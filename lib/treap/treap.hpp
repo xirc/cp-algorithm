@@ -37,11 +37,6 @@ public:
         return find(root, key);
     }
 
-    int size() 
-    {
-        return count(root);
-    }
-
     void dump(std::vector<T>& buffer) {
         buffer.clear();
         dump(root, buffer);
@@ -64,7 +59,7 @@ protected:
         }
         pushdown(tree);
         if (key < tree->key) {
-            split(tree->left, key, left, tree->right);
+            split(tree->left, key, left, tree->left);
             right = tree;
         } else {
             split(tree->right, key, tree->right, right);
