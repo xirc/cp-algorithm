@@ -30,6 +30,10 @@ protected:
     Tree root;
 
 public:
+    // O(1)
+    int size() {
+        return count(root);
+    }
     // O(logN)
     void insert(int pos, T value) {
         insert(root, pos, new Node(value, random()));
@@ -173,6 +177,18 @@ protected:
         reverse(tree, l, l + r - m);
         reverse(tree, l + r - m, r);
     }
+    // O(logN)
+    int count(Tree tree, int l, int r) {
+        Tree t1, t2, t3;
+        int ans;
+        split(tree, l, t1, t2);
+        split(t2, r - l, t2, t3);
+        ans = count(t2);
+        merge(t2, t2, t3);
+        merge(tree, t1, t2);
+        return ans;
+    }
+    // O(N)
     void dump(Tree tree, std::vector<T>& buffer) {
         if (!tree) {
             return;

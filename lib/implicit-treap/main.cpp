@@ -17,9 +17,6 @@ struct Data {
 
 class ImplicitTreap : public ImplicitTreapBase<Data> {
 public:
-    int size() {
-        return count(root);
-    }
     void add(int l, int r, int value) {
         add(root, l, r, value);
     }
@@ -143,6 +140,13 @@ void action_rotate() {
     itreap.rotate(l, m, r);
 }
 
+void action_count() {
+    int l, r;
+    cin >> l >> r;
+    int ans = itreap.count(l, r);
+    cout << ans << endl;
+}
+
 void action_dump() {
     itreap.dump(buffer);
     for (auto it = buffer.begin(); it != buffer.end(); it++) {
@@ -167,6 +171,8 @@ void setup(string& header, map<string,Command>& commands) {
         Command { "reverse {left} {right}", action_reverse };
     commands["rotate"] =
         Command { "rotate {left} {middle} {right}", action_rotate };
+    commands["count"] =
+        Command { "count {left} {right}", action_count };
     commands["dump"] =
         Command { "dump", action_dump };
 }
