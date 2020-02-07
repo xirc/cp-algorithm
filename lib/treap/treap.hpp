@@ -25,18 +25,19 @@ protected:
     Tree root = nullptr;
 
 public:
+    // O(logN)
     void insert(T key) {
         insert(root, new Node(key, random()));
     }
-
+    // O(logN)
     bool erase(T key) {
         return erase(root, key);
     }
-
+    // O(logN)
     bool find(T key) {
         return find(root, key);
     }
-
+    // O(N)
     void dump(std::vector<T>& buffer) {
         buffer.clear();
         dump(root, buffer);
@@ -46,12 +47,12 @@ protected:
     virtual void pushup(Tree tree) {
         // Do pushup procedure.
     }
-
     virtual void pushdown(Tree tree) {
         // Do pushdown procedure, and then finally pushup.
         pushup(tree);
     }
-
+    // O(logN)
+    // left: <= key, right: > key
     void split(Tree tree, T key, Tree& left, Tree& right) {
         if (!tree) {
             left = right = nullptr;
@@ -67,7 +68,7 @@ protected:
         }
         pushup(tree);
     }
-
+    // O(logN)
     void merge(Tree &tree, Tree left, Tree right) {
         pushdown(left);
         pushdown(right);
@@ -82,7 +83,7 @@ protected:
         }
         pushup(tree);
     }
-
+    // O(logN)
     void insert(Tree &tree, Tree item) {
         if (!tree) {
             tree = item;
@@ -97,7 +98,7 @@ protected:
         }
         pushup(tree);
     }
-
+    // O(logN)
     bool erase(Tree &tree, T key) {
         if (!tree) {
             return false;
@@ -113,7 +114,7 @@ protected:
         pushup(tree);
         return has_key;
     }
-
+    // O(logN)
     bool find(Tree tree, T key) {
         if (!tree) {
             return false;
@@ -125,7 +126,7 @@ protected:
             return find(key < tree->key ? tree->left : tree->right, key);
         }
     }
-    
+    // O(N)
     void dump(Tree tree, std::vector<T>& buffer) {
         if (!tree) {
             return;
