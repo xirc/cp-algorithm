@@ -21,8 +21,13 @@ struct Data {
 
 class Treap : public TreapBase<Data> {
 public:
+    // O(logN)
     int count() {
         return count(root);
+    }
+    // O(logN)
+    int count(int l, int r) {
+        return count(root, l, r);
     }
 protected:
     void pushup(Tree tree) override {
@@ -36,6 +41,18 @@ protected:
         if (tree) {
             tree->key.count = 1 + count(tree->left) + count(tree->right);
         }
+    }
+    // O(logN)
+    // count elements where key = [l, r)
+    int count(Tree &tree, int l, int r) {
+        Tree t1, t2, t3;
+        int ans;
+        split(tree, {l-1,0}, t1, t2);
+        split(t2, {r-1,0}, t2, t3);
+        ans = count(t2);
+        merge(t2, t2, t3);
+        merge(tree, t1, t2);
+        return ans;
     }
 };
 
@@ -62,6 +79,13 @@ void action_find() {
     cout << (ans ? "true" : "false") << endl;
 }
 
+void action_count() {
+    int l, r;
+    cin >> l >> r;
+    int ans = treap.count(l, r);
+    cout << ans << endl;
+}
+
 void action_size() {
     int ans = treap.count();
     cout << ans << endl;
@@ -84,6 +108,8 @@ void setup(string& header, map<string,Command>& commands) {
         Command { "erase {value}", action_erase };
     commands["find"] =
         Command { "find {value}", action_find };
+    commands["count"] =
+        Command { "count {l} {r}", action_count };
     commands["size"] =
         Command { "size", action_size };
     commands["dump"] = 
