@@ -21,7 +21,7 @@ protected:
     };
     using Tree = Node*;
 
-    std::random_device random;
+    std::mt19937 random;
     Tree root = nullptr;
 
 public:
