@@ -30,28 +30,33 @@ protected:
     Tree root;
 
 public:
+    // O(logN)
     void insert(int pos, T value) {
         insert(root, pos, new Node(value, random()));
     }
-
+    // O(logN)
     T at(int pos) {
         T value;
         if (!at(root, pos, value)) throw;
         return value;
     }
-
+    // O(logN)
     bool erase(int pos) {
         return erase(root, pos);
     }
-
+    // O(logN)
     void reverse(int l, int r) {
         reverse(root, l, r);
     }
-
+    // O(logN)
     void rotate(int l, int m, int r) {
         rotate(root, l, m, r);
     }
-
+    // O(logN)
+    int count(int l, int r) {
+        return count(root, l, r);
+    }
+    // O(N)
     void dump(std::vector<T>& buffer) {
         buffer.clear();
         dump(root, buffer);
@@ -75,22 +80,20 @@ protected:
         }
         pushup(tree);
     }
-
     virtual void pushup(Tree tree) {
         // Do pushup procedure.
         update_count(tree);
     }
-
     int count(Tree tree) {
         return tree ? tree->count : 0;
     }
-
     void update_count(Tree tree) {
         if (tree) {
             tree->count = 1 + count(tree->left) + count(tree->right);
         }
     }
-
+    // O(logN)
+    // left > key, right >= key
     void split(Tree tree, int key, Tree &left, Tree &right) {
         if (!tree) {
             left = right = nullptr;
@@ -107,7 +110,7 @@ protected:
         }
         pushup(tree);
     }
-
+    // O(logN)
     void merge(Tree& tree, Tree left, Tree right) {
         pushdown(left);
         pushdown(right);
@@ -122,14 +125,14 @@ protected:
         }
         pushup(tree);
     }
-
+    // O(logN)
     void insert(Tree& tree, int key, Tree item) {
         Tree t1, t2;
         split(tree, key, t1, t2);
         merge(t1, t1, item);
         merge(tree, t1, t2);
     }
-
+    // O(logN)
     bool erase(Tree& tree, int key) {
         Tree t1, t2, t3;
         split(tree, key + 1, t1, t2);
@@ -137,7 +140,7 @@ protected:
         merge(tree, t1, t2);
         return t3 != nullptr;
     }
-
+    // O(logN)
     bool at(Tree &tree, int key, T& value) {
         Tree t1, t2, t3;
         bool has_value = false;
@@ -151,7 +154,8 @@ protected:
         merge(tree, t1, t2);
         return has_value;
     }
-
+    // O(logN)
+    // reverse elements in [l,r)
     void reverse(Tree tree, int l, int r) {
         if (l > r) {
             return;
@@ -163,13 +167,12 @@ protected:
         merge(t2, t2, t3);
         merge(tree, t1, t2);
     }
-
+    // O(logN)
     void rotate(Tree tree, int l, int m, int r) {
         reverse(tree, l, r);
         reverse(tree, l, l + r - m);
         reverse(tree, l + r - m, r);
     }
-
     void dump(Tree tree, std::vector<T>& buffer) {
         if (!tree) {
             return;
