@@ -34,13 +34,13 @@ public:
         // For the performance, Avoid the maintenance cost of a complex data structure in Q.
         struct custom_less {
             bool operator()(const int& lhs, const int& rhs) const {
-                return distance[lhs] < distance[rhs];
+                return distance[lhs] != distance[rhs] ? distance[lhs] < distance[rhs] : lhs < rhs;
             }
         };
         std::set<int, custom_less> Q;
 
         distance[s] = 0;
-        Q.insert({0, s});
+        Q.insert(s);
 
         while (!Q.empty()) {
             int v = *Q.begin();
