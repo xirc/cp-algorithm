@@ -8,17 +8,15 @@
 #include <random>
 #include "../template-main.hpp"
 
-using namespace std;
-
 template<class T, class SegmentTree>
 class SegmentTreeInterpBase {
 protected:
     SegmentTree m_tree = SegmentTree(8);
-    vector<T> m_buffer;
+    std::vector<T> m_buffer;
 
 protected:
     virtual T make_value(int value) = 0;
-    virtual string repr_value(T value) = 0;
+    virtual std::string repr_value(T value) = 0;
 
 public:
     void action_build() {
@@ -62,8 +60,8 @@ public:
 template<class SegmentTreeInterp>
 void setup(
     SegmentTreeInterp* interp,
-    string& header,
-    map<string,Command>& commands
+    std::string& header,
+    std::map<std::string,Command>& commands
 ) {
     using clazz = SegmentTreeInterp;
 
