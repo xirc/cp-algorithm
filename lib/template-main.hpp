@@ -6,31 +6,29 @@
 #include <string>
 #include <functional>
 
-using namespace std;
-
 struct Command {
-    string description;
-    function<void()> action;
+    std::string description;
+    std::function<void()> action;
 };
 
 void setup(
-    string& header,
-    map<string,Command>& commands
+    std::string& header,
+    std::map<std::string,Command>& commands
 );
 
-void print_help(string& header, map<string,Command>& commands) {
-    cout << header << endl;
-    cout << "commands:" << endl;
+void print_help(std::string& header, std::map<std::string,Command>& commands) {
+    std::cout << header << std::endl;
+    std::cout << "commands:" << std::endl;
     for (auto it = commands.begin(); it != commands.end(); ++it) {
-        cout << "  * " << it->second.description << endl;
+        std::cout << "  * " << it->second.description << std::endl;
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
 int main() {
-    string query;
-    string header;
-    map<string,Command> commands;
+    std::string query;
+    std::string header;
+    std::map<std::string,Command> commands;
     
     setup(header, commands);
     if (commands.find("help") == commands.end()) {
@@ -38,10 +36,10 @@ int main() {
     }
 
     while (true) {
-        cout << ">>> ";
-        cin >> query;
-        if (cin.eof()) {
-            cout << endl;
+        std::cout << ">>> ";
+        std::cin >> query;
+        if (std::cin.eof()) {
+            std::cout << std::endl;
             break;
         }
 
@@ -49,7 +47,7 @@ int main() {
         if (it != commands.end()) {
             it->second.action();
         } else {
-            cout << "invalid command" << endl << endl;
+            std::cout << "invalid command" << std::endl << std::endl;
             auto help_action = commands.find("help");
             if (help_action != commands.end()) {
                 help_action->second.action();

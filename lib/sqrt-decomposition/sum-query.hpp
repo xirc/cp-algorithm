@@ -11,7 +11,7 @@ class SqrtDecomposition {
 public:
     SqrtDecomposition(){}
     int size() { return N; }
-    void dump(vector<int>& buffer) {
+    void dump(std::vector<int>& buffer) {
         buffer.resize(m_array.size());
         std::copy(m_array.begin(), m_array.end(), buffer.begin());
     }
