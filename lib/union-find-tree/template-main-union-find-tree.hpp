@@ -6,11 +6,9 @@
 #include <string>
 #include "../template-main.hpp"
 
-using namespace std;
-
 template <class UnionFindTree, class Repr>
 class UnionFindTreeInterp {
-    using Tree = shared_ptr<UnionFindTree>;
+    using Tree = std::shared_ptr<UnionFindTree>;
     Tree tree = Tree(new UnionFindTree(0));
 public:
     void action_init() {
@@ -58,7 +56,7 @@ public:
 };
 
 template <class UnionFindTreeInterp>
-void setup(UnionFindTreeInterp* repr, string& header, map<string,Command>& commands) {
+void setup(UnionFindTreeInterp* repr, std::string& header, std::map<std::string,Command>& commands) {
     header = "Union Find Tree";
     using clazz = UnionFindTreeInterp;
     commands["init"] = Command { "init {size}", bind(&clazz::action_init, repr) };
