@@ -4,18 +4,16 @@
 #include <vector>
 #include <algorithm>
 
-const int S = 700; // Block Size
-
-struct Query {
-    int l, r, idx;
-    bool operator<(Query &rhs) {
-        return std::make_pair(l / S, r) < std::make_pair(rhs.l / S, rhs.r);
-    }
-};
-
 template <class T>
 class Mo {
 public:
+    const int S = 700; // Block Size
+    struct Query {
+        int l, r, idx;
+        bool operator<(Query &rhs) {
+            return std::make_pair(l / S, r) < std::make_pair(rhs.l / S, rhs.r);
+        }
+    };
     // O((N+Q)sqrt(N))
     std::vector<T> solve(std::vector<Query>& queries) {
         std::vector<T> ans(queries.size());
