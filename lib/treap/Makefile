@@ -1,7 +1,7 @@
 CXX = clang
 CXXFLAGS = -std=c++14
 
-MAIN = main
+MAIN = main-treap
 
 .PHONY: all clean
 all: ${MAIN}
