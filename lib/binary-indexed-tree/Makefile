@@ -3,7 +3,9 @@ CXXFLAGS = -std=c++14
 
 MAIN = main-binary-indexed-tree \
 main-binary-indexed-tree-min \
-main-binary-indexed-tree-2d
+main-binary-indexed-tree-2d \
+main-binary-indexed-tree-rupq \
+main-binary-indexed-tree-rurq
 
 .PHONY: all clean
 all: ${MAIN}
