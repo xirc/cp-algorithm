@@ -6,11 +6,9 @@
 #include <algorithm>
 #include "../template-main.hpp"
 
-using namespace std;
-
 template <class Solver>
 class Interp {
-    using SolverPtr = shared_ptr<Solver>;
+    using SolverPtr = std::shared_ptr<Solver>;
     SolverPtr solver = SolverPtr(new Solver(0));
 public:
     void action_init() {
@@ -73,7 +71,7 @@ public:
 };
 
 template<class SolverInterp>
-void setup(SolverInterp* interp, string& header, map<string,Command>& commands){
+void setup(SolverInterp* interp, std::string& header, std::map<std::string,Command>& commands){
     header = "Dijkstra with Priority Queue";
     commands["init"] =
         Command { "init {size}", bind(&SolverInterp::action_init, interp) };
