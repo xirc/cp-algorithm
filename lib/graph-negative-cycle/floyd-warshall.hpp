@@ -41,7 +41,8 @@ public:
             for (int i = 0; i < N; ++i) {
                 for (int j = 0; j < N; ++j) {
                     if (D[i][t] >= inf || D[t][j] >= inf) continue;
-                    D[i][j] = std::min(D[i][j], D[i][t] + D[t][j]);
+                    const auto distance = D[i][t] + D[t][j];
+                    D[i][j] = std::min(D[i][j], std::max(-inf, distance));
                 }
             }
         }
