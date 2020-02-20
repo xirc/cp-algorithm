@@ -4,7 +4,7 @@
 #include <algorithm>
 
 class BellmanFord {
-    const int inf = 1e8;
+    static const int inf = 1e8;
     struct edge { int from, to, cost; };
     int m_size;
     std::vector<edge> m_edges;

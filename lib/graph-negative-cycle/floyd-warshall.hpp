@@ -4,7 +4,7 @@
 #include <algorithm>
 
 class FloydWarshall {
-    const int inf = 1e8;
+    static const int inf = 1e8;
     int m_size;
     std::vector<std::vector<int>> m_adjmat;
 public:

@@ -5,7 +5,7 @@
 
 // More faster than Bellman-Ford on average.
 class SPFA {
-    const int inf = 1e8;
+    static const int inf = 1e8;
     struct edge { int to, cost; };
     int m_size;
     std::vector<std::vector<edge>> m_edges;

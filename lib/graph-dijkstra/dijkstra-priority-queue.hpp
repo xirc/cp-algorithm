@@ -6,7 +6,7 @@
 // Use Dijkstra(ver: priority_queue<>) in most case.
 // This has better performance than Dijkstra(ver: set<>).
 class Dijkstra {
-    const int infinity = 1e9;
+    static const int infinity = 1e9;
     int m_size;
     std::vector<std::vector<std::pair<int,int>>> adj;
 

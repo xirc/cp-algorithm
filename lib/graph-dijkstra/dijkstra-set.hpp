@@ -7,7 +7,7 @@
 // If you use the complex data structure in set<>,
 // use Dijkstra(ver: priority_queue<>) which is better performance in such case.
 class Dijkstra {
-    const int infinity = 1e9;
+    static const int infinity = 1e9;
     int m_size;
     std::vector<std::vector<std::pair<int,int>>> adj;
     static std::vector<int> distance;

@@ -7,7 +7,7 @@
 template <class T>
 class Mo {
 public:
-    const int S = 700; // Block Size
+    static const int S = 700; // Block Size
     struct Query {
         int l, r, idx;
         bool operator<(Query &rhs) {
