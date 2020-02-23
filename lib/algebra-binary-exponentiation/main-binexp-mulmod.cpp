@@ -4,6 +4,7 @@
 using namespace std;
 
 // (a * b) mod m
+// O(logN)
 long long mulmod(long long a, long long b, long long m) {
     if (a == 0) return 0;
     long long half = mulmod(a / 2, b, m);

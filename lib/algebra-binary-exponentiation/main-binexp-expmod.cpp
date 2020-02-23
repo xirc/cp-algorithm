@@ -4,6 +4,7 @@
 using namespace std;
 
 // Compute (x^n) mod m
+// O(logN)
 long long powmod(long long x, long long n, long long m) {
     x %= m;
     long long ans = 1;

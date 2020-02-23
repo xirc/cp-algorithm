@@ -26,6 +26,7 @@ public:
         adj[a].push_back({b, len});
     }
 
+    // O(V log V + E)
     void solve(int s, std::vector<int>& D, std::vector<int>& P) {
         D.assign(m_size, infinity);
         P.assign(m_size, -1);

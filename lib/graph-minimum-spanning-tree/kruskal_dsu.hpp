@@ -86,7 +86,7 @@ public:
         m_edges.push_back({ u, v, distance });
     }
 
-    // O (M logN)
+    // O (E logV)
     bool solve(int& out_distance, std::vector<std::pair<int,int>>& out_edges) {
         const int N = m_size;
 

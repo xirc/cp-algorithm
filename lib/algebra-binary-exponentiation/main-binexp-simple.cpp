@@ -4,6 +4,7 @@
 
 using namespace std;
 
+// O(logN)
 long long binpow(long long a, int b) {
     return binpow<long long>(a, b, 1);
 }

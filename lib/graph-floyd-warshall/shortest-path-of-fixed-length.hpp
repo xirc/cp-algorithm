@@ -22,6 +22,7 @@ public:
         throw_if_invalid_index(to);
         m_matrix[from][to] = distance;
     }
+    // O(V^3 logK)
     mat solve(int length) {
         if (length <= 0) throw "argument exception";
         return power(m_matrix, length);

@@ -29,6 +29,7 @@ mat binpow(mat a, int b) {
     return binpow<mat>(a, b, id(a.size()));
 }
 
+// O(logN)
 long long fib(int n) {
     if (n < 0) throw;
     if (n == 1 || n == 2) return 1;
