@@ -22,6 +22,8 @@ public:
         return m_size - 1;
     }
 
+    // Add the value to array[l,r)
+    // O(logN)
     void add(int l, int r, int value) {
         add(bit1, l, value);
         add(bit1, r, -value);
@@ -29,10 +31,14 @@ public:
         add(bit2, r, -value * (r-1));
     }
 
+    // Sum of array[0,index)
+    // O(logN)
     int sum(int index) {
         return sum(bit1, index) * (index - 1) - sum(bit2, index);
     }
 
+    // Sum of array[l,r)
+    // O(logN)
     int sum(int l, int r) {
         return sum(r) - sum(l);
     }
