@@ -20,7 +20,7 @@ public:
         return m_size - 1;
     }
 
-    // Add value to array[l,r]
+    // Add value to array[l,r)
     // O(logN)
     void add(int l, int r, int value) {
         add(l, value);
@@ -31,7 +31,7 @@ public:
     // O(logN)
     int query(int index) {
         int ans = 0;
-        for (; index > 0; index -= index & -index) {
+        for (++index; index > 0; index -= index & -index) {
             ans += bit[index];
         }
         return ans;
