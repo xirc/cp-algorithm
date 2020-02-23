@@ -3,7 +3,9 @@ CXXFLAGS = -std=c++14
 
 MAIN = \
 main-prim-dense \
-main-prim-sparse
+main-prim-sparse \
+main-kruskal-simple \
+main-kruskal-dsu
 
 .PHONY: all clean
 all: ${MAIN}
