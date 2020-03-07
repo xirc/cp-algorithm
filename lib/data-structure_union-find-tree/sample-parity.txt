@@ -1,0 +1,10 @@
+init 9
+union 0 5
+union 1 5
+union 1 6
+union 2 7
+union 2 8
+union 3 6
+union 4 5
+union 4 8
+dump

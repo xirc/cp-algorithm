@@ -3,26 +3,16 @@
 #include <vector>
 #include <algorithm>
 
-struct Node {
-    int parent;
-    int rank;
-    bool parity;
-    bool bipartite;
-    Node()
-        : parent(0)
-        , rank(0)
-        , parity(0)
-        , bipartite(0) {}
-    Node(int parent, int rank, bool parity, bool bipartite)
-        : parent(parent)
-        , rank(rank)
-        , parity(parity)
-        , bipartite(bipartite) {}
-};
-
 class UnionFindTree {
+public:
+    struct node {
+        int parent, rank;
+        bool parity, bipartite;
+    };
+
+private:
     int m_size;
-    std::vector<Node> m_nodes;
+    std::vector<node> m_nodes;
 
 public:
     UnionFindTree(int size)
@@ -30,45 +20,48 @@ public:
         , m_nodes(size)
     {
         for (int i = 0; i < size; ++i) {
-            m_nodes[i] = Node(i, 0, false, true);
+            m_nodes[i] = { i, 0, false, true };
         }
     }
     int size() {
         return m_size;
     }
     // O(a(n))
-    Node find_set(int index) {
+    node find_set(int index) {
         if (index < 0 || index >= m_size) throw;
-        if (index != m_nodes[index].parent) {
+        auto& node = m_nodes[index];
+        if (index != node.parent) {
             // Path Compression
-            auto root = find_set(m_nodes[index].parent);
-            m_nodes[index].parent = root.parent;
-            m_nodes[index].parity = root.parity ^ m_nodes[index].parity;
-            m_nodes[index].bipartite = root.bipartite;
+            auto root = find_set(node.parent);
+            node.parent = root.parent;
+            node.rank = root.rank;
+            node.parity = root.parity ^ node.parity;
+            node.bipartite = root.bipartite;
         }
-        return m_nodes[index];
+        return node;
     }
     // O(a(n))
-    void union_set(int lindex, int rindex) {
-        auto nl = find_set(lindex);
-        auto nr = find_set(rindex);
+    void union_set(int a, int b) {
+        auto ra = find_set(a);
+        auto rb = find_set(b);
 
-        lindex = nl.parent;
-        rindex = nr.parent;
+        a = ra.parent;
+        b = rb.parent;
 
-        if (lindex == rindex) {
-            if (nl.parity == nr.parity) {
-                m_nodes[lindex].bipartite = false;
+        if (a == b) {
+            if (ra.parity == rb.parity) {
+                m_nodes[a].bipartite = false;
             }
         } else {
-            if (m_nodes[lindex].rank < m_nodes[rindex].rank) {
-                std::swap(lindex, rindex);
+            if (m_nodes[a].rank < m_nodes[b].rank) {
+                std::swap(a, b);
+                std::swap(ra, rb);
             }
-            m_nodes[rindex].parent = lindex;
-            m_nodes[rindex].parity = nl.parity ^ nr.parity ^ true;
-            m_nodes[lindex].bipartite &= m_nodes[rindex].bipartite;
-            if (m_nodes[lindex].rank == m_nodes[rindex].rank) {
-                m_nodes[lindex].rank++;
+            m_nodes[b].parent = a;
+            m_nodes[b].parity = ra.parity ^ rb.parity ^ true;
+            m_nodes[a].bipartite &= m_nodes[b].bipartite;
+            if (m_nodes[a].rank == m_nodes[b].rank) {
+                m_nodes[a].rank++;
             }
         }
     }
