@@ -7,7 +7,7 @@
 using namespace std;
 
 struct Repr {
-    static string to_string(Node node) {
+    static string to_string(UnionFindTree::node node) {
         return "(" + std::to_string(node.parent) + "," + std::to_string(node.length) + ")";
     }
 };
