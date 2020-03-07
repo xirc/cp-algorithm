@@ -1,5 +1,8 @@
 #pragma once
 
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C
+
 #include <vector>
 
 class LCA {
@@ -38,27 +41,6 @@ class LCA {
     std::vector<int> ancestor;
     std::vector<int> answer;
 
-    void dfs(
-        const std::vector<std::vector<int>>& adj,
-        const std::vector<std::vector<Query>>& queries,
-        int v
-    ) {
-        visited[v] = true;
-        ancestor[v] = v;
-        for (int u : adj[v]) {
-            if (visited[u]) continue;
-            dfs(adj, queries, u);
-            dsu.union_set(u, v);
-            int c = dsu.find_set(v).parent;
-            ancestor[c] = v;
-        }
-        for (auto query : queries[v]) {
-            if (!visited[query.u]) continue;
-            int c = dsu.find_set(query.u).parent;
-            answer[query.idx] = ancestor[c];
-        }
-    }
-
 public:
     // O(V + Q)
     std::vector<int> solve(
@@ -78,5 +60,27 @@ public:
         answer.assign(M, -1);
         dfs(adj, Q, 0);
         return answer;
+    }
+
+private:
+    void dfs(
+        const std::vector<std::vector<int>>& adj,
+        const std::vector<std::vector<Query>>& queries,
+        int v
+    ) {
+        visited[v] = true;
+        ancestor[v] = v;
+        for (int u : adj[v]) {
+            if (visited[u]) continue;
+            dfs(adj, queries, u);
+            dsu.union_set(u, v);
+            int c = dsu.find_set(v).parent;
+            ancestor[c] = v;
+        }
+        for (auto query : queries[v]) {
+            if (!visited[query.u]) continue;
+            int c = dsu.find_set(query.u).parent;
+            answer[query.idx] = ancestor[c];
+        }
     }
 };
