@@ -22,7 +22,7 @@ public:
         solver = SolverPtr(new Solver(n));
     }
     void action_add_edge() {
-        int from, to, cost;
+        int from, to; long long cost;
         cin >> from >> to >> cost;
         if (from < 0 || from >= solver->size() ||
             to < 0 || to >= solver->size())
@@ -34,7 +34,8 @@ public:
     }
     void action_solve() {
         int from;
-        std::vector<int> distance, predecessor;
+        std::vector<long long> distance;
+        std::vector<int> predecessor;
         cin >> from;
         if (from < 0 || from >= solver->size())
         {

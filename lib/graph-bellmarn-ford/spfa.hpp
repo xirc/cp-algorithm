@@ -5,25 +5,22 @@
 
 // More faster than Bellman-Ford on average.
 class SPFA {
-    static const int inf = 1e8;
-    struct edge { int to, cost; };
+    struct edge { int to; long long cost; };
     int m_size;
     std::vector<std::vector<edge>> m_edges;
 public:
+    static const long long inf = 1e18;
     SPFA(int size): m_size(size), m_edges(size) {}
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index of of range";
-    }
     int size() {
         return m_size;
     }
-    void add_edge(int from, int to, int cost) {
+    void add_edge(int from, int to, long long cost) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         m_edges[from].push_back(edge{ to, cost });
     }
     // O (E V)
-    bool solve(int from, std::vector<int>& D, std::vector<int>& P) {
+    bool solve(int from, std::vector<long long>& D, std::vector<int>& P) {
         const int N = m_size;
         D.assign(N, inf);
         P.assign(N, -1);
@@ -53,5 +50,10 @@ public:
             }
         }
         return true;
+    }
+
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= m_size) throw "index of of range";
     }
 };
