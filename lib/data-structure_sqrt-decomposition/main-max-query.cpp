@@ -3,12 +3,20 @@
 #include <map>
 #include <string>
 #include <random>
+#include <climits>
+#include <algorithm>
 #include "../template-main.hpp"
-#include "max-query.hpp"
+#include "sqrt-decomposition.hpp"
 
 using namespace std;
 
-SqrtDecomposition container;
+struct Max {
+    static long long id() { return LONG_LONG_MIN; }
+    static long long op(const long long& lhs, const long long& rhs) {
+        return std::max(lhs, rhs);
+    }
+};
+SqrtDecomposition<int,Max> container;
 
 void action_init() {
     int n, _min, _max;
