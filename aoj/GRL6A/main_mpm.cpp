@@ -1,0 +1,217 @@
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
+
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#include <set>
+
+using namespace std;
+
+class MaximumFlow {
+    static const long long inf = 1e18;
+    struct edge {
+        int from, to;
+        long long capacity, flow;
+    };
+
+    int m_size;
+    std::vector<edge> edges;
+    std::vector<std::vector<int>> adj;
+    // Temporal
+    std::vector<bool> alive;
+    std::vector<int> level;
+    std::vector<long long> pin, pout;
+    std::vector<std::set<int>> in, out;
+
+public:
+    MaximumFlow(int size): m_size(size), adj(size) {}
+    int size() {
+        return m_size;
+    }
+    void add_edge(int from, int to, long long capacity) {
+        throw_if_invalid_index(from);
+        throw_if_invalid_index(to);
+        edges.push_back({ from, to, capacity });
+        edges.push_back({ to, from, 0 });
+        adj[from].push_back(edges.size() - 2);
+        adj[to].push_back(edges.size() - 1);
+    }
+    // O(V^3)
+    long long solve(int s, int t, std::vector<std::vector<long long>>& flow) {
+        throw_if_invalid_index(s);
+        throw_if_invalid_index(t);
+
+        const int N = m_size;
+        long long ans = 0;
+        while (true) {
+            if (!bfs(s, t)) break;
+
+            build(s, t);
+
+            alive.assign(N, true);
+            while (true) {
+                int v = find_reference_node();
+                if (v == -1) break;
+                auto f = pot(v);
+                if (f == 0) {
+                    remove_node(v);
+                    continue;
+                }
+                ans += f;
+                push(v, s, f, false);
+                push(v, t, f, true);
+                remove_node(v);
+            }
+        }
+
+        flow.assign(N, std::vector<long long>(N, 0));
+        for (auto& e : edges) {
+            flow[e.from][e.to] += e.flow;
+        }
+        return ans;
+    }
+
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= m_size) throw "index out of range";
+    }
+    bool bfs(int s, int t) {
+        const int N = m_size;
+        std::queue<int> Q;
+        level.assign(N, -1);
+        level[s] = 0;
+        Q.push(s);
+        while (!Q.empty()) {
+            int v = Q.front(); Q.pop();
+            for (int id : adj[v]) {
+                auto& e = edges[id];
+                if (e.capacity - e.flow <= 0) continue;
+                if (level[e.to] != -1) continue;
+                level[e.to] = level[v] + 1;
+                Q.push(e.to);
+            }
+        }
+        return level[t] != -1;
+    }
+    void build(int s, int t) {
+        const int N = m_size;
+        pin.assign(N, 0);
+        pout.assign(N, 0);
+        in.assign(N, std::set<int>());
+        out.assign(N, std::set<int>());
+        for (int i = 0; i < edges.size(); ++i) {
+            auto& e = edges[i];
+            if (e.capacity - e.flow <= 0) continue;
+            if (level[e.from] + 1 != level[e.to]) continue;
+            if (e.to != t && level[e.to] >= level[t]) continue;
+            in[e.to].insert(i);
+            out[e.from].insert(i);
+            auto cf = e.capacity - e.flow;
+            pin[e.to] += cf;
+            pout[e.from] += cf;
+        }
+        pin[s] = pout[t] = inf;
+    }
+    long long pot(int v) {
+        return std::min(pin[v], pout[v]);
+    }
+    int find_reference_node() {
+        const int N = m_size;
+        int v = -1;
+        for (int i = 0; i < N; ++i) {
+            if (!alive[i]) continue;
+            if (v == -1 || pot(i) < pot(v)) {
+                v = i;
+            }
+        }
+        return v;
+    }
+    void remove_node(int v) {
+        alive[v] = false;
+        for (int i : in[v]) {
+            auto e = edges[i];
+            auto it = std::find(out[e.from].begin(), out[e.from].end(), i);
+            out[e.from].erase(it);
+            pout[e.from] -= e.capacity - e.flow;
+        }
+        for (int i : out[v]) {
+            auto e = edges[i];
+            auto it = std::find(in[e.to].begin(), in[e.to].end(), i);
+            in[e.to].erase(it);
+            pin[e.to] -= e.capacity - e.flow;
+        }
+    }
+    void push(int from, int to, long long f, bool forward) {
+        const int N = m_size;
+        std::queue<int> Q;
+        std::vector<long long> excess(N, 0);
+
+        excess[from] = f;
+        Q.push(from);
+        while (!Q.empty()) {
+            int v = Q.front(); Q.pop();
+            if (v == to) {
+                break;
+            }
+            auto it = forward ? out[v].begin() : in[v].begin();
+            while (excess[v] > 0) {
+                auto& e = edges[*it];
+                auto& er = edges[*it^1];
+                int u = forward ? e.to : e.from;
+                auto push = std::min(excess[v], e.capacity - e.flow);
+
+                if (push == 0) {
+                    break;
+                }
+
+                if (forward) {
+                    pout[v] -= push;
+                    pin[u] -= push;
+                } else {
+                    pin[v] -= push;
+                    pout[u] -= push;
+                }
+                if (excess[u] == 0) {
+                    Q.push(u);
+                }
+                excess[u] += push;
+                e.flow += push;
+                er.flow -= push;
+                excess[v] -= push;
+
+                if (e.capacity - e.flow > 0) {
+                    break;
+                }
+
+                if (forward) {
+                    in[u].erase(*it);
+                    out[v].erase(*it);
+                    it = out[v].begin();
+                } else {
+                    out[u].erase(*it);
+                    in[v].erase(*it);
+                    it = in[v].begin();
+                }
+            }
+        }
+    }
+};
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+
+    int V, E;
+    cin >> V >> E;
+    MaximumFlow solver(V);
+    for (int i = 0; i < E; ++i) {
+        int u, v, c;
+        cin >> u >> v >> c;
+        solver.add_edge(u, v, c);
+    }
+    vector<vector<long long>> flow;
+    cout << solver.solve(0, V-1, flow) << endl;
+
+    return 0;
+}
