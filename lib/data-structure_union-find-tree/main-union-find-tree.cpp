@@ -7,8 +7,8 @@
 using namespace std;
 
 struct Repr {
-    static string to_string(int value) {
-        return std::to_string(value);
+    static string to_string(UnionFindTree::node value) {
+        return std::to_string(value.parent);
     }
 };
 using Interp = UnionFindTreeInterp<UnionFindTree, Repr>;
