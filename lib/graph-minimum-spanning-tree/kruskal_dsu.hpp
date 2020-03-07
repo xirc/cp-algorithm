@@ -57,7 +57,8 @@ private:
 
 class Kruskal {
     struct edge {
-        int u, v, distance;
+        int u, v;
+        long long distance;
         bool operator<(const edge& other) const {
             return distance < other.distance;
         }
@@ -87,7 +88,7 @@ public:
     }
 
     // O (E logV)
-    bool solve(int& out_distance, std::vector<std::pair<int,int>>& out_edges) {
+    bool solve(long long& out_distance, std::vector<std::pair<int,int>>& out_edges) {
         const int N = m_size;
 
         out_distance = 0;

@@ -6,7 +6,8 @@
 
 class KruskalSimple {
     struct edge {
-        int u, v, distance;
+        int u, v;
+        long long distance;
         bool operator<(const edge& other) const {
             return distance < other.distance;
         }
@@ -22,7 +23,7 @@ public:
         return m_size;
     }
 
-    void add_edge(int u, int v, int distance) {
+    void add_edge(int u, int v, long long distance) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         if (m_uniq_edges.count({ u, v }) > 0 ||
@@ -35,7 +36,7 @@ public:
     }
 
     // O(E logV + V^2)
-    bool solve(int& out_distance, std::vector<std::pair<int,int>> &out_edges) {
+    bool solve(long long& out_distance, std::vector<std::pair<int,int>> &out_edges) {
         const int N = m_size;
 
         out_distance = 0;

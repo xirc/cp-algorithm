@@ -4,8 +4,8 @@
 #include <set>
 
 class PrimSparse {
-    static const int inf = 1e8;
-    struct edge { int to, distance; };
+    static const long long inf = 1e18;
+    struct edge { int to; long long distance; };
     int m_size;
     std::vector<std::vector<edge>> adj;
 
@@ -18,7 +18,7 @@ public:
         return m_size;
     }
 
-    void add_edge(int from, int to, int distance) {
+    void add_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adj[from].push_back({ to, distance });
@@ -26,7 +26,7 @@ public:
     }
 
     // O(E logV)
-    bool solve(int& distance, std::vector<std::pair<int,int>>& edges) {
+    bool solve(long long& distance, std::vector<std::pair<int,int>>& edges) {
         struct custom_less {
             bool operator()(const edge& lhs, const edge& rhs) const {
                 return lhs.distance != rhs.distance
@@ -53,7 +53,7 @@ public:
             }
 
             int v = Q.begin()->to;
-            int d = Q.begin()->distance;
+            auto d = Q.begin()->distance;
             Q.erase(Q.begin());
 
             used[v] = true;

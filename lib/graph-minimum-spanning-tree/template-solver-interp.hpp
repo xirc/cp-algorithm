@@ -17,7 +17,7 @@ public:
         solver = SolverPtr(new Solver(size));
     }
     void action_add_edge() {
-        int from, to, distance;
+        int from, to; long long distance;
         std::cin >> from >> to >> distance;
         if (from < 0 || from >= solver->size() ||
             to < 0 || to >= solver->size())
@@ -28,7 +28,7 @@ public:
         solver->add_edge(from, to, distance);
     }
     void action_solve() {
-        int distance;
+        long long distance;
         std::vector<std::pair<int,int>> edges;
         bool has_ans = solver->solve(distance, edges);
         if (!has_ans) {

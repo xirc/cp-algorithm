@@ -3,20 +3,20 @@
 #include <vector>
 
 class PrimDense {
-    static const int inf = 1e8;
+    static const long long inf = 1e18;
     int m_size;
-    std::vector<std::vector<int>> adjmat;
+    std::vector<std::vector<long long>> adjmat;
 
 public:
     PrimDense(int size)
         : m_size(size)
-        , adjmat(size, std::vector<int>(size, inf)) {}
+        , adjmat(size, std::vector<long long>(size, inf)) {}
 
     int size() {
         return m_size;
     }
 
-    void add_edge(int from, int to, int distance) {
+    void add_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adjmat[from][to] = distance;
@@ -25,10 +25,10 @@ public:
 
     // O(V^2)
     bool solve(
-        int& distance,
+        long long& distance,
         std::vector<std::pair<int,int>>& edges
     ) {
-        struct edge { int from, distance; };
+        struct edge { int from; long long distance; };
         const int N = m_size;
 
         distance = 0;
