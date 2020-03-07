@@ -23,7 +23,7 @@ public:
     }
 
     void action_add_edge() {
-        int from, to, distance;
+        int from, to; long long distance;
         cin >> from >> to >> distance;
         if (from < 0 ||
             from > solver->size() ||
@@ -34,7 +34,7 @@ public:
             cout << "false" << endl;
             return;
         }
-        solver->add_dir_edge(from, to, distance);
+        solver->add_edge(from, to, distance);
         cout << "true" << endl;
     }
 
@@ -47,7 +47,8 @@ public:
         }
 
         const int n = solver->size();
-        vector<int> distance, parent;
+        vector<long long> distance;
+        vector<int> parent;
         solver->solve(s, distance, parent);
 
         for (int i = 0; i < n; ++i) {

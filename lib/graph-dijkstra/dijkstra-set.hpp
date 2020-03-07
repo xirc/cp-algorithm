@@ -7,29 +7,33 @@
 // If you use the complex data structure in set<>,
 // use Dijkstra(ver: priority_queue<>) which is better performance in such case.
 class Dijkstra {
-    static const int infinity = 1e9;
+    struct edge { int to; long long distance; };
     int m_size;
-    std::vector<std::vector<std::pair<int,int>>> adj;
-    static std::vector<int> distance;
+    std::vector<std::vector<edge>> adj;
+    static std::vector<long long> distance;
 
 public:
-    Dijkstra(int size) : m_size(size) {
-        adj.assign(size, std::vector<std::pair<int,int>>());
+    static const long long inf = 1e18;
+
+    Dijkstra(int size) : m_size(size), adj(size) {
     }
 
     int size() {
         return m_size;
     }
 
-    void add_dir_edge(int a, int b, int len) {
-        if (a < 0 || a >= m_size) throw;
-        if (b < 0 || b >= m_size) throw;
-        adj[a].push_back({b, len});
+    void add_edge(int from, int to, long long distance) {
+        throw_if_invalid_index(from);
+        throw_if_invalid_index(to);
+        if (distance < 0) throw;
+        adj[from].push_back({ to, distance });
     }
 
     // O(V log V + E)
-    void solve(int s, std::vector<int>& D, std::vector<int>& P) {
-        distance.assign(m_size, infinity);
+    void solve(int s, std::vector<long long>& D, std::vector<int>& P) {
+        throw_if_invalid_index(s);
+
+        distance.assign(m_size, inf);
         P.assign(m_size, -1);
 
         // For the performance, Avoid the maintenance cost of a complex data structure in Q.
@@ -48,7 +52,7 @@ public:
             Q.erase(Q.begin());
 
             for (auto edge : adj[v]) {
-                int to = edge.first, len = edge.second;
+                int to = edge.to; long long len = edge.distance;
                 if (distance[v] + len < distance[to]) {
                     Q.erase(to); // Do first for the Q's consistency.
                     distance[to] = distance[v] + len;
@@ -59,7 +63,11 @@ public:
         }
 
         // Copy from the temporary buffer.
-        D = std::vector<int>(distance.begin(), distance.end());
+        D = std::vector<long long>(distance.begin(), distance.end());
+    }
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= m_size) throw "index out of range";
     }
 };
-std::vector<int> Dijkstra::distance = std::vector<int>();
+std::vector<long long> Dijkstra::distance = std::vector<long long>();
