@@ -5,20 +5,21 @@
 #include <algorithm>
 
 class SqrtDecomposition {
-    std::vector<int> m_array;
-    std::vector<int> m_block;
+    using T = int;
+    std::vector<T> m_array;
+    std::vector<T> m_block;
     int N, S;
 public:
     SqrtDecomposition(){}
     int size() { return N; }
-    void dump(std::vector<int>& buffer) {
+    void dump(std::vector<T>& buffer) {
         buffer.resize(m_array.size());
         std::copy(m_array.begin(), m_array.end(), buffer.begin());
     }
     // O(N)
-    void build(std::vector<int>& array) {
+    void build(std::vector<T>& array) {
         N = array.size();
-        S = sqrt(N) + 1;
+        S = std::ceil(std::sqrt(N));
         m_array.assign(N, 0);
         m_block.assign(S, 0);
         std::copy(array.begin(), array.end(), m_array.begin());
@@ -28,10 +29,10 @@ public:
     }
     // sum of array [l..r)
     // O(sqrt(N))
-    int query(int l, int r) {
+    T query(int l, int r) {
         l = std::max(l, 0);
         r = std::min(r, N);
-        int ans = 0;
+        T ans = 0;
         int cl = l / S, cr = (r - 1) / S;
         if (cl == cr) {
             for (int i = l; i < r; ++i) {
@@ -52,7 +53,7 @@ public:
     }
     // Update value at array[index]
     // O(1)
-    void update(int index, int value) {
+    void update(int index, T value) {
         if (index < 0 || index > N) return;
         m_block[index/S] -= m_array[index];
         m_array[index] = value;
