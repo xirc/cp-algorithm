@@ -22,7 +22,7 @@ void action_init() {
 }
 
 void action_define_edge() {
-    int from, to, distance;
+    int from, to; long long distance;
     cin >> from >> to >> distance;
     if (from < 0 || from >= solver->size() ||
         to < 0 || to >= solver->size())
@@ -35,7 +35,8 @@ void action_define_edge() {
 
 void action_solve() {
     const int N = solver->size();
-    vector<vector<int>> D, P;
+    vector<vector<long long>> D;
+    vector<vector<int>> P;
     auto has_ans = solver->solve(D, P);
     if (!has_ans) {
         cout << "false" << endl;

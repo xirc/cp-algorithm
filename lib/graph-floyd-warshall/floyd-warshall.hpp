@@ -6,28 +6,25 @@
 
 class FloydWarshall {
     int m_size;
-    std::vector<std::vector<int>> m_adjmat;
+    std::vector<std::vector<long long>> m_adjmat;
 public:
-    static const int inf = 1e8;
+    static const long long inf = 1e18;
     FloydWarshall(int size)
         : m_size(size)
-        , m_adjmat(size, std::vector<int>(size, inf)) {}
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "Index out of range";
-    }
+        , m_adjmat(size, std::vector<long long>(size, inf)) {}
     int size() {
         return m_size;
     }
-    void define_edge(int from, int to, int distance) {
+    void define_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         m_adjmat[from][to] = distance;
     }
     // O(V^3)
-    bool solve(std::vector<std::vector<int>>& D, std::vector<std::vector<int>> &P) {
+    bool solve(std::vector<std::vector<long long>>& D, std::vector<std::vector<int>> &P) {
         const int N = m_size;
         // Initialize
-        D.assign(N, std::vector<int>(N, inf));
+        D.assign(N, std::vector<long long>(N, inf));
         P.assign(N, std::vector<int>(N, -1));
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
@@ -58,7 +55,7 @@ public:
         return true;
     }
     std::vector<int> retrieve_path(
-        std::vector<std::vector<int>>& D,
+        std::vector<std::vector<long long>>& D,
         std::vector<std::vector<int>>& P,
         int from, int to
     ) {
@@ -74,6 +71,9 @@ public:
         return path;
     }
 private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= m_size) throw "Index out of range";
+    }
     void retrieve_path
     (
         std::vector<std::vector<int>>& P,

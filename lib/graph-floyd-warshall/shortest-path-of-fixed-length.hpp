@@ -7,12 +7,12 @@
 #include <algorithm>
 
 class Solver {
-    using vec = std::vector<int>;
+    using vec = std::vector<long long>;
     using mat = std::vector<vec>;
     int m_size;
     mat m_matrix;
 public:
-    static const int inf = 1e8;
+    static const long long inf = 1e18;
     Solver(int size): m_size(size), m_matrix(size, vec(size, inf)) {}
     int size() {
         return m_size;

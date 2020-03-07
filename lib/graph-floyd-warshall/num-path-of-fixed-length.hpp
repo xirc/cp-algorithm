@@ -6,7 +6,7 @@
 #include <map>
 
 class Solver {
-    using vec = std::vector<int>;
+    using vec = std::vector<long long>;
     using mat = std::vector<vec>;
     int m_size;
     mat m_matrix;
