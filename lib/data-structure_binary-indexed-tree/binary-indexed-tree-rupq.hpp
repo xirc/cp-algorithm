@@ -5,7 +5,8 @@
 #include <vector>
 
 class BinaryIndexedTree {
-    std::vector<int> bit;
+    using T = long long;
+    std::vector<T> bit;
     int m_size;
 
 public:
@@ -22,15 +23,15 @@ public:
 
     // Add value to array[l,r)
     // O(logN)
-    void add(int l, int r, int value) {
+    void add(int l, int r, T value) {
         add(l, value);
         add(r, -value);
     }
 
     // Get value at array[index]
     // O(logN)
-    int query(int index) {
-        int ans = 0;
+    T query(int index) {
+        T ans = 0;
         for (++index; index > 0; index -= index & -index) {
             ans += bit[index];
         }
@@ -38,7 +39,7 @@ public:
     }
 
 private:
-    void add(int index, int value) {
+    void add(int index, T value) {
         if (index < 0) return;
         for (++index; index < m_size; index += index & -index) {
             bit[index] += value;
