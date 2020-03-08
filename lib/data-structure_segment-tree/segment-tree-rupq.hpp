@@ -91,8 +91,8 @@ protected:
         } else {
             const int tm = (tl + tr) / 2;
             Push::pushdown(m_tree[v], m_tree[left(v)], m_tree[right(v)]);
-            update(left(v), tl, tm, l, min(r, tm), value);
-            update(right(v), tm, tr, max(l,tm), r, value);
+            update(left(v), tl, tm, l, std::min(r,tm), value);
+            update(right(v), tm, tr, std::max(l,tm), r, value);
         }
     }
 };
