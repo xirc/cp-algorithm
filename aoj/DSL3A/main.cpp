@@ -6,7 +6,7 @@ protected:
     int N;
     virtual T id() = 0;
     // O(K), [l,r)
-    virtual bool satisfy() = 0;
+    virtual bool should_move_right(int l, int r) = 0;
     // O(K), [l,r)
     virtual void move_left(int l, int r) = 0;
     // O(K), [l,r)
@@ -19,15 +19,16 @@ public:
     T solve() {
         T ans = id();
         int r = 0;
-        for (int l = 0; l < N; l++) {
-            while (r < l) r++;
-            while (r < N && !satisfy()) {
+        for (int l = 0; l < N; ++l) {
+            while (r < l) {
                 move_right(l, r);
-                r++;
+                ++r;
             }
-            if (satisfy()) {
-                update(ans, l, r);
+            while (r < N && should_move_right(l,r)) {
+                move_right(l, r);
+                ++r;
             }
+            update(ans, l, r);
             move_left(l, r);
         }
         return ans;
@@ -51,17 +52,19 @@ protected:
     int id() override {
         return N + 1;
     }
-    bool satisfy() override {
-        return sum >= S;
+    bool should_move_right(int l, int r) override {
+        return sum < S;
     }
-    void move_left(int left, int right) override {
-        sum -= A[left];
+    void move_left(int l, int r) override {
+        sum -= A[l];
     }
-    void move_right(int left, int right) override {
-        sum += A[right];
+    void move_right(int l, int r) override {
+        sum += A[r];
     }
-    void update(int& ans, int left, int right) override {
-        ans = min(ans, right - left);
+    void update(int& ans, int l, int r) override {
+        if (sum >= S) {
+            ans = min(ans, r - l);
+        }
     }
 };
 
