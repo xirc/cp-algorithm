@@ -44,7 +44,7 @@ public:
     }
     // O(log N)
     T query(int l, int r) {
-        return query(0, 0, m_size, max(l,0), min(r,m_size)).max;
+        return query(0, 0, m_size, std::max(l,0), std::min(r,m_size));
     }
     // O(log N)
     void update(int l, int r, T value) {
@@ -72,26 +72,26 @@ protected:
         if (l >= r) {
             return QueryMonoid::id();
         }
-        Push::pushdown(m_tree[v], m_tree[left(v)], m_tree[right(v)]);
         if (l == tl && r == tr) {
             return m_tree[v];
         }
+        Push::pushdown(m_tree[v], m_tree[left(v)], m_tree[right(v)]);
         const int tm = (tl + tr) / 2;
-        const auto lhs = query(left(v), tl, tm, l, min(r,tm));
-        const auto rhs = query(right(v), tm, tr, max(l,tm), r);
+        const auto lhs = query(left(v), tl, tm, l, std::min(r,tm));
+        const auto rhs = query(right(v), tm, tr, std::max(l,tm), r);
         return QueryMonoid::op(lhs, rhs);
     }
     void update(int v, int tl, int tr, int l, int r, T value) {
         if (l >= r) {
             return;
         }
-        Push::pushdown(m_tree[v], m_tree[left(v)], m_tree[right(v)]);
         if (l == tl && r == tr) {
             m_tree[v] = UpdateMonoid::op(m_tree[v], value);
         } else {
+            Push::pushdown(m_tree[v], m_tree[left(v)], m_tree[right(v)]);
             const int tm = (tl + tr) / 2;
-            update(left(v), tl, tm, l, min(r, tm), value);
-            update(right(v), tm, tr, max(l,tm), r, value);
+            update(left(v), tl, tm, l, std::min(r, tm), value);
+            update(right(v), tm, tr, std::max(l,tm), r, value);
             m_tree[v] = QueryMonoid::op(m_tree[left(v)], m_tree[right(v)]);
         }
     }
