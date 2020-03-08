@@ -4,7 +4,7 @@
 #include <string>
 #include "segment-tree.hpp"
 #include "../template-main.hpp"
-#include "template-segment-tree-interp.hpp"
+#include "template-segment-tree-interp-purq.hpp"
 
 using namespace std;
 
@@ -44,30 +44,15 @@ struct Assign {
 };
 using SegmentTreeImpl = SegmentTree<Data,MaxSum,Assign>;
 
-class SegmentTreeInterp
-    : public SegmentTreeInterpBase<Data,SegmentTreeImpl>
-{
-protected:
-    Data make_value(int value) {
+struct Value {
+    static Data make_value(int value) {
         return Data(value);
     }
-    string repr_value(Data value) {
+    static string repr_value(Data value) {
         return to_string(value.sum);
     }
-public:
-    void action_query() {
-        int l, r;
-        cin >> l >> r;
-        auto ans = m_tree.query(l, r);
-        cout << ans.ans << endl;
-    }
-    void action_update() {
-        int i, v;
-        cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
-        cout << (ans ? "true" : "false") << endl;
-    }
 };
+using SegmentTreeInterp = SegmentTreeInterpPURQ<Data,SegmentTreeImpl,Value>;
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string& header, map<string,Command>& commands) {
