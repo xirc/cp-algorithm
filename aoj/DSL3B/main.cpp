@@ -30,9 +30,6 @@ public:
             }
             move_left(l, r);
         }
-        if (ans == N + 1) {
-            return 0;
-        }
         return ans;
     }
 };
