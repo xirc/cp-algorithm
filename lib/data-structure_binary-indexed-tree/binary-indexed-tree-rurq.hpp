@@ -1,6 +1,8 @@
 #pragma once
 
 // Range Updates and Range Queries
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_G
 
 #include <vector>
 
