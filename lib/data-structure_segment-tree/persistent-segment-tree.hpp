@@ -26,22 +26,14 @@ class SegmentTree {
     std::vector<vertex*> m_history;
 
 public:
-    SegmentTree() {
-        build(0);
-    }
     SegmentTree(int n) {
-        build(n);
+        build(std::vector<int>(n,0));
     }
     int history_size() {
         return m_history.size();
     }
     // O(N)
-    void build(int n) {
-        std::vector<int> array(std::max(n,0));
-        build(array); // for simplicity
-    }
-    // O(N)
-    void build(std::vector<int>& array) {
+    void build(const std::vector<int>& array) {
         m_history.clear();
         m_size = array.size();
         if (m_size == 0) {
@@ -86,7 +78,7 @@ protected:
         int i = m_history.size() - hindex - 1;
         return m_history[i];
     }
-    vertex* build(std::vector<int>& array, int tl, int tr) {
+    vertex* build(const std::vector<int>& array, int tl, int tr) {
         if (tr - tl <= 0) return nullptr;
         if (tr - tl == 1) {
             return new vertex(array[tl]);
