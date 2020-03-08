@@ -9,7 +9,7 @@ protected:
     int N;
     virtual T id() = 0;
     // O(K), [l,r)
-    virtual bool satisfy() = 0;
+    virtual bool should_move_right(int l, int r) = 0;
     // O(K), [l,r)
     virtual void move_left(int l, int r) = 0;
     // O(K), [l,r)
@@ -22,15 +22,16 @@ public:
     T solve() {
         T ans = id();
         int r = 0;
-        for (int l = 0; l < N; l++) {
-            while (r < l) r++;
-            while (r < N && !satisfy()) {
+        for (int l = 0; l < N; ++l) {
+            while (r < l) {
                 move_right(l, r);
-                r++;
+                ++r;
             }
-            if (satisfy()) {
-                update(ans, l, r);
+            while (r < N && should_move_right(l,r)) {
+                move_right(l, r);
+                ++r;
             }
+            update(ans, l, r);
             move_left(l, r);
         }
         return ans;

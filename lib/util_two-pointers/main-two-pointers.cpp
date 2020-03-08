@@ -21,17 +21,17 @@ protected:
     int id() override {
         return N + 1;
     }
-    bool satisfy() override {
+    bool should_move_right(int l, int r) override {
         return sum >= S;
     }
-    void move_left(int left, int right) override {
-        sum -= A[left];
+    void move_left(int l, int r) override {
+        sum -= A[l];
     }
-    void move_right(int left, int right) override {
-        sum += A[right];
+    void move_right(int l, int r) override {
+        sum += A[r];
     }
-    void update(int& ans, int left, int right) override {
-        ans = min(ans, right - left);
+    void update(int& ans, int l, int r) override {
+        ans = min(ans, r - l);
     }
 };
 
