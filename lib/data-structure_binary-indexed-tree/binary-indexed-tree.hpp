@@ -1,6 +1,8 @@
 #pragma once
 
 // Finding Sum in One-Dimensional Array
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B
 
 #include <vector>
 
