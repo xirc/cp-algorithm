@@ -1,7 +1,7 @@
 #pragma once
 
 // Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_A
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C
 
 template <class T>
 class TwoPointers {
