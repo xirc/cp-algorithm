@@ -14,15 +14,23 @@
 using namespace std;
 
 struct Sum {
-    static int id() {
+    static constexpr int id() {
         return 0;
     }
     static int op(int lhs, int rhs) {
         return lhs + rhs;
     }
 };
+struct Assign {
+    static constexpr int id() {
+        return 0;
+    }
+    static int op(int lhs, int rhs) {
+        return rhs;
+    }
+};
 
-class SegmentTreeImpl : public SegmentTree<int, Sum>
+class SegmentTreeImpl : public SegmentTree<int,Sum,Assign>
 {
 public:
     SegmentTreeImpl(int n): SegmentTree(n) {}

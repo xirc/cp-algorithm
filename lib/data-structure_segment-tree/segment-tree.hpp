@@ -8,7 +8,7 @@
 // Build  O(N)
 // Query O(log N)
 // Update O(log N)
-template<class T, class Monoid>
+template<class T, class QueryMonoid, class UpdateMonoid>
 class SegmentTree {
 protected:
     int m_size;
@@ -19,7 +19,7 @@ public:
     SegmentTree(int n)
         : m_size(n)
         , m_array(n)
-        , m_tree(n*4, Monoid::id())
+        , m_tree(n*4, UpdateMonoid::id())
     {
         // Do nothing
     }
@@ -33,9 +33,9 @@ public:
     void build(std::vector<T>& array) {
         m_size = array.size();
         m_array.resize(m_size);
-        std::fill(m_array.begin(), m_array.end(), Monoid::id());
+        std::fill(m_array.begin(), m_array.end(), UpdateMonoid::id());
         m_tree.resize(m_size * 4);
-        std::fill(m_tree.begin(), m_tree.end(), Monoid::id());
+        std::fill(m_tree.begin(), m_tree.end(), UpdateMonoid::id());
         build(array, 0, 0, m_size);
     }
 
@@ -81,19 +81,19 @@ protected:
         }
         if (tr - tl == 1) {
             m_array[tl] = array[tl];
-            m_tree[v] = Monoid::op(array[tl], Monoid::id());
+            m_tree[v] = UpdateMonoid::op(m_tree[v], array[tl]);
         } else {
             const int tm = (tl + tr) / 2;
             const int vl = left(v), vr = right(v);
             build(array, vl, tl, tm);
             build(array, vr, tm, tr);
-            m_tree[v] = Monoid::op(m_tree[vl], m_tree[vr]);
+            m_tree[v] = QueryMonoid::op(m_tree[vl], m_tree[vr]);
         }
     }
 
     T query(int v, int tl, int tr, int l, int r) {
         if (l >= r) {
-            return Monoid::id();
+            return QueryMonoid::id();
         }
         if (l == tl && r == tr) {
             return m_tree[v];
@@ -102,7 +102,7 @@ protected:
         const int vl = left(v), vr = right(v);
         const auto sl = query(vl, tl, tm, l, std::min(r,tm));
         const auto sr = query(vr, tm, tr, std::max(l,tm), r);
-        return Monoid::op(sl, sr);
+        return QueryMonoid::op(sl, sr);
     }
 
     void update(int v, int tl, int tr, int index, T value) {
@@ -110,8 +110,8 @@ protected:
             return;
         }
         if (tr - tl == 1) {
-            m_array[tl] = value;
-            m_tree[v] = Monoid::op(value, Monoid::id());
+            m_array[tl] = UpdateMonoid::op(m_array[tl], value);
+            m_tree[v] = UpdateMonoid::op(m_tree[v], value);
         } else {
             const int tm = (tl + tr) / 2;
             const int vl = left(v), vr = right(v);
@@ -120,7 +120,7 @@ protected:
             } else {
                 update(vr, tm, tr, index, value);
             }
-            m_tree[v] = Monoid::op(m_tree[vl], m_tree[vr]);
+            m_tree[v] = QueryMonoid::op(m_tree[vl], m_tree[vr]);
         }
     }
 };

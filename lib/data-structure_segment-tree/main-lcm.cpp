@@ -32,9 +32,18 @@ struct LCM {
         return lcm(lhs,rhs);
     }
 };
+struct Assign {
+    static constexpr int id() {
+        return 0;
+    }
+    static int op(int lhs, int rhs) {
+        return rhs;
+    }
+};
+using SegmentTreeImpl = SegmentTree<int,LCM,Assign>;
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTree<int,LCM>>
+    : public SegmentTreeInterpBase<int,SegmentTreeImpl>
 {
 protected:
     int make_value(int value) {

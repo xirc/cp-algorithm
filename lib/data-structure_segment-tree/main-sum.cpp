@@ -16,7 +16,15 @@ struct Sum {
         return lhs + rhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<int,Sum>;
+struct Assign {
+    static constexpr int id() {
+        return 0;
+    }
+    static int op(int lhs, int rhs) {
+        return rhs;
+    }
+};
+using SegmentTreeImpl = SegmentTree<int,Sum,Assign>;
 
 class SegmentTreeInterp
     : public SegmentTreeInterpBase<int,SegmentTreeImpl>

@@ -17,8 +17,16 @@ struct Maximum {
         return std::max(lhs, rhs);
     }
 };
+struct Assign {
+    static constexpr int id() {
+        return INT_MIN;
+    };
+    static int op(int lhs, int rhs) {
+        return rhs;
+    }
+};
 
-class SegmentTreeImpl : public SegmentTree<int,Maximum> {
+class SegmentTreeImpl : public SegmentTree<int,Maximum,Assign> {
 public:
     SegmentTreeImpl(int n): SegmentTree(n) {}
 

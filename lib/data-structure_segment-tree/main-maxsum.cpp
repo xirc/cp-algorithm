@@ -34,7 +34,15 @@ struct MaxSum {
         return data;
     }
 };
-using SegmentTreeImpl = SegmentTree<Data,MaxSum>;
+struct Assign {
+    static Data id() {
+        return Data(0);
+    }
+    static Data op(Data lhs, Data rhs) {
+        return rhs;
+    }
+};
+using SegmentTreeImpl = SegmentTree<Data,MaxSum,Assign>;
 
 class SegmentTreeInterp
     : public SegmentTreeInterpBase<Data,SegmentTreeImpl>

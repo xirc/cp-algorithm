@@ -11,7 +11,7 @@ using namespace std;
 using pii = pair<int,int>;
 
 struct MaxTimes {
-    static pii id() {
+    static constexpr pii id() {
         return {0, 0};
     }
     static pii op(pii lhs, pii rhs) {
@@ -24,9 +24,18 @@ struct MaxTimes {
         }
     }
 };
+struct Assign {
+    static constexpr pii id() {
+        return { 0, 0 };
+    }
+    static pii op(pii lhs, pii rhs) {
+        return rhs;
+    }
+};
+using SegmentTreeImpl = SegmentTree<pii,MaxTimes,Assign>;
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<pii,SegmentTree<pii,MaxTimes>>
+    : public SegmentTreeInterpBase<pii,SegmentTreeImpl>
 {
 protected:
     pii make_value(int value) {

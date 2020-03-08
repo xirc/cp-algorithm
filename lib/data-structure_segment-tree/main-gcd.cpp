@@ -28,7 +28,15 @@ struct GCD {
         return gcd(lhs,rhs);
     }
 };
-using SegmentTreeImpl = SegmentTree<int,GCD>;
+struct Assign {
+    static constexpr int id() {
+        return 0;
+    }
+    static int op(int lhs, int rhs) {
+        return rhs;
+    }
+};
+using SegmentTreeImpl = SegmentTree<int,GCD,Assign>;
 
 class SegmentTreeInterp
     : public SegmentTreeInterpBase<int,SegmentTreeImpl>

@@ -18,8 +18,16 @@ struct SumZero {
         return { !0, lhs.second + rhs.second };
     }
 };
+struct Assign {
+    static pii id() {
+        return { !0, 0 };
+    }
+    static pii op(pii lhs, pii rhs) {
+        return rhs;
+    }
+};
 
-class SegmentTreeImpl : public SegmentTree<pii, SumZero>
+class SegmentTreeImpl : public SegmentTree<pii,SumZero,Assign>
 {
 public:
     SegmentTreeImpl(int n): SegmentTree(n) {}
