@@ -18,10 +18,8 @@ protected:
 
 public:
     SegmentTree(int n)
-        : m_size(n)
-        , m_tree(n*4, UpdateMonoid::id())
     {
-        // Do nothing
+        build(std::vector<T>(n,UpdateMonoid::id()));
     }
     // O(1)
     int size() {
@@ -38,7 +36,7 @@ public:
         }
     }
     // O(N)
-    void build(std::vector<T>& array) {
+    void build(const std::vector<T>& array) {
         m_size = array.size();
         m_tree.resize(m_size * 4);
         std::fill(m_tree.begin(), m_tree.end(), UpdateMonoid::id());
@@ -60,7 +58,10 @@ protected:
     static constexpr int right(int v) {
         return v * 2 + 2;
     }
-    void build(std::vector<T>& array, int v, int tl, int tr) {
+    void build(const std::vector<T>& array, int v, int tl, int tr) {
+        if (tr - tl <= 0) {
+            return;
+        }
         if (tr - tl == 1) {
             m_tree[v] = UpdateMonoid::op(m_tree[v], array[tl]);
         } else {
