@@ -27,7 +27,7 @@ protected:
     using Tree = Node*;
 
     std::mt19937 random;
-    Tree root;
+    Tree root = nullptr;
 
 public:
     // O(1)
@@ -68,7 +68,7 @@ public:
 
 protected:
     virtual void pushdown(Tree tree) {
-        // Do pushdown procedure, and then finallly pushup.
+        // Do pushdown procedure.
         if (!tree) {
             return;
         }
@@ -82,7 +82,6 @@ protected:
                 tree->right->reverse ^= true;
             }
         }
-        pushup(tree);
     }
     virtual void pushup(Tree tree) {
         // Do pushup procedure.

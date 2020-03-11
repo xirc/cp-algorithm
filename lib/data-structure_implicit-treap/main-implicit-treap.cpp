@@ -31,15 +31,14 @@ protected:
         }
         if (tree->value.lazy) {
             const int lazy = tree->value.lazy;
-            
-            tree->value.value += lazy;
             tree->value.lazy = 0;
-
             if (tree->left) {
+                tree->left->value.value += lazy;
                 tree->left->value.lazy += lazy;
                 tree->left->value.min += lazy;
             }
             if (tree->right) {
+                tree->right->value.value += lazy;
                 tree->right->value.lazy += lazy;
                 tree->right->value.min += lazy;
             }
@@ -57,7 +56,7 @@ protected:
         if (tree) {
             tree->value.min =
             std::min(
-                tree->value.min, 
+                tree->value.value, 
                 std::min(min(tree->left), min(tree->right))
             );
         }
@@ -67,6 +66,7 @@ protected:
         split(tree, l, t1, t2);
         split(t2, r - l, t2, t3);
         if (t2) {
+            t2->value.value += x;
             t2->value.lazy += x;
             t2->value.min += x;
         }
