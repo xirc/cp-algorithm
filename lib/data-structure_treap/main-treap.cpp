@@ -31,7 +31,6 @@ public:
     }
 protected:
     void pushup(Tree tree) override {
-        TreapBase::pushup(tree);
         update_count(tree);
     }
     int count(Tree tree) {

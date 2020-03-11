@@ -48,8 +48,7 @@ protected:
         // Do pushup procedure.
     }
     virtual void pushdown(Tree tree) {
-        // Do pushdown procedure, and then finally pushup.
-        pushup(tree);
+        // Do pushdown procedure.
     }
     // O(logN)
     // left: <= key, right: > key
