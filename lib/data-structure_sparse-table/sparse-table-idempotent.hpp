@@ -31,7 +31,7 @@ private:
         N = array.size();
         if (N == 0) return;
         K = std::ceil(std::log2(N)) + 1;
-        table.assign(N, vector<int>(K, Monoid::id()));
+        table.assign(N, std::vector<int>(K, Monoid::id()));
         for (int i = 0; i < N; ++i) {
             table[i][0] = Monoid::op(array[i], Monoid::id());
         }
