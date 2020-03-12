@@ -1,64 +1,82 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_B
 
 #include <vector>
-#include <cstdio>
-#include <stack>
+#include <algorithm>
+
+// Topological Sort
+// This algorithm cannot detect a cycle.
+class TopologicalSort {
+    int N;
+    std::vector<std::vector<int>> adj;
+    // Temporal
+    std::vector<int> ans;
+    std::vector<bool> visited;
+
+public:
+    TopologicalSort(int n): N(n), adj(n) {}
+    int size() {
+        return N;
+    }
+    void add_edge(int from, int to) {
+        throw_if_invalid_index(from);
+        throw_if_invalid_index(to);
+        adj[from].push_back(to);
+    }
+    std::vector<int> solve() {
+        std::vector<int> in(N, 0);
+
+        ans.clear();
+        visited.assign(N, false);
+
+        for (int v = 0; v < N; ++v) {
+            for (int u : adj[v]) {
+                in[u]++;
+            }
+        }
+        for (int v = 0; v < N; ++v) {
+            if (in[v] > 0) continue;
+            if (visited[v]) continue;
+            dfs(v);
+        }
+        std::reverse(ans.begin(), ans.end());
+
+        return ans;
+    }
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
+    }
+    void dfs(int v) {
+        visited[v] = true;
+        for (int u : adj[v]) {
+            if (!visited[u]) {
+                dfs(u);
+            }
+        }
+        ans.push_back(v);
+    }
+};
+
+#include <iostream>
 
 using namespace std;
 
-vector<int> solve(vector<vector<int>>& G) {
-    int V = G.size();
-    vector<int> in(V);
-    vector<int> ans;
-    stack<int> cs;
-
-    // O(V)
-    for (int s = 0; s < V; ++s) {
-        for (int t : G[s]) {
-            in[t]++;
-        }
-    }
-
-    // O(V)
-    for (int i = 0; i < V; ++i) {
-        if (in[i] == 0) {
-            cs.push(i);
-        }
-    }
-
-    // O(E)
-    while (!cs.empty()){
-        int c = cs.top(); cs.pop();
-        ans.push_back(c);
-        for (int d : G[c]) {
-            in[d] -= 1;
-            if (in[d] == 0) {
-                cs.push(d);
-            }
-        }
-    }
-
-    return ans;
-}
-
-const int MAX_V = 10000;
-const int MAX_E = 100000;
-
 int main() {
-    int V, E;
-    scanf("%d %d", &V, &E);
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
 
-    vector<vector<int>> G(V);
-    for (int i = 0; i < V; ++i) {
-        G[i] = vector<int>();
-    }
+    int V, E;
+    cin >> V >> E;
+
+    TopologicalSort solver(V);
+    
     for (int i = 0; i < E; ++i) {
         int s, t;
-        scanf("%d %d", &s, &t);
-        G[s].push_back(t);
+        cin >> s>> t;
+        solver.add_edge(s, t);
     }
 
-    auto ans = solve(G);
+    auto ans = solver.solve();
     for (int v : ans) {
         printf("%d\n", v);
     }
