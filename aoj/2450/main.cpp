@@ -1,4 +1,4 @@
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2450
 
 #include <vector>
 #include <stack>
@@ -318,47 +318,59 @@ protected:
 };
 
 #include <iostream>
-#include <vector>
-
+#include <iomanip>
+#include <algorithm>
+#include <tuple>
 using namespace std;
 
+const long long inf = 1e18; 
 struct Data {
-    long long value, lazy;
-    int count;
-    Data() {}
-    Data(long long value): value(value), lazy(0), count(1) {}
-};
-struct Query {
-    static Data id() {
-        return Data(0);
-    }
-    static Data op(const Data& lhs, const Data& rhs) {
-        Data ans;
-        ans.count = lhs.count + rhs.count;
-        ans.value = lhs.value + rhs.value;
-        ans.lazy = 0;
-        return ans;
+    bool active;
+    long long value, count;
+    long long sum, prefix, suffix, maximum;
+    static Data make(int value) {
+        return { true, value, 0, value, value, value, value };
     }
 };
 struct Update {
     static Data id() {
-        return Data(0);
+        return Data { false, -inf, 1, 0, -inf, -inf, -inf };
     }
     static Data op(const Data& lhs, const Data& rhs) {
-        Data ans;
-        ans.count = lhs.count;
-        ans.value = lhs.value + (rhs.value + rhs.lazy) * lhs.count;
-        ans.lazy = lhs.lazy + (rhs.value + rhs.lazy);
-        return ans;
+        auto sum = rhs.value * lhs.count;
+        auto prefix = max(rhs.value, sum), suffix = max(rhs.value, sum);
+        auto maximum = max(rhs.value, sum);
+        return {
+            true, rhs.value, lhs.count, sum, prefix, suffix, maximum
+        };
+    }
+};
+struct Query {
+    static Data id() {
+        return { false, -inf, 0, 0, -inf, -inf, -inf };
+    }
+    static Data op(const Data& lhs, const Data& rhs) {
+        auto count = lhs.count + rhs.count;
+        auto sum = lhs.sum + rhs.sum;
+        auto prefix = max(lhs.sum + rhs.prefix, lhs.prefix);
+        auto suffix = max(lhs.suffix + rhs.sum, rhs.suffix);
+        auto maximum = max({ lhs.suffix + rhs.prefix, lhs.maximum, rhs.maximum });
+        return Data { false, -inf, count, sum, prefix, suffix, maximum };
     }
 };
 struct Push {
-    static void pushdown(Data& node, Data& lhs, Data& rhs) {
-        lhs.value += lhs.count * node.lazy;
-        lhs.lazy += node.lazy;
-        rhs.value += rhs.count * node.lazy;
-        rhs.lazy += node.lazy;
-        node.lazy = 0;
+    static void pushdown(Data& node, Data& left, Data& right) {
+        if (!node.active) {
+            return;
+        }
+        node.active = false;
+        auto value = node.value;
+        left.active = right.active = true;
+        left.value = right.value = value;
+        left.sum = value * left.count;
+        left.prefix = left.suffix = left.maximum = max(value, left.sum);
+        right.sum = value * right.count;
+        right.prefix = right.suffix = right.maximum = max(value, right.sum);
     }
 };
 
@@ -367,33 +379,67 @@ int main() {
     cin.tie(0); cout.tie(0);
 
     int N, Q;
+    vector<int> ws;
     vector<vector<int>> adj;
 
     cin >> N >> Q;
     adj.assign(N, vector<int>());
+    ws.assign(N, 0);
+    for (int i = 0; i < N; ++i) {
+        cin >> ws[i];
+    }
     for (int i = 0; i < N-1; ++i) {
         int u, v;
         cin >> u >> v;
+        --u, --v;
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
 
     HeavyLightDecomposition hld(adj, {0});
     SegmentTree<Data,Query,Update,Push> tree(N);
+    for (int i = 0; i < N; ++i) {
+        int w = ws[hld.get_vertex(i)];
+        tree.update(i, i+1, Data::make(w));
+    }
+
+    auto merge=[&](tuple<int,int,Data>& a, tuple<int,int,Data>& b, tuple<int,int,Data>& ans) {
+        return hld.try_merge<Data>(
+            a, b, ans,
+            [&](Data& v) { swap(v.prefix,v.suffix); },
+            [&](Data& a, Data& b) { return Query::op(a,b); }
+        );
+    };
+    auto merge_all=[&](vector<tuple<int,int,Data>>& a) {
+        while (a.size() > 1) {
+            auto x = a.back(); a.pop_back();
+            for (int i = 0; i < a.size(); ++i) {
+                tuple<int,int,Data> ans;
+                if (merge(x,a[i],ans)) {
+                    a[i] = ans;
+                    break;
+                }
+            }
+        }
+        return a[0];
+    };
 
     for (int i = 0; i < Q; ++i) {
-        int c, x, y;
-        cin >> c >> x >> y;
-        if (c == 0) {
-            long long ans = 0;
-            hld.for_each_edge(x, y, [&](int l, int r) {
-                ans += tree.query(l, r).value;
+        int t, a, b, c;
+        cin >> t >> a >> b >> c;
+        --a, --b;
+        if (t == 1) {
+            hld.for_each_vertex(a, b, [&](int l, int r) {
+                tree.update(l, r, Data::make(c));
             });
-            cout << ans << endl;
-        } else if (c == 1) {
-            hld.for_each_subtree_edge(x, [&](int l, int r) {
-                tree.update(l, r, Data(y));
+        } else if (t == 2) {
+            vector<tuple<int,int,Data>> qs;
+            hld.for_each_vertex(a, b, [&](int l, int r) {
+                auto x = tree.query(l, r);
+                qs.push_back(make_tuple(l, r-1, x));
             });
+            auto ans = merge_all(qs);
+            cout << get<2>(ans).maximum << endl;
         } else throw;
     }
 
