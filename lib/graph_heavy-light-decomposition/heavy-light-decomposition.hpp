@@ -1,11 +1,13 @@
 #pragma once
 
 // Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
+// x http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
 
 #include <vector>
+#include <stack>
 #include <algorithm>
 #include <functional>
+#include <tuple>
 
 class HeavyLightDecomposition {
     int N;
@@ -119,39 +121,69 @@ private:
         int pos = 0;
         for (auto v : R) {
             dfs_prepare(adj, v);
-            dfs_decompose(adj, v, v, pos);
+            dfs_decompose(adj, v, pos);
         }
     }
     // O(N)
-    void dfs_prepare(const std::vector<std::vector<int>>& adj, int v) {
-        int max_size = 0;
-        subsize[v] = 1;
-        for (int u : adj[v]) {
-            if (u == parent[v]) continue;
-            parent[u] = v;
-            depth[u] = depth[v] + 1;
-            dfs_prepare(adj, u);
-            subsize[v] += subsize[u];
-            if (subsize[u] > max_size) {
-                max_size = subsize[u];
-                heavy[v] = u;
+    // NOTE: Don't use a recursive call for strict constraints.
+    void dfs_prepare(const std::vector<std::vector<int>>& adj, int s) {
+        std::stack<std::pair<int,int>> S;
+        parent[s] = -1;
+        depth[s] = 0;
+        S.push({s,0});
+        while (S.size()) {
+            int v = S.top().first;
+            int &i = S.top().second;
+            if (i == -1) {
+                i++;
+                subsize[v] = 1;
+            } else if (i < adj[v].size()) {
+                int u = adj[v][i++];
+                if (u == parent[v]) continue;
+                parent[u] = v;
+                depth[u] = depth[v] + 1;
+                S.push({u, -1});
+            } else {
+                S.pop();
+                int max_size = 0;
+                for (auto u : adj[v]) {
+                    if (parent[v] == u) continue;
+                    subsize[v] += subsize[u];
+                    if (subsize[u] > max_size) {
+                        max_size = subsize[u];
+                        heavy[v] = u;
+                    }
+                }
             }
         }
     }
     // O(N)
-    void dfs_decompose(const std::vector<std::vector<int>>& adj, int v, int h, int& pos) {
-        head[v] = h;
-        index[v] = pos;
-        inverse[pos] = v;
-        pos++;
-        if (heavy[v] != -1) {
-            dfs_decompose(adj, heavy[v], h, pos);
+    // NOTE: Don't use a recursive call for strict constraints.
+    void dfs_decompose(const std::vector<std::vector<int>>& adj, int s, int& pos) {
+        std::stack<std::tuple<int,int,int>> S;
+        S.push(std::make_tuple(s,s,-1));
+        while (S.size()) {
+            int v = std::get<0>(S.top());
+            int h = std::get<1>(S.top());
+            int &i = std::get<2>(S.top());
+            if (i == -1) {
+                i++;
+                head[v] = h;
+                index[v] = pos;
+                inverse[pos] = v;
+                pos++;
+                if (heavy[v] != -1) {
+                    S.push(std::make_tuple(heavy[v],h,-1));
+                }
+            } else if (i < adj[v].size()) {
+                int u = adj[v][i++];
+                if (parent[v] == u) continue;
+                if (heavy[v] == u) continue;
+                S.push(std::make_tuple(u,u,-1));
+            } else {
+                out[v] = pos;
+                S.pop();
+            }
         }
-        for (int u : adj[v]) {
-            if (parent[v] == u) continue;
-            if (heavy[v] == u) continue;
-            dfs_decompose(adj, u, u, pos);
-        }
-        out[v] = pos;
     }
 };
