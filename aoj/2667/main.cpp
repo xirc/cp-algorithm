@@ -12,9 +12,11 @@ class HeavyLightDecomposition {
 
 public:
     // O(N)
+    HeavyLightDecomposition(): HeavyLightDecomposition({}, {}) {}
+    // O(N)
     HeavyLightDecomposition(
         const std::vector<std::vector<int>>& adj,
-        std::vector<int> R = std::vector<int>({0})
+        const std::vector<int>& R = std::vector<int>({0})
     )
         : N(adj.size())
         , index(N,-1)
@@ -28,20 +30,34 @@ public:
     {
         build(adj, R);
     }
+    // O(N)
+    void build(
+        const std::vector<std::vector<int>>& adj,
+        const std::vector<int>& R  = std::vector<int>({0})
+    ) {
+        int pos = 0;
+        for (auto v : R) {
+            dfs_prepare(adj, v);
+            dfs_decompose(adj, v, pos);
+        }
+    }
     // O(1)
     int size() {
         return N;
     }
     // O(1)
     int get_index(int v) {
+        throw_if_invalid_index(v);
         return index[v];
     }
     // O(1)
     int get_vertex(int index) {
+        throw_if_invalid_index(index);
         return inverse[index];
     }
     // O(1)
     int get_parent(int v) {
+        throw_if_invalid_index(v);
         return parent[v];
     }
     // O(1)
@@ -146,14 +162,6 @@ public:
 private:
     void throw_if_invalid_index(int index) {
         if (index < 0 || index >= N) throw "index out of range";
-    }
-    // O(N)
-    void build(const std::vector<std::vector<int>>& adj, const std::vector<int>& R) {
-        int pos = 0;
-        for (auto v : R) {
-            dfs_prepare(adj, v);
-            dfs_decompose(adj, v, pos);
-        }
     }
     // O(N)
     // NOTE: Don't use a recursive call for strict constraints.
