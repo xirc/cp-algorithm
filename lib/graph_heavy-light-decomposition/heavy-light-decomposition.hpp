@@ -1,5 +1,8 @@
 #pragma once
 
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
+
 #include <vector>
 #include <algorithm>
 #include <functional>
