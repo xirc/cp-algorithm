@@ -1,0 +1,16 @@
+init 16
+edge 0 1
+edge 0 2
+edge 0 3
+edge 1 4
+edge 1 5
+edge 2 6
+edge 2 7
+edge 5 8
+edge 5 9
+edge 6 10
+edge 7 11
+edge 10 12
+edge 10 13
+edge 10 14
+edge 13 15
