@@ -70,9 +70,14 @@ void action_query() {
     }
     cout << endl;
 
-    cout << "ForEach-Subtree:";
-    solver->for_each_subtree(u, [&](int l, int r) { cout << " u:(" << l << "," << r << ")"; });
-    solver->for_each_subtree(v, [&](int l, int r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << "ForEach-SubtreeVertex:";
+    solver->for_each_subtree_vertex(u, [&](int l, int r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_each_subtree_vertex(v, [&](int l, int r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << endl;
+
+    cout << "ForEach-SubtreeEdge:";
+    solver->for_each_subtree_edge(u, [&](int l, int r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_each_subtree_edge(v, [&](int l, int r) { cout << " v:(" << l << "," << r << ")"; });
     cout << endl;
 
     cout << "ForEach-Vertex:";

@@ -8,14 +8,15 @@
 #include <functional>
 
 class HeavyLightDecomposition {
-    using mat = const std::vector<std::vector<int>>;
-    using func = std::function<void(int,int)>;
     int N;
     std::vector<int> index, inverse, out, head, heavy, parent, depth, subsize;
 
 public:
     // O(N)
-    HeavyLightDecomposition(mat& adj, std::vector<int> R = std::vector<int>({0}))
+    HeavyLightDecomposition(
+        const std::vector<std::vector<int>>& adj,
+        std::vector<int> R = std::vector<int>({0})
+    )
         : N(adj.size())
         , index(N,-1)
         , inverse(N,-1)
@@ -46,19 +47,19 @@ public:
     }
     // O(1)
     // f [l,r)
-    void for_each_subtree_node(int u, const func& f) {
+    void for_each_subtree_vertex(int u, const std::function<void(int,int)>& f) {
         throw_if_invalid_index(u);
         f(index[u], out[u]);
     }
     // O(1)
     // f [l,r)
-    void for_each_subtree_edge(int u, const func& f) {
+    void for_each_subtree_edge(int u, const std::function<void(int,int)>& f) {
         throw_if_invalid_index(u);
         f(index[u]+1, out[u]);
     }
     // O(logN)
     // f [l,r)
-    void for_each_vertex(int u, int v, const func& f) {
+    void for_each_vertex(int u, int v, const std::function<void(int,int)>& f) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         for (; head[u] != head[v]; v = parent[head[v]]) {
@@ -74,7 +75,7 @@ public:
     }
     // O(logN)
     // f [l,r)
-    void for_each_edge(int u, int v, const func& f) {
+    void for_each_edge(int u, int v, const std::function<void(int,int)>& f) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         for (; head[u] != head[v]; v = parent[head[v]]) {
@@ -114,7 +115,7 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
     // O(N)
-    void build(mat& adj, const std::vector<int>& R) {
+    void build(const std::vector<std::vector<int>>& adj, const std::vector<int>& R) {
         int pos = 0;
         for (auto v : R) {
             dfs_prepare(adj, v);
@@ -122,7 +123,7 @@ private:
         }
     }
     // O(N)
-    void dfs_prepare(const mat& adj, int v) {
+    void dfs_prepare(const std::vector<std::vector<int>>& adj, int v) {
         int max_size = 0;
         subsize[v] = 1;
         for (int u : adj[v]) {
@@ -138,7 +139,7 @@ private:
         }
     }
     // O(N)
-    void dfs_decompose(mat& adj, int v, int h, int& pos) {
+    void dfs_decompose(const std::vector<std::vector<int>>& adj, int v, int h, int& pos) {
         head[v] = h;
         index[v] = pos;
         inverse[pos] = v;
