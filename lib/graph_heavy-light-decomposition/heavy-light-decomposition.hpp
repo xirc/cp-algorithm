@@ -1,7 +1,8 @@
 #pragma once
 
 // Verified
-// x http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2450
 
 #include <vector>
 #include <stack>
