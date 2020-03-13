@@ -111,6 +111,40 @@ public:
         throw_if_invalid_index(v);
         return depth[u] + depth[v] - 2 * depth[lca(u,v)];
     }
+    // O(1)
+    // a: [l,r]+T
+    // b: [l,r]+T
+    template <class T>
+    bool try_merge(
+        const std::tuple<int,int,T>& a,
+        const std::tuple<int,int,T>& b,
+        std::tuple<int,int,T>& ans,
+        const std::function<void(T&)> swap,
+        const std::function<T(T&,T&)> merge
+    ) {
+        auto is_connect=[&](int u, int v) {
+            return get_parent(u) == v || get_parent(v) == u;
+        };
+        auto al = std::get<0>(a), ar = std::get<1>(a); auto av = std::get<2>(a);
+        auto bl = std::get<0>(b), br = std::get<1>(b); auto bv = std::get<2>(b);
+        auto alv = get_vertex(al), arv = get_vertex(ar);
+        auto blv = get_vertex(bl), brv = get_vertex(br);
+        if (is_connect(alv,blv) || is_connect(alv,brv)) {
+            std::swap(al,ar);
+            std::swap(alv,arv);
+            swap(av);
+        }
+        if (is_connect(arv,brv)) {
+            std::swap(bl,br);
+            std::swap(blv,brv);
+            swap(bv);
+        }
+        if (is_connect(arv,blv)) {
+            ans = std::make_tuple(al, br, merge(av,bv));
+            return true;
+        }
+        return false;
+    }
 
 private:
     void throw_if_invalid_index(int index) {
