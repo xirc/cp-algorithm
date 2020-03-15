@@ -9,8 +9,8 @@
 
 // BinaryIndexedTree
 // Memory O(N)
-// Update O(logN)
 // Query O(logN)
+// Update O(logN)
 template <class T = long long>
 class BinaryIndexedTree {
 public:

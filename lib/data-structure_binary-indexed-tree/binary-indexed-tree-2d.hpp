@@ -5,6 +5,10 @@
 #include <vector>
 #include <functional>
 
+// BinaryIndexedTree
+// Memory: O(NM)
+// Query: O(logN logM)
+// Update: O(logN logM)
 template<class T = long long>
 class BinaryIndexedTree {
 public:
