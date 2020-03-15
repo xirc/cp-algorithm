@@ -6,44 +6,75 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <functional>
 
-// Monoid::op should be assosiative.
-// op(op(x,y),z) = op(x,op(y,z))
-template <class T, class Monoid>
+// DisjointSparseTable
+// Memory: O(N logN)
+// Query: O(loglogN)
+template <class T>
 class DisjointSparseTable {
+public:
+    // F should be assosiative.
+    // op(op(x,y),z) = op(x,op(y,z))
+    using F = std::function<T(const T&, const T&)>;
+
+protected:
+    F monoid_op;
+    T monoid_id;
     int N, L;
     std::vector<T> array;
     std::vector<std::vector<T>> table;
-    std::vector<int> clz;
 
 public:
     // O(N logN)
-    DisjointSparseTable(const std::vector<T>& array)
+    DisjointSparseTable(
+        const std::vector<T>& array,
+        const F& monoid_op,
+        const T& monoid_id
+    )
+        : monoid_op(monoid_op)
+        , monoid_id(monoid_id)
+        , array(array)
     {
-        this->array = array;
         int S = array.size();
         L = std::ceil(std::log2(std::max(S,2)));
         N = 1 << L;
-        table.assign(L, std::vector<T>(N, Monoid::id()));
+        table.assign(L, std::vector<T>(N, monoid_id));
         build(0, 0, N);
+    }
+    // O(N logN)
+    template <class Monoid>
+    DisjointSparseTable(
+        const std::vector<T> array,
+        const Monoid& monoid
+    )
+        : DisjointSparseTable(
+            array,
+            std::bind(&Monoid::operator(), monoid, std::placeholders::_1, std::placeholders::_2),
+            monoid.id
+        )
+    {
+        // Do nothing
     }
     // O(loglogN)
     // [l, r)
+    // l = [0,N)
+    // r = [0,N]
     T query(int l, int r) {
         l = std::max(l, 0);
         r = std::min(r, N);
         if (r - l <= 0) {
-            return Monoid::id();
+            return monoid_id;
         }
         if (r - l == 1) {
             return array[l];
         }
         int k = msb(l^(r-1));
         int level = L - 1 - k;
-        return Monoid::op(table[level][l], table[level][r-1]);
+        return monoid_op(table[level][l], table[level][r-1]);
     }
 
-private:
+protected:
     // O(loglogN)
     int msb(int x) {
         int ans = 0;
@@ -62,23 +93,25 @@ private:
         ans += x >> 1;
         return ans;
     }
+    // O(1)
     T value(int index) {
         if (index >= array.size()) {
-            return Monoid::id();
+            return monoid_id;
         }
         return array[index];
     }
-    // O(N logN), [l,r)
+    // O(N logN)
+    // [l,r)
     void build(int level, int l, int r) {
         const int m = (l + r) / 2;
 
         table[level][m-1] = value(m-1);
         for (int i = m-2; i >= l; --i) {
-            table[level][i] = Monoid::op(value(i), table[level][i+1]);
+            table[level][i] = monoid_op(value(i), table[level][i+1]);
         }
         table[level][m] = value(m);
         for (int i = m+1; i < r; ++i) {
-            table[level][i] = Monoid::op(table[level][i-1], value(i));
+            table[level][i] = monoid_op(table[level][i-1], value(i));
         }
 
         if (r - l >= 4) {

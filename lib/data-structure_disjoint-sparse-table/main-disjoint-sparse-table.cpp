@@ -6,15 +6,13 @@
 
 using namespace std;
 
-struct Sum {
-    static constexpr long long id() {
-        return 0;
-    }
-    static long long op(const int& lhs, const int& rhs) {
+struct Monoid {
+    long long id = 0;
+    long long operator()(const int& lhs, const int& rhs) const {
         return lhs + rhs;
     }
 };
-using Solver = DisjointSparseTable<long long, Sum>;
+using Solver = DisjointSparseTable<long long>;
 using SolverPtr = shared_ptr<Solver>;
 
 vector<long long> buffer;
@@ -40,7 +38,7 @@ void action_query() {
     int l, r;
     cin >> l >> r;
     if (solver == nullptr) {
-        solver = SolverPtr(new Solver(buffer));
+        solver = SolverPtr(new Solver(buffer, Monoid()));
     }
     cout << solver->query(l, r) << endl;
 }
