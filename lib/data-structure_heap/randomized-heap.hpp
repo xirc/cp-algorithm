@@ -7,6 +7,7 @@
 // Memory: O(N)
 template <class T, class less = std::less<T>>
 class Heap {
+protected:
     struct node {
         using tree = std::shared_ptr<node>;
         T value;
