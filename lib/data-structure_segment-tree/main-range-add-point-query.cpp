@@ -10,45 +10,42 @@
 
 using namespace std;
 
+struct Query {
+    const int id = 0;
+};
 struct Update {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(const int& lhs, const int& rhs) {
+    int operator()(const int& lhs, const int& rhs) const {
         return lhs + rhs;
     }
 };
-struct Push {
-    static void pushdown(int& node, int& lhs, int& rhs) {
-        lhs += node;
-        rhs += node;
-        node = 0;
+struct Lazy {
+    const int id = 0;
+    int operator()(const int& lhs, const int& rhs) const {
+        return lhs + rhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<int,Update,Push>;
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTree<int,int>>
 {
-protected:
-    int make_value(int value) {
-        return value;
-    }
-    string repr_value(int value) {
-        return to_string(value);
-    }
-
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTree<int,int>>(
+            std::shared_ptr<SegmentTree<int,int>>(
+                new SegmentTree<int,int>(0, Query(), Update(), Lazy())
+            )
+        )
+    {}
     void action_query() {
         int x;
         cin >> x;
-        auto ans = m_tree.query(x);
-        cout << repr_value(ans) << endl;
+        auto ans = m_tree->query(x);
+        cout << to_string(ans) << endl;
     }
     void action_update() {
         int l, r, v;
         cin >> l >> r >> v;
-        m_tree.update(l, r, v);
+        m_tree->update(l, r, v);
     }
 };
 

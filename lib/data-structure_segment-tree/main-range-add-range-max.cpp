@@ -5,71 +5,52 @@
 #include <map>
 #include <string>
 #include <algorithm>
-#include <climits>
+#include <numeric>
 #include "segment-tree-rurq.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp.hpp"
 
 using namespace std;
 
-struct Data {
-    int max;
-    int lazy;
-    Data() {}
-    Data(int max): Data(max, 0) {}
-    Data(int max, int lazy): max(max), lazy(lazy) {}
-};
 struct Query {
-    static Data id() {
-        return Data(INT_MIN);
-    }
-    static Data op(const Data& lhs, const Data& rhs) {
-        return Data(std::max(lhs.max,rhs.max));
+    const int id = numeric_limits<int>::lowest();
+    int operator()(const int& lhs, const int& rhs) const {
+        return max(lhs,rhs);
     }
 };
 struct Update {
-    static Data id() {
-        return Data(0);
-    }
-    static Data op(const Data& lhs, const Data& rhs) {
-        int max = lhs.max + rhs.max + rhs.lazy;
-        int lazy = lhs.lazy + rhs.max + rhs.lazy;
-        return Data(max, lazy);
+    int operator()(const int& lhs, const int& rhs) const {
+        return lhs + rhs;
     }
 };
-struct Push {
-    static void pushdown(Data& node, Data& lhs, Data& rhs) {
-        lhs.max += node.lazy;
-        lhs.lazy += node.lazy;
-        rhs.max += node.lazy;
-        rhs.lazy += node.lazy;
-        node.lazy = 0;
+struct Lazy {
+    const int id = 0;
+    int operator()(const int& lhs, const int& rhs) const {
+        return lhs + rhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<Data,Query,Update,Push>;
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<Data,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTree<int,int>>
 {
-protected:
-    Data make_value(int value) {
-        return Data(value);
-    }
-    string repr_value(Data value) {
-        return to_string(value.max);
-    }
-
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTree<int,int>>(
+            std::shared_ptr<SegmentTree<int,int>>(
+                new SegmentTree<int,int>(0, Query(), Update(), Lazy())
+            )
+        )
+    {}
     void action_query() {
         int l, r;
         cin >> l >> r;
-        auto ans = m_tree.query(l, r);
-        cout << repr_value(ans) << endl;
+        auto ans = m_tree->query(l, r);
+        cout << to_string(ans) << endl;
     }
     void action_update() {
         int l, r, v;
         cin >> l >> r >> v;
-        m_tree.update(l, r, make_value(v));
+        m_tree->update(l, r, E(v));
     }
 };
 

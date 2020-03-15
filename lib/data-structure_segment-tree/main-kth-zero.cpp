@@ -8,41 +8,47 @@
 
 using namespace std;
 
-using pii = pair<int,int>;
+struct Data {
+    int value;
+    int times;
+    Data(): value(0), times(0) {}
+    Data(int value): value(value), times(!value) {}
+};
+string to_string(const Data& value) {
+    return "(" + to_string(value.value) + "," + to_string(value.times) + ")";
+}
 
-struct SumZero {
-    static pii id() {
-        return { !0, 0 };
-    }
-    static pii op(pii lhs, pii rhs) {
-        return { !0, lhs.second + rhs.second };
+struct Query {
+    const Data id = Data();
+    Data operator()(const Data& lhs, const Data& rhs) const {
+        Data ans;
+        ans.value = lhs.value + rhs.value;
+        ans.times = lhs.times + rhs.times;
+        return ans;
     }
 };
-struct Assign {
-    static pii id() {
-        return { !0, 0 };
-    }
-    static pii op(pii lhs, pii rhs) {
-        return rhs;
+struct Update {
+    Data operator()(const Data& lhs, int rhs) const {
+        return Data(rhs);
     }
 };
 
-class SegmentTreeImpl : public SegmentTree<pii,SumZero,Assign>
+class SegmentTreeImpl : public SegmentTree<Data,int>
 {
 public:
-    SegmentTreeImpl(int n): SegmentTree(n) {}
+    SegmentTreeImpl(int n): SegmentTree(n, Query(), Update()) {}
 
-    // find the k-th zero (k is [0,...]
+    // find the k-th zero (k is [0,...)
     int query(int k) {
         if (k < 0) {
             return -1;
         }
-        return query(0, 0, m_size, k + 1);
+        return query(0, 0, N, k + 1);
     }
 
 protected:
     int query(int v, int tl, int tr, int k) {
-        if (tr - tl <= 0 || k > m_tree[v].second) {
+        if (tr - tl <= 0 || k > tree[v].times) {
             return -1;
         }
         if (tr - tl == 1) {
@@ -50,35 +56,33 @@ protected:
         }
         int tm = (tl + tr) / 2;
         int vl = left(v), vr = right(v);
-        if (m_tree[vl].second >= k) {
+        if (tree[vl].times >= k) {
             return query(vl, tl, tm, k);
         } else {
-            return query(vr, tm, tr, k - m_tree[vl].second);
+            return query(vr, tm, tr, k - tree[vl].times);
         }
     }
 };
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<pii,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTreeImpl>
 {
-protected:
-    pii make_value(int value) {
-        return { value, value ? 0 : 1 };
-    }
-    string repr_value(pii value) {
-        return to_string(value.first);
-    }
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTreeImpl>(
+            std::shared_ptr<SegmentTreeImpl>(new SegmentTreeImpl(0))
+        )
+    {}
     void action_query() {
         int k;
         cin >> k;
-        auto ans = m_tree.query(k);
+        auto ans = m_tree->query(k);
         cout << ans << endl;
     }
     void action_update() {
         int i, v;
         cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
+        bool ans = m_tree->update(i, E(v));
         cout << (ans ? "true" : "false") << endl;
     }
 };

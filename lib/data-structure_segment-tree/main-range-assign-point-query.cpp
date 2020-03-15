@@ -10,53 +10,54 @@
 
 using namespace std;
 
-struct Data {
-    bool mark;
+struct Option {
+    bool active;
     int value;
-    Data(): mark(false), value(0) {}
-    Data(int value): mark(true), value(value) {}
+    Option(): active(false), value(0) {}
+    Option(int value): active(true), value(value) {}
+};
+struct Query {
+    const int id = 0;
 };
 struct Update {
-    static Data id() {
-        return Data();
-    }
-    static Data op(const Data& lhs, const Data& rhs) {
-        return rhs;
-    }
-};
-struct Push {
-    static void pushdown(Data &node, Data& lhs, Data& rhs) {
-        if (!node.mark) {
-            return;
+    int operator()(const int& lhs, const Option& rhs) const {
+        if (rhs.active) {
+            return rhs.value;
         }
-        lhs = rhs = node;
-        node = Data();
+        return lhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<Data,Update,Push>;
+struct Lazy {
+    const Option id = Option();
+    Option operator()(const Option& lhs, const Option& rhs) const {
+        if (rhs.active) {
+            return rhs;
+        }
+        return lhs;
+    }
+};
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<Data,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTree<int,Option>>
 {
-protected:
-    Data make_value(int value) {
-        return Data(value);
-    }
-    string repr_value(Data value) {
-        return to_string(value.value);
-    }
-
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTree<int,Option>>(
+            std::shared_ptr<SegmentTree<int,Option>>(
+                new SegmentTree<int,Option>(0, Query(), Update(), Lazy())
+            )
+        )
+    {}
     void action_query() {
         int x;
         cin >> x;
-        auto ans = m_tree.query(x);
-        cout << repr_value(ans) << endl;
+        auto ans = m_tree->query(x);
+        cout << to_string(ans) << endl;
     }
     void action_update() {
         int l, r, v;
         cin >> l >> r >> v;
-        m_tree.update(l, r, make_value(v));
+        m_tree->update(l, r, E(v));
     }
 };
 

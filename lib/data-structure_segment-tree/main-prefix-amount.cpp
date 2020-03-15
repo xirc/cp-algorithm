@@ -13,37 +13,32 @@
 
 using namespace std;
 
-struct Sum {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(int lhs, int rhs) {
+struct Query {
+    const int id = 0;
+    int operator()(int lhs, int rhs) const {
         return lhs + rhs;
     }
 };
-struct Assign {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(int lhs, int rhs) {
+struct Update {
+    int operator()(int lhs, int rhs) const {
         return rhs;
     }
 };
 
-class SegmentTreeImpl : public SegmentTree<int,Sum,Assign>
+class SegmentTreeImpl : public SegmentTree<int,int>
 {
 public:
-    SegmentTreeImpl(int n): SegmentTree(n) {}
+    SegmentTreeImpl(int n): SegmentTree(n, Query(), Update()) {}
 
     int query(int x) {
         if (x < 0) {
             return -1;
         }
-        return query(0, 0, m_size, x);
+        return query(0, 0, N, x);
     }
 protected:
     int query(int v, int tl, int tr, int x) {
-        if (tr - tl <= 0 || x > m_tree[v]) {
+        if (tr - tl <= 0 || x > tree[v]) {
             return -1;
         }
         if (tr - tl == 1) {
@@ -51,36 +46,41 @@ protected:
         }
         int tm = (tl + tr) / 2;
         int vl = left(v), vr = right(v);
-        if (m_tree[vl] >= x) {
+        if (tree[vl] >= x) {
             return query(vl, tl, tm, x);
         } else {
-            return query(vr, tm, tr, x - m_tree[vl]);
+            return query(vr, tm, tr, x - tree[vl]);
         }
     }
 };
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTreeImpl>
 {
 protected:
-    int make_value(int value) {
+    int make_value(const int& value) {
         return value;
     }
-    string repr_value(int value) {
+    string repr_value(const int& value) {
         return to_string(value);
     }
     
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase(
+            std::shared_ptr<SegmentTreeImpl>(new SegmentTreeImpl(0))
+        )
+    {}
     void action_query() {
         int k;
         cin >> k;
-        int ans = m_tree.query(k);
+        int ans = m_tree->query(k);
         cout << ans << endl;
     }
     void action_update() {
         int i, v;
         cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
+        bool ans = m_tree->update(i, make_value(v));
         cout << (ans ? "true" : "false") << endl;
     }
 };
@@ -89,7 +89,7 @@ SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string& header, map<string,Command>& commands) {
     setup(interp, header, commands);
     commands["query"] =
-        Command { "query {kth}", bind(&SegmentTreeInterp::action_query, interp) };
+        Command { "query {x}", bind(&SegmentTreeInterp::action_query, interp) };
     commands["update"] =
         Command { "update {index} {value}", bind(&SegmentTreeInterp::action_update, interp) };
 }

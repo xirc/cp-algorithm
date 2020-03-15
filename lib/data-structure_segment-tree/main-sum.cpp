@@ -1,40 +1,23 @@
 // Finding the sum
 
-#include <map>
-#include <string>
 #include "segment-tree.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp-purq.hpp"
 
 using namespace std;
 
-struct Sum {
-    static constexpr int id() {
-        return 0;
-    }
-    static constexpr int op(int lhs, int rhs) {
+struct Query {
+    const int id = 0;
+    int operator()(int lhs, int rhs) const {
         return lhs + rhs;
     }
 };
-struct Assign {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(int lhs, int rhs) {
+struct Update {
+    int operator()(int lhs, int rhs) const {
         return rhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<int,Sum,Assign>;
-
-struct Value {
-    static int make_value(int value) {
-        return value;
-    }
-    static string repr_value(int value) {
-        return to_string(value);
-    }
-};
-using SegmentTreeInterp = SegmentTreeInterpPURQ<int,SegmentTreeImpl,Value>;
+using SegmentTreeInterp = SegmentTreeInterpPURQ<SegmentTree<int,int>,Query,Update>;
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string& header, map<string,Command>& commands) {

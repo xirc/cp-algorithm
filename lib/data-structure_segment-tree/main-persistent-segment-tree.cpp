@@ -1,30 +1,51 @@
 // Finding the sum with persistent segment tree
 
-#include <map>
-#include <string>
+#include <iostream>
+#include <iomanip>
+#include <algorithm>
 #include "persistent-segment-tree.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp.hpp"
 
 using namespace std;
 
+struct Query {
+    long long id = 0;
+    long long operator()(long long lhs, long long rhs) const {
+        return lhs + rhs;
+    }
+};
+struct Update {
+    long long operator()(long long lhs, int rhs) const {
+        return lhs + rhs;
+    }
+};
+struct Lazy {
+    const int id = 0;
+    int operator()(int lhs, int rhs) const {
+        return lhs + rhs;
+    }
+};
+
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTree>
+    : public SegmentTreeInterpBase<SegmentTree<long long,int>>
 {
-protected:
-    int make_value(int value) {
-        return value;
-    }
-    string repr_value(int value) {
-        return to_string(value);
-    }
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTree<long long,int>>(
+            std::shared_ptr<SegmentTree<long long,int>>(
+                new SegmentTree<long long, int>(0, Query(), Update(), Lazy())
+            )
+        )
+    {}
     void action_dump_history() {
-        for (int history = m_tree.history_size() - 1; history >= 0; --history) {
-            m_tree.dump(m_buffer, history);
-            for (int i = 0; i < m_buffer.size(); ++i) {
+        vector<T> buffer;
+        for (int history = m_tree->history_size() - 1; history >= 0; --history) {
+            m_tree->dump(buffer, history);
+            cout << history << ": ";
+            for (int i = 0; i < buffer.size(); ++i) {
                 if (i > 0) cout << " ";
-                cout << m_buffer[i];
+                cout << setw(3) << buffer[i];
             }
             cout << endl;
         }
@@ -32,13 +53,13 @@ public:
     void action_query() {
         int history, l, r;
         cin >> history >> l >> r;
-        auto ans = m_tree.sum(l, r, history);
-        cout << repr_value(ans) << endl;
+        auto ans = m_tree->query(l, r, history);
+        cout << to_string(ans) << endl;
     }
     void action_update() {
-        int i, v;
-        cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
+        int history, l, r, v;
+        cin >> history >> l >> r >> v;
+        auto ans = m_tree->update(l, r, E(v), history);
         cout << (ans ? "true" : "false") << endl;
     }
 };
@@ -49,7 +70,7 @@ void setup(string& header, map<string,Command>& commands) {
     commands["query"] =
         Command { "query {history} {left} {right}", bind(&SegmentTreeInterp::action_query, interp) };
     commands["update"] =
-        Command { "update {index} {value}", bind(&SegmentTreeInterp::action_update, interp) };
+        Command { "update {history} {left} {right} {value}", bind(&SegmentTreeInterp::action_update, interp) };
     commands["dump"] = // overwrite
         Command { "dump", bind(&SegmentTreeInterp::action_dump_history, interp) };
 }

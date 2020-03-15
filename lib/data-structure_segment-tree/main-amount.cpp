@@ -1,37 +1,31 @@
 // Searching for the first element greater than a given amount
 
 #include <algorithm>
-#include <map>
-#include <string>
+#include <numeric>
 #include "segment-tree.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp.hpp"
 
 using namespace std;
 
-struct Maximum {
-    static constexpr int id() {
-        return INT_MIN;
-    }
-    static int op(int lhs, int rhs) {
+struct Query {
+    const int id = numeric_limits<int>::lowest();
+    int operator()(int lhs, int rhs) const {
         return std::max(lhs, rhs);
     }
 };
-struct Assign {
-    static constexpr int id() {
-        return INT_MIN;
-    };
-    static int op(int lhs, int rhs) {
+struct Update {
+    int operator()(int lhs, int rhs) const {
         return rhs;
     }
 };
 
-class SegmentTreeImpl : public SegmentTree<int,Maximum,Assign> {
+class SegmentTreeImpl : public SegmentTree<int,int> {
 public:
-    SegmentTreeImpl(int n): SegmentTree(n) {}
+    SegmentTreeImpl(int n): SegmentTree(n, Query(), Update()) {}
 
     int query(int l, int r, int x) {
-        return query(0, 0, m_size, l, r, x);
+        return query(0, 0, N, l, r, x);
     }
 
 protected:
@@ -40,12 +34,12 @@ protected:
             return -1;
         }
         if (l <= lv && rv <= r) {
-            if (m_tree[v] <= x){
+            if (tree[v] <= x){
                 return -1;
             }
             while (rv - lv > 1) {
                 const int mv = lv + (rv - lv) / 2;
-                if (m_tree[left(v)] > x) {
+                if (tree[left(v)] > x) {
                     v = left(v);
                     rv = mv;
                 } else {
@@ -66,26 +60,24 @@ protected:
 };
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTreeImpl>
+    : public SegmentTreeInterpBase<SegmentTreeImpl>
 {
-protected:
-    int make_value(int value) {
-        return value;
-    }
-    string repr_value(int value) {
-        return to_string(value);
-    }
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase(
+            std::shared_ptr<SegmentTreeImpl>(new SegmentTreeImpl(0))
+        )
+    {}
     void action_query() {
         int l, r, x;
         cin >> l >> r >> x;
-        auto ans = m_tree.query(l, r, x);
+        auto ans = m_tree->query(l, r, x);
         cout << ans << endl;
     }
     void action_update() {
         int i, v;
         cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
+        bool ans = m_tree->update(i, E(v));
         cout << (ans ? "true" : "false") << endl;
     }
 };

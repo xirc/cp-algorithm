@@ -1,48 +1,41 @@
 // Finding the maximum and the number of times it appears
 
-#include <map>
-#include <string>
 #include "segment-tree.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp-purq.hpp"
 
 using namespace std;
 
-using pii = pair<int,int>;
+struct Data {
+    int maximum, times;
+    Data(): maximum(0), times(0) {}
+    Data(int value): maximum(value), times(1) {}
+};
+string to_string(const Data& value) {
+    return "(" + to_string(value.maximum) + "," + to_string(value.times) + ")";
+}
 
-struct MaxTimes {
-    static constexpr pii id() {
-        return {0, 0};
-    }
-    static pii op(pii lhs, pii rhs) {
-        if (lhs.first > rhs.first) {
+struct Query {
+    const Data id = Data();
+    Data operator()(const Data& lhs, const Data& rhs) const {
+        if (lhs.maximum > rhs.maximum) {
             return lhs;
-        } else if (lhs.first < rhs.first) {
+        } else if (lhs.maximum < rhs.maximum) {
             return rhs;
         } else {
-            return { lhs.first, lhs.second + rhs.second };
+            Data ans;
+            ans.maximum = lhs.maximum;
+            ans.times = lhs.times + rhs.times;
+            return ans;
         }
     }
 };
-struct Assign {
-    static constexpr pii id() {
-        return { 0, 0 };
-    }
-    static pii op(pii lhs, pii rhs) {
-        return rhs;
+struct Update {
+    Data operator()(const Data& lhs, int rhs) const {
+        return Data(rhs);
     }
 };
-using SegmentTreeImpl = SegmentTree<pii,MaxTimes,Assign>;
-
-struct Value {
-    static pii make_value(int value) {
-        return { value, 1 };
-    }
-    static string repr_value(pii value) {
-        return "(" + to_string(value.first) + "," + to_string(value.second) + ")";
-    }
-};
-using SegmentTreeInterp = SegmentTreeInterpPURQ<pii,SegmentTreeImpl,Value>;
+using SegmentTreeInterp = SegmentTreeInterpPURQ<SegmentTree<Data,int>,Query,Update>;
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string &header, map<string,Command>& commands) {

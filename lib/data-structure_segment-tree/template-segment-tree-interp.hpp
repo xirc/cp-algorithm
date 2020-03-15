@@ -8,52 +8,50 @@
 #include <random>
 #include "../template-main.hpp"
 
-template<class T, class SegmentTree>
+template<class SegmentTree>
 class SegmentTreeInterpBase {
-protected:
-    SegmentTree m_tree = SegmentTree(8);
-    std::vector<T> m_buffer;
+public:
+    using T = typename SegmentTree::value_type_T;
+    using E = typename SegmentTree::value_type_E;
 
 protected:
-    virtual T make_value(int value) = 0;
-    virtual std::string repr_value(T value) = 0;
+    std::shared_ptr<SegmentTree> m_tree = nullptr;
 
 public:
+    SegmentTreeInterpBase(std::shared_ptr<SegmentTree> tree): m_tree(tree) {
+        // Do nothing
+    }
     void action_build() {
         int n, v;
-        cin >> n;
-        vector<T> array(n);
+        std::cin >> n;
+        std::vector<T> array(n);
         for (int i = 0; i < n; ++i) {
-            cin >> v;
-            array[i] = make_value(v);
+            std::cin >> v;
+            array[i] = T(v);
         }
-        m_tree.build(array);
+        m_tree->build(array);
     }
 
     void action_random() {
         int n, min, max, v;
-        cin >> n >> min >> max;
-        random_device random;
-        vector<T> array(n);
+        std::cin >> n >> min >> max;
+        std::random_device random;
+        std::vector<T> array(n);
         for (int i = 0; i < n; ++i) {
             v = (random() % std::abs(max-min)) + std::min(max,min);
-            array[i] = make_value(v);
+            array[i] = T(v);
         }
-        m_tree.build(array);
+        m_tree->build(array);
     }
 
     void action_dump() {
-        m_tree.dump(m_buffer);
-
-        auto it = m_buffer.begin();
-        if (it != m_buffer.end()) {
-            cout << repr_value(*it);
-            it++;
+        std::vector<T> buffer;
+        m_tree->dump(buffer);
+        for (auto it = buffer.begin(); it != buffer.end(); ++it) {
+            if (it != buffer.begin()) cout << " ";
+            std::cout << to_string(*it);
         }
-        for (; it != m_buffer.end(); ++it) {
-            cout << " " << repr_value(*it);
-        }
-        cout << endl;
+        std::cout << endl;
     }
 };
 

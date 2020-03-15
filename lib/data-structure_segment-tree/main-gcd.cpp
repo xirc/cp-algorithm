@@ -17,36 +17,21 @@ int gcd(int lhs, int rhs) {
     return rhs;
 }
 
-struct GCD {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(int lhs, int rhs) {
+struct Query {
+    const int id = 0;
+    int operator()(int lhs, int rhs) const {
         if (!lhs || !rhs) {
             return lhs ? lhs : rhs;
         }
         return gcd(lhs,rhs);
     }
 };
-struct Assign {
-    static constexpr int id() {
-        return 0;
-    }
-    static int op(int lhs, int rhs) {
+struct Update {
+    int operator()(int lhs, int rhs) const {
         return rhs;
     }
 };
-using SegmentTreeImpl = SegmentTree<int,GCD,Assign>;
-
-struct Value {
-    static int make_value(int value) {
-        return value;
-    }
-    static string repr_value(int value) {
-        return to_string(value);
-    }
-};
-using SegmentTreeInterp = SegmentTreeInterpPURQ<int,SegmentTreeImpl,Value>;
+using SegmentTreeInterp = SegmentTreeInterpPURQ<SegmentTree<int,int>,Query,Update>;
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string &header, map<string,Command>& commands) {

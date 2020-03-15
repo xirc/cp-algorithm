@@ -11,42 +11,45 @@
 using namespace std;
 
 struct Query {
-    static int id() {
-        return INT_MAX;
-    }
-    static int op(multiset<int>& set, int x) {
+    const int id = 0;
+    int operator()(multiset<int>& set, int x) const {
         auto it = set.lower_bound(x);
         if (it == set.end()) {
             return INT_MAX;
         }
         return *it;
     }
-    static int op(int lhs, int rhs) {
+    int operator()(int lhs, int rhs) const {
         return min(lhs, rhs);
     }
 };
 
 class SegmentTreeInterp
-    : public SegmentTreeInterpBase<int,SegmentTree<int>>
+    : public SegmentTreeInterpBase<SegmentTree<int>>
 {
 protected:
-    int make_value(int value) {
+    int make_value(const int& value) {
         return value;
     }
-    string repr_value(int value) {
+    string repr_value(const int& value) {
         return to_string(value);
     }
 public:
+    SegmentTreeInterp()
+        : SegmentTreeInterpBase<SegmentTree<int>>(
+            std::shared_ptr<SegmentTree<int>>(new SegmentTree<int>(0))
+        )
+    {}
     void action_query() {
         int l, r, x;
         cin >> l >> r >> x;
-        auto ans = m_tree.query<Query>(l, r, x);
+        auto ans = m_tree->query(l, r, x, Query());
         cout << repr_value(ans) << endl;
     }
     void action_update() {
         int i, v;
         cin >> i >> v;
-        bool ans = m_tree.update(i, make_value(v));
+        bool ans = m_tree->update(i, make_value(v));
         cout << (ans ? "true" : "false") << endl;
     }
 };
