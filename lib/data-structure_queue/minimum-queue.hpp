@@ -6,8 +6,11 @@
 #include <stack>
 #include <algorithm>
 
+// MinimumQueue
+// Memory: O(N)
 template <class T>
 class MinimumQueue {
+protected:
     class MinimumStack {
         struct entry { T value, minimum; };
         std::deque<entry> S;
@@ -69,7 +72,7 @@ public:
         }
     }
 
-private:
+protected:
     // O(N)
     void transfer_if_needed() {
         if (!Sr.empty()) return;
