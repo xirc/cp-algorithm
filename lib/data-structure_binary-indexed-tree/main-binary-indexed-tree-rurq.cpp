@@ -6,9 +6,9 @@
 #include "../template-main.hpp"
 
 using namespace std;
-using Tree = shared_ptr<BinaryIndexedTree>;
 
-Tree tree = Tree(new BinaryIndexedTree(0));
+using BIT = BinaryIndexedTree<long long>;
+BIT bit = BIT(0);
 
 void action_init() {
     int size;
@@ -17,40 +17,36 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    tree = Tree(new BinaryIndexedTree(size));
+    bit = BIT(size);
     cout << "true" << endl;
 }
 
 void action_sum() {
     int l, r;
     cin >> l >> r;
-    auto ans = tree->sum(l, r);
+    auto ans = bit.sum(l, r);
     cout << ans << endl;
 }
 
 void action_add() {
     int l, r, value;
     cin >> l >> r >> value;
-    tree->add(l, r, value);
+    bit.add(l, r, value);
     cout << "true" << endl;
 }
 
 void action_dump() {
-    for (int i = 0; i < tree->size(); ++i) {
+    for (int i = 0; i < bit.size(); ++i) {
         if (i > 0) cout << " ";
-        cout << tree->sum(i, i+1);
+        cout << bit.sum(i, i+1);
     }
     cout << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Binary Indexed Tree";
-    commands["init"] =
-        Command { "init {size}", action_init };
-    commands["sum"] =
-        Command { "sum {l} {r}", action_sum };
-    commands["add"] =
-        Command { "add {l} {r} {value}", action_add };
-    commands["dump"] =
-        Command { "dump", action_dump };
+    commands["init"] = { "init {size}", action_init };
+    commands["sum"] = { "sum {l} {r}", action_sum };
+    commands["add"] = { "add {l} {r} {value}", action_add };
+    commands["dump"] = { "dump", action_dump };
 }

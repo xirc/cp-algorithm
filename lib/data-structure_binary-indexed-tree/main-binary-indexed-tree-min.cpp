@@ -1,14 +1,23 @@
 #include <iostream>
-#include <map>
-#include <string>
-#include <functional>
-#include "binary-indexed-tree-min.hpp"
+#include <numeric>
+#include <algorithm>
+#include "binary-indexed-tree.hpp"
 #include "../template-main.hpp"
 
 using namespace std;
-using Tree = shared_ptr<BinaryIndexedTree>;
 
-Tree tree = Tree(new BinaryIndexedTree(0));
+using BIT = BinaryIndexedTree<long long>;
+BIT make_bit(int N) {
+    auto id = numeric_limits<long long>::max();
+    auto plus = [&](const long long& lhs, const long long& rhs) {
+        return min(lhs, rhs);
+    };
+    auto minus = [&](const long long& lhs, const long long& rhs) -> long long {
+        throw;
+    };
+    return BIT(N, numeric_limits<long long>::max(), plus, minus);
+};
+BIT bit = make_bit(0);
 
 void action_init() {
     int size;
@@ -17,34 +26,31 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    tree = Tree(new BinaryIndexedTree(size));
+    bit = make_bit(size);
     cout << "true" << endl;
 }
 
 void action_min() {
     int index;
     cin >> index;
-    auto ans = tree->min(index);
+    auto ans = bit.sum(index);
     cout << ans << endl;
 }
 
 void action_update() {
     int index, value;
     cin >> index >> value;
-    if (index < 0 || index >= tree->size()) {
+    if (index < 0 || index >= bit.size()) {
         cout << "false" << endl;
         return;
     }
-    tree->update(index, value);
+    bit.add(index, value);
     cout << "true" << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Binary Indexed Tree";
-    commands["init"] =
-        Command { "init {size}", action_init };
-    commands["min"] =
-        Command { "min {index}", action_min };
-    commands["update"] =
-        Command { "update {index} {value}", action_update };
+    commands["init"] = { "init {size}", action_init };
+    commands["min"] = { "min {index}", action_min };
+    commands["update"] = { "update {index} {value}", action_update };
 }
