@@ -1,50 +1,79 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_E
 
-#include <iostream>
 #include <vector>
+#include <functional>
 
+// BinaryIndexedTree
+// Memory O(N)
+// Update O(logN)
+// Query O(logN)
+template <class T = long long>
 class BinaryIndexedTree {
-    using T = long long;
+public:
+    using F = std::function<T(const T&, const T&)>;
+
+protected:
+    int N;
     std::vector<T> bit;
-    int m_size;
+    T id;
+    F plus;
+    F minus;
 
 public:
-    BinaryIndexedTree(int size)
-        : m_size(size + 1)
-        , bit(size + 1)
+    // O(N)
+    BinaryIndexedTree(
+        int n,
+        T id = T(),
+        F plus = std::plus<T>(),
+        F minus = std::minus<T>()
+    )
+        : N(n + 1)
+        , bit(n + 1, id)
+        , id(id)
+        , plus(plus)
+        , minus(minus)
     {
         // Do nothing
     }
-
+    // O(1)
     int size() {
-        return m_size - 1;
+        return N - 1;
     }
-
     // Add value to array[l,r)
     // O(logN)
-    void add(int l, int r, T value) {
+    // l = [0,N)
+    // r = [0,N]
+    void add(int l, int r, const T& value) {
+        if (l > r) throw;
+        if (l < 0 || l >= N) throw;
+        if (r < 0 || r > N) throw;
         add(l, value);
-        add(r, -value);
+        if (r < N) add(r, minus(id, value));
     }
-
     // Get value at array[index]
     // O(logN)
-    T query(int index) {
-        T ans = 0;
+    // index = [0,N)
+    T get(int index) {
+        if (index < 0 || index >= N) throw;
+        T ans = id;
         for (++index; index > 0; index -= index & -index) {
-            ans += bit[index];
+            ans = plus(ans, bit[index]);
         }
         return ans;
     }
 
-private:
-    void add(int index, T value) {
-        if (index < 0) return;
-        for (++index; index < m_size; index += index & -index) {
-            bit[index] += value;
+protected:
+    // index = [0,N)
+    void add(int index, const T& value) {
+        if (index < 0 || index >= N) throw;
+        for (++index; index < N; index += index & -index) {
+            bit[index] = plus(bit[index], value);
         }
     }
 };
+
+
+#include <iostream>
 
 using namespace std;
 
@@ -55,7 +84,7 @@ int main() {
     int N, Q;
     cin >> N >> Q;
 
-    BinaryIndexedTree bit(N);
+    BinaryIndexedTree<long long> bit(N);
     for (int i = 0; i < Q; ++i) {
         int c, s, t, x;
         cin >> c;
@@ -66,7 +95,7 @@ int main() {
         } else if (c == 1) {
             cin >> t;
             --t;
-            cout << bit.query(t) << endl;
+            cout << bit.get(t) << endl;
         } else throw;
     }
 
