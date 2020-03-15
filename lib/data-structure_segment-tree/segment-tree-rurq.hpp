@@ -9,7 +9,7 @@
 
 // SegmentTree (RangeUpdate,RangeQuery)
 // Memory O(N)
-// Build  O(N)
+// Build O(N)
 // Query O(log N)
 // Update O(log N)
 template<class T, class E>

@@ -5,7 +5,7 @@
 
 // SegmentTree (PointUpdate,RangeQuery)
 // Memory O(N log N)
-// Build  O(N log^2 N)
+// Build O(N log^2 N)
 // Query O(log^2 N)
 // Update O(log^2 N) 
 template<class T>
