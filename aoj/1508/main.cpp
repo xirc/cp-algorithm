@@ -1,20 +1,32 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=1508
 
+#include <vector>
+#include <functional>
 #include <cmath>
 #include <random>
-#include <vector>
+#include <memory>
 
-template <class T>
-class ImplicitTreapBase {
+template <class T, class E>
+class ImplicitTreap {
+public:
+    using value_type_T = T;
+    using value_type_E = E;
+    using F = std::function<T(const T&, const T&, const T&)>;
+    using G = std::function<T(const T&, const E&)>;
+    using H = std::function<E(const E&, const E&)>;
+
 protected:
     struct Node {
+        using Tree = std::shared_ptr<Node>;
         T value;
+        E lazy;
         int priority;
         int count;
         bool reverse;
-        Node *left, *right;
-        Node(T value, int priority)
+        Tree left, right;
+        Node(T value, E lazy, int priority)
             : value(value)
+            , lazy(lazy)
             , priority(priority)
             , count(0)
             , reverse(false)
@@ -24,39 +36,110 @@ protected:
                 // Do nothing
             }
     };
-    using Tree = Node*;
+    using Tree = std::shared_ptr<Node>;
+
+    F query_op;
+    T query_id;
+    G update_op;
+    H lazy_op;
+    E lazy_id;
 
     std::mt19937 random;
-    Tree root = nullptr;
+    Tree root;
 
 public:
+    // O(1)
+    ImplicitTreap(
+        const F& query_op,
+        const T& query_id,
+        const G& update_op,
+        const H& lazy_op,
+        const E& lazy_id
+    )
+        : query_op(query_op)
+        , query_id(query_id)
+        , update_op(update_op)
+        , lazy_op(lazy_op)
+        , lazy_id(lazy_id)
+        , random()
+        , root(nullptr)
+    {
+        // Do nothing
+    }
+    // O(1)
+    template <class Query, class Update, class Lazy>
+    ImplicitTreap(
+        const Query& query,
+        const Update& update,
+        const Lazy& lazy
+    )
+        : ImplicitTreap(
+            std::bind(&Query::operator(), query, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+            query.id,
+            std::bind(&Update::operator(), update, std::placeholders::_1, std::placeholders::_2),
+            std::bind(&Lazy::operator(), lazy, std::placeholders::_1, std::placeholders::_2),
+            lazy.id
+        )
+    {
+        // Do nothing
+    }
     // O(1)
     int size() {
         return count(root);
     }
     // O(logN)
-    void insert(int pos, T value) {
-        insert(root, pos, new Node(value, random()));
+    void insert(int key, const T& value) {
+        insert(root, key, Tree(new Node(value, lazy_id, random())));
     }
     // O(logN)
-    T at(int pos) {
+    T operator[](int key) {
         T value;
-        if (!at(root, pos, value)) throw;
+        if (!at(root, key, value)) {
+            insert(key, query_id);
+        }
+        return at(key);
+    }
+    // O(logN)
+    T at(int key) {
+        T value;
+        if (!at(root, key, value)) throw;
         return value;
     }
     // O(logN)
-    bool erase(int pos) {
-        return erase(root, pos);
+    bool erase(int key) {
+        return erase(root, key);
     }
     // O(logN)
+    // [l,r)
+    bool query(int l, int r, T& value) {
+        return query(root, l, r, value);
+    }
+    // O(logN)
+    // [,r)
+    T query(int l, int r) {
+        T value;
+        bool has_value = query(root, l, r, value);
+        return has_value ? value : query_id;
+    }
+    // O(logN)
+    // [l,r)
+    bool update(int l, int r, const E& value) {
+        return update(root, l, r, value);
+    }
+    // O(logN)
+    // [l,r)
     void reverse(int l, int r) {
         reverse(root, l, r);
     }
     // O(logN)
+    // [l,m,r)
+    // rotate left +1 : rotate(tree, l, l+1, r)
+    // rotate right +1 : rotate(tree, l, r-1, r)
     void rotate(int l, int m, int r) {
         rotate(root, l, m, r);
     }
     // O(logN)
+    // [l,r)
     int count(int l, int r) {
         return count(root, l, r);
     }
@@ -67,12 +150,9 @@ public:
     }
 
 protected:
-    virtual void pushdown(Tree tree) {
-        // Do pushdown procedure.
-        if (!tree) {
-            return;
-        }
-        if (tree->reverse) {
+    // O(1)
+    void pushdown(Tree tree) {
+        if (tree && tree->reverse) {
             tree->reverse = false;
             std::swap(tree->left, tree->right);
             if (tree->left) {
@@ -82,14 +162,40 @@ protected:
                 tree->right->reverse ^= true;
             }
         }
+        pushdown_value(tree);
     }
-    virtual void pushup(Tree tree) {
-        // Do pushup procedure.
+    // O(1)
+    void pushdown_value(Tree tree) {
+        if (tree) {
+            if (tree->left) {
+                tree->left->value = update_op(tree->left->value, tree->lazy);
+                tree->left->lazy = lazy_op(tree->left->lazy, tree->lazy);
+            }
+            if (tree->right) {
+                tree->right->value = update_op(tree->right->value, tree->lazy);
+                tree->right->lazy = lazy_op(tree->right->lazy, tree->lazy);
+            }
+            tree->lazy = lazy_id;
+        }
+    }
+    // O(1)
+    void pushup(Tree tree) {
         update_count(tree);
+        pushup_value(tree);
     }
+    // O(1)
+    void pushup_value(Tree tree) {
+        if (tree) {
+            auto lvalue = tree->left ? tree->left->value : query_id;
+            auto rvalue = tree->right ? tree->right->value : query_id;
+            tree->value = query_op(tree->value, lvalue, rvalue);
+        }
+    }
+    // O(1)
     int count(Tree tree) {
         return tree ? tree->count : 0;
     }
+    // O(1)
     void update_count(Tree tree) {
         if (tree) {
             tree->count = 1 + count(tree->left) + count(tree->right);
@@ -158,7 +264,38 @@ protected:
         return has_value;
     }
     // O(logN)
-    // reverse elements in [l,r)
+    // [l,r)
+    bool query(Tree tree, int l, int r, T& value) {
+        Tree t1, t2, t3;
+        bool has_value = false;
+        split(tree, l, t1, t2);
+        split(t2, r - l, t2, t3);
+        if (t2) {
+            has_value = true;
+            value = t2->value;
+        }
+        merge(t2, t2, t3);
+        merge(tree, t1, t2);
+        return has_value;
+    }
+    // O(logN)
+    // [l,r)
+    bool update(Tree &tree, int l, int r, const E& value) {
+        bool has_value = false;
+        Tree t1, t2, t3;
+        split(tree, l, t1, t2);
+        split(t2, r - l, t2, t3);
+        if (t2) {
+            has_value = true;
+            t2->value = update_op(t2->value, value);
+            t2->lazy = lazy_op(t2->lazy, value);
+        }
+        merge(t2, t2, t3);
+        merge(tree, t1, t2);
+        return has_value;
+    }
+    // O(logN)
+    // [l,r)
     void reverse(Tree tree, int l, int r) {
         if (l > r) {
             return;
@@ -171,12 +308,14 @@ protected:
         merge(tree, t1, t2);
     }
     // O(logN)
+    // [l,m,r)
     void rotate(Tree tree, int l, int m, int r) {
         reverse(tree, l, r);
         reverse(tree, l, l + r - m);
         reverse(tree, l + r - m, r);
     }
     // O(logN)
+    // [l,r)
     int count(Tree tree, int l, int r) {
         Tree t1, t2, t3;
         int ans;
@@ -199,6 +338,7 @@ protected:
     }
 };
 
+
 #include <iostream>
 #include <numeric>
 #include <algorithm>
@@ -207,63 +347,39 @@ using namespace std;
 
 struct Data {
     int value, minimum;
-    bool active;
-    Data(int value) : value(value), minimum(0), active(false) {}
+    Data(): value(0), minimum(numeric_limits<int>::max()) {}
+    Data(int value) : value(value), minimum(value) {}
 };
-class ImplicitTreap : public ImplicitTreapBase<Data> {
-public:
-    // [l,r)
-    void update(int l, int r, int x) {
-        Tree t1, t2, t3;
-        split(root, l, t1, t2);
-        split(t2, r - l, t2, t3);
-        if (t2) {
-            t2->value.value = x;
-            t2->value.minimum = x;
-            t2->value.active = true;
-        }
-        merge(t2, t2, t3);
-        merge(root, t1, t2);
-    }
-    // [l,r)
-    int minimum(int l, int r) {
-        Tree t1, t2, t3;
-        int ans;
-        split(root, l, t1, t2);
-        split(t2, r - l, t2, t3);
-        ans = minimum(t2);
-        merge(t2, t2, t3);
-        merge(root, t1, t2);
+struct Option {
+    bool active;
+    int value;
+    Option(): active(false), value(0) {}
+    Option(int value): active(true), value(value) {}
+};
+struct Query {
+    const Data id = Data();
+    Data operator()(const Data& node, const Data& lhs, const Data& rhs) const {
+        Data ans;
+        ans.value = node.value;
+        ans.minimum = min({ node.value, lhs.minimum, rhs.minimum });
         return ans;
     }
-protected:
-    int minimum(Tree tree) {
-        return tree ? tree->value.minimum : numeric_limits<int>::max();
-    }
-    void pushdown(Tree tree) override {
-        if (tree && tree->value.active) {
-            tree->value.active = false;
-            auto value = tree->value.value;
-            auto& left = tree->left; auto& right = tree->right;
-            if (left) {
-                left->value.value = value;
-                left->value.minimum = value;
-                left->value.active = true;
-            }
-            if (right) {
-                right->value.value = value;
-                right->value.minimum = value;
-                right->value.active = true;
-            }
+};
+struct Update {
+    Data operator()(const Data& lhs, const Option& rhs) const {
+        if (rhs.active) {
+            return Data(rhs.value);
         }
-        ImplicitTreapBase::pushdown(tree);
-        pushup(tree);
+        return lhs;
     }
-    void pushup(Tree tree) override {
-        ImplicitTreapBase::pushup(tree);
-        if (tree) {
-            tree->value.minimum = std::min({ tree->value.value, minimum(tree->left), minimum(tree->right) });
+};
+struct Lazy {
+    const Option id = Option();
+    Option operator()(const Option& lhs, const Option& rhs) const {
+        if (rhs.active) {
+            return rhs;
         }
+        return lhs;
     }
 };
 
@@ -274,7 +390,8 @@ int main() {
     int N, Q;
     cin >> N >> Q;
 
-    ImplicitTreap treap;
+    auto query = Query(); auto update = Update(); auto lazy = Lazy();
+    ImplicitTreap<Data,Option> treap(query, update, lazy);
 
     for (int i = 0; i < N; ++i) {
         int x;
@@ -288,7 +405,7 @@ int main() {
         if (x == 0) {
             treap.rotate(y, z, z+1);
         } else if (x == 1) {
-            cout << treap.minimum(y, z+1) << endl;
+            cout << treap.query(y, z+1).minimum << endl;
         } else if (x == 2) {
             treap.update(y, y+1, z);
         }
