@@ -1,17 +1,55 @@
 #include <iostream>
-#include <map>
-#include <string>
 #include <random>
 #include <cmath>
+#include <numeric>
+#include <string>
 #include "segment-tree-2d.hpp"
 #include "../template-main.hpp"
 
 using namespace std;
-using row = vector<int>;
-using matrix = vector<row>;
 
-SegmentTree tree(4,4);
-matrix buffer;
+struct Data {
+    int maximum;
+    int times;
+    Data(): maximum(numeric_limits<int>::lowest()), times(0) {}
+    Data(int value): maximum(value), times(1) {}
+};
+string to_string(const Data& value) {
+    return "(" + to_string(value.maximum) + "," + to_string(value.times) + ")";
+}
+struct Option {
+    bool active;
+    int value;
+    Option(): active(false), value(0) {}
+    Option(int value): active(true), value(value) {}
+};
+struct Query {
+    const Data id = Data();
+    Data operator()(const Data& lhs, const Data& rhs) {
+        if (lhs.maximum > rhs.maximum) {
+            return lhs;
+        } else if (rhs.maximum > lhs.maximum) {
+            return rhs;
+        } else {
+            Data ans;
+            ans.maximum = lhs.maximum;
+            ans.times = lhs.times + rhs.times;
+            return ans;
+        }
+    }
+};
+struct Update {
+    Data operator()(const Data& lhs, const Option& rhs) {
+        if (!rhs.active) {
+            return lhs;
+        }
+        return Data(rhs.value);
+    }
+};
+SegmentTree<Data,Option> tree(0, 0, Query(), Update());
+
+using row = vector<Data>;
+using matrix = vector<row>;
 
 void action_random() {
     int n, m, minv, maxv;
@@ -21,19 +59,22 @@ void action_random() {
     auto mat = matrix(n, row(m));
     for (int x = 0; x < n; x++) {
         for (int y = 0; y < m; y++) {
-            mat[x][y] = (random() % abs(maxv - minv)) + minv;
+            mat[x][y] = Data((random() % abs(maxv - minv)) + minv);
         }
     }
     tree.build(mat);
 }
 
 void action_dump() {
+    int N, M;
+    tie(N,M) = tree.size();
+    matrix buffer;
     tree.dump(buffer);
-    for (int y = 0; y < tree.size_y(); ++y) {
+    for (int y = 0; y < M; ++y) {
         if (y > 0) cout << endl;
-        for (int x = 0; x < tree.size_x(); ++x) {
+        for (int x = 0; x < N; ++x) {
             if (x > 0) cout << " ";
-            cout << buffer[x][y];
+            cout << to_string(buffer[x][y]);
         }
     }
     cout << endl;
@@ -42,14 +83,14 @@ void action_dump() {
 void action_query() {
     int lx, rx, ly, ry;
     cin >> lx >> rx >> ly >> ry;
-    int ans = tree.sum(lx, rx, ly, ry);
-    cout << ans << endl;
+    auto ans = tree.query(lx, rx, ly, ry);
+    cout << to_string(ans) << endl;
 }
 
 void action_update() {
     int x, y, value;
     cin >> x >> y >> value;
-    bool ans = tree.update(x, y, value);
+    bool ans = tree.update(x, y, Option(value));
     cout << (ans ? "true" : "false") << endl;
 }
 
