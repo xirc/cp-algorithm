@@ -64,10 +64,7 @@ void setup(
     using clazz = SegmentTreeInterp;
 
     header = "Segment Tree";
-    commands["build"] =
-        Command { "build {count} {...}", bind(&clazz::action_build, interp) };
-    commands["random"] =
-        Command { "random {count} {min} {max}", bind(&clazz::action_random, interp) };
-    commands["dump"] =
-        Command { "dump", bind(&clazz::action_dump, interp) };
+    commands["build"] = { "build {count} {...}", bind(&clazz::action_build, interp) };
+    commands["random"] = { "random {count} {min} {max}", bind(&clazz::action_random, interp) };
+    commands["dump"] = { "dump", bind(&clazz::action_dump, interp) };
 }

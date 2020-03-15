@@ -85,8 +85,6 @@ public:
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string& header, map<string,Command>& commands) {
     setup(interp, header, commands);
-    commands["query"] =
-        Command {"query {left} {right} {value}", bind(&SegmentTreeInterp::action_query, interp) };
-    commands["update"] =
-        Command { "update {index} {value}", bind(&SegmentTreeInterp::action_update, interp) };
+    commands["query"] = {"query {left} {right} {value}", bind(&SegmentTreeInterp::action_query, interp) };
+    commands["update"] = { "update {index} {value}", bind(&SegmentTreeInterp::action_update, interp) };
 }

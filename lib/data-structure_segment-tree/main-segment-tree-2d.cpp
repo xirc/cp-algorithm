@@ -55,12 +55,8 @@ void action_update() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Segment Tree 2D";
-    commands["random"] =
-        Command { "random {n} {m} {min} {max}", action_random };
-    commands["dump"] =
-        Command { "dump", action_dump };
-    commands["query"] =
-        Command { "query {lx} {rx} {ly} {ry}", action_query };
-    commands["update"] =
-        Command { "update {x} {y} {value}", action_update };
+    commands["random"] = { "random {n} {m} {min} {max}", action_random };
+    commands["dump"] = { "dump", action_dump };
+    commands["query"] = { "query {lx} {rx} {ly} {ry}", action_query };
+    commands["update"] = { "update {x} {y} {value}", action_update };
 }
