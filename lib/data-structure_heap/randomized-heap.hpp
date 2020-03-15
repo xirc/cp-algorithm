@@ -42,7 +42,7 @@ public:
         other.root = nullptr;
     }
 
-private:
+protected:
     // O(logN)
     tree merge(tree u, tree v) {
         if (u == nullptr || v == nullptr) {
