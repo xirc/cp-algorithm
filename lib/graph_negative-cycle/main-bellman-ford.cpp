@@ -54,10 +54,7 @@ void action_solve() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Negatice Cycle Finding with BellmanFord";
-    commands["init"] =
-        Command { "init {size}", action_init };
-    commands["add-edge"] =
-        Command { "add-edge {from} {to} {cost}", action_add_edge };
-    commands["solve"] =
-        Command { "solve {from}", action_solve };
+    commands["init"] = { "init {size}", action_init };
+    commands["add-edge"] = { "add-edge {from} {to} {cost}", action_add_edge };
+    commands["solve"] = { "solve {from}", action_solve };
 }

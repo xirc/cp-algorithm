@@ -4,38 +4,40 @@
 #include <algorithm>
 
 class BellmanFord {
-    struct edge { int from, to, cost; };
-    int m_size;
-    std::vector<edge> m_edges;
+    struct edge {
+        int from, to;
+        long long cost;
+    };
+    int N;
+    std::vector<edge> edges;
+
 public:
-    BellmanFord(int size): m_size(size) {}
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
-    }
+    // O(1)
+    BellmanFord(int size): N(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-    void add_edge(int from, int to, int cost) {
+    // O(1)
+    void add_edge(int from, int to, long long cost) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        m_edges.push_back(edge{ from, to, cost });
+        edges.push_back({ from, to, cost });
     }
     // O(VE)
     bool solve(std::vector<int>& cycle) {
-        const int N = m_size;
-        std::vector<int> D(N);
+        std::vector<long long> D(N, 0);
         std::vector<int> P(N, -1);
         int x;
         for (int i = 0; i < N; ++i) {
             x = -1;
-            for (auto e : m_edges) {
+            for (auto e : edges) {
                 if (D[e.to] <= D[e.from] + e.cost) continue;
                 D[e.to] = D[e.from] + e.cost;
                 P[e.to] = e.from;
                 x = e.to;
             }
         }
-
         if (x == -1) {
             return false;
         } else {
@@ -49,5 +51,10 @@ public:
             reverse(cycle.begin(), cycle.end());
             return true;
         }
+    }
+
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };

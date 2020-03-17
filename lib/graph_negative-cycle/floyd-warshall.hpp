@@ -4,37 +4,32 @@
 #include <algorithm>
 
 class FloydWarshall {
-    static const int inf = 1e8;
-    int m_size;
-    std::vector<std::vector<int>> m_adjmat;
+    static const long long inf = 1e18;
+    int N;
+    std::vector<std::vector<long long>> adjmat;
+
 public:
+    // O(V^2)
     FloydWarshall(int size)
-        : m_size(size)
-        , m_adjmat(size, std::vector<int>(size, inf)) {}
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
-    }
+        : N(size)
+        , adjmat(size, std::vector<long long>(size, inf))
+    {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-    void add_edge(int from, int to, int cost) {
+    // O(1)
+    void add_edge(int from, int to, long long cost) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        m_adjmat[from][to] = std::min(cost, inf);
+        adjmat[from][to] = std::min(cost, inf);
     }
     // O(V^3)
     void solve(std::vector<std::pair<int,int>>& cycle_pairs) {
-        const int N = m_size;
-        std::vector<std::vector<int>> D(N, std::vector<int>(N, inf));
         // Init
+        auto D = adjmat;
         for (int i = 0; i < N; ++i) {
-            for (int j = 0; j < N; ++j) {
-                if (i == j) {
-                    D[i][j] = 0;
-                } else {
-                    D[i][j] = m_adjmat[i][j];
-                }
-            }
+            D[i][i] = 0;
         }
         // Floyd-Warshall
         for (int t = 0; t < N; ++t) {
@@ -65,5 +60,10 @@ public:
                 }
             }
         }
+    }
+
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };
