@@ -74,10 +74,7 @@ public:
 template<class SolverInterp>
 void setup(SolverInterp* interp, std::string& header, std::map<std::string,Command>& commands){
     header = "Dijkstra with Priority Queue";
-    commands["init"] =
-        Command { "init {size}", bind(&SolverInterp::action_init, interp) };
-    commands["add"] =
-        Command { "add {from} {to} {distance}", bind(&SolverInterp::action_add_edge, interp) };
-    commands["solve"] =
-        Command { "solve {source}", bind(&SolverInterp::action_solve, interp) };
+    commands["init"] = { "init {size}", bind(&SolverInterp::action_init, interp) };
+    commands["add"] = { "add {from} {to} {distance}", bind(&SolverInterp::action_add_edge, interp) };
+    commands["solve"] = { "solve {source}", bind(&SolverInterp::action_solve, interp) };
 }
