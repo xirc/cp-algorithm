@@ -6,12 +6,11 @@
 
 using namespace std;
 
-struct Repr {
-    static string to_string(UnionFindTree::node value) {
-        return std::to_string(value.parent);
-    }
-};
-using Interp = UnionFindTreeInterp<UnionFindTree, Repr>;
+string to_string(UnionFindTree::node value) {
+    return to_string(value.parent);
+}
+
+using Interp = UnionFindTreeInterp<UnionFindTree>;
 Interp* interp = new Interp();
 
 void setup(string& header, map<string,Command>& commands) {

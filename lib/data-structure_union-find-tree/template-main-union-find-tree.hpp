@@ -6,10 +6,11 @@
 #include <string>
 #include "../template-main.hpp"
 
-template <class UnionFindTree, class Repr>
+template <class UnionFindTree>
 class UnionFindTreeInterp {
     using Tree = std::shared_ptr<UnionFindTree>;
     Tree tree = Tree(new UnionFindTree(0));
+
 public:
     void action_init() {
         int size;
@@ -29,7 +30,7 @@ public:
             return;
         }
         auto ans = tree->find_set(index);
-        cout << Repr::to_string(ans) << endl;
+        cout << to_string(ans) << endl;
     }
     void action_union() {
         int index1, index2;
@@ -49,7 +50,7 @@ public:
         for (int i = 0; i < tree->size(); ++i) {
             if (i != 0) cout << " ";
             auto value = tree->find_set(i);
-            cout << Repr::to_string(value);
+            cout << to_string(value);
         }
         cout << endl;
     }
