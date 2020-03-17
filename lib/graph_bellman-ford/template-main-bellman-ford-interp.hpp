@@ -11,6 +11,7 @@ template <class Solver>
 class SolverInterp {
     using SolverPtr = std::shared_ptr<Solver>;
     SolverPtr solver = SolverPtr(new Solver(0));
+
 public:
     void action_init() {
         int n;
@@ -69,10 +70,7 @@ public:
 
 template <class SolverInterp>
 void setup(SolverInterp *interp, std::string& header, std::map<std::string,Command> &commands) {
-    commands["init"] =
-        Command { "init {size}", bind(&SolverInterp::action_init, interp) };
-    commands["add-edge"] =
-        Command { "add-edge {from} {to} {cost}", bind(&SolverInterp::action_add_edge, interp) };
-    commands["solve"] =
-        Command { "solve {from}", bind(&SolverInterp::action_solve, interp) };
+    commands["init"] = { "init {size}", bind(&SolverInterp::action_init, interp) };
+    commands["add-edge"] = { "add-edge {from} {to} {cost}", bind(&SolverInterp::action_add_edge, interp) };
+    commands["solve"] = { "solve {from}", bind(&SolverInterp::action_solve, interp) };
 }
