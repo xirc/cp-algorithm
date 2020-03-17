@@ -9,30 +9,34 @@
 class Solver {
     using vec = std::vector<long long>;
     using mat = std::vector<vec>;
-    int m_size;
-    mat m_matrix;
+    int N;
+    mat matrix;
+
 public:
     static const long long inf = 1e18;
-    Solver(int size): m_size(size), m_matrix(size, vec(size, inf)) {}
+    // O(V^2)
+    Solver(int size): N(size), matrix(size, vec(size, inf)) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void add_edge(int from, int to, int distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        m_matrix[from][to] = distance;
+        matrix[from][to] = distance;
     }
     // O(V^3 logK)
     mat solve(int length) {
         if (length <= 0) throw "argument exception";
-        return power(m_matrix, length);
+        return power(matrix, length);
     }
+
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
     mat power(const mat& a, const int k, std::map<int,mat> lookup = {}) {
-        const int N = m_size;
         if (lookup.count(k)) {
             return lookup[k];
         }
@@ -48,7 +52,6 @@ private:
         return lookup[k];
     }
     mat op(const mat& a, const mat&b) {
-        const int N = m_size;
         mat ans(N, vec(N, inf));
         for (int i = 0; i < N; ++i) {
             for (int j = 0; j < N; ++j) {
