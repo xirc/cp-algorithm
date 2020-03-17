@@ -136,8 +136,8 @@ public:
     }
     // O(logN)
     // [l,m,r)
-    // rotate left +1 : rotate(tree, l, l+1, r)
-    // rotate right +1 : rotate(tree, l, r-1, r)
+    // rotate left +1 = rotate(tree, l, l+1, r)
+    // rotate right +1 = rotate(tree, l, r-1, r)
     void rotate(int l, int m, int r) {
         rotate(root, l, m, r);
     }
@@ -205,7 +205,7 @@ protected:
         }
     }
     // O(logN)
-    // left > key, right >= key
+    // left: < key, right: >= key
     void split(Tree tree, int key, Tree &left, Tree &right) {
         if (!tree) {
             left = right = nullptr;
