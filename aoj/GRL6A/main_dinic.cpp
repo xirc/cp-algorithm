@@ -1,23 +1,26 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
 
-#include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
 
-using namespace std;
-
 class MaximumFlow {
     static const long long inf = 1e18;
-    struct edge { int from, to; long long capacity, flow; };
-    int m_size;
+    struct edge {
+        int from, to;
+        long long capacity, flow;
+    };
+
+    int N;
     std::vector<edge> edges;
     std::vector<std::vector<int>> adj;
     // Temporal
     std::vector<int> level, ptr;
 
 public:
-    MaximumFlow(int size): m_size(size), adj(size) {}
+    // O(N)
+    MaximumFlow(int size): N(size), adj(size) {}
+    // O(1)
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
@@ -28,8 +31,6 @@ public:
     }
     // O(V^2 E)
     long long solve(int s, int t, std::vector<std::vector<long long>>& flow) {
-        const int N = m_size;
-
         long long ans = 0;
         level.assign(N, 0);
         ptr.assign(N, 0);
@@ -52,7 +53,7 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
     bool bfs(int s, int t) {
         std::queue<int> Q;
@@ -89,6 +90,11 @@ private:
         return 0;
     }
 };
+
+
+#include <iostream>
+
+using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false);

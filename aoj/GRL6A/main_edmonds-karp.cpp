@@ -1,27 +1,29 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_6_A
 
-#include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
-#include <numeric>
-#include <tuple>
-
-using namespace std;
 
 class MaximumFlow {
     static const long long inf = 1e18;
-    struct edge { int to; long long capacity; };
-    int m_size;
+    struct edge {
+        int to;
+        long long capacity;
+    };
+
+    int N;
     std::vector<std::vector<edge>> adj;
     // Temporal variables
     std::vector<std::vector<long long>> capacity, flow;
 
 public:
-    MaximumFlow(int size): m_size(size), adj(size) {}
+    // O(N)
+    MaximumFlow(int size): N(size), adj(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
@@ -33,7 +35,6 @@ public:
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
 
-        const int N = m_size;
         capacity.assign(N, std::vector<long long>(N, 0));
         for (int u = 0; u < N; ++u) {
             for (auto e : adj[u]) {
@@ -53,11 +54,10 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
     // O(E)
     long long bfs(int s, int t) {
-        const int N = m_size;
         struct entry { int v; long long flow; };
         std::queue<entry> Q;
         std::vector<int> prev(N, -1);
@@ -96,6 +96,11 @@ private:
         return aug;
     }
 };
+
+
+#include <iostream>
+
+using namespace std;
 
 int main() {
     ios_base::sync_with_stdio(false);
