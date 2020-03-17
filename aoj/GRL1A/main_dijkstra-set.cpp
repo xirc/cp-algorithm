@@ -1,38 +1,38 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_A
 
-#include <iostream>
 #include <vector>
 #include <set>
 
+// Use Dijkstra(ver: set<>) if the peformance is very important.
+// If you use the complex data structure in set<>,
+// use Dijkstra(ver: priority_queue<>) which is better performance in such case.
 class Dijkstra {
     struct edge { int to; long long distance; };
-    int m_size;
+    int N;
     std::vector<std::vector<edge>> adj;
     static std::vector<long long> distance;
 
 public:
     static const long long inf = 1e18;
-
-    Dijkstra(int size) : m_size(size), adj(size) {
-    }
-
+    // O(V)
+    Dijkstra(int size) : N(size), adj(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-
+    // O(1)
     void add_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         if (distance < 0) throw;
         adj[from].push_back({ to, distance });
     }
-
     // O(V log V + E)
     void solve(int s, std::vector<long long>& D, std::vector<int>& P) {
         throw_if_invalid_index(s);
 
-        distance.assign(m_size, inf);
-        P.assign(m_size, -1);
+        distance.assign(N, inf);
+        P.assign(N, -1);
 
         // For the performance, Avoid the maintenance cost of a complex data structure in Q.
         struct custom_less {
@@ -65,10 +65,13 @@ public:
     }
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };
 std::vector<long long> Dijkstra::distance = std::vector<long long>();
+
+
+#include <iostream>
 
 using namespace std;
 
