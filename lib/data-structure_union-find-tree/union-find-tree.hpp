@@ -6,55 +6,65 @@
 #include <vector>
 #include <algorithm>
 
+// UnionFindTree
+// Memory: O(N)
 class UnionFindTree {
 public:
     struct node { int parent, rank; };
 
-private:
-    int m_size;
-    std::vector<node> m_nodes;
+protected:
+    int N;
+    std::vector<node> nodes;
 
 public:
-    UnionFindTree(int size)
-        : m_size(size)
-        , m_nodes(size)
+    // O(N)
+    UnionFindTree(int n)
+        : N(n)
+        , nodes(n)
     {
-        for (int i = 0; i < size; ++i) {
-            m_nodes[i] = { i, 0 };
+        for (int i = 0; i < N; ++i) {
+            nodes[i] = { i, 0 };
         }
     }
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
     // O(a(N))
-    node find_set(int index) {
+    node find(int index) {
         throw_if_invalid_index(index);
-        if (index != m_nodes[index].parent) {
+        if (index != nodes[index].parent) {
             // Path Compression
-            m_nodes[index] = find_set(m_nodes[index].parent);
+            nodes[index] = find(nodes[index].parent);
         }
-        return m_nodes[index];
+        return nodes[index];
     }
     // O(a(N))
-    void union_set(int a, int b) {
+    bool same(int a, int b) {
         throw_if_invalid_index(a);
         throw_if_invalid_index(b);
-        a = find_set(a).parent;
-        b = find_set(b).parent;
+        return find(a).parent == find(b).parent;
+    }
+    // O(a(N))
+    void unite(int a, int b) {
+        throw_if_invalid_index(a);
+        throw_if_invalid_index(b);
+        a = find(a).parent;
+        b = find(b).parent;
         if (a == b) {
             return;
         }
-        if (m_nodes[a].rank < m_nodes[b].rank) {
+        if (nodes[a].rank < nodes[b].rank) {
             std::swap(a, b);
         }
-        m_nodes[b].parent = a;
-        if (m_nodes[a].rank == m_nodes[b].rank) {
-            m_nodes[a].rank++;
+        nodes[b].parent = a;
+        if (nodes[a].rank == nodes[b].rank) {
+            nodes[a].rank++;
         }
     }
 
-private:
+protected:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };

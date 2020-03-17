@@ -29,7 +29,7 @@ public:
             cout << -1 << endl;
             return;
         }
-        auto ans = tree->find_set(index);
+        auto ans = tree->find(index);
         cout << to_string(ans) << endl;
     }
     void action_union() {
@@ -43,13 +43,13 @@ public:
             cout << "false" << endl;
             return;
         }
-        tree->union_set(index1, index2);
+        tree->unite(index1, index2);
         cout << "true" << endl;
     }
     void action_dump() {
         for (int i = 0; i < tree->size(); ++i) {
             if (i != 0) cout << " ";
-            auto value = tree->find_set(i);
+            auto value = tree->find(i);
             cout << to_string(value);
         }
         cout << endl;

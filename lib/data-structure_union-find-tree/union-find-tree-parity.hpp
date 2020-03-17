@@ -11,28 +11,30 @@ public:
     };
 
 private:
-    int m_size;
-    std::vector<node> m_nodes;
+    int N;
+    std::vector<node> nodes;
 
 public:
-    UnionFindTree(int size)
-        : m_size(size)
-        , m_nodes(size)
+    // O(N)
+    UnionFindTree(int n)
+        : N(n)
+        , nodes(n)
     {
-        for (int i = 0; i < size; ++i) {
-            m_nodes[i] = { i, 0, false, true };
+        for (int i = 0; i < N; ++i) {
+            nodes[i] = { i, 0, false, true };
         }
     }
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
     // O(a(n))
-    node find_set(int index) {
-        if (index < 0 || index >= m_size) throw;
-        auto& node = m_nodes[index];
+    node find(int index) {
+        throw_if_invalid_index(index);
+        auto& node = nodes[index];
         if (index != node.parent) {
             // Path Compression
-            auto root = find_set(node.parent);
+            auto root = find(node.parent);
             node.parent = root.parent;
             node.rank = root.rank;
             node.parity = root.parity ^ node.parity;
@@ -41,32 +43,38 @@ public:
         return node;
     }
     // O(a(n))
-    void union_set(int a, int b) {
-        auto ra = find_set(a);
-        auto rb = find_set(b);
-
+    void unite(int a, int b) {
+        throw_if_invalid_index(a);
+        throw_if_invalid_index(b);
+        auto ra = find(a);
+        auto rb = find(b);
         a = ra.parent;
         b = rb.parent;
-
         if (a == b) {
             if (ra.parity == rb.parity) {
-                m_nodes[a].bipartite = false;
+                nodes[a].bipartite = false;
             }
         } else {
-            if (m_nodes[a].rank < m_nodes[b].rank) {
+            if (nodes[a].rank < nodes[b].rank) {
                 std::swap(a, b);
                 std::swap(ra, rb);
             }
-            m_nodes[b].parent = a;
-            m_nodes[b].parity = ra.parity ^ rb.parity ^ true;
-            m_nodes[a].bipartite &= m_nodes[b].bipartite;
-            if (m_nodes[a].rank == m_nodes[b].rank) {
-                m_nodes[a].rank++;
+            nodes[b].parent = a;
+            nodes[b].parity = ra.parity ^ rb.parity ^ true;
+            nodes[a].bipartite &= nodes[b].bipartite;
+            if (nodes[a].rank == nodes[b].rank) {
+                nodes[a].rank++;
             }
         }
     }
     // O(1)
     bool is_bipartite(int index) {
-        return find_set(index).bipartite;
+        throw_if_invalid_index(index);
+        return find(index).bipartite;
+    }
+
+protected:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };

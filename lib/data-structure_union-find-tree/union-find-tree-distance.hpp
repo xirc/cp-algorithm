@@ -10,52 +10,61 @@ public:
         int parent, rank, length;
     };
 
-private:
-    int m_size;
-    std::vector<node> m_nodes;
+protected:
+    int N;
+    std::vector<node> nodes;
 
 public:
-    UnionFindTree(int size)
-        : m_size(size)
-        , m_nodes(size)
+    // O(N)
+    UnionFindTree(int n)
+        : N(n)
+        , nodes(n)
     {
-        for (int i = 0; i < size; ++i) {
-            m_nodes[i] = { i, 0, 0 };
+        for (int i = 0; i < N; ++i) {
+            nodes[i] = { i, 0, 0 };
         }
     }
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
     // O(a(n))
-    node find_set(int index) {
-        if (index < 0 || index >= m_size) throw;
-        if (index != m_nodes[index].parent) {
+    node find(int index) {
+        throw_if_invalid_index(index);
+        if (index != nodes[index].parent) {
             // Path Compression
-            auto root = find_set(m_nodes[index].parent);
-            m_nodes[index].parent = root.parent;
-            m_nodes[index].rank = root.rank;
-            m_nodes[index].length += root.length;
+            auto root = find(nodes[index].parent);
+            nodes[index].parent = root.parent;
+            nodes[index].rank = root.rank;
+            nodes[index].length += root.length;
         }
-        return m_nodes[index];
+        return nodes[index];
     }
     // O(a(n))
-    void union_set(int a, int b) {
-        auto ra = find_set(a);
-        auto rb = find_set(b);
+    void unite(int a, int b) {
+        throw_if_invalid_index(a);
+        throw_if_invalid_index(b);
+        auto ra = find(a);
+        auto rb = find(b);
         a = ra.parent;
         b = rb.parent;
         if (a == b) {
             return;
         }
-        if (m_nodes[a].rank < m_nodes[b].rank) {
+        if (nodes[a].rank < nodes[b].rank) {
             std::swap(a, b);
             std::swap(ra, rb);
         }
         // The distance between node 'a' and 'b' is 1.
-        m_nodes[b].parent = a;
-        m_nodes[b].length = ra.length + 1;
-        if (m_nodes[a].rank == m_nodes[b].rank) {
-            m_nodes[a].rank++;
+        nodes[b].parent = a;
+        nodes[b].length = ra.length + 1;
+        if (nodes[a].rank == nodes[b].rank) {
+            nodes[a].rank++;
         }
+    }
+
+protected:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };
