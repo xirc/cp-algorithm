@@ -13,15 +13,19 @@ class MinimumCostFlow {
         int from, to;
         long long capacity, cost, flow;
     };
+
     int N;
     std::vector<edge> edges;
     std::vector<std::vector<int>> adj;
 
 public:
+    // O(N)
     MinimumCostFlow(int size): N(size), adj(size) {}
+    // O(1)
     int size() {
         return N;
     }
+    // O(1)
     void add_edge(int from, int to, long long capacity, long long cost) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
