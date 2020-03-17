@@ -8,15 +8,19 @@ class BipartiteCheck {
     std::vector<std::vector<int>> adj;
 
 public:
+    // O(V)
     BipartiteCheck(int n): N(n), adj(n) {}
+    // O(1)
     int size() {
         return N;
     }
+    // O(1)
     void add_edge(int from, int to) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adj[from].push_back(to);
     }
+    // O(V)
     bool solve() {
         bool is_bipartite = true;
         std::vector<int> side(N, -1);
@@ -39,6 +43,7 @@ public:
         }
         return is_bipartite;
     }
+
 private:
     void throw_if_invalid_index(int index) {
         if (index < 0 || index >= N) throw "index out of range";
