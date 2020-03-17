@@ -4,11 +4,20 @@
 #include <string>
 #include <random>
 #include "../template-main.hpp"
-#include "sum-query.hpp"
+#include "./sqrt-decomposition-group.hpp"
 
 using namespace std;
 
-SqrtDecomposition container;
+struct Group {
+    const int id = 0;
+    int operator()(const int& lhs, const int& rhs) const {
+        return lhs + rhs;
+    }
+    int operator-(const int& value) const {
+        return -value;
+    }
+};
+SqrtDecomposition<int> container({}, Group());
 
 void action_init() {
     int n, _min, _max;
@@ -56,12 +65,8 @@ void action_dump() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Sum Query using Sqrt Decomposition";
-    commands["init"] =
-        Command { "init {size} {min} {max}", action_init };
-    commands["sum"] =
-        Command { "sum {l} {r}", action_query };
-    commands["update"] =
-        Command { "update {index} {value}", action_update };
-    commands["dump"] =
-        Command { "dump", action_dump };
+    commands["init"] = { "init {size} {min} {max}", action_init };
+    commands["sum"] = { "sum {l} {r}", action_query };
+    commands["update"] = { "update {index} {value}", action_update };
+    commands["dump"] = { "dump", action_dump };
 }

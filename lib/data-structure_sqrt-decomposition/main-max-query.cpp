@@ -3,20 +3,20 @@
 #include <map>
 #include <string>
 #include <random>
-#include <climits>
+#include <numeric>
 #include <algorithm>
 #include "../template-main.hpp"
 #include "sqrt-decomposition.hpp"
 
 using namespace std;
 
-struct Max {
-    static long long id() { return LONG_LONG_MIN; }
-    static long long op(const long long& lhs, const long long& rhs) {
-        return std::max(lhs, rhs);
+struct Maximum {
+    const long long id = std::numeric_limits<long long>::lowest();
+    long long operator()(const long long& lhs, const long long& rhs) const {
+        return max(lhs, rhs);
     }
 };
-SqrtDecomposition<int,Max> container;
+SqrtDecomposition<int> container({}, Maximum());
 
 void action_init() {
     int n, _min, _max;
@@ -64,12 +64,8 @@ void action_dump() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Sum Query using Sqrt Decomposition";
-    commands["init"] =
-        Command { "init {size} {min} {max}", action_init };
-    commands["max"] =
-        Command { "max {l} {r}", action_query };
-    commands["update"] =
-        Command { "update {index} {value}", action_update };
-    commands["dump"] =
-        Command { "dump", action_dump };
+    commands["init"] = { "init {size} {min} {max}", action_init };
+    commands["max"] = { "max {l} {r}", action_query };
+    commands["update"] = { "update {index} {value}", action_update };
+    commands["dump"] = { "dump", action_dump };
 }
