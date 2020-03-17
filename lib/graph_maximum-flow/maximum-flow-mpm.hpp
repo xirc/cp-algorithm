@@ -14,7 +14,7 @@ class MaximumFlow {
         long long capacity, flow;
     };
 
-    int m_size;
+    int N;
     std::vector<edge> edges;
     std::vector<std::vector<int>> adj;
     // Temporal
@@ -24,10 +24,13 @@ class MaximumFlow {
     std::vector<std::set<int>> in, out;
 
 public:
-    MaximumFlow(int size): m_size(size), adj(size) {}
+    // O(N)
+    MaximumFlow(int size): N(size), adj(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
@@ -41,7 +44,6 @@ public:
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
 
-        const int N = m_size;
         long long ans = 0;
         while (true) {
             if (!bfs(s, t)) break;
@@ -73,10 +75,9 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
     bool bfs(int s, int t) {
-        const int N = m_size;
         std::queue<int> Q;
         level.assign(N, -1);
         level[s] = 0;
@@ -94,7 +95,6 @@ private:
         return level[t] != -1;
     }
     void build(int s, int t) {
-        const int N = m_size;
         pin.assign(N, 0);
         pout.assign(N, 0);
         in.assign(N, std::set<int>());
@@ -116,7 +116,6 @@ private:
         return std::min(pin[v], pout[v]);
     }
     int find_reference_node() {
-        const int N = m_size;
         int v = -1;
         for (int i = 0; i < N; ++i) {
             if (!alive[i]) continue;
@@ -130,19 +129,18 @@ private:
         alive[v] = false;
         for (int i : in[v]) {
             auto e = edges[i];
-            auto it = std::find(out[e.from].begin(), out[e.from].end(), i);
+            auto it = out[e.from].find(i);
             out[e.from].erase(it);
             pout[e.from] -= e.capacity - e.flow;
         }
         for (int i : out[v]) {
             auto e = edges[i];
-            auto it = std::find(in[e.to].begin(), in[e.to].end(), i);
+            auto it = in[e.to].find(i);
             in[e.to].erase(it);
             pin[e.to] -= e.capacity - e.flow;
         }
     }
     void push(int from, int to, long long f, bool forward) {
-        const int N = m_size;
         std::queue<int> Q;
         std::vector<long long> excess(N, 0);
 
