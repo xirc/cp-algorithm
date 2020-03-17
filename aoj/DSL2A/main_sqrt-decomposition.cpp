@@ -1,78 +1,120 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_A
 
-#include <iostream>
 #include <vector>
-#include <algorithm>
-#include <climits>
-#include <vector>
+#include <functional>
 #include <cmath>
+#include <algorithm>
 
-template <class T, class Monoid>
+// SqrtDecomposition
+// Memory: O(N)
+// Query: O(sqrt(N))
+// Update: O(sqrt(N))
+template <class T>
 class SqrtDecomposition {
-    std::vector<T> m_array;
-    std::vector<T> m_block;
-    int N, S;
 public:
-    SqrtDecomposition(){}
-    int size() { return N; }
-    void dump(std::vector<T>& buffer) {
-        buffer.resize(m_array.size());
-        std::copy(m_array.begin(), m_array.end(), buffer.begin());
+    using value_type_T = T;
+    using F = std::function<T(const T&, const T&)>;
+
+protected:
+    int N, S;
+    std::vector<T> array;
+    std::vector<T> block;
+    F monoid_op;
+    T monoid_id;
+
+public:
+    // O(N)
+    SqrtDecomposition(
+        const std::vector<T>& array,
+        const F& monoid_op,
+        const T& monoid_id
+    )
+        : monoid_op(monoid_op)
+        , monoid_id(monoid_id)
+    {
+        build(array);
     }
     // O(N)
-    void build(std::vector<T>& array) {
+    template <class Monoid>
+    SqrtDecomposition(
+        const std::vector<T>& array,
+        const Monoid& monoid
+    )
+        : SqrtDecomposition(
+            array,
+            std::bind(&Monoid::operator(), monoid, std::placeholders::_1, std::placeholders::_2),
+            monoid.id
+        )
+    {
+        // Do nothing
+    }
+    // O(1)
+    int size() {
+        return N;
+    }
+    // O(N)
+    void dump(std::vector<T>& buffer) {
+        buffer.resize(array.size());
+        std::copy(array.begin(), array.end(), buffer.begin());
+    }
+    // O(N)
+    void build(const std::vector<T>& array) {
         N = array.size();
         S = std::ceil(std::sqrt(N));
-        m_array.assign(N, 0);
-        m_block.assign(S, Monoid::id());
-        std::copy(array.begin(), array.end(), m_array.begin());
+        this->array = array;
+        block.assign(S, monoid_id);
         for (int i = 0; i < N; ++i) {
-            m_block[i / S] = Monoid::op(m_block[i / S], m_array[i]);
+            block[i/S] = monoid_op(block[i/S], array[i]);
         }
     }
-    // sum of array [l..r)
     // O(sqrt(N))
+    // [l..r)
+    // l = [0,N), r = [0,N]
     T query(int l, int r) {
         l = std::max(l, 0);
         r = std::min(r, N);
-        T ans = Monoid::id();
+        T ans = monoid_id;
         int cl = l / S, cr = (r - 1) / S;
         if (cl == cr) {
             for (int i = l; i < r; ++i) {
-                ans = Monoid::op(ans, m_array[i]);
+                ans = monoid_op(ans, array[i]);
             }
         } else {
             for (int i = l, M = (cl+1)*S; i < M; ++i) {
-                ans = Monoid::op(ans, m_array[i]);
+                ans = monoid_op(ans, array[i]);
             }
             for (int i = cl + 1; i < cr; ++i) {
-                ans = Monoid::op(ans, m_block[i]);
+                ans = monoid_op(ans, block[i]);
             }
             for (int i = cr * S; i < r; ++i) {
-                ans = Monoid::op(ans, m_array[i]);
+                ans = monoid_op(ans, array[i]);
             }
         }
         return ans;
     }
-    // Update value at array[index]
     // O(sqrt(N))
-    void update(int index, T value) {
+    // index = [0,N)
+    void update(int index, const T& value) {
         if (index < 0 || index > N) return;
-        m_array[index] = value;
+        array[index] = value;
         int bi = index / S;
-        m_block[bi] = Monoid::id();
+        block[bi] = monoid_id;
         for (int i = bi * S; i < (bi+1)*S; ++i) {
-            m_block[bi] = Monoid::op(m_block[bi], m_array[i]);
+            block[bi] = monoid_op(block[bi], array[i]);
         }
     }
 };
 
+
+#include <iostream>
+#include <numeric>
+
 using namespace std;
 
-struct Min {
-    static long long id() { return LONG_LONG_MAX; }
-    static int op(const long long& lhs, const long long& rhs) {
-        return std::min(lhs, rhs);
+struct Minimum {
+    const long long id = numeric_limits<long long>::max();
+    int operator()(const long long& lhs, const long long& rhs) const {
+        return min(lhs, rhs);
     }
 };
 
@@ -87,8 +129,8 @@ int main() {
     for (int i = 0; i < N; ++i) {
         array[i] = (1LL << 31) - 1;
     }
-    SqrtDecomposition<long long,Min> solver;
-    solver.build(array);
+
+    SqrtDecomposition<long long> solver(array, Minimum());
 
     for (int i = 0; i < Q; ++i) {
         int c, x, y;
