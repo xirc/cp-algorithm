@@ -16,15 +16,19 @@ class TopologicalSort {
     std::vector<bool> visited;
 
 public:
+    // O(V)
     TopologicalSort(int n): N(n), adj(n) {}
+    // O(1)
     int size() {
         return N;
     }
+    // O(1)
     void add_edge(int from, int to) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adj[from].push_back(to);
     }
+    // O(V + E)
     std::vector<int> solve() {
         std::vector<int> in(N, 0);
 
@@ -45,6 +49,7 @@ public:
 
         return ans;
     }
+
 private:
     void throw_if_invalid_index(int index) {
         if (index < 0 || index >= N) throw "index out of range";
