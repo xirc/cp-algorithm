@@ -4,32 +4,32 @@
 
 class PrimDense {
     static const long long inf = 1e18;
-    int m_size;
+    int N;
     std::vector<std::vector<long long>> adjmat;
 
 public:
+    // O(V^2)
     PrimDense(int size)
-        : m_size(size)
-        , adjmat(size, std::vector<long long>(size, inf)) {}
-
+        : N(size)
+        , adjmat(size, std::vector<long long>(size, inf))
+    {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-
+    // O(1)
     void add_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adjmat[from][to] = distance;
         adjmat[to][from] = distance;
     }
-
     // O(V^2)
     bool solve(
         long long& distance,
         std::vector<std::pair<int,int>>& edges
     ) {
         struct edge { int from; long long distance; };
-        const int N = m_size;
 
         distance = 0;
         edges.clear();
@@ -73,6 +73,6 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };

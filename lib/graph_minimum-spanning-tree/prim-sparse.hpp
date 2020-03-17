@@ -8,26 +8,31 @@
 
 class PrimSparse {
     static const long long inf = 1e18;
-    struct edge { int to; long long distance; };
-    int m_size;
+    struct edge {
+        int to;
+        long long distance;
+    };
+
+    int N;
     std::vector<std::vector<edge>> adj;
 
 public:
+    // O(N)
     PrimSparse(int size)
-        : m_size(size)
-        , adj(size) {}
-
+        : N(size)
+        , adj(size)
+    {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-
+    // O(1)
     void add_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
         adj[from].push_back({ to, distance });
         adj[to].push_back({ from, distance });
     }
-
     // O(E logV)
     bool solve(long long& distance, std::vector<std::pair<int,int>>& edges) {
         struct custom_less {
@@ -37,7 +42,6 @@ public:
                     : lhs.to < rhs.to;
             }
         };
-        const int N = m_size;
 
         distance = 0;
         edges.clear();
@@ -79,6 +83,6 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };

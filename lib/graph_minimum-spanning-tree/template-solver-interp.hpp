@@ -45,10 +45,7 @@ public:
 template <class Interp>
 void setup(Interp *interp, std::string& header, std::map<std::string,Command>& commands) 
 {
-    commands["init"] =
-        Command { "init {size}", bind(&Interp::action_init, interp) };
-    commands["edge"] =
-        Command { "edge {from} {to} {distance}", bind(&Interp::action_add_edge, interp) };
-    commands["solve"] =
-        Command { "solve", bind(&Interp::action_solve, interp) };
+    commands["init"] = { "init {size}", bind(&Interp::action_init, interp) };
+    commands["edge"] = { "edge {from} {to} {distance}", bind(&Interp::action_add_edge, interp) };
+    commands["solve"] = { "solve", bind(&Interp::action_solve, interp) };
 }
