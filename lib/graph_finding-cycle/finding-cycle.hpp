@@ -7,13 +7,17 @@
 #include <algorithm>
 
 class Solver {
-    int m_size;
+    int N;
     std::vector<std::vector<int>> adj;
+
 public:
-    Solver(int size): m_size(size), adj(size) {}
+    // O(V)
+    Solver(int size): N(size), adj(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void add_edge(int from, int to) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
@@ -21,12 +25,10 @@ public:
     }
     // O(E)
     bool solve(std::vector<int>& cycle) {
-        const int N = m_size;
-
         std::vector<int> color(N, 0);
         std::vector<int> parent(N, -1);
         std::pair<int,int> be;
-        
+
         bool found = false;
         for (int v = 0; v < N; ++v) {
             if (color[v] != 0) continue;
@@ -49,9 +51,10 @@ public:
         reverse(cycle.begin(), cycle.end());
         return true;
     }
+
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
     bool dfs(int v, std::vector<int>& color, std::vector<int>& parent, std::pair<int,int>& be) {
         color[v] = 1;

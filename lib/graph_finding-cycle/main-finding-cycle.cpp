@@ -47,10 +47,7 @@ void action_solve() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Finding a cycle of a graph";
-    commands["init"] =
-        Command { "init {size}", action_init };
-    commands["edge"] =
-        Command { "edge {from} {to}", action_add_edge };
-    commands["solve"] =
-        Command { "solve", action_solve };
+    commands["init"] = { "init {size}", action_init };
+    commands["edge"] = { "edge {from} {to}", action_add_edge };
+    commands["solve"] = { "solve", action_solve };
 }
