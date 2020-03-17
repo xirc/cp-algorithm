@@ -1,9 +1,5 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A
-
-#include <iostream>
 #include <vector>
 #include <set>
 #include <algorithm>
@@ -16,33 +12,25 @@ class KruskalSimple {
             return distance < other.distance;
         }
     };
-    int m_size;
-    std::set<std::pair<int,int>> m_uniq_edges;
-    std::vector<edge> m_edges;
+
+    int N;
+    std::vector<edge> edges;
 
 public:
-    KruskalSimple(int size): m_size(size) {}
-
+    // O(1)
+    KruskalSimple(int size): N(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
-
+    // O(1)
     void add_edge(int u, int v, long long distance) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        if (m_uniq_edges.count({ u, v }) > 0 ||
-            m_uniq_edges.count({ v, u }) > 0
-        ) {
-            return;
-        }
-        m_uniq_edges.insert({ u, v });
-        m_edges.push_back({ u, v, distance });
+        edges.push_back({ u, v, distance });
     }
-
     // O(E logV + V^2)
     bool solve(long long& out_distance, std::vector<std::pair<int,int>> &out_edges) {
-        const int N = m_size;
-
         out_distance = 0;
         out_edges.clear();
 
@@ -51,9 +39,9 @@ public:
         for (int i = 0; i < N; ++i) {
             tree_id[i] = i;
         }
-        std::sort(m_edges.begin(), m_edges.end());
+        std::sort(edges.begin(), edges.end());
 
-        for (auto edge : m_edges) {
+        for (auto edge : edges) {
             if (tree_id[edge.u] == tree_id[edge.v]) continue;
 
             out_distance += edge.distance;
@@ -72,9 +60,12 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+        if (index < 0 || index >= N) throw "index out of range";
     }
 };
+
+
+#include <iostream>
 
 using namespace std;
 
