@@ -28,7 +28,6 @@ public:
         segtree.assign(4 * M, 0);
         build_segtree(0, 0, M);
     }
-
     // O(logN)
     int query(int u, int v) {
         throw_if_invalid_index(u);
@@ -45,7 +44,6 @@ private:
     void throw_if_invalid_index(int index) {
         if (index < 0 || index >= N) throw "index out of range";
     }
-
     // O(N)
     void dfs_euler(std::vector<std::vector<int>>& adj, int v, int p = -1, int h = 0) {
         height[v] = h;
@@ -57,10 +55,8 @@ private:
             euler.push_back(v);
         }
     }
-
     static constexpr int left_segtree(int v) { return 2 * v + 1; }
     static constexpr int right_segtree(int v) { return 2 * v + 2; }
-
     // O(N)
     void build_segtree(int v, int tl, int tr) {
         if (tr - tl <= 0) return;
@@ -74,7 +70,6 @@ private:
             segtree[v] = (height[lhs] < height[rhs]) ? lhs : rhs;
         }
     }
-
     // O(logN)
     // [l,r) exclusive
     int query_segtree(int v, int tl, int tr, int l, int r) {

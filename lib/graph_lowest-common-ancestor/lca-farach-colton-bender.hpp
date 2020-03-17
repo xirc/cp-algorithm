@@ -21,7 +21,6 @@ public:
     LCA(std::vector<std::vector<int>>& adj) {
         build(adj);
     }
-
     // O(1)
     int query(int v, int u) {
         int l = first[v], r = first[u];

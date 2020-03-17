@@ -22,7 +22,6 @@ public:
         int timer = 0;
         dfs(adj, 0, 0, timer);
     }
-
     // O(logN)
     int query(int  u, int v) {
         throw_if_invalid_index(u);
@@ -55,11 +54,9 @@ private:
         }
         tout[v] = ++timer;
     }
-
     bool is_ancestor(int u, int v) {
         return tin[u] <= tin[v] && tout[u] >= tout[v];
     }
-
     void throw_if_invalid_index(int index){ 
         if (index < 0 || index >= N) throw "index out of range";
     }

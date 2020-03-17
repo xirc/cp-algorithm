@@ -61,10 +61,7 @@ void action_solve() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "LCA offline";
-    commands["init"] =
-        Command { "init {size}", action_init };
-    commands["edge"] =
-        Command { "edge {u} {v}", action_edge };
-    commands["solve"] =
-        Command { "solve Q {u v}...", action_solve };
+    commands["init"] = { "init {size}", action_init };
+    commands["edge"] = { "edge {u} {v}", action_edge };
+    commands["solve"] = { "solve Q {u v}...", action_solve };
 }
