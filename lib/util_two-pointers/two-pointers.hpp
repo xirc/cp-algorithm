@@ -17,6 +17,7 @@ protected:
     // O(K), [l,r)
     virtual void update(T& ans, int l, int r) = 0;
 public:
+    // O(1)
     TwoPointers(int n): N(n) {}
     // O(KN)
     T solve() {
