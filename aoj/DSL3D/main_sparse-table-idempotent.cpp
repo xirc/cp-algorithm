@@ -1,45 +1,73 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
 
 #include <vector>
+#include <functional>
 #include <cmath>
 
-// OP::op should be idempotent function OP::op(x,x) = x.
-template <class T, class Monoid>
+// SparseTable
+// Memory: O(N logN)
+// Query: O(1)
+// NOTE: monoid.operator() should be idempotent function op(x,x) = x.
+template <class T>
 class SparseTable {
+public:
+    using value_type_T = T;
+    using F = std::function<T(const T&, const T&)>;
+
+protected:
     int N, K;
     std::vector<std::vector<T>> table;
+    F monoid_op;
+    T monoid_id;
 
 public:
     // O(N logN)
-    SparseTable(std::vector<T>& array) {
+    SparseTable(
+        const std::vector<T>& array,
+        const F& monoid_op,
+        const T& monoid_id
+    )
+        : monoid_op(monoid_op)
+        , monoid_id(monoid_id)
+    {
         build(array);
     }
-    // [l,r)
+    // O(N logN)
+    template <class Monoid>
+    SparseTable(const std::vector<T>& array, const Monoid& monoid)
+        : SparseTable(
+            array,
+            std::bind(&Monoid::operator(), monoid, std::placeholders::_1, std::placeholders::_2),
+            monoid.id
+        )
+    {
+        // Do nothing
+    }
     // O(1)
+    // [l,r)
     T query(int l, int r) {
         l = std::max(0, l);
         r = std::min(r, N);
         int w = r - l;
-        if (w <= 0) return Monoid::id();
+        if (w <= 0) return monoid_id;
         int j = std::floor(std::log2(w));
-        return Monoid::op(table[l][j], table[r - (1 << j)][j]);
+        return monoid_op(table[l][j], table[r - (1 << j)][j]);
     }
 
-private:
+protected:
     // O(N)
-    void build(std::vector<T>& array) {
+    void build(const std::vector<T>& array) {
         N = array.size();
-        if (N == 0) return;
-        K = std::ceil(std::log2(N)) + 1;
-        table.assign(N, std::vector<int>(K, Monoid::id()));
+        K = std::ceil(std::log2(std::max(N,1))) + 1;
+        table.assign(N, std::vector<int>(K, monoid_id));
         for (int i = 0; i < N; ++i) {
-            table[i][0] = Monoid::op(array[i], Monoid::id());
+            table[i][0] = monoid_op(array[i], monoid_id);
         }
         for (int j = 1; j < K; ++j) {
             for (int i = 0; i < N; ++i) {
                 int w = 1 << (j-1);
                 if (i + w >= N) continue;
-                table[i][j] = Monoid::op(table[i][j-1], table[i+w][j-1]);
+                table[i][j] = monoid_op(table[i][j-1], table[i+w][j-1]);
             }
         }
     }
@@ -54,10 +82,8 @@ private:
 using namespace std;
 
 struct Minimum {
-    static int id() {
-        return numeric_limits<int>::max();
-    }
-    static int op(const int& lhs, const int& rhs) {
+    const int id = numeric_limits<int>::max();
+    int operator()(const int& lhs, const int& rhs) const {
         return min(lhs, rhs);
     }
 };
@@ -75,7 +101,7 @@ int main() {
         cin >> A[i];
     }
 
-    SparseTable<int,Minimum> table(A);
+    SparseTable<int> table(A, Minimum());
     for (int i = 0; i + L - 1 < N; ++i) {
         if (i > 0) cout << " ";
         cout << table.query(i, i+L);
