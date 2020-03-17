@@ -1,28 +1,30 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B
 
-#include <iostream>
 #include <vector>
-#include <algorithm>
 #include <queue>
 
+// More faster than Bellman-Ford on average.
 class SPFA {
     struct edge { int to; long long cost; };
-    int m_size;
-    std::vector<std::vector<edge>> m_edges;
+    int N;
+    std::vector<std::vector<edge>> edges;
+
 public:
     static const long long inf = 1e18;
-    SPFA(int size): m_size(size), m_edges(size) {}
+    // O(V)
+    SPFA(int size): N(size), edges(size) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void add_edge(int from, int to, long long cost) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        m_edges[from].push_back(edge{ to, cost });
+        edges[from].push_back({ to, cost });
     }
     // O (E V)
     bool solve(int from, std::vector<long long>& D, std::vector<int>& P) {
-        const int N = m_size;
         D.assign(N, inf);
         P.assign(N, -1);
         std::vector<int> count(N, 0);
@@ -36,7 +38,7 @@ public:
             int v = Q.front(); Q.pop();
             inqueue[v] = false;
 
-            for (auto edge : m_edges[v]) {
+            for (auto edge : edges[v]) {
                 if (D[edge.to] <= D[v] + edge.cost) continue;
                 D[edge.to] = D[v] + edge.cost;
                 P[edge.to] = v;
@@ -55,9 +57,12 @@ public:
 
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index of of range";
+        if (index < 0 || index >= N) throw "index of of range";
     }
 };
+
+
+#include <iostream>
 
 using namespace std;
 
