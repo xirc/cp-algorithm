@@ -3,11 +3,16 @@
 #include <functional>
 #include "../template-main.hpp"
 
-template <class Solver>
+template <class Solver, class Monoid>
 class SolverInterp {
-    using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = nullptr;
+    std::shared_ptr<Solver> solver = nullptr;
     std::vector<int> array;
+
+    std::shared_ptr<Solver> make_solver() {
+        return std::shared_ptr<Solver>(
+            new Solver(array, Monoid())
+        );
+    }
 
 public:
     void action_init() {
@@ -47,7 +52,7 @@ public:
         int l, r;
         cin >> l >> r;
         if (solver == nullptr) {
-            solver = SolverPtr(new Solver(array));
+            solver = make_solver();
         }
         std::cout << solver->query(l, r) << std::endl;
     }

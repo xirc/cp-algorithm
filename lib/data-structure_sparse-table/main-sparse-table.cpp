@@ -6,14 +6,12 @@
 using namespace std;
 
 struct sum {
-    static constexpr int id() { return 0; };
-    static int op(const int& lhs, const int& rhs) {
+    const int id = 0;
+    int operator()(const int& lhs, const int& rhs) const {
         return lhs + rhs;
     }
 };
-
-using Solver = SparseTable<int,sum>;
-SolverInterp<Solver>* interp = new SolverInterp<Solver>();
+auto interp = new SolverInterp<SparseTable<int>,sum>();
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Sparse Table for Range Sum Query";

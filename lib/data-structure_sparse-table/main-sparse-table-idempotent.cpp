@@ -1,5 +1,5 @@
 #include <iostream>
-#include <climits>
+#include <numeric>
 #include "../template-main.hpp"
 #include "./template-sparse-table-interp.hpp"
 #include "./sparse-table-idempotent.hpp"
@@ -7,14 +7,12 @@
 using namespace std;
 
 struct minimum {
-    static constexpr int id() { return INT_MAX; };
-    static int op(const int& lhs, const int& rhs) {
-        return std::min(lhs, rhs);
+    const int id = numeric_limits<int>::max();
+    int operator()(const int& lhs, const int& rhs) const {
+        return min(lhs, rhs);
     }
 };
-
-using Solver = SparseTable<int,minimum>;
-SolverInterp<Solver>* interp = new SolverInterp<Solver>();
+auto interp = new SolverInterp<SparseTable<int>,minimum>();
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Sparse Table for Range Minimum Query";
