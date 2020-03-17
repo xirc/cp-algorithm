@@ -31,40 +31,41 @@ public:
         return N;
     }
     // O(a(N))
-    node find(int index) {
-        throw_if_invalid_index(index);
-        if (index != nodes[index].parent) {
+    node find(int v) {
+        throw_if_invalid_index(v);
+        if (v != nodes[v].parent) {
             // Path Compression
-            nodes[index] = find(nodes[index].parent);
+            nodes[v] = find(nodes[v].parent);
         }
-        return nodes[index];
+        return nodes[v];
     }
     // O(a(N))
-    bool same(int a, int b) {
-        throw_if_invalid_index(a);
-        throw_if_invalid_index(b);
-        return find(a).parent == find(b).parent;
+    bool same(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        return find(u).parent == find(v).parent;
     }
     // O(a(N))
-    void unite(int a, int b) {
-        throw_if_invalid_index(a);
-        throw_if_invalid_index(b);
-        a = find(a).parent;
-        b = find(b).parent;
-        if (a == b) {
-            return;
+    bool unite(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        u = find(u).parent;
+        v = find(v).parent;
+        if (u == v) {
+            return false;
         }
-        if (nodes[a].rank < nodes[b].rank) {
-            std::swap(a, b);
+        if (nodes[u].rank < nodes[v].rank) {
+            std::swap(u, v);
         }
-        nodes[b].parent = a;
-        if (nodes[a].rank == nodes[b].rank) {
-            nodes[a].rank++;
+        nodes[v].parent = u;
+        if (nodes[u].rank == nodes[v].rank) {
+            nodes[u].rank++;
         }
+        return true;
     }
 
 protected:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
+    void throw_if_invalid_index(int v) {
+        if (v < 0 || v >= N) throw "index out of range";
     }
 };
