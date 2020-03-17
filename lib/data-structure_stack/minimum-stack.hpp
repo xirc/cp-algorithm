@@ -3,8 +3,11 @@
 #include <stack>
 #include <algorithm>
 
+// MinimumStack
+// Memory: O(N)
 template <class T>
 class MinimumStack {
+protected:
     struct entry { T value, minimum; };
     std::stack<entry> S;
 public:
