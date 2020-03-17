@@ -1,29 +1,31 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_C
 
-#include <iostream>
 #include <vector>
 #include <queue>
 #include <algorithm>
 
 class FloydWarshall {
-    int m_size;
-    std::vector<std::vector<long long>> m_adjmat;
+    int N;
+    std::vector<std::vector<long long>> adjmat;
+
 public:
     static const long long inf = 1e18;
+    // O(V^2)
     FloydWarshall(int size)
-        : m_size(size)
-        , m_adjmat(size, std::vector<long long>(size, inf)) {}
+        : N(size)
+        , adjmat(size, std::vector<long long>(size, inf)) {}
+    // O(1)
     int size() {
-        return m_size;
+        return N;
     }
+    // O(1)
     void define_edge(int from, int to, long long distance) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        m_adjmat[from][to] = distance;
+        adjmat[from][to] = distance;
     }
     // O(V^3)
     bool solve(std::vector<std::vector<long long>>& D, std::vector<std::vector<int>> &P) {
-        const int N = m_size;
         // Initialize
         D.assign(N, std::vector<long long>(N, inf));
         P.assign(N, std::vector<int>(N, -1));
@@ -32,7 +34,7 @@ public:
                 if (i == j) {
                     D[i][j] = 0;
                 } else {
-                    D[i][j] = m_adjmat[i][j];
+                    D[i][j] = adjmat[i][j];
                 }
             }
         }
@@ -55,6 +57,7 @@ public:
         }
         return true;
     }
+    // O(V)
     std::vector<int> retrieve_path(
         std::vector<std::vector<long long>>& D,
         std::vector<std::vector<int>>& P,
@@ -71,9 +74,10 @@ public:
         path.push_back(to);
         return path;
     }
+
 private:
     void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "Index out of range";
+        if (index < 0 || index >= N) throw "Index out of range";
     }
     void retrieve_path
     (
@@ -93,6 +97,9 @@ private:
         }
     }
 };
+
+
+#include <iostream>
 
 using namespace std;
 
