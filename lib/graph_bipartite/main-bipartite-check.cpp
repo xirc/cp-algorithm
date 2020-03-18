@@ -18,15 +18,15 @@ void action_init() {
 }
 
 void action_add_edge() {
-    int from, to;
-    cin >> from >> to;
-    if (from < 0 || from >= solver.size() ||
-        to < 0 || to >= solver.size()
+    int u, v;
+    cin >> u >> v;
+    if (u < 0 || u >= solver.size() ||
+        v < 0 || v >= solver.size()
     ) {
         cout << "false" << endl;
         return;
     }
-    solver.add_edge(from, to);
+    solver.add_edge(u, v);
     cout << "true" << endl;
 }
 
@@ -38,6 +38,6 @@ void action_solve() {
 void setup(string& header, map<string,Command>& commands) {
     header = "Bipartite Check";
     commands["init"] = { "init {size}", action_init };
-    commands["edge"] = { "edge {from} {to}", action_add_edge };
+    commands["edge"] = { "edge {u} {v}", action_add_edge };
     commands["solve"] = { "solve", action_solve };
 }

@@ -15,10 +15,11 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int from, int to) {
-        throw_if_invalid_index(from);
-        throw_if_invalid_index(to);
-        adj[from].push_back(to);
+    void add_edge(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
     // O(V)
     bool solve() {
