@@ -4,16 +4,13 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_4_B
 
 #include <vector>
+#include <queue>
 #include <algorithm>
 
 // Topological Sort
-// This algorithm cannot detect a cycle.
 class TopologicalSort {
     int N;
     std::vector<std::vector<int>> adj;
-    // Temporal
-    std::vector<int> ans;
-    std::vector<bool> visited;
 
 public:
     // O(V)
@@ -29,38 +26,32 @@ public:
         adj[from].push_back(to);
     }
     // O(V + E)
-    std::vector<int> solve() {
+    bool solve(std::vector<int>& ans) {
+        std::queue<int> Q;
         std::vector<int> in(N, 0);
 
         ans.clear();
-        visited.assign(N, false);
+        ans.reserve(N);
 
         for (int v = 0; v < N; ++v) {
-            for (int u : adj[v]) {
-                in[u]++;
+            for (int u : adj[v]) in[u]++;
+        }
+        for (int v = 0; v < N; ++v) {
+            if (in[v] == 0) Q.push(v);
+        }
+        while (Q.size()) {
+            int v = Q.front(); Q.pop();
+            ans.push_back(v);
+            for (auto u : adj[v]) {
+                in[u]--;
+                if (in[u] == 0) Q.push(u);
             }
         }
-        for (int v = 0; v < N; ++v) {
-            if (in[v] > 0) continue;
-            if (visited[v]) continue;
-            dfs(v);
-        }
-        std::reverse(ans.begin(), ans.end());
-
-        return ans;
+        return ans.size() == N;
     }
 
 private:
     void throw_if_invalid_index(int index) {
         if (index < 0 || index >= N) throw "index out of range";
-    }
-    void dfs(int v) {
-        visited[v] = true;
-        for (int u : adj[v]) {
-            if (!visited[u]) {
-                dfs(u);
-            }
-        }
-        ans.push_back(v);
     }
 };

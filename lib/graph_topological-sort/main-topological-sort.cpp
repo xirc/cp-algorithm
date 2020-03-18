@@ -30,7 +30,12 @@ void action_add_edge() {
 }
 
 void action_solve() {
-    auto ans = solver.solve();
+    std::vector<int> ans;
+    auto has_ans = solver.solve(ans);
+    if (!has_ans) {
+        cout << "false" << endl;
+        return;
+    }
     for (int i = 0; i < ans.size(); ++i) {
         if (i > 0) cout << " ";
         cout << ans[i];
