@@ -25,11 +25,12 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int u, int v, long long weight) {
+    void add_edge(int u, int v, long long w) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        adj[u].push_back({ v, weight });
-        adj[v].push_back({ u, weight });
+        if (w < 0) throw;
+        adj[u].push_back({ v, w });
+        adj[v].push_back({ u, w });
     }
     // O(E)
     std::tuple<int, int, long long> solve(int s = 0) {
