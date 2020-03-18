@@ -27,11 +27,11 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int from, int to, long long distance) {
-        throw_if_invalid_index(from);
-        throw_if_invalid_index(to);
-        adj[from].push_back({ to, distance });
-        adj[to].push_back({ from, distance });
+    void add_edge(int u, int v, long long distance) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        adj[u].push_back({ v, distance });
+        adj[v].push_back({ u, distance });
     }
     // O(E logV)
     bool solve(long long& distance, std::vector<std::pair<int,int>>& edges) {

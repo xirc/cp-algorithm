@@ -18,11 +18,11 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int from, int to, long long distance) {
-        throw_if_invalid_index(from);
-        throw_if_invalid_index(to);
-        adjmat[from][to] = distance;
-        adjmat[to][from] = distance;
+    void add_edge(int u, int v, long long distance) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        adjmat[u][v] = distance;
+        adjmat[v][u] = distance;
     }
     // O(V^2)
     bool solve(

@@ -17,15 +17,16 @@ public:
         solver = SolverPtr(new Solver(size));
     }
     void action_add_edge() {
-        int from, to; long long distance;
-        std::cin >> from >> to >> distance;
-        if (from < 0 || from >= solver->size() ||
-            to < 0 || to >= solver->size())
+        int u, v;
+        long long distance;
+        std::cin >> u >> v >> distance;
+        if (u < 0 || u >= solver->size() ||
+            v < 0 || v >= solver->size())
         {
             std::cout << "false" << std::endl;
             return;
         }
-        solver->add_edge(from, to, distance);
+        solver->add_edge(u, v, distance);
     }
     void action_solve() {
         long long distance;
@@ -46,6 +47,6 @@ template <class Interp>
 void setup(Interp *interp, std::string& header, std::map<std::string,Command>& commands) 
 {
     commands["init"] = { "init {size}", bind(&Interp::action_init, interp) };
-    commands["edge"] = { "edge {from} {to} {distance}", bind(&Interp::action_add_edge, interp) };
+    commands["edge"] = { "edge {u} {v} {distance}", bind(&Interp::action_add_edge, interp) };
     commands["solve"] = { "solve", bind(&Interp::action_solve, interp) };
 }
