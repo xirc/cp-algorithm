@@ -60,7 +60,7 @@ void action_solve() {
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Euler Tour";
-    commands["init"] = { "init", action_init };
-    commands["edge"] = { "edge", action_edge };
+    commands["init"] = { "init {size}", action_init };
+    commands["edge"] = { "edge {u} {v}", action_edge };
     commands["solve"] = { "solve", action_solve };
 }
