@@ -24,34 +24,50 @@ class MaximumFlow {
     std::vector<int> level, ptr;
 
 public:
-    // O(N)
+    // O(V)
     MaximumFlow(int size): N(size), adj(size) {}
+    // O(1)
+    int size() {
+        return N;
+    }
     // O(1)
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
-        edges.push_back({ from, to, capacity });
-        edges.push_back({ to, from, 0 });
+        if (capacity < 0) throw;
+        edges.push_back({ from, to, capacity, 0 });
+        edges.push_back({ to, from, 0, 0 });
         adj[from].push_back(edges.size() - 2);
         adj[to].push_back(edges.size() - 1);
     }
+    // O(E)
+    void clear_flow() {
+        for (auto& e : edges) {
+            e.flow = 0;
+        }
+    }
+    // O(V^2)
+    std::vector<std::vector<long long>> get_flow() {
+        std::vector<std::vector<long long>> flow(N, std::vector<long long>(N, 0));
+        for (int i = 0; i < edges.size(); i += 2) {
+            auto e = edges[i];
+            flow[e.from][e.to] += e.flow;
+        }
+        return flow;
+    }
     // O(V^2 E)
-    long long solve(int s, int t, std::vector<std::vector<long long>>& flow) {
-        long long ans = 0;
+    // NOTE: This memorizes the residual network.
+    long long solve(int s, int t) {
         level.assign(N, 0);
         ptr.assign(N, 0);
+
+        long long ans = 0;
         while (true) {
             if (!bfs(s, t)) break;
             std::fill(ptr.begin(), ptr.end(), 0);
             while (long long push = dfs(t, s, inf)) {
                 ans += push;
             }
-        }
-
-        flow.assign(N, std::vector<long long>(N, 0));
-        for (int i = 0; i < edges.size(); i += 2) {
-            auto e = edges[i];
-            flow[e.from][e.to] += e.flow;
         }
 
         return ans;

@@ -27,7 +27,7 @@ class MaximumFlow {
     std::vector<std::set<int>> in, out;
 
 public:
-    // O(N)
+    // O(V)
     MaximumFlow(int size): N(size), adj(size) {}
     // O(1)
     int size() {
@@ -37,13 +37,29 @@ public:
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
+        if (capacity < 0) throw;
         edges.push_back({ from, to, capacity });
         edges.push_back({ to, from, 0 });
         adj[from].push_back(edges.size() - 2);
         adj[to].push_back(edges.size() - 1);
     }
+    // O(E)
+    void clear_flow() {
+        for (auto& e : edges) {
+            e.flow = 0;
+        }
+    }
+    // O(V^2)
+    std::vector<std::vector<long long>> get_flow() {
+        std::vector<std::vector<long long>> flow(N, std::vector<long long>(N, 0));
+        for (auto& e : edges) {
+            flow[e.from][e.to] += e.flow;
+        }
+        return flow;
+    }
     // O(V^3)
-    long long solve(int s, int t, std::vector<std::vector<long long>>& flow) {
+    // NOTE: This memorizes the residual network.
+    long long solve(int s, int t) {
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
 
@@ -69,10 +85,6 @@ public:
             }
         }
 
-        flow.assign(N, std::vector<long long>(N, 0));
-        for (auto& e : edges) {
-            flow[e.from][e.to] += e.flow;
-        }
         return ans;
     }
 

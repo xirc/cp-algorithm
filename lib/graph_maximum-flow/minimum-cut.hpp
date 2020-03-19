@@ -3,35 +3,41 @@
 #include <vector>
 #include <set>
 
+// Minimum Cut
+// Memory: O(V^2)
 class MinimumCut {
     struct edge { int from, to, capacity; };
     int N;
     std::vector<edge> edges;
-    // Temporal
     std::vector<std::vector<long long>> capacity;
+    // Temporal
     std::vector<int> prev;
 
 public:
-    // O(1)
-    MinimumCut(int size): N(size) {}
+    // O(V^2)
+    MinimumCut(int n)
+        : N(n)
+        , capacity(n, std::vector<long long>(n, 0))
+    {
+        // Do nothing
+    }
     // O(1)
     void add_edge(int from, int to, int capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
+        if (capacity < 0) throw;
         edges.push_back({ from, to, capacity });
+        this->capacity[from][to] += capacity;
     }
     // O(MaximumFlow's Algorithm) + O(V^2)
     void solve(
-        int s, int t, const std::vector<std::vector<long long>>& flow,
+        int s, int t,
+        const std::vector<std::vector<long long>>& flow,
         std::set<int>& setS, std::set<int>& setT
     ) {
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
 
-        capacity.assign(N, std::vector<long long>(N, 0));
-        for (auto e : edges) {
-            capacity[e.from][e.to] += e.capacity;
-        }
         prev.assign(N, -1);
         setS.clear();
         setT.clear();

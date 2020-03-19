@@ -19,12 +19,18 @@ class MaximumFlow {
 
     int N;
     std::vector<std::vector<edge>> adj;
-    // Temporal variables
     std::vector<std::vector<long long>> capacity, flow;
 
 public:
-    // O(N)
-    MaximumFlow(int size): N(size), adj(size) {}
+    // O(V)
+    MaximumFlow(int n)
+        : N(n)
+        , adj(n)
+        , capacity(n, std::vector<long long>(n, 0))
+        , flow(n, std::vector<long long>(n, 0))
+    {
+        // Do nothing
+    }
     // O(1)
     int size() {
         return N;
@@ -33,28 +39,29 @@ public:
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
+        if (capacity < 0) throw;
         adj[from].push_back({ to, capacity });
         adj[to].push_back({ from, 0 });
+        this->capacity[from][to] += capacity;
+    }
+    // O(V^2)
+    void clear_flow() {
+        flow.assign(N, std::vector<long long>(N, 0));
+    }
+    // O(V^2)
+    std::vector<std::vector<long long>> get_flow() {
+        return flow;
     }
     // O(V E^2)
-    long long solve(int s, int t, std::vector<std::vector<long long>>& out_flow) {
+    // NOTE: This memorizes the residual network.
+    long long solve(int s, int t) {
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
-
-        capacity.assign(N, std::vector<long long>(N, 0));
-        for (int u = 0; u < N; ++u) {
-            for (auto e : adj[u]) {
-                capacity[u][e.to] += e.capacity;
-            }
-        }
-        flow.assign(N, std::vector<long long>(N, 0));
 
         long long ans = 0;
         while (auto new_flow = bfs(s, t)) {
             ans += new_flow;
         }
-
-        out_flow = flow;
         return ans;
     }
 

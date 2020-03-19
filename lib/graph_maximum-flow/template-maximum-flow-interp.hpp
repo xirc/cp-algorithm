@@ -11,10 +11,13 @@ template <class MaximumFlow>
 class SolverInterp {
     using mat = std::vector<std::vector<long long>>;
     struct edge { int from, to; long long capacity; };
-    int m_size;
+    int N;
     std::vector<edge> edges;
+    MaximumFlow maxflow;
+    MinimumCut mincut;
 
 public:
+    SolverInterp(): N(0), edges(0), maxflow(0), mincut(0) {}
     void action_init() {
         int size;
         std::cin >> size;
@@ -22,28 +25,32 @@ public:
             std::cout << "false" << std::endl;
             return;
         }
-        m_size = size;
+        N = size;
         edges.clear();
+        maxflow = MaximumFlow(N);
+        mincut = MinimumCut(N);
         std::cout << "true" << std::endl;
     }
-
     void action_add_edge() {
         int from, to;
         long long capacity;
         std::cin >> from >> to >> capacity;
-        if (from < 0 || from >= m_size ||
-            to < 0 || to >= m_size)
+        if (from < 0 || from >= N ||
+            to < 0 || to >= N)
         {
             std::cout << "false" << std::endl;
             return;
         }
         edges.push_back({ from, to, capacity });
+        maxflow.add_edge(from, to, capacity);
+        mincut.add_edge(from, to, capacity);
         std::cout << "true" << std::endl;
     }
-
+    void action_clear_flow() {
+        maxflow.clear_flow();
+        cout << "true" << endl;
+    }
     void action_solve() {
-        const int N = m_size;
-
         int source, sink;
         std::cin >> source >> sink;
         if (source < 0 || source >= N ||
@@ -52,22 +59,12 @@ public:
             std::cout << "false" << std::endl;
             return;
         }
-
         // Maximum Flow
-        std::vector<std::vector<long long>> flow;
-        MaximumFlow maxflow(N);
-        for (auto e : edges) {
-            maxflow.add_edge(e.from, e.to, e.capacity);
-        }
-        auto maximum_flow = maxflow.solve(source, sink, flow);
+        auto maximum_flow = maxflow.solve(source, sink);
+        auto flow = maxflow.get_flow();
         dump_maximum_flow(maximum_flow, flow);
-
         // Minimum Cut
         std::set<int> setS, setT;
-        MinimumCut mincut(m_size);
-        for (auto e : edges) {
-            mincut.add_edge(e.from, e.to, e.capacity);
-        }
         mincut.solve(source, sink, flow, setS, setT);
         dump_minimum_cut(setS, setT);
     }
@@ -102,5 +99,6 @@ template <class Interp>
 void setup(Interp* interp, std::map<std::string,Command>& commands) {
     commands["init"] = { "init {size}", std::bind(&Interp::action_init, interp) };
     commands["edge"] = { "edge {from} {to} {capacity}", std::bind(&Interp::action_add_edge, interp) };
+    commands["clear"] = { "clear", std::bind(&Interp::action_clear_flow, interp) };
     commands["solve"] = { "solve {source} {sink}", std::bind(&Interp::action_solve, interp) };
 }

@@ -20,15 +20,23 @@ class MaximumFlow {
 
     int N;
     std::vector<edge> edges;
-    // Temporal
-    std::queue<int> excess_verts;
     std::vector<std::vector<long long>> capacity, flow;
+    // Temporal
+    int S;
+    long long maxflow;
+    std::queue<int> excess_vertices;
     std::vector<int> height, seen;
     std::vector<long long> excess;
 
 public:
-    // O(1)
-    MaximumFlow(int size): N(size) {}
+    // O(V^2)
+    MaximumFlow(int n)
+        : N(n)
+        , capacity(n, std::vector<long long>(n, 0))
+        , flow(n, std::vector<long long>(n, 0))
+    {
+        // Do nothing
+    }
     // O(1)
     int size() {
         return N;
@@ -37,42 +45,45 @@ public:
     void add_edge(int from, int to, long long capacity) {
         throw_if_invalid_index(from);
         throw_if_invalid_index(to);
+        if (capacity < 0) throw;
         edges.push_back({ from, to, capacity });
         edges.push_back({ to, from, 0 });
+        this->capacity[from][to] += capacity;
+    }
+    // O(E)
+    void clear_flow() {
+        flow.assign(N, std::vector<long long>(N, 0));
+    }
+    // O(V^2)
+    std::vector<std::vector<long long>> get_flow() {
+        return flow;
     }
     // O(V^2 E)
-    long long solve(int s, int t, std::vector<std::vector<long long>>& out_flow) {
+    // NOTE: This memorizes the residual network.
+    long long solve(int s, int t) {
         throw_if_invalid_index(s);
         throw_if_invalid_index(t);
 
-        excess_verts = std::queue<int>();
-        capacity.assign(N, std::vector<long long>(N, 0));
-        flow.assign(N, std::vector<long long>(N, 0));
+        excess_vertices = std::queue<int>();
         height.assign(N, 0);
         excess.assign(N, 0);
         seen.assign(N, 0);
 
-        for (auto e : edges) {
-            capacity[e.from][e.to] += e.capacity;
-        }
+        S = s;
+        maxflow = 0;
         height[s] = N;
         excess[s] = inf;
         for (int u = 0; u < N; ++u) {
             push(s, u);
         }
 
-        while (!excess_verts.empty()) {
-            int u = excess_verts.front(); excess_verts.pop();
+        while (!excess_vertices.empty()) {
+            int u = excess_vertices.front(); excess_vertices.pop();
             if (u == s || u == t) continue;
             discharge(u);
         }
 
-        out_flow = flow;
-        long long max_flow = 0;
-        for (int u = 0; u < N; ++u) {
-            max_flow += flow[s][u];
-        }
-        return max_flow;
+        return maxflow;
     }
 
 private:
@@ -101,8 +112,10 @@ private:
         excess[u] -= d;
         excess[v] += d;
         if (d > 0 && excess[v] == d) {
-            excess_verts.push(v);
+            excess_vertices.push(v);
         }
+        if (u == S) maxflow += d;
+        if (v == S) maxflow -= d;
     }
     void relabel(int u) {
         auto h = inf_int;
