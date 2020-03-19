@@ -1,0 +1,8 @@
+init 5
+edge 0 1
+edge 1 0
+edge 1 2
+edge 2 4
+edge 4 3
+edge 3 2
+solve
