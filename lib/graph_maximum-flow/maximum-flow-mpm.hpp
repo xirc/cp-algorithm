@@ -7,6 +7,9 @@
 #include <set>
 #include <queue>
 
+// Maximum Flow
+// MPM Algorithm
+// Memory: O(V^2)
 class MaximumFlow {
     static const long long inf = 1e18;
     struct edge {

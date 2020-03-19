@@ -7,10 +7,10 @@
 #include <vector>
 #include <functional>
 
-// BinaryIndexedTree
-// Memory O(N)
-// Query O(logN)
-// Update O(logN)
+// Binary Indexed Tree
+// Memory: O(N)
+// Query: O(logN)
+// Update: O(logN)
 template <class T = long long>
 class BinaryIndexedTree {
 public:

@@ -3,6 +3,8 @@
 #include <vector>
 #include <queue>
 
+// Bipartite Check
+// Memory: O(V + E)
 class BipartiteCheck {
     int N;
     std::vector<std::vector<int>> adj;

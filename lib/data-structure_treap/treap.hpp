@@ -7,6 +7,8 @@
 #include <functional>
 #include <random>
 
+// Treap
+// Memory: O(N)
 template <class T, class E>
 class Treap {
 public:

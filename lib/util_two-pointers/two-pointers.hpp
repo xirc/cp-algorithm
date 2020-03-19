@@ -3,6 +3,7 @@
 // Verified
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C
 
+// Two Pointers
 template <class T>
 class TwoPointers {
 protected:

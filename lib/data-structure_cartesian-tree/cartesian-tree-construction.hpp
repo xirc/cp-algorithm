@@ -3,6 +3,11 @@
 #include <vector>
 #include <stack>
 
+// Construct cartesian tree (Heap)
+// Time: O(N)
+// Memory: O(N)
+// NOTE:
+//   ans[i] = index of parent fo a node 'i'
 std::vector<int> construct(const std::vector<int>& ary) {
     const int N = ary.size();
     std::vector<int> parent(N, -1);

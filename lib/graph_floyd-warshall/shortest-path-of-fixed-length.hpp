@@ -1,11 +1,11 @@
-// Sortest paths of a fixed length
-
 #pragma once
 
 #include <vector>
 #include <map>
 #include <algorithm>
 
+// Sortest paths of a fixed length
+// Memory: O(V^2)
 class Solver {
     using vec = std::vector<long long>;
     using mat = std::vector<vec>;

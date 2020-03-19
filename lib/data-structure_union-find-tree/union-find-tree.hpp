@@ -6,7 +6,7 @@
 #include <vector>
 #include <algorithm>
 
-// UnionFindTree
+// Union Find Tree (Disjoint Set Union)
 // Memory: O(N)
 class UnionFindTree {
 public:

@@ -3,11 +3,12 @@
 #include <vector>
 #include <set>
 
-// SegmentTree (PointUpdate,RangeQuery)
-// Memory O(N log N)
-// Build O(N log^2 N)
-// Query O(log^2 N)
-// Update O(log^2 N) 
+// SegmentTree
+//   (PointUpdate,RangeQuery)
+// Memory: O(N log N)
+// Build: O(N log^2 N)
+// Query: O(log^2 N)
+// Update: O(log^2 N) 
 template<class T>
 class SegmentTree {
 public:

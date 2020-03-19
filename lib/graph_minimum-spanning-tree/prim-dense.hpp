@@ -2,6 +2,9 @@
 
 #include <vector>
 
+// Minimum Spanning Tree
+// Prim's Algorithm for Dense Graph
+// Memory: O(V^2)
 class PrimDense {
     static const long long inf = 1e18;
     int N;

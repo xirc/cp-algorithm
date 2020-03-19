@@ -6,6 +6,8 @@
 #include <vector>
 #include <cmath>
 
+// LCA: Lowest Common Ancestor
+// Memory: O(V log V + E)
 class LCA {
     int N, L;
     std::vector<int> tin, tout;

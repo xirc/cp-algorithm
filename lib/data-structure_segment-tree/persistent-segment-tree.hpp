@@ -6,11 +6,12 @@
 #include <functional>
 #include <memory>
 
-// PersistentSegmentTree (RangeUpdate,RangeQuery)
-// Memory O(N * H)
-// Build  O(N)
-// Query O(log N)
-// Update O(log N)
+// Persistent Segment Tree
+//   (RangeUpdate,RangeQuery)
+// Memory: O(N * H)
+// Build: O(N)
+// Query: O(log N)
+// Update: O(log N)
 template <class T, class E>
 class SegmentTree {
 public:

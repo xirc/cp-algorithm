@@ -7,6 +7,9 @@
 #include <set>
 #include <algorithm>
 
+// Minimum Spanning Tree
+// Kruskal's Algorithm
+// Memory: O(V + E)
 class KruskalSimple {
     struct edge {
         int u, v;

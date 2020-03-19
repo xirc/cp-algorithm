@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 
+// Bellman Ford Algorith
+// Memory: O(V + E)
 class BellmanFord {
     struct edge { int from, to; long long cost; };
     int N;

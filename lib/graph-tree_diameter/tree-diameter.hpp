@@ -7,6 +7,8 @@
 #include <queue>
 #include <tuple>
 
+// Diameter of a Tree
+// Memory: O(V + E)
 class TreeDiameter {
     struct edge {
         int to;

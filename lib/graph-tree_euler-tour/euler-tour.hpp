@@ -6,6 +6,8 @@
 #include <vector>
 #include <stack>
 
+// Euler Tour in Tree
+// Memory: O(V + E)
 class EulerTrour {
     int N;
     std::vector<std::vector<int>> adj;

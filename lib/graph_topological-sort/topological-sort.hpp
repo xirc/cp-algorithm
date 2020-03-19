@@ -8,6 +8,7 @@
 #include <algorithm>
 
 // Topological Sort
+// Memory: O(V + E)
 class TopologicalSort {
     int N;
     std::vector<std::vector<int>> adj;

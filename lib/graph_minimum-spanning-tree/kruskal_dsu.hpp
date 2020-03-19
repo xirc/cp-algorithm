@@ -7,6 +7,9 @@
 #include <set>
 #include <algorithm>
 
+// Minimum Spanning Tree
+// Kruskal's Algorithm
+// Memory: O(V + E)
 class Kruskal {
     struct UnionFindTree {
         struct node { int parent, rank; };

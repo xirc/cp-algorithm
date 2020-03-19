@@ -8,6 +8,7 @@
 
 // Use Dijkstra(ver: priority_queue<>) in most case.
 // This has better performance than Dijkstra(ver: set<>).
+// Memory: O(V + E)
 class Dijkstra {
     struct edge { int to; long long distance; };
     int N;

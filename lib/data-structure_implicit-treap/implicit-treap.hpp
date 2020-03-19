@@ -9,6 +9,8 @@
 #include <random>
 #include <memory>
 
+// Implicit Treap
+// Memory: O(N)
 template <class T, class E>
 class ImplicitTreap {
 public:

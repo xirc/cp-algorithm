@@ -6,6 +6,9 @@
 #include <vector>
 #include <set>
 
+// Minimum Spanning Tree
+// Prim's Algorithm for Sparse Graph
+// Memory: O(V + E)
 class PrimSparse {
     static const long long inf = 1e18;
     struct edge {

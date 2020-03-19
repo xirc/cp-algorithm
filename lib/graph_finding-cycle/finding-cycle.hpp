@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 
+// Finding a cycle in the graph
+// Memory: O(V + E)
 class Solver {
     int N;
     std::vector<std::vector<int>> adj;

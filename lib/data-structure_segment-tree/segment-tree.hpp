@@ -7,11 +7,12 @@
 #include <algorithm>
 #include <functional>
 
-// SegmentTree (PointUpdate,RangeQuery)
-// Memory O(N)
-// Build O(N)
-// Query O(log N)
-// Update O(log N)
+// SegmentTree
+//   (PointUpdate,RangeQuery)
+// Memory: O(N)
+// Build: O(N)
+// Query: O(log N)
+// Update: O(log N)
 template<class T, class E>
 class SegmentTree {
 public:

@@ -8,8 +8,8 @@
 #include <algorithm>
 #include <iostream>
 
-// UnionFindTree
-// Memory O(N)
+// Union Find Tree (Disjoint Set Union)
+// Memory: O(N)
 // T should be group.
 template <class T>
 class UnionFindTree {

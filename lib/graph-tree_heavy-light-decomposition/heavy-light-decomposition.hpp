@@ -10,6 +10,8 @@
 #include <functional>
 #include <tuple>
 
+// Heavy Light Decomposition
+// Memory: O(V + E)
 class HeavyLightDecomposition {
     int N;
     std::vector<int> index, inverse, out, head, heavy, parent, depth, subsize;

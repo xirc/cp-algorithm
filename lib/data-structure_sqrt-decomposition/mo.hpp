@@ -4,6 +4,8 @@
 #include <vector>
 #include <algorithm>
 
+// Mo's Algorithm
+// Memory: Q + N
 template <class T>
 class Mo {
 public:

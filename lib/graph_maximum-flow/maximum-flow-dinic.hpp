@@ -7,6 +7,9 @@
 #include <queue>
 #include <algorithm>
 
+// Maximum Flow
+// Dinic Algorithm
+// Memory: O(V^2)
 class MaximumFlow {
     static const long long inf = 1e18;
     struct edge {

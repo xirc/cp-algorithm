@@ -5,6 +5,8 @@
 
 #include <vector>
 
+// LCA: Lowest Common Ancestor
+// Memory: O(V + E + Q)
 class LCA {
     struct Query { int u, idx; };
     struct DSU {

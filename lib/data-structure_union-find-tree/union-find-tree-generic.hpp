@@ -7,8 +7,8 @@
 #include <functional>
 #include <algorithm>
 
-// UnionFindTree
-// Memory O(N)
+// Union Find Tree (Disjoint Set Union)
+// Memory: O(N)
 template <class T>
 class UnionFindTree {
 public:

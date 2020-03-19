@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 
+// Finding a negative cycle
+// Memory: O(V + E)
 class BellmanFord {
     struct edge {
         int from, to;

@@ -7,6 +7,8 @@
 #include <queue>
 #include <algorithm>
 
+// Floyd Warshall Algorithm
+// Memory: O(V^3)
 class FloydWarshall {
     int N;
     std::vector<std::vector<long long>> adjmat;

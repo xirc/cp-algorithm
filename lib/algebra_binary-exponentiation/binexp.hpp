@@ -1,6 +1,8 @@
 #pragma once
 
-// O (logN)
+// Binary Exponentation
+// Time: O(logN)
+// Memory: O(1)
 template<class T>
 T binpow(T a, long long n, const T& id) {
     if (n < 0) throw;

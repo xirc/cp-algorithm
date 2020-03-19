@@ -6,6 +6,8 @@
 #include <vector>
 #include <algorithm>
 
+// LCA: Lowest Common Ancestor
+// Memory: O(V + E)
 class LCA {
     int N, M;
     std::vector<int> height, first, euler, segtree;

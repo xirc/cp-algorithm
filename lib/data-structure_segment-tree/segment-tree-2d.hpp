@@ -4,10 +4,11 @@
 #include <algorithm>
 #include <functional>
 
-// SegmentTree (PointUpdate,RangeQuery)
-// Memory O(NM)
-// Query (logN logM)
-// Update (logN logM)
+// SegmentTree
+//   (PointUpdate,RangeQuery)
+// Memory: O(NM)
+// Query: (logN logM)
+// Update: (logN logM)
 template <class T, class E>
 class SegmentTree {
 public:

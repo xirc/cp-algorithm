@@ -6,7 +6,9 @@
 #include <vector>
 #include <queue>
 
+// Shortest Path Faster Algorithm
 // More faster than Bellman-Ford on average.
+// Memory: O(V + E)
 class SPFA {
     struct edge { int to; long long cost; };
     int N;

@@ -7,6 +7,8 @@
 #include <queue>
 #include <algorithm>
 
+// Minimum Cost Flow
+// Memory: O(V + E)
 class MinimumCostFlow {
     static const long long inf = 1e18;
     struct edge {

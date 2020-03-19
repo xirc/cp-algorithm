@@ -7,6 +7,8 @@
 #include <cmath>
 #include <algorithm>
 
+// LCA: Lowest Common Ancestor
+// Memory: O(V + E)
 class LCA {
     std::vector<int> first;
     std::vector<int> euler;

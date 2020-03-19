@@ -9,6 +9,7 @@
 // Use Dijkstra(ver: set<>) if the peformance is very important.
 // If you use the complex data structure in set<>,
 // use Dijkstra(ver: priority_queue<>) which is better performance in such case.
+// Memory: O(V + E)
 class Dijkstra {
     struct edge { int to; long long distance; };
     int N;

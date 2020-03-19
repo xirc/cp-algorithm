@@ -7,6 +7,9 @@
 #include <queue>
 #include <algorithm>
 
+// Maximum Flow
+// Preflow Push-Relabel Algorithm using Highest Label Strategy
+// Memory: O(V^2)
 class MaximumFlow {
     static const long long inf = 1e18;
     static const int inf_int = 1e8;

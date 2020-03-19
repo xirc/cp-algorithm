@@ -3,6 +3,8 @@
 #include <vector>
 #include <algorithm>
 
+// Finding a negative cycle
+// Memory: O(V^2 + E)
 class FloydWarshall {
     static const long long inf = 1e18;
     int N;
