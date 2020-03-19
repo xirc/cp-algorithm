@@ -1,28 +1,38 @@
 #pragma once
 
-#include <utility>
 #include <vector>
 #include <algorithm>
+#include <tuple>
 
 // Mo's Algorithm
 // Memory: Q + N
 template <class T>
 class Mo {
-public:
-    static const int S = 700; // Block Size
+    // use 'const' for compiler's optimization
+    // S = sqrt(N) or sqrt(Q)
+    static const int S = 700;
     struct Query {
         int l, r, idx;
-        bool operator<(Query &rhs) {
-            return std::make_pair(l / S, r) < std::make_pair(rhs.l / S, rhs.r);
+        bool operator<(Query &other) {
+            return std::make_pair(l / S, r) < std::make_pair(other.l / S, other.r);
         }
     };
-    // O((N+Q)sqrt(N))
-    std::vector<T> solve(std::vector<Query>& queries) {
+
+public:
+    // O((N+Q)sqrt(N)) if S = sqrt(N)
+    // O(N sqrt(Q)) if S = sqrt(Q)
+    std::vector<T> solve(std::vector<std::pair<int,int>>& queries) {
         std::vector<T> ans(queries.size());
-        std::sort(ans.begin(), ans.end());
+        std::vector<Query> Q(queries.size());
+        for (int i = 0; i < Q.size(); ++i) {
+            int l, r;
+            std::tie(l, r) = queries[i];
+            Q[i] = { l, r, i };
+        }
+        std::sort(Q.begin(), Q.end());
 
         int cl = 0, cr = -1;
-        for (auto query : queries) {
+        for (auto query : Q) {
             while (cl > query.l){
                 cl--;
                 add(cl);
