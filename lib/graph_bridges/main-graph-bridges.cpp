@@ -33,8 +33,8 @@ void action_edge() {
 void action_solve() {
     auto bridges = solver.solve();
     for (int i = 0; i < bridges.size(); ++i) {
-        int u, v;
-        tie(u, v) = bridges[i];
+        int id, u, v;
+        tie(id, u, v) = bridges[i];
         if (i > 0) cout << " ";
         cout << "(" << u << "," << v << ")";
     }
