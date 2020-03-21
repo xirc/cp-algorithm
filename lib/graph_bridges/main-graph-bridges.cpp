@@ -1,10 +1,10 @@
 #include <iostream>
 #include "../template-main.hpp"
-#include "./graph-bridge.hpp"
+#include "./graph-bridges.hpp"
 
 using namespace std;
 
-Bridge solver(0);
+Bridges solver(0);
 
 void action_init() {
     int size;
@@ -13,7 +13,7 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    solver = Bridge(size);
+    solver = Bridges(size);
     cout << "true" << endl;
 }
 
@@ -42,7 +42,7 @@ void action_solve() {
 }
 
 void setup(string& header, map<string,Command>& commands) {
-    header = "Bridge of a Graph";
+    header = "Bridges of a Graph";
     commands["init"] = { "init {size}", action_init };
     commands["edge"] = { "edge {u} {v}", action_edge };
     commands["solve"] = { "solve", action_solve };

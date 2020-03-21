@@ -6,10 +6,10 @@
 #include <vector>
 #include <algorithm>
 
-// Bridge of a Graph
+// Bridges of a Graph
 // Memory: O(V + E)
 // NOTE: undirected, multi-edge, no-self-loop
-class Bridge {
+class Bridges {
     struct edge { int id, to; };
 
     int N, M;
@@ -22,7 +22,7 @@ class Bridge {
 
 public:
     // O(V)
-    Bridge(int n): N(n), M(0), adj(n) {}
+    Bridges(int n): N(n), M(0), adj(n) {}
     // O(1)
     int size() {
         return N;
