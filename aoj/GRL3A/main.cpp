@@ -1,3 +1,5 @@
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A
+
 #include <vector>
 #include <algorithm>
 
