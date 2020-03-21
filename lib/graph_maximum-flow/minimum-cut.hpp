@@ -5,6 +5,7 @@
 
 // Minimum Cut
 // Memory: O(V^2)
+// NOTE: directed, multi-edge, self-loop
 class MinimumCut {
     struct edge { int from, to, capacity; };
     int N;

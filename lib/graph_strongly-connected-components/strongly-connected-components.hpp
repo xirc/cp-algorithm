@@ -9,6 +9,7 @@
 
 // Strongly Connected Components
 // Memory: O(E + V)
+// NOTE: directed, multi-edge
 class SCC {
     int N;
     std::vector<std::vector<int>> G;

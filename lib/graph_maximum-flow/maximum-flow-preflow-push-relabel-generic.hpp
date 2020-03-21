@@ -10,6 +10,7 @@
 // Maximum Flow
 // Preflow Push-Relabel Algorithm
 // Memory: O(V^2)
+// NOTE: directed, multi-edge, self-loop
 class MaximumFlow {
     static const long long inf = 1e18;
     static const int inf_int = 1e8;

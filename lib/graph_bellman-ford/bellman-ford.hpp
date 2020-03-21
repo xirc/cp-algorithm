@@ -8,6 +8,7 @@
 
 // Bellman Ford Algorith
 // Memory: O(V + E)
+// NOTE: directed, multi-edge, self-loop, negative-weight
 class BellmanFord {
     struct edge { int from, to; long long cost; };
     int N;

@@ -9,6 +9,7 @@
 // Shortest Path Faster Algorithm
 // More faster than Bellman-Ford on average.
 // Memory: O(V + E)
+// NOTE: directed, multi-edge, self-loop, negative-weight
 class SPFA {
     struct edge { int to; long long cost; };
     int N;

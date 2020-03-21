@@ -8,6 +8,7 @@
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V + E)
+// NOTE: undirected
 class LCA {
     int N, M;
     std::vector<int> height, first, euler, segtree;

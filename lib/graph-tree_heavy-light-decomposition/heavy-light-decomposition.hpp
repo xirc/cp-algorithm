@@ -12,6 +12,7 @@
 
 // Heavy Light Decomposition
 // Memory: O(V + E)
+// NOTE: undirected
 class HeavyLightDecomposition {
     int N;
     std::vector<int> index, inverse, out, head, heavy, parent, depth, subsize;

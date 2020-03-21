@@ -5,6 +5,7 @@
 
 // Number of paths of a fixed length
 // Memory: O(V^2)
+// NOTE: directed, no-multi-edge, no-self-loop
 class Solver {
     using vec = std::vector<long long>;
     using mat = std::vector<vec>;

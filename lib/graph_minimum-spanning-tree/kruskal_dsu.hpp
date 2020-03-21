@@ -10,6 +10,7 @@
 // Minimum Spanning Tree
 // Kruskal's Algorithm
 // Memory: O(V + E)
+// NOTE: undirected, multi-edge, negative-weight
 class Kruskal {
     struct UnionFindTree {
         struct node { int parent, rank; };

@@ -9,6 +9,7 @@
 
 // Floyd Warshall Algorithm
 // Memory: O(V^3)
+// NOTE: directed, no-multi-edge, no-self-loop
 class FloydWarshall {
     int N;
     std::vector<std::vector<long long>> adjmat;

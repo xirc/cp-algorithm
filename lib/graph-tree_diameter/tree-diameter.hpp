@@ -9,6 +9,7 @@
 
 // Diameter of a Tree
 // Memory: O(V + E)
+// NOTE: undirected, no-negative-weight
 class TreeDiameter {
     struct edge {
         int to;

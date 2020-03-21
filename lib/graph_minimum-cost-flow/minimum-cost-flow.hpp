@@ -9,6 +9,7 @@
 
 // Minimum Cost Flow
 // Memory: O(V + E)
+// NOTE: directed, multi-edge, self-loop, negative-cost
 class MinimumCostFlow {
     static const long long inf = 1e18;
     struct edge {

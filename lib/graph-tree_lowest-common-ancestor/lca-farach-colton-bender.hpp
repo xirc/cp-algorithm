@@ -9,6 +9,7 @@
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V + E)
+// NOTE: undirected
 class LCA {
     std::vector<int> first;
     std::vector<int> euler;

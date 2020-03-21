@@ -9,6 +9,7 @@
 // Minimum Spanning Tree
 // Prim's Algorithm for Sparse Graph
 // Memory: O(V + E)
+// NOTE: undirected, no-multi-edge, negative-weight
 class PrimSparse {
     static const long long inf = 1e18;
     struct edge {

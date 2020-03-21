@@ -8,6 +8,7 @@
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V log V + E)
+// NOTE: undirected
 class LCA {
     int N, L;
     std::vector<int> tin, tout;

@@ -8,6 +8,7 @@
 
 // Finding a cycle in the graph
 // Memory: O(V + E)
+// NOTE: directed, multi-edge, self-loop
 class Solver {
     int N;
     std::vector<std::vector<int>> adj;

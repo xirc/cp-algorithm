@@ -8,7 +8,7 @@
 
 // Bridge of a Graph
 // Memory: O(V + E)
-// NOTE: allow multi-edge, but no self-loop
+// NOTE: undirected, multi-edge, no-self-loop
 class Bridge {
     struct edge { int id, to; };
 

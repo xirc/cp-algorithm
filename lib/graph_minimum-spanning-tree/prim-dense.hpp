@@ -5,6 +5,7 @@
 // Minimum Spanning Tree
 // Prim's Algorithm for Dense Graph
 // Memory: O(V^2)
+// NOTE: undirected, no-multi-edge, negative-weight
 class PrimDense {
     static const long long inf = 1e18;
     int N;

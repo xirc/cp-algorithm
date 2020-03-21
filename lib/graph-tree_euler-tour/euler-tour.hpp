@@ -8,6 +8,7 @@
 
 // Euler Tour in Tree
 // Memory: O(V + E)
+// NOTE: undirected
 class EulerTrour {
     int N;
     std::vector<std::vector<int>> adj;

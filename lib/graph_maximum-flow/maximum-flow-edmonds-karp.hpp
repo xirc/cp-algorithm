@@ -10,6 +10,7 @@
 // Maximum Flow
 // Edmonds&Karp Algorithm
 // Memory: O(V^2)
+// NOTE: directed, multi-edge, self-loop
 class MaximumFlow {
     static const long long inf = 1e18;
     struct edge {

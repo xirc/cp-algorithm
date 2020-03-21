@@ -9,6 +9,7 @@
 
 // Topological Sort
 // Memory: O(V + E)
+// NOTE: directed, multi-edge
 class TopologicalSort {
     int N;
     std::vector<std::vector<int>> adj;

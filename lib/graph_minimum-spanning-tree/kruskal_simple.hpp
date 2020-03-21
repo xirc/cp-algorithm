@@ -10,6 +10,7 @@
 // Minimum Spanning Tree
 // Kruskal's Algorithm
 // Memory: O(V + E)
+// NOTE: undirected, multi-edge, negative-weight
 class KruskalSimple {
     struct edge {
         int u, v;

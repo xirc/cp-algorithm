@@ -5,6 +5,7 @@
 
 // Bipartite Check
 // Memory: O(V + E)
+// NOTE: undirected, no-multi-edge, self-loop
 class BipartiteCheck {
     int N;
     std::vector<std::vector<int>> adj;
