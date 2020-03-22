@@ -1,5 +1,8 @@
 #pragma once
 
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A
+
 #include <vector>
 
 // Bipartite Maximum Matching
