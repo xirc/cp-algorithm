@@ -1,0 +1,82 @@
+#include <vector>
+
+// Bipartite Maximum Matching
+// Memory: O(V + E)
+// NOTE: undirected, bipartite
+class BipartiteMaximumMatching {
+    int N;
+    std::vector<std::vector<int>> adj;
+    // Temporal
+    std::vector<int> match;
+    std::vector<bool> used;
+
+public:
+    // O(N)
+    BipartiteMaximumMatching(int n = 0): N(n), adj(n) {}
+    // O(1)
+    int size() {
+        return N;
+    }
+    // O(1)
+    void add_edge(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        adj[u].push_back(v);
+        adj[v].push_back(u);
+    }
+    // O(V(V+E))
+    int solve(std::vector<int>& out_match) {
+        int ans = 0;
+        match.assign(N, -1);
+        for (int v = 0; v < N; ++v) {
+            if (match[v] != -1) continue;
+            used.assign(N, false);
+            if (dfs(v)) ans++;
+        }
+        out_match = std::vector<int>(match);
+        return ans;
+    }
+
+private:
+    void throw_if_invalid_index(int index) {
+        if (index < 0 || index >= N) throw "index out of range";
+    }
+    bool dfs(int v) {
+        used[v] = true;
+        for (int u : adj[v]) {
+            int w = match[u];
+            if (w == -1 || (!used[w] && dfs(w))) {
+                match[v] = u;
+                match[u] = v;
+                return true;
+            }
+        }
+        return false;
+    }
+};
+
+
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+
+    int X, Y, E;
+    cin >> X >> Y >> E;
+
+    BipartiteMaximumMatching matching(X + Y);
+    for (int i = 0; i < E; ++i) {
+        int x, y;
+        cin >> x >> y;
+        matching.add_edge(x, y + X);
+    }
+
+    vector<int> match;
+    int ans = matching.solve(match);
+    cout << ans << endl;
+
+    return 0;
+}
