@@ -16,7 +16,7 @@ class TopologicalSort {
 
 public:
     // O(V)
-    TopologicalSort(int n): N(n), adj(n) {}
+    TopologicalSort(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

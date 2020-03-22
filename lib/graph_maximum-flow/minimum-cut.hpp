@@ -16,7 +16,7 @@ class MinimumCut {
 
 public:
     // O(V^2)
-    MinimumCut(int n)
+    MinimumCut(int n = 0)
         : N(n)
         , capacity(n, std::vector<long long>(n, 0))
     {

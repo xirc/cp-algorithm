@@ -21,37 +21,11 @@ class LCA {
 
 public:
     // O(N)
-    LCA(std::vector<std::vector<int>>& adj) {
-        build(adj);
+    LCA(const std::vector<std::vector<int>>& adj = {}, int root = 0) {
+        build(adj, root);
     }
-    // O(1)
-    int query(int v, int u) {
-        int l = first[v], r = first[u];
-        if (l > r) {
-            std::swap(l, r);
-        }
-        int bl = l / block_size, br = r / block_size;
-        if (bl == br) {
-            int i = query_in_block(bl, l % block_size, r % block_size);
-            return euler[i];
-        }
-        int ans1 = query_in_block(bl, l % block_size, block_size - 1);
-        int ans2 = query_in_block(br, 0, r % block_size);
-        int ans = min_by_height(ans1, ans2);
-        if (br - bl <= 1) {
-            return euler[ans];
-        }
-        int w = (int)log2(br - bl - 1);
-        int ans3 = sparse_table[bl + 1][w];
-        int ans4 = sparse_table[br - (1 << w)][w];
-        ans = min_by_height(ans, ans3);
-        ans = min_by_height(ans, ans4);
-        return euler[ans];
-    }
-
-private:
     // O(N)
-    void build(std::vector<std::vector<int>>& adj, int root = 0) {
+    void build(const std::vector<std::vector<int>>& adj, int root = 0) {
         const int N = adj.size();
 
         // Get euler tour & indice of first occurences.
@@ -116,8 +90,34 @@ private:
             }
         }
     }
+    // O(1)
+    int query(int v, int u) {
+        int l = first[v], r = first[u];
+        if (l > r) {
+            std::swap(l, r);
+        }
+        int bl = l / block_size, br = r / block_size;
+        if (bl == br) {
+            int i = query_in_block(bl, l % block_size, r % block_size);
+            return euler[i];
+        }
+        int ans1 = query_in_block(bl, l % block_size, block_size - 1);
+        int ans2 = query_in_block(br, 0, r % block_size);
+        int ans = min_by_height(ans1, ans2);
+        if (br - bl <= 1) {
+            return euler[ans];
+        }
+        int w = (int)log2(br - bl - 1);
+        int ans3 = sparse_table[bl + 1][w];
+        int ans4 = sparse_table[br - (1 << w)][w];
+        ans = min_by_height(ans, ans3);
+        ans = min_by_height(ans, ans4);
+        return euler[ans];
+    }
+
+private:
     // O(N)
-    void dfs_euler(std::vector<std::vector<int>>& adj, int v, int p, int h) {
+    void dfs_euler(const std::vector<std::vector<int>>& adj, int v, int p, int h) {
         euler.push_back(v);
         first[v] = euler.size() - 1;
         height[v] = h;

@@ -31,7 +31,7 @@ protected:
 public:
     // O(N)
     UnionFindTree(
-        int n,
+        int n = 0,
         const F& group_plus = std::plus<T>(),
         const F& group_minus = std::minus<T>(),
         const T& group_id = T()

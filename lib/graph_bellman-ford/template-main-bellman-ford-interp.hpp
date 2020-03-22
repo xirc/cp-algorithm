@@ -10,7 +10,7 @@
 template <class Solver>
 class SolverInterp {
     using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = SolverPtr(new Solver(0));
+    SolverPtr solver = SolverPtr(new Solver());
 
 public:
     void action_init() {

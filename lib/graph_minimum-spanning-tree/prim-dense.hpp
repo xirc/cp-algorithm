@@ -13,9 +13,9 @@ class PrimDense {
 
 public:
     // O(V^2)
-    PrimDense(int size)
-        : N(size)
-        , adjmat(size, std::vector<long long>(size, inf))
+    PrimDense(int n = 0)
+        : N(n)
+        , adjmat(n, std::vector<long long>(n, inf))
     {}
     // O(1)
     int size() {

@@ -25,7 +25,7 @@ class KruskalSimple {
 
 public:
     // O(1)
-    KruskalSimple(int size): N(size) {}
+    KruskalSimple(int n = 0): N(n) {}
     // O(1)
     int size() {
         return N;

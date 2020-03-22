@@ -23,7 +23,7 @@ class MinimumCostFlow {
 
 public:
     // O(N)
-    MinimumCostFlow(int size): N(size), adj(size) {}
+    MinimumCostFlow(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

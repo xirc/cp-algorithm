@@ -30,7 +30,7 @@ class MaximumFlow {
 
 public:
     // O(V^2)
-    MaximumFlow(int n)
+    MaximumFlow(int n = 0)
         : N(n)
         , capacity(n, std::vector<long long>(n, 0))
         , flow(n, std::vector<long long>(n, 0))

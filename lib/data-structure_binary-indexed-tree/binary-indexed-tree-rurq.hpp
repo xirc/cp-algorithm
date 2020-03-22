@@ -19,10 +19,10 @@ protected:
 
 public:
     // O(N)
-    BinaryIndexedTree(int size)
-        : N(size + 1)
-        , bit1(size + 1)
-        , bit2(size + 1)
+    BinaryIndexedTree(int n = 0)
+        : N(n + 1)
+        , bit1(n + 1)
+        , bit2(n + 1)
     {
         // Do nothing
     }

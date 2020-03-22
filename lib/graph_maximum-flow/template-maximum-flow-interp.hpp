@@ -17,7 +17,7 @@ class SolverInterp {
     MinimumCut mincut;
 
 public:
-    SolverInterp(): N(0), edges(0), maxflow(0), mincut(0) {}
+    SolverInterp(): N(0), edges(), maxflow(), mincut() {}
     void action_init() {
         int size;
         std::cin >> size;

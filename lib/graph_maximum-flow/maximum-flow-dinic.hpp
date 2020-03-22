@@ -26,7 +26,7 @@ class MaximumFlow {
 
 public:
     // O(V)
-    MaximumFlow(int size): N(size), adj(size) {}
+    MaximumFlow(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

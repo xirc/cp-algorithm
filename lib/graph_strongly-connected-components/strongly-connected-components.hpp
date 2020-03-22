@@ -17,7 +17,7 @@ class SCC {
 
 public:
     // O(N)
-    SCC(int size): N(size), G(size), GT(size) {}
+    SCC(int n = 0): N(n), G(n), GT(n) {}
     // O(1)
     int size() {
         return N;

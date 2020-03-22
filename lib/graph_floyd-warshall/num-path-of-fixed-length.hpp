@@ -14,7 +14,7 @@ class Solver {
 
 public:
     // O(V^2)
-    Solver(int size): N(size), matrix(size, vec(size, 0)) {}
+    Solver(int n = 0): N(n), matrix(n, vec(n, 0)) {}
     // O(1)
     int size() {
         return N;

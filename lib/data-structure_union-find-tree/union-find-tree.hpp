@@ -18,7 +18,7 @@ protected:
 
 public:
     // O(N)
-    UnionFindTree(int n)
+    UnionFindTree(int n = 0)
         : N(n)
         , nodes(n)
     {

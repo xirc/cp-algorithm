@@ -5,7 +5,7 @@
 
 using namespace std;
 
-UnionFindTree tree(0);
+UnionFindTree tree;
 
 string to_string(UnionFindTree::node value) {
     return to_string(value.parent);

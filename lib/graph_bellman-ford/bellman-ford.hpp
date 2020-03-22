@@ -17,7 +17,7 @@ class BellmanFord {
 public:
     static const long long inf = 1e18;
     // O(1)
-    BellmanFord(int size): N(size) {}
+    BellmanFord(int n = 0): N(n) {}
     // O(1)
     int size() {
         return N;

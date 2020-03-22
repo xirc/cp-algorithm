@@ -16,7 +16,7 @@ class Solver {
 public:
     static const long long inf = 1e18;
     // O(V^2)
-    Solver(int size): N(size), matrix(size, vec(size, inf)) {}
+    Solver(int n = 0): N(n), matrix(n, vec(n, inf)) {}
     // O(1)
     int size() {
         return N;

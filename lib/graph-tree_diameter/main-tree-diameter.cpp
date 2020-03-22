@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TreeDiameter solver(0);
+TreeDiameter solver;
 
 void action_init() {
     int size;

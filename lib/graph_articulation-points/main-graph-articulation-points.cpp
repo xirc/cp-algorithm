@@ -4,7 +4,7 @@
 
 using namespace std;
 
-ArticulationPoints solver(0);
+ArticulationPoints solver;
 
 void action_init() {
     int size;

@@ -15,7 +15,7 @@ class EulerTrour {
 
 public:
     // O(V)
-    EulerTrour(int size): N(size), adj(size) {}
+    EulerTrour(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

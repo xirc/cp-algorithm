@@ -20,7 +20,7 @@ class Dijkstra {
 public:
     static const long long inf = 1e18;
     // O(V)
-    Dijkstra(int size) : N(size), adj(size) {}
+    Dijkstra(int n = 0) : N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

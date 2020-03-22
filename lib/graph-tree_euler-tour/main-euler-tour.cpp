@@ -8,7 +8,7 @@
 
 using namespace std;
 
-EulerTrour solver(0);
+EulerTrour solver;
 
 void action_init() {
     int size;

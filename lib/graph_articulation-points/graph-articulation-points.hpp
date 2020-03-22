@@ -22,7 +22,7 @@ class ArticulationPoints {
 
 public:
     // O(V)
-    ArticulationPoints(int n): N(n), M(0), adj(n) {}
+    ArticulationPoints(int n = 0): N(n), M(0), adj(n) {}
     // O(1)
     int size() {
         return N;

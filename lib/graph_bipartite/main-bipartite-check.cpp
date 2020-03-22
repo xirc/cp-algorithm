@@ -4,7 +4,7 @@
 
 using namespace std;
 
-BipartiteCheck solver(0);
+BipartiteCheck solver;
 
 void action_init() {
     int size;

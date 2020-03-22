@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TopologicalSort solver(0);
+TopologicalSort solver;
 
 void action_init() {
     int size;

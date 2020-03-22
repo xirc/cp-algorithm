@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <cmath>
+#include <algorithm>
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V log V + E)
@@ -16,14 +17,18 @@ class LCA {
 
 public:
     // O(N logN)
-    LCA(std::vector<std::vector<int>>& adj) {
+    LCA(const std::vector<std::vector<int>>& adj = {}, int root = 0) {
+        build(adj, root);
+    }
+    // O(N logN)
+    void build(const std::vector<std::vector<int>>& adj, int root = 0) {
         N = adj.size();
         tin.assign(N, 0);
         tout.assign(N, 0);
-        L = std::ceil(std::log2(N)) + 1;
+        L = std::ceil(std::log2(std::max(1,N))) + 1;
         up.assign(N, std::vector<int>(L, 0));
         int timer = 0;
-        dfs(adj, 0, 0, timer);
+        dfs(adj, root, root, timer);
     }
     // O(logN)
     int query(int  u, int v) {
@@ -45,7 +50,7 @@ public:
 
 private:
     // O(N logN)
-    void dfs(std::vector<std::vector<int>>& adj, int v, int p, int &timer) {
+    void dfs(const std::vector<std::vector<int>>& adj, int v, int p, int &timer) {
         tin[v] = ++timer;
         up[v][0] = p;
         for (int i = 1; i < L; ++i) {

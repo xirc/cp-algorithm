@@ -31,7 +31,7 @@ protected:
 public:
     // O(N)
     UnionFindTree(
-        int n,
+        int n = 0,
         const F& compress = &T::compress,
         const G& unite_same = &T::unite_same,
         const H& unite_diff = &T::unite_diff

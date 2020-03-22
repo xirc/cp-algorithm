@@ -17,7 +17,7 @@ BIT make_bit(int N) {
     };
     return BIT(N, numeric_limits<long long>::max(), plus, minus);
 };
-BIT bit = make_bit(0);
+BIT bit;
 
 void action_init() {
     int size;

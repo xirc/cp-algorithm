@@ -57,7 +57,7 @@ class Kruskal {
 
 public:
     // O(1)
-    Kruskal(int size): N(size) {}
+    Kruskal(int n = 0): N(n) {}
     // O(1)
     int size() {
         return N;

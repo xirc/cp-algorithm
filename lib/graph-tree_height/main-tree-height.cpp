@@ -4,7 +4,7 @@
 
 using namespace std;
 
-TreeHeight solver(0);
+TreeHeight solver;
 
 void action_init() {
     int size;

@@ -25,7 +25,7 @@ class Bridges {
 
 public:
     // O(V)
-    Bridges(int n): N(n), adj(n) {}
+    Bridges(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

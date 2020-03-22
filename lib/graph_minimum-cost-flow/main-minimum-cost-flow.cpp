@@ -4,7 +4,7 @@
 
 using namespace std;
 
-MinimumCostFlow solver(0);
+MinimumCostFlow solver;
 
 void action_init() {
     int size;

@@ -15,7 +15,11 @@ class LCA {
 
 public:
     // O(N)
-    LCA(std::vector<std::vector<int>>& adj) {
+    LCA(const std::vector<std::vector<int>>& adj = {}, int root = 0) {
+        build(adj, root);
+    }
+    // O(N)
+    void build(const std::vector<std::vector<int>>& adj, int root = 0) {
         N = adj.size();
 
         height.assign(N, 0);
@@ -24,7 +28,7 @@ public:
         euler.reserve(2 * N);
 
         if (N > 0) {
-            dfs_euler(adj, 0);
+            dfs_euler(adj, root);
         }
 
         M = euler.size();
@@ -48,7 +52,7 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
     // O(N)
-    void dfs_euler(std::vector<std::vector<int>>& adj, int v, int p = -1, int h = 0) {
+    void dfs_euler(const std::vector<std::vector<int>>& adj, int v, int p = -1, int h = 0) {
         height[v] = h;
         euler.push_back(v);
         first[v] = euler.size() - 1;

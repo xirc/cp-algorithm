@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Bridges solver(0);
+Bridges solver;
 
 void action_init() {
     int size;

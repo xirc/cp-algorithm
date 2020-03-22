@@ -17,9 +17,9 @@ class FloydWarshall {
 public:
     static const long long inf = 1e18;
     // O(V^2)
-    FloydWarshall(int size)
-        : N(size)
-        , adjmat(size, std::vector<long long>(size, inf)) {}
+    FloydWarshall(int n = 0)
+        : N(n)
+        , adjmat(n, std::vector<long long>(n, inf)) {}
     // O(1)
     int size() {
         return N;

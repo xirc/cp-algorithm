@@ -9,7 +9,7 @@
 template <class Solver>
 class Interp {
     using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = SolverPtr(new Solver(0));
+    SolverPtr solver = SolverPtr(new Solver());
 public:
     void action_init() {
         int n;

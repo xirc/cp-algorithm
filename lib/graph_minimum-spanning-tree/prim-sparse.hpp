@@ -22,9 +22,9 @@ class PrimSparse {
 
 public:
     // O(N)
-    PrimSparse(int size)
-        : N(size)
-        , adj(size)
+    PrimSparse(int n = 0)
+        : N(n)
+        , adj(n)
     {}
     // O(1)
     int size() {

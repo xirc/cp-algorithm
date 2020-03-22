@@ -15,7 +15,7 @@ class Solver {
 
 public:
     // O(V)
-    Solver(int size): N(size), adj(size) {}
+    Solver(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

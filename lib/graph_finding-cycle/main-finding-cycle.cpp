@@ -5,7 +5,7 @@
 using namespace std;
 
 using SolverPtr = shared_ptr<Solver>;
-SolverPtr solver = SolverPtr(new Solver(0));
+SolverPtr solver = SolverPtr(new Solver());
 
 void action_init() {
     int size;

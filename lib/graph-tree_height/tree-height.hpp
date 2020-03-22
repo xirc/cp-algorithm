@@ -21,7 +21,7 @@ class TreeHeight {
 public:
     static const long long inf = 1e18;
     // O(V)
-    TreeHeight(int size): N(size), adj(size){}
+    TreeHeight(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

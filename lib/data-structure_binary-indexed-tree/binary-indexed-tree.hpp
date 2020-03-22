@@ -26,7 +26,7 @@ protected:
 public:
     // O(N)
     BinaryIndexedTree(
-        int n,
+        int n = 0,
         T id = T(),
         F plus = std::plus<T>(),
         F minus = std::minus<T>()

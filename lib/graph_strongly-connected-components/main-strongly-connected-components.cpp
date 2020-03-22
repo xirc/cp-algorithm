@@ -7,7 +7,7 @@
 
 using namespace std;
 
-SCC solver(0);
+SCC solver;
 
 void action_init() {
     int size;

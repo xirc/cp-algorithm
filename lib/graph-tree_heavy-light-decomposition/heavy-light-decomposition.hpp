@@ -22,8 +22,8 @@ public:
     HeavyLightDecomposition(): HeavyLightDecomposition({}, {}) {}
     // O(N)
     HeavyLightDecomposition(
-        const std::vector<std::vector<int>>& adj,
-        const std::vector<int>& R = std::vector<int>({0})
+        const std::vector<std::vector<int>>& adj = {},
+        const std::vector<int>& R = { 0 }
     )
         : N(adj.size())
         , index(N,-1)

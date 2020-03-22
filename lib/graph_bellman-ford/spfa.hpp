@@ -18,7 +18,7 @@ class SPFA {
 public:
     static const long long inf = 1e18;
     // O(V)
-    SPFA(int size): N(size), edges(size) {}
+    SPFA(int n = 0): N(n), edges(n) {}
     // O(1)
     int size() {
         return N;

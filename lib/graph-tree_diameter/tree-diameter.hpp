@@ -22,7 +22,7 @@ class TreeDiameter {
 public:
     static const long long inf = 1e18;
     // O(V)
-    TreeDiameter(int size): N(size), adj(size) {}
+    TreeDiameter(int n = 0): N(n), adj(n) {}
     // O(1)
     int size() {
         return N;

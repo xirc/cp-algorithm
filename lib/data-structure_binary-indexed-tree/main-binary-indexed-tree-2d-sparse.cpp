@@ -8,7 +8,7 @@
 using namespace std;
 
 using BIT = BinaryIndexedTree<long long>;
-BIT bit = BIT(0,0);
+BIT bit;
 
 void action_init() {
     int size_n, size_m;

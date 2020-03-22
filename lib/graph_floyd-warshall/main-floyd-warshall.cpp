@@ -8,7 +8,7 @@
 using namespace std;
 
 using SolverPtr = shared_ptr<FloydWarshall>;
-SolverPtr solver = SolverPtr(new FloydWarshall(0));
+SolverPtr solver = SolverPtr(new FloydWarshall());
 
 void action_init() {
     int size;
