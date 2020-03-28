@@ -38,7 +38,6 @@ public:
         std::vector<bool> used(N, false);
         std::vector<int> order;
 
-        ans.assign(N, -1);
         order.reserve(N);
         for (int s = 0; s < N; ++s) {
             if (used[s]) continue;
@@ -63,6 +62,7 @@ public:
         std::reverse(order.begin(), order.end());
 
         int K = 0;
+        ans.assign(N, -1);
         for (int i = 0; i < N; ++i) {
             int s = order[i];
             if (ans[s] != -1) continue;
