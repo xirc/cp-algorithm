@@ -34,7 +34,11 @@ void action_edge() {
 }
 
 void action_solve() {
-    auto ans = solver.solve();
+    vector<int> ans;
+    auto k = solver.solve(ans);
+
+    cout << k << endl;
+
     int w = log10(max(1,solver.size())) + 2;
     cout << "i: ";
     for (int v = 0; v < ans.size(); ++v) {
@@ -42,6 +46,7 @@ void action_solve() {
         cout << v;
     }
     cout << endl;
+
     cout << "c: ";
     for (int v = 0; v < ans.size(); ++v) {
         if (v > 0) cout << " ";

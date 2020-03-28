@@ -33,12 +33,12 @@ public:
     // Kosaraju's Algorithm
     // ans[u] = Component ID of vertex 'u'.
     // Component ID is assigned in topological order.
-    std::vector<int> solve() {
+    int solve(std::vector<int>& ans) {
         std::stack<std::pair<int,int>> S;
-        std::vector<int> ans(N, -1);
         std::vector<bool> used(N, false);
         std::vector<int> order;
 
+        ans.assign(N, -1);
         order.reserve(N);
         for (int s = 0; s < N; ++s) {
             if (used[s]) continue;
@@ -62,7 +62,7 @@ public:
         }
         std::reverse(order.begin(), order.end());
 
-        int c = 0;
+        int K = 0;
         for (int i = 0; i < N; ++i) {
             int s = order[i];
             if (ans[s] != -1) continue;
@@ -71,7 +71,7 @@ public:
                 int u = S.top().first;
                 int& j = S.top().second;
                 if (j < 0) {
-                    ans[u] = c;
+                    ans[u] = K;
                 } else if (j < GT[u].size()) {
                     int v = GT[u][j];
                     if (ans[v] == -1) {
@@ -82,10 +82,10 @@ public:
                 }
                 ++j;
             }
-            ++c;
+            ++K;
         }
 
-        return ans;
+        return K;
     }
 
 private:
