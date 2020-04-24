@@ -76,19 +76,15 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 ## References & Learning site
 
 * <http://www.cplusplus.com/reference/>
-* Top Coder  
-  <https://www.topcoder.com/community/competitive-programming/tutorials/>
-* CP Algorithm  
-  <https://cp-algorithms.com/>
+* <https://www.topcoder.com/community/competitive-programming/tutorials/>
+* <https://cp-algorithms.com/>
 
 ## My status
 
 I am still newbee :-)
 
-* Code forces  
-  <http://codeforces.com/profile/ninja>
-* At Corder  
-  <https://atcoder.jp/users/xirc>
+* Code forces <http://codeforces.com/profile/ninja>
+* At Corder <https://atcoder.jp/users/xirc>
 
 ## TODO
 
