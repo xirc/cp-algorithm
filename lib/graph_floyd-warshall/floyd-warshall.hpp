@@ -15,7 +15,7 @@ class FloydWarshall {
     std::vector<std::vector<long long>> adjmat;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V^2)
     FloydWarshall(int n = 0)
         : N(n)
@@ -103,3 +103,4 @@ private:
         }
     }
 };
+const long long FloydWarshall::inf = 1e18;

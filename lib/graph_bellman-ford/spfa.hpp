@@ -16,7 +16,7 @@ class SPFA {
     std::vector<std::vector<edge>> edges;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V)
     SPFA(int n = 0): N(n), edges(n) {}
     // O(1)
@@ -66,3 +66,4 @@ private:
         if (index < 0 || index >= N) throw "index of of range";
     }
 };
+const long long SPFA::inf = 1e18;

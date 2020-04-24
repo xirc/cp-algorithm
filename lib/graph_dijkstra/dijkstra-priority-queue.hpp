@@ -16,7 +16,7 @@ class Dijkstra {
     std::vector<std::vector<edge>> adj;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V)
     Dijkstra(int n = 0) : N(n), adj(n) {
     }
@@ -65,3 +65,4 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
 };
+const long long Dijkstra::inf = 1e18;

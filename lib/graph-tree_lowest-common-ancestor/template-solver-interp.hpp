@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 #include "../template-main.hpp"
 
 template <class Solver>
@@ -54,7 +55,7 @@ public:
 
 template<class Interp>
 void setup(Interp* interp, std::string& header, std::map<std::string,Command>& commands) {
-    commands["init"] = { "init {size}", bind(&Interp::action_init, interp) };
-    commands["edge"] = { "edge {u} {v}", bind(&Interp::action_add_edge, interp) };
-    commands["query"] = { "query {u} {v}", bind(&Interp::action_query, interp) };
+    commands["init"] = { "init {size}", std::bind(&Interp::action_init, interp) };
+    commands["edge"] = { "edge {u} {v}", std::bind(&Interp::action_add_edge, interp) };
+    commands["query"] = { "query {u} {v}", std::bind(&Interp::action_query, interp) };
 }

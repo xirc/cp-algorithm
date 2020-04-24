@@ -1,6 +1,7 @@
 #include <iostream>
 #include <random>
 #include <functional>
+#include <memory>
 #include "../template-main.hpp"
 
 template <class Solver, class Monoid>
@@ -32,7 +33,7 @@ public:
     }
     void action_update() {
         int index, value;
-        cin >> index >> value;
+        std::cin >> index >> value;
         if (index < 0 || index >= array.size()) {
             std::cout << "false" << std::endl;
             return;
@@ -50,7 +51,7 @@ public:
     }
     void action_query() {
         int l, r;
-        cin >> l >> r;
+        std::cin >> l >> r;
         if (solver == nullptr) {
             solver = make_solver();
         }

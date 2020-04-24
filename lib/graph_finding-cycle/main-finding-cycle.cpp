@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "../template-main.hpp"
 #include "./finding-cycle.hpp"
 

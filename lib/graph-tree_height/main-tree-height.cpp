@@ -1,4 +1,5 @@
 #include <iostream>
+#include <memory>
 #include "../template-main.hpp"
 #include "./tree-height.hpp"
 

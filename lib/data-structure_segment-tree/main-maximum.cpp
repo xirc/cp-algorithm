@@ -1,5 +1,6 @@
 // Finding the maximum
 
+#include <numeric>
 #include "segment-tree.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp-purq.hpp"
@@ -7,7 +8,7 @@
 using namespace std;
 
 struct Query {
-    const int id = INT_MIN;
+    const int id = numeric_limits<int>::lowest();
     int operator()(int lhs, int rhs) const {
         return std::max(lhs, rhs);
     }

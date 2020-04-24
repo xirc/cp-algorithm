@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <memory>
 #include "../template-main.hpp"
 
 template <class Solver>
@@ -13,60 +14,60 @@ class Interp {
 public:
     void action_init() {
         int n;
-        cin >> n;
+        std::cin >> n;
         if (n < 0) {
-            cout << "false" << endl;
+            std::cout << "false" << std::endl;
             return;
         }
         solver = SolverPtr(new Solver(n));
-        cout << "true" << endl;
+        std::cout << "true" << std::endl;
     }
 
     void action_add_edge() {
         int from, to; long long distance;
-        cin >> from >> to >> distance;
+        std::cin >> from >> to >> distance;
         if (from < 0 ||
             from > solver->size() ||
             to < 0 ||
             to > solver->size() ||
             distance < 0
         ) {
-            cout << "false" << endl;
+            std::cout << "false" << std::endl;
             return;
         }
         solver->add_edge(from, to, distance);
-        cout << "true" << endl;
+        std::cout << "true" << std::endl;
     }
 
     void action_solve() {
         int s;
-        cin >> s;
+        std::cin >> s;
         if (s < 0 || s >= solver->size()) {
-            cout << "false" << endl;
+            std::cout << "false" << std::endl;
             return;
         }
 
         const int n = solver->size();
-        vector<long long> distance;
-        vector<int> parent;
+        std::vector<long long> distance;
+        std::vector<int> parent;
         solver->solve(s, distance, parent);
 
         for (int i = 0; i < n; ++i) {
             if (i == s) continue;
 
-            vector<int> path;
+            std::vector<int> path;
             for (int v = parent[i]; v != -1; v = parent[v]) {
                 path.push_back(v);
             }
             reverse(path.begin(), path.end());
             if (path.size() > 0) path.push_back(i);
 
-            cout << "path: ";
+            std::cout << "path: ";
             for (int j = 0; j < path.size(); ++j) {
-                if (j > 0) cout << " -> ";
-                cout << path[j];
+                if (j > 0) std::cout << " -> ";
+                std::cout << path[j];
             }
-            cout << ", distance: " << distance[i] << endl;
+            std::cout << ", distance: " << distance[i] << std::endl;
         }
     }
 };
@@ -74,7 +75,7 @@ public:
 template<class SolverInterp>
 void setup(SolverInterp* interp, std::string& header, std::map<std::string,Command>& commands){
     header = "Dijkstra with Priority Queue";
-    commands["init"] = { "init {size}", bind(&SolverInterp::action_init, interp) };
-    commands["add"] = { "add {from} {to} {distance}", bind(&SolverInterp::action_add_edge, interp) };
-    commands["solve"] = { "solve {source}", bind(&SolverInterp::action_solve, interp) };
+    commands["init"] = { "init {size}", std::bind(&SolverInterp::action_init, interp) };
+    commands["add"] = { "add {from} {to} {distance}", std::bind(&SolverInterp::action_add_edge, interp) };
+    commands["solve"] = { "solve {source}", std::bind(&SolverInterp::action_solve, interp) };
 }

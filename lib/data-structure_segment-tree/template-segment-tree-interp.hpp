@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <random>
+#include <memory>
 #include "../template-main.hpp"
 
 template<class SegmentTree>
@@ -48,10 +49,10 @@ public:
         std::vector<T> buffer;
         m_tree->dump(buffer);
         for (auto it = buffer.begin(); it != buffer.end(); ++it) {
-            if (it != buffer.begin()) cout << " ";
+            if (it != buffer.begin()) std::cout << " ";
             std::cout << to_string(*it);
         }
-        std::cout << endl;
+        std::cout << std::endl;
     }
 };
 
@@ -64,7 +65,7 @@ void setup(
     using clazz = SegmentTreeInterp;
 
     header = "Segment Tree";
-    commands["build"] = { "build {count} {...}", bind(&clazz::action_build, interp) };
-    commands["random"] = { "random {count} {min} {max}", bind(&clazz::action_random, interp) };
-    commands["dump"] = { "dump", bind(&clazz::action_dump, interp) };
+    commands["build"] = { "build {count} {...}", std::bind(&clazz::action_build, interp) };
+    commands["random"] = { "random {count} {min} {max}", std::bind(&clazz::action_random, interp) };
+    commands["dump"] = { "dump", std::bind(&clazz::action_dump, interp) };
 }

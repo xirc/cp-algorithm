@@ -7,11 +7,11 @@
 // Memory: O(V^2)
 // NOTE: undirected, no-multi-edge, negative-weight
 class PrimDense {
-    static const long long inf = 1e18;
     int N;
     std::vector<std::vector<long long>> adjmat;
 
 public:
+    static const long long inf;
     // O(V^2)
     PrimDense(int n = 0)
         : N(n)
@@ -80,3 +80,4 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
 };
+const long long PrimDense::inf = 1e18;
