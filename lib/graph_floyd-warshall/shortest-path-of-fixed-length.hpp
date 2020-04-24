@@ -14,7 +14,7 @@ class Solver {
     mat matrix;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V^2)
     Solver(int n = 0): N(n), matrix(n, vec(n, inf)) {}
     // O(1)
@@ -69,3 +69,4 @@ private:
         return ans;
     }
 };
+const long long Solver::inf = 1e18;

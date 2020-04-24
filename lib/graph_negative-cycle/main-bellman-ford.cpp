@@ -1,5 +1,6 @@
 #include <map>
 #include <string>
+#include <memory>
 #include "../template-main.hpp"
 #include "./bellman-ford.hpp"
 

@@ -119,8 +119,8 @@ public:
     }
     // O(K)
     void drop_histroy(int index = 0) {
-        if (index < 0 || index >= histroy.size()) throw;
-        histroy.resize(index+1);
+        if (index < 0 || index >= history.size()) throw;
+        history.resize(index+1);
     }
 
 protected:

@@ -48,7 +48,7 @@ public:
     }
     void action_clear_flow() {
         maxflow.clear_flow();
-        cout << "true" << endl;
+        std::cout << "true" << std::endl;
     }
     void action_solve() {
         int source, sink;
@@ -87,11 +87,11 @@ private:
         dump_set("T:", setT);
     }
     void dump_set(const std::string& prefix, const std::set<int>& set) {
-        cout << prefix;
+        std::cout << prefix;
         for (auto u : set) {
-            cout << " " << u;
+            std::cout << " " << u;
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 };
 

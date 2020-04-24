@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <random>
+#include <memory>
 #include "../template-main.hpp"
 #include "./disjoint-sparse-table.hpp"
 

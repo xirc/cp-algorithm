@@ -18,7 +18,7 @@ class Dijkstra {
     static std::vector<long long> distance;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V)
     Dijkstra(int n = 0) : N(n), adj(n) {}
     // O(1)
@@ -73,4 +73,5 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
 };
+const long long Dijkstra::inf = 1e18;
 std::vector<long long> Dijkstra::distance = std::vector<long long>();

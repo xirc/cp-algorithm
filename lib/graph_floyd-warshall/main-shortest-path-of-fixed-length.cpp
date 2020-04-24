@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <functional>
+#include <memory>
 #include "../template-main.hpp"
 #include "./shortest-path-of-fixed-length.hpp"
 

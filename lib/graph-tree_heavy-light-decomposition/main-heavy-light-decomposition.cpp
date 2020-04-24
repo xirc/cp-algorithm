@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <memory>
 #include "../template-main.hpp"
 #include "./heavy-light-decomposition.hpp"
 

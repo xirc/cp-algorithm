@@ -6,7 +6,7 @@
 // Finding a negative cycle
 // Memory: O(V^2 + E)
 class FloydWarshall {
-    static const long long inf = 1e18;
+    static const long long inf;
     int N;
     std::vector<std::vector<long long>> adjmat;
 
@@ -69,3 +69,4 @@ private:
         if (index < 0 || index >= N) throw "index out of range";
     }
 };
+const long long FloydWarshall::inf = 1e18;

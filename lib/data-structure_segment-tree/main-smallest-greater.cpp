@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <map>
 #include <set>
+#include <numeric>
 #include "segment-tree-vector.hpp"
 #include "../template-main.hpp"
 #include "template-segment-tree-interp.hpp"
@@ -15,7 +16,7 @@ struct Query {
     int operator()(multiset<int>& set, int x) const {
         auto it = set.lower_bound(x);
         if (it == set.end()) {
-            return INT_MAX;
+            return numeric_limits<int>::lowest();
         }
         return *it;
     }

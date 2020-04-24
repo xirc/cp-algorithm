@@ -20,7 +20,7 @@ class TreeDiameter {
     std::vector<std::vector<edge>> adj;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(V)
     TreeDiameter(int n = 0): N(n), adj(n) {}
     // O(1)
@@ -72,3 +72,4 @@ private:
         return std::make_pair(v, D[v]);
     }
 };
+const long long TreeDiameter::inf = 1e18;

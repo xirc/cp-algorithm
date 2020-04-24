@@ -3,6 +3,7 @@
 // Verified
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B
 
+#include <memory>
 #include <vector>
 #include <algorithm>
 
@@ -15,7 +16,7 @@ class BellmanFord {
     std::vector<edge> edges;
 
 public:
-    static const long long inf = 1e18;
+    static const long long inf;
     // O(1)
     BellmanFord(int n = 0): N(n) {}
     // O(1)
@@ -60,3 +61,4 @@ private:
         if (index < 0 || index >= N) throw "index of of range";
     }
 };
+const long long BellmanFord::inf = 1e18;
