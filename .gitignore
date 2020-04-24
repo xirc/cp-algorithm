@@ -4,3 +4,6 @@
 # vscode
 /**/.vscode/*
 !/.vscode/template.code-snippets
+
+# paiza (paiza.jp)
+/paiza
