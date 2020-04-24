@@ -1,5 +1,4 @@
-# TODO use clang++
-CXX = c++
+CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = \

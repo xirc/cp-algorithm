@@ -1,5 +1,5 @@
-# TODO Remove -fpermissinve and change compiler clang++
-CXX = c++
+# TODO Remove -fpermissinve
+CXX = g++
 CXXFLAGS = -std=c++14 -fpermissive
 
 MAIN = main-sum main-maximum main-maxtimes \
