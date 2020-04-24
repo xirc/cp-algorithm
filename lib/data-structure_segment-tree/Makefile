@@ -1,5 +1,6 @@
-CXX = clang
-CXXFLAGS = -std=c++14
+# TODO Remove -fpermissinve and change compiler clang++
+CXX = c++
+CXXFLAGS = -std=c++14 -fpermissive
 
 MAIN = main-sum main-maximum main-maxtimes \
 main-gcd main-lcm main-kth-zero main-prefix-amount \
