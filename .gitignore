@@ -1,2 +1,6 @@
 *.exe
-.vscode/
+*.out
+
+# vscode
+/**/.vscode/*
+!/.vscode/template.code-snippets
