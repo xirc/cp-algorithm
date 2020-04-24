@@ -1,4 +1,4 @@
-CXX = clang++
+CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = main-strongly-connected-components

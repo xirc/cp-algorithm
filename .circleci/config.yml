@@ -1,0 +1,14 @@
+version: 2.0
+jobs:
+  compile:
+    docker:
+      - image: gcc:latest
+    steps:
+      - checkout
+      - run: cd lib && make all
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - compile
