@@ -1,3 +1,5 @@
+// https://onlinejudge.u-aizu.ac.jp/courses/library/3/DSL/all/DSL_5_A
+
 #include <bits/stdc++.h>
 #include <iostream>
 #include <iomanip>
