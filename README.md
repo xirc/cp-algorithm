@@ -8,6 +8,7 @@ This repository manages my competitive programming library & solutions.
 
 ### Algebra
 * Binary Exponentation
+* GCD, LCM
 
 ### Data Structure
 
@@ -83,8 +84,9 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 
 I am still newbee :-)
 
-* Code forces <http://codeforces.com/profile/ninja>
-* At Corder <https://atcoder.jp/users/xirc>
+* Codeforces <http://codeforces.com/profile/ninja>
+* AtCorder <https://atcoder.jp/users/xirc>
+* CodeCheff <https://www.codechef.com/users/xirc>
 
 ## TODO
 
