@@ -1,5 +1,8 @@
 #pragma once
 
+// Verified
+// https://www.codechef.com/problems/FLOW016
+
 #include <bits/stdc++.h>
 
 // GCD (a,b)
