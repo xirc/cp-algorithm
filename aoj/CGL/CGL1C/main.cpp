@@ -86,28 +86,33 @@ static const double EPS = 1e-8;
 bool EQ(const double& x, const double& y) {
     return std::abs(x - y) < EPS;
 }
-// Is point 'P' on line segment ('A','B')
-bool is_point_on_line_segment(const vector2& a, const vector2& b, const vector2& p) {
-    return abs(a-p) + abs(p-b) < abs(a-b) + EPS;
+
+// Direction
+int ccw(const vector2& a, const vector2& b, const vector2& c) {
+    vector2 x = b - a, y = c - a;
+    if (cross(x, y) - EPS > 0) return +1;      // counter clockwise
+    if (cross(x, y) + EPS < 0) return -1;      // clockwise
+    if (dot(x,y) + EPS < 0) return +2;         // c--a--b on line
+    if (x.norm() + EPS < y.norm()) return -2;  // a--b--c on line
+    return 0;                                  // a--c--b on line
 }
 
 using namespace std;
 
 string solve(vector2 p0, vector2 p1, vector2 p2) {
-    double c = cross(p1 - p0, p2 - p0);
-    if (c > EPS) {
-        return "COUNTER_CLOCKWISE";
+    switch (ccw(p0, p1, p2)) {
+        case 0:
+            return "ON_SEGMENT";
+        case 1:
+            return "COUNTER_CLOCKWISE";
+        case -1:
+            return "CLOCKWISE";
+        case 2:
+            return "ONLINE_BACK";
+        case -2:
+            return "ONLINE_FRONT";
     }
-    if (c < -EPS) {
-        return "CLOCKWISE";
-    }
-    if (dot(p1 - p0, p2 - p0) < -EPS) {
-        return "ONLINE_BACK";
-    }
-    if (is_point_on_line_segment(p1, p0, p2)) {
-        return "ON_SEGMENT";
-    }
-    return "ONLINE_FRONT";
+    return "";
 }
 
 int main() {
