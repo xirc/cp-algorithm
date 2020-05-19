@@ -86,23 +86,30 @@ static const double EPS = 1e-8;
 bool EQ(const double& x, const double& y) {
     return std::abs(x - y) < EPS;
 }
-// Is point 'P' on line segment ('A','B')
-// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_C
-bool is_point_on_line_segment(const vector2& a, const vector2& b, const vector2& p) {
-    return abs(a-p) + abs(p-b) < abs(a-b) + EPS;
+bool LQ(const double& x, const double& y) {
+    return x < y || EQ(x,y);
+}
+bool GQ(const double& x, const double& y) {
+    return x > y || EQ(x,y);
+}
+
+// Is point 'P' on line segment 'A'
+bool is_intersect_sp(const vector2& a1, const vector2& a2, const vector2& p) {
+    return LQ(abs(a1-p) + abs(p-a2), abs(a1-a2));
 }
 // Are line segments 'A' and 'B' intersected or not?
-bool is_intersect_line_segments(
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_B
+bool is_intersect_ss(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
     auto ca1 = cross(b2-b1,a1-b1), ca2 = cross(b2-b1,a2-b1);
     auto cb1 = cross(a2-a1,b1-a1), cb2 = cross(a2-a1,b2-a1);
     if (EQ(ca1,0) && EQ(ca1, 0)) {
-        return is_point_on_line_segment(b1, b2, a1)
-            || is_point_on_line_segment(b1, b2, a2)
-            || is_point_on_line_segment(a1, a2, b1)
-            || is_point_on_line_segment(a1, a2, b2);
+        return is_intersect_sp(b1, b2, a1)
+            || is_intersect_sp(b1, b2, a2)
+            || is_intersect_sp(a1, a2, b1)
+            || is_intersect_sp(a1, a2, b2);
     }
     return (ca1 * ca2 < EPS) && (cb1 * cb2 < EPS);
 }
@@ -110,7 +117,7 @@ bool is_intersect_line_segments(
 using namespace std;
 
 bool solve(vector2 p0, vector2 p1, vector2 p2, vector2 p3) {
-    return is_intersect_line_segments(p0, p1, p2, p3);
+    return is_intersect_ss(p0, p1, p2, p3);
 }
 
 int main() {

@@ -144,7 +144,7 @@ bool is_intersect_lp(const vector2& a1, const vector2& a2, const vector2& p) {
 }
 // Is point 'P' on line segment 'A'
 bool is_intersect_sp(const vector2& a1, const vector2& a2, const vector2& p) {
-    return abs(a1-p) + abs(p-a2) < abs(a1-a2) + EPS;
+    return LQ(abs(a1-p) + abs(p-a2), abs(a1-a2));
 }
 // Are lines 'A' and 'B' intersected or not?
 bool is_intersect_ll(
