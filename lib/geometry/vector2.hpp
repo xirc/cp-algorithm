@@ -177,7 +177,7 @@ bool is_intersect_ls(
 ) {
     const auto cb1 = cross(a2 - a1, b1 - a1);
     const auto cb2 = cross(a2 - a1, b2 - a1);
-    return cb1 * cb2 < EPS;
+    return LQ(cb1 * cb2, 0);
 }
 
 // Distance between point 'P' and line 'A'
