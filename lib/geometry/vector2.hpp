@@ -243,13 +243,26 @@ vector2 intersection_ss(
 }
 
 // Area of Polygon (can handle non-Convex)
+// The coordinates of points are given in the order of counter-clockwise visit of them.
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/3/CGL_3_A
 double polygon_area(const std::vector<vector2>& G) {
-    // The coordinates of points are given in the order of counter-clockwise visit of them.
     double ans = 0;
     for (int i = 0; i < G.size(); ++i) {
         int j = (i + 1) % G.size();
         ans += cross(G[i], G[j]);
     }
     return ans / 2;
+}
+
+// Is a polygon convex or not?
+// The coordinates of points are given in the order of counter-clockwise visit of them.
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/3/CGL_3_B
+bool is_convex_polygon(const std::vector<vector2>& G) {
+    for (int i = 0; i < G.size(); ++i) {
+        int p = (i-1+G.size()) % G.size();
+        int n = (i+1) % G.size();
+        int c = ccw(G[p], G[i], G[n]);
+        if (c == -1) return false;
+    }
+    return true;
 }
