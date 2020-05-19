@@ -10,6 +10,34 @@ This repository manages my competitive programming library & solutions.
 * Binary Exponentation
 * GCD, LCM
 
+### Geometry (2D)
+* Basic Operations
+* Projection, Rejection
+* CCW
+* Line
+  * Orthogonal
+  * Parallel
+* Intersection
+  * Line-Point
+  * Segment-Point
+  * Line-Line
+  * Segment-Segment
+  * Line-Segment (w/o point)
+* Distance
+  * Line-Point
+  * Segment-Point
+  * Line-Line
+  * Segment-Segment
+  * Line-Segment
+* Polygon
+  * Area
+  * Convex Check
+  * Containment (ON, IN, OUT)
+
+### Geometry (3D)
+* Basic Operations
+* Projection, Rejection
+
 ### Data Structure
 
 * Binary Indexed Tree (Fenwick Tree)
