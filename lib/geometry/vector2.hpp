@@ -110,6 +110,17 @@ bool EQ(const double& x, const double& y) {
     return std::abs(x - y) < EPS;
 }
 
+// Direction
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_C
+int ccw(const vector2& a, const vector2& b, const vector2& c) {
+    vector2 x = b - a, y = c - a;
+    if (cross(x, y) - EPS > 0) return +1;      // counter clockwise
+    if (cross(x, y) + EPS < 0) return -1;      // clockwise
+    if (dot(x,y) + EPS < 0) return +2;         // c--a--b on line
+    if (x.norm() + EPS < y.norm()) return -2;  // a--b--c on line
+    return 0;                                  // a--c--b on line
+}
+
 // Are line 'A' and 'B' orthogonal or not?
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_A
 bool is_orthogonal(const vector2& a, const vector2& b) {
@@ -126,7 +137,6 @@ bool is_intersect_lp(const vector2& a1, const vector2& a2, const vector2& p) {
     return EQ(cross(a2-a1,p), 0.0);
 }
 // Is point 'P' on line segment 'A'
-// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_C
 bool is_intersect_sp(const vector2& a1, const vector2& a2, const vector2& p) {
     return abs(a1-p) + abs(p-a2) < abs(a1-a2) + EPS;
 }
