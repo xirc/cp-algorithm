@@ -7,10 +7,12 @@ This repository manages my competitive programming library & solutions.
 ## Categories
 
 ### Algebra
+
 * Binary Exponentation
 * GCD, LCM
 
 ### Geometry (2D)
+
 * Basic Operations
 * Projection, Rejection
 * CCW
@@ -35,6 +37,7 @@ This repository manages my competitive programming library & solutions.
   * Containment (ON, IN, OUT)
 
 ### Geometry (3D)
+
 * Basic Operations
 * Projection, Rejection
 
