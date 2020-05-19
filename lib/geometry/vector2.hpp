@@ -109,6 +109,12 @@ static const double EPS = 1e-8;
 bool EQ(const double& x, const double& y) {
     return std::abs(x - y) < EPS;
 }
+bool LQ(const double& x, const double& y) {
+    return x < y || EQ(x,y);
+}
+bool GQ(const double& x, const double& y) {
+    return x > y || EQ(x,y);
+}
 
 // Direction
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_C
@@ -265,4 +271,26 @@ bool is_convex_polygon(const std::vector<vector2>& G) {
         if (c == -1) return false;
     }
     return true;
+}
+
+// Does A polygon 'G' contain point 'P'?
+// 0: 'P' is on a segment of 'G'
+// 1: 'P' is in 'G'
+// -1: 'P' is not in 'G'
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/3/CGL_3_C
+int polgygon_contains(const std::vector<vector2> G, const vector2& p) {
+    enum { ON = 0, IN = 1, OUT = -1 };
+    bool in = false;
+    for (int i = 0; i < G.size(); ++i) {
+        int j = (i+1) % G.size();
+        auto a = G[i] - p, b = G[j] - p;
+        if (EQ(cross(a,b),0) && LQ(dot(a,b), 0)) return ON;
+        if (a.y > b.y) {
+            std::swap(a, b);
+        }
+        if (LQ(a.y, 0) && b.y > 0 && cross(a,b) < 0) {
+            in = !in;
+        }
+    }
+    return in ? IN : OUT;
 }
