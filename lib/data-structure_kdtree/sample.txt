@@ -1,0 +1,8 @@
+insert 2 1
+insert 2 2
+insert 4 2
+insert 6 2
+insert 3 3
+insert 5 4
+search 2 0 4 4
+search 4 2 10 5

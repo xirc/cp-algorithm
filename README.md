@@ -55,6 +55,7 @@ This repository manages my competitive programming library & solutions.
 * Stack
 * Treap
 * Union Find Tree (Disjoint Set Union)
+* kD Tree (n-dimensional)
 
 ### Graph (Tree)
 
