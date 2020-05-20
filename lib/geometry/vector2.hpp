@@ -122,9 +122,9 @@ int ccw(const vector2& a, const vector2& b, const vector2& c) {
     vector2 x = b - a, y = c - a;
     if (cross(x, y) > 0) return +1;      // counter clockwise
     if (cross(x, y) < 0) return -1;      // clockwise
-    if (dot(x,y) < 0) return +2;         // c--a--b on line
+    if (dot(x, y) < 0) return +2;        // c--a--b on line
     if (x.norm() < y.norm()) return -2;  // a--b--c on line
-    return 0;                                  // a--c--b on line
+    return 0;                            // a--c--b on line
 }
 
 // Are line 'A' and 'B' orthogonal or not?
