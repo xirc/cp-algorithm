@@ -233,12 +233,14 @@ double distance_ls(
 }
 
 // Intersection Point of lines 'A' and 'B'
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_C
 vector2 intersection_ll(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    auto a = a2 - a1, b = b2 - b1;
-    return a1 + a * cross(b, b1-a1) / cross(b, a);
+    double A = cross(a2 - a1, b2 - b1);
+    double B = cross(a2 - a1, a2 - b1);
+    return b1 + (B / A) * (b2 - b1);
 }
 // Intersection Point of line segments 'A' and 'B'
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_C
