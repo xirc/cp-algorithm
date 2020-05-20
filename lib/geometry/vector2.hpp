@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <vector>
+#include <tuple>
 
 struct vector2 {
     double x, y;
@@ -319,4 +320,40 @@ std::vector<vector2> convex_hull(const std::vector<vector2>& G) {
     ans.resize(K - 1);
 
     return ans;
+}
+
+// Convex Diameter
+// - solved by Rotating Calipers
+// - O (N logN)
+// - tuple(i, j, diameter)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_B
+std::tuple<int,int,double> convex_diameter(const std::vector<vector2>& G) {
+    if (G.size() <= 1) throw;
+
+    const int N = G.size();
+
+    // Pick antipodal points
+    int is = 0, js = 0;
+    for (int i = 1; i < N; ++i) {
+        if (G[i].y > G[is].y) is = i;
+        if (G[i].y < G[js].y) js = i;
+    }
+
+    auto maxd = (G[is]-G[js]).norm();
+    int i, maxi, j, maxj;
+    i = maxi = is;
+    j = maxj = js;
+    do {
+        int ni = (i+1)%N, nj = (j+1)%N;
+        if (GQ(cross(G[ni]-G[i], G[nj]-G[j]), 0)) {
+            j = nj;
+        } else {
+            i = ni;
+        }
+        auto d = (G[i]-G[j]).norm();
+        if (d > maxd) {
+            maxd = d, maxi = i, maxj = j;
+        }
+    } while (i != is || j != js);
+    return std::make_tuple(maxi, maxj, std::sqrt(maxd));
 }
