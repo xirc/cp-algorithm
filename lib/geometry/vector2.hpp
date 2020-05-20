@@ -172,13 +172,16 @@ bool is_intersect_ss(
     return (ca1 * ca2 < EPS) && (cb1 * cb2 < EPS);
 }
 // Are line 'A' and line segment 'B' intersected or not?
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_C
 bool is_intersect_ls(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    const auto cb1 = cross(a2 - a1, b1 - a1);
-    const auto cb2 = cross(a2 - a1, b2 - a1);
-    return LQ(cb1 * cb2, 0);
+    int ccw1 = ccw(a1, a2, b1);
+    int ccw2 = ccw(a1, a2, b2);
+    return
+        (ccw1 == -1 && ccw2 == 1) ||
+        (ccw1 == 1 && ccw2 == -1);
 }
 
 // Distance between point 'P' and line 'A'
@@ -230,12 +233,14 @@ double distance_ls(
 }
 
 // Intersection Point of lines 'A' and 'B'
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_C
 vector2 intersection_ll(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    auto a = a2 - a1, b = b2 - b1;
-    return a1 + a * cross(b, b1-a1) / cross(b, a);
+    double A = cross(a2 - a1, b2 - b1);
+    double B = cross(a2 - a1, a2 - b1);
+    return b1 + (B / A) * (b2 - b1);
 }
 // Intersection Point of line segments 'A' and 'B'
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_C
@@ -356,4 +361,34 @@ std::tuple<int,int,double> convex_diameter(const std::vector<vector2>& G) {
         }
     } while (i != is || j != js);
     return std::make_tuple(maxi, maxj, std::sqrt(maxd));
+}
+
+// Convex Cut
+// - O(N)
+// - require
+//   The coordinates of points of a given polygon
+//   are given in the order of counter-clockwise visit of them.
+// - return
+//   a polygon that is left hand side of line.
+//   The coordinates of points of a result polygon
+//   are given in the order of counter-clockwise visit of them.
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_C
+std::vector<vector2> convex_cut(
+    const std::vector<vector2>& G,
+    const vector2& a1, const vector2& a2
+) {
+    const int N = G.size();
+    std::vector<vector2> ans;
+    ans.reserve(N);
+    for (int i = 0; i < N; ++i) {
+        auto &a = G[i], &b = G[(i+1)%N];
+        if (ccw(a1, a2, a) != -1) {
+            ans.push_back(a);
+        }
+        if (is_intersect_ls(a1, a2, a, b)) {
+            auto c = intersection_ll(a1, a2, a, b);
+            ans.push_back(c);
+        }
+    }
+    return ans;
 }
