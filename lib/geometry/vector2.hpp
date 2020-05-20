@@ -122,9 +122,9 @@ int ccw(const vector2& a, const vector2& b, const vector2& c) {
     vector2 x = b - a, y = c - a;
     if (cross(x, y) > 0) return +1;      // counter clockwise
     if (cross(x, y) < 0) return -1;      // clockwise
-    if (dot(x,y) < 0) return +2;         // c--a--b on line
+    if (dot(x, y) < 0) return +2;        // c--a--b on line
     if (x.norm() < y.norm()) return -2;  // a--b--c on line
-    return 0;                                  // a--c--b on line
+    return 0;                            // a--c--b on line
 }
 
 // Are line 'A' and 'B' orthogonal or not?
@@ -293,4 +293,30 @@ int polgygon_contains(const std::vector<vector2> G, const vector2& p) {
         }
     }
     return in ? IN : OUT;
+}
+
+// Convex Hull
+// O(N logN)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/all/CGL_4_A
+std::vector<vector2> convex_hull(const std::vector<vector2>& G) {
+    const int N = G.size();
+    std::vector<vector2> ps(G.begin(), G.end());
+    std::sort(ps.begin(), ps.end(), [&](auto& l, auto& r) {
+        return l.x != r.x ? l.x < r.x : l.y < r.y;
+    });
+
+    int K = 0;
+    std::vector<vector2> ans(2*N);
+    for (int i = 0; i < N; ++i) {
+        while (K >= 2 && ccw(ans[K-2], ans[K-1], ps[i]) == -1) K--;
+        ans[K++] = ps[i];
+    }
+    int T = K + 1;
+    for (int i = N - 2; i >= 0; --i) {
+        while (K >= T && ccw(ans[K-2], ans[K-1], ps[i]) == -1) K--;
+        ans[K++] = ps[i];
+    }
+    ans.resize(K - 1);
+
+    return ans;
 }
