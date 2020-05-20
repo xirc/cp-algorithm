@@ -172,13 +172,16 @@ bool is_intersect_ss(
     return (ca1 * ca2 < EPS) && (cb1 * cb2 < EPS);
 }
 // Are line 'A' and line segment 'B' intersected or not?
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/4/CGL_4_C
 bool is_intersect_ls(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    const auto cb1 = cross(a2 - a1, b1 - a1);
-    const auto cb2 = cross(a2 - a1, b2 - a1);
-    return LQ(cb1 * cb2, 0);
+    int ccw1 = ccw(a1, a2, b1);
+    int ccw2 = ccw(a1, a2, b2);
+    return
+        (ccw1 == -1 && ccw2 == 1) ||
+        (ccw1 == 1 && ccw2 == -1);
 }
 
 // Distance between point 'P' and line 'A'
