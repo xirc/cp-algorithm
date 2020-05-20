@@ -35,6 +35,8 @@ This repository manages my competitive programming library & solutions.
   * Area
   * Convex Check
   * Containment (ON, IN, OUT)
+  * Convex Hull
+  * Convex Diameter
 
 ### Geometry (3D)
 
