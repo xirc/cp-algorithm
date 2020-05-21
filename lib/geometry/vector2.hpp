@@ -70,6 +70,9 @@ struct vector2 {
 vector2 operator*(const double& o, const vector2& v) {
     return v * o;
 }
+inline bool operator<(const vector2& lhs, const vector2& rhs) {
+    return lhs.x != rhs.x ? lhs.x < rhs.x : lhs.y < rhs.y;
+}
 
 // Length of Vector
 double abs(const vector2& a) {
@@ -307,9 +310,7 @@ int polgygon_contains(const std::vector<vector2> G, const vector2& p) {
 std::vector<vector2> convex_hull(const std::vector<vector2>& G) {
     const int N = G.size();
     std::vector<vector2> ps(G.begin(), G.end());
-    std::sort(ps.begin(), ps.end(), [&](auto& l, auto& r) {
-        return l.x != r.x ? l.x < r.x : l.y < r.y;
-    });
+    std::sort(ps.begin(), ps.end());
 
     int K = 0;
     std::vector<vector2> ans(2*N);
