@@ -25,6 +25,7 @@ This repository manages my competitive programming library & solutions.
   * Line-Line
   * Segment-Segment
   * Line-Segment (w/o point)
+  * Circle-Circle
 * Distance
   * Line-Point
   * Segment-Point
