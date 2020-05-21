@@ -393,3 +393,46 @@ std::vector<vector2> convex_cut(
     }
     return ans;
 }
+
+// Intersection of Circles (c1,r1) and (c2, r2)
+// return:
+//   4) they do not cross (there are 4 common tangent lines)
+//   3) they are circumscribed (there are 3 common tanget lines)
+//   2) they are intersect (there are 2 common tanget lines)
+//   1) a circle is inscribed in another (there are 1 common tanget line)
+//   0) a circle includes another (there are no common tanget line)
+//   and intersection points (0 ~ 2)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_A
+//   (But, intersection points are not verified.)
+int intersect_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vector2>& ans) {
+    ans.clear();
+
+    if (r1 < r2) {
+        std::swap(c1, c2);
+        std::swap(r1, r2);
+    }
+
+    int dd = (c1 - c2).length();
+    if (dd > r1 + r2) return 4;
+    if (EQ(dd, r1 + r2)) {
+        auto v = c1 + (c2 - c1).normalized() * r1;
+        ans.push_back(v);
+        return 3;
+    }
+    if (dd < r1 - r2) {
+        return 0;
+    }
+    if (EQ(dd, r1 - r2)) {
+        auto v = (c2 - c1).normalized() * r1;
+        ans.push_back(v);
+        return 1;
+    }
+
+    double x = (dd * dd + r1 * r1 - r2 * r2) / (2 * dd);
+    auto v = (c2 - c1).normalized() * x;
+    double y = std::sqrt(std::max(r1 * r1 - x * x, 0.0));
+    auto u = (c2 - c1).rotated(M_PI_2).normalized() * y;
+    ans.push_back(c1 + v + u);
+    ans.push_back(c1 + v - u);
+    return 2;
+}
