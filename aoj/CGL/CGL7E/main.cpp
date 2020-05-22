@@ -103,7 +103,7 @@ bool GQ(const double& x, const double& y) {
 //   2) they are intersect (there are 2 common tanget lines)
 //   1) a circle is inscribed in another (there are 1 common tanget line)
 //   0) a circle includes another (there are no common tanget line)
-//   and intersection points (0 ~ 2)
+//   and intersection points (0 ~ 2 points)
 int intersection_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vector2>& ans) {
     ans.clear();
     ans.reserve(2);
@@ -148,12 +148,17 @@ int main() {
 
     vector2 c1, c2;
     double r1, r2;
+
     cin >> c1.x >> c1.y >> r1;
     cin >> c2.x >> c2.y >> r2;
 
     vector<vector2> cp;
     int ans = intersection_cc(c1, r1, c2, r2, cp);
-    cout << ans << endl;
+    if (ans == 4 || ans == 0) throw;
+    if (ans == 3 || ans == 1) cp.push_back(cp[0]);
+    sort(cp.begin(), cp.end());
+    cout << fixed << setprecision(7)
+        << cp[0].x << " " << cp[0].y << " " << cp[1].x << " " << cp[1].y << endl;
 
     return 0;
 }

@@ -401,8 +401,8 @@ std::vector<vector2> convex_cut(
 //   0) a circle includes another (there are no common tanget line)
 //   and intersection points (0 ~ 2 points)
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_A
-//   (But, intersection points are not verified.)
-int intersect_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vector2>& ans) {
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_E
+int intersection_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vector2>& ans) {
     ans.clear();
     ans.reserve(2);
 
@@ -411,7 +411,7 @@ int intersect_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vecto
         std::swap(r1, r2);
     }
 
-    int dd = (c1 - c2).length();
+    double dd = (c1 - c2).length();
     if (dd > r1 + r2) {
         return 4;
     }
