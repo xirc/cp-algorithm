@@ -189,7 +189,7 @@ bool is_intersect_ls(
 
 // Distance between point 'P' and line 'A'
 double distance_lp(const vector2& a1, const vector2& a2, const vector2& p) {
-    return abs(rejectionv(a2 - a1, p));
+    return abs(cross(a2-a1, p-a1)) / abs(a2-a1);
 }
 // Distance between point 'P' and line segment 'A'
 double distance_sp(const vector2& a1, const vector2& a2, const vector2& p) {
