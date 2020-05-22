@@ -251,10 +251,7 @@ vector2 intersection_ss(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    double d1 = abs(cross(b2 - b1, a1-b1));
-    double d2 = abs(cross(b2 - b1, a2-b1));
-    double t = d1 / (d1 + d2);
-    return a1 + (a2 - a1) * t;
+    return intersection_ll(a1, a2, b1, b2);
 }
 
 // Area of Polygon (can handle non-Convex)
