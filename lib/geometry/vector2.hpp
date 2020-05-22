@@ -471,3 +471,35 @@ int intersection_cl(
     out.push_back(c1 + v - u);
     return 0;
 }
+
+// Find the tangent lines between a point 'P' and a circle 'C'
+// return:
+//   2) they have 2 tangent lines (2 tangent points)
+//   1) a point lies on a circle (1 tangent point)
+//   0) a circle includes a point (no tangent point)
+//   and tangent points (0 ~ 2 points)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_F
+int tangent_on_circle(
+    const vector2& c1, const double r1,
+    const vector2& p,
+    std::vector<vector2>& ans
+) {
+    ans.clear();
+    ans.reserve(2);
+
+    const double dd = (p - c1).length();
+    if (dd < r1) {
+        return 0;
+    }
+    if (EQ(dd, r1)) {
+        ans.push_back(p);
+        return 1;
+    }
+
+    double theta = std::acos(r1 / dd);
+    auto v = (p - c1).rotated(theta).normalized() * r1;
+    auto u = (p - c1).rotated(-theta).normalized() * r1;
+    ans.push_back(c1 + v);
+    ans.push_back(c1 + u);
+    return 2;
+}
