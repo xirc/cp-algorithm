@@ -445,6 +445,7 @@ int intersect_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vecto
 //   0) they are intersected
 //   and intersection points (0 ~ 2 points)
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_D
+//   (But, intersection points are not verified.)
 int intersection_cl(
     const vector2& c1, const double r1,
     const vector2& a1, const vector2& a2,
