@@ -188,6 +188,7 @@ bool is_intersect_ls(
 }
 
 // Distance between point 'P' and line 'A'
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_D
 double distance_lp(const vector2& a1, const vector2& a2, const vector2& p) {
     return abs(cross(a2-a1, p-a1)) / abs(a2-a1);
 }
@@ -435,4 +436,37 @@ int intersect_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<vecto
     ans.push_back(c1 + v + u);
     ans.push_back(c1 + v - u);
     return 2;
+}
+
+// Intersection of Circle (c1,r1) and Line (a1,a2)
+// return:
+//   2) they do not cross
+//   1) they are circumscribed
+//   0) they are intersected
+//   and intersection points (0 ~ 2 points)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_D
+int intersection_cl(
+    const vector2& c1, const double r1,
+    const vector2& a1, const vector2& a2,
+    std::vector<vector2>& out
+) {
+    out.clear();
+    out.reserve(2);
+
+    double d = distance_lp(a1, a2, c1);
+    if (d > r1) {
+        return 2;
+    }
+    if (EQ(d, r1)) {
+        auto v = a1 + projectionv(c1 - a1, a2 - a1);
+        out.push_back(v);
+        return 1;
+    }
+
+    auto v = -1 * rejectionv(c1 - a1, a2 - a1);
+    auto y = std::sqrt(std::max(r1 * r1 - v.norm(), 0.0));
+    auto u = (a2 - a1).normalized() * y;
+    out.push_back(c1 + v + u);
+    out.push_back(c1 + v - u);
+    return 0;
 }
