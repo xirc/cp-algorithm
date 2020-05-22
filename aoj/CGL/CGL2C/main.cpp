@@ -107,21 +107,28 @@ bool is_intersect_line_segments(
     }
     return (ca1 * ca2 < EPS) && (cb1 * cb2 < EPS);
 }
-// Intersection Point of line segments 'A' and 'B'
-vector2 intersection_of_line_segments(
+// Intersection Point of lines 'A' and 'B'
+vector2 intersection_ll(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    double d1 = abs(cross(b2 - b1, a1-b1));
-    double d2 = abs(cross(b2 - b1, a2-b1));
-    double t = d1 / (d1 + d2);
-    return a1 + (a2 - a1) * t;
+    double A = cross(a2 - a1, b2 - b1);
+    double B = cross(b1 - a1, b2 - b1);
+    return a1 + (B / A) * (a2 - a1);
 }
+// Intersection Point of line segments 'A' and 'B'
+vector2 intersection_ss(
+    const vector2& a1, const vector2& a2,
+    const vector2& b1, const vector2& b2
+) {
+    return intersection_ll(a1, a2, b1, b2);
+}
+
 
 using namespace std;
 
 vector2 solve(vector2 p0, vector2 p1, vector2 p2, vector2 p3) {
-    return intersection_of_line_segments(p0, p1, p2, p3);
+    return intersection_ss(p0, p1, p2, p3);
 }
 
 int main() {

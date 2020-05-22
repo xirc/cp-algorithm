@@ -242,8 +242,8 @@ vector2 intersection_ll(
     const vector2& b1, const vector2& b2
 ) {
     double A = cross(a2 - a1, b2 - b1);
-    double B = cross(a2 - a1, a2 - b1);
-    return b1 + (B / A) * (b2 - b1);
+    double B = cross(b1 - a1, b2 - b1);
+    return a1 + (B / A) * (a2 - a1);
 }
 // Intersection Point of line segments 'A' and 'B'
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/2/CGL_2_C
@@ -251,10 +251,7 @@ vector2 intersection_ss(
     const vector2& a1, const vector2& a2,
     const vector2& b1, const vector2& b2
 ) {
-    double d1 = abs(cross(b2 - b1, a1-b1));
-    double d2 = abs(cross(b2 - b1, a2-b1));
-    double t = d1 / (d1 + d2);
-    return a1 + (a2 - a1) * t;
+    return intersection_ll(a1, a2, b1, b2);
 }
 
 // Area of Polygon (can handle non-Convex)

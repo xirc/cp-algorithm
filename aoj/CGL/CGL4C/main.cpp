@@ -122,8 +122,8 @@ vector2 intersection_ll(
     const vector2& b1, const vector2& b2
 ) {
     double A = cross(a2 - a1, b2 - b1);
-    double B = cross(a2 - a1, a2 - b1);
-    return b1 + (B / A) * (b2 - b1);
+    double B = cross(b1 - a1, b2 - b1);
+    return a1 + (B / A) * (a2 - a1);
 }
 
 // Area of Polygon (can handle non-Convex)
