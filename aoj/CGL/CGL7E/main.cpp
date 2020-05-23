@@ -126,7 +126,7 @@ int intersection_cc(vector2 c1, double r1, vector2 c2, double r2, std::vector<ve
         return 0;
     }
     if (EQ(dd, r1 - r2)) {
-        auto v = (c2 - c1).normalized() * r1;
+        auto v = c1 + (c2 - c1).normalized() * r1;
         ans.push_back(v);
         return 1;
     }
