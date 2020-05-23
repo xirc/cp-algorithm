@@ -94,14 +94,10 @@ double angle(const vector2& a, const vector2& b) {
     return std::acos(dot(a,b) / abs(a) / abs(b));
 }
 
-// Scalar Projection of 'A' onto 'B'
-double projection(const vector2& a, const vector2& b) {
-    return dot(a,b) / abs(b);
-}
 // Vector Projection of 'A' onto 'B'
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_A
 vector2 projectionv(const vector2& a, const vector2& b) {
-    return projection(a, b) * b.normalized();
+    return dot(a,b) / abs(b) * b.normalized();
 }
 // Vector Rejection of 'A' from 'B'
 // Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/1/CGL_1_B

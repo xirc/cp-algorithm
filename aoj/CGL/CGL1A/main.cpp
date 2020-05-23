@@ -76,13 +76,9 @@ double abs(const vector2& a) {
 double dot(const vector2& a, const vector2& b) {
     return a.x * b.x + a.y * b.y;
 }
-// Scalar Projection of 'A' onto 'B'
-double projection(const vector2& a, const vector2& b) {
-    return dot(a,b) / abs(b);
-}
 // Vector Projection of 'A' onto 'B'
 vector2 projectionv(const vector2& a, const vector2& b) {
-    return projection(a, b) * b.normalized();
+    return dot(a,b) / abs(b) * b.normalized();
 }
 
 using namespace std;
