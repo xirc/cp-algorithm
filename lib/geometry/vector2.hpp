@@ -392,6 +392,12 @@ std::vector<vector2> convex_cut(
     return ans;
 }
 
+// Are a circle (c1,r1) and a point p1 intersected or not?
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_G
+bool is_intersect_cp(const vector2& c1, const double r1, const vector2& p) {
+    return EQ((p - c1).length(), r1);
+}
+
 // Intersection of Circles (c1,r1) and (c2, r2)
 // return:
 //   4) they do not cross (there are 4 common tangent lines)
@@ -502,4 +508,64 @@ int tangent_on_circle(
     ans.push_back(c1 + v);
     ans.push_back(c1 + u);
     return 2;
+}
+
+// Common tangent of two circles (c1,r1) and (c2, r2)
+// return:
+//   4) they do not cross (there are 4 common tangent lines)
+//   3) they are circumscribed (there are 3 common tanget lines)
+//   2) they are intersect (there are 2 common tanget lines)
+//   1) a circle is inscribed in another (there are 1 common tanget line)
+//   0) a circle includes another (there are no common tanget line)
+//   and intersection points (0 ~ 8 points)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/7/CGL_7_G
+int tangent_on_circles(
+    vector2 c1, double r1,
+    vector2 c2, double r2,
+    std::vector<vector2>& ans
+) {
+    ans.clear();
+    ans.reserve(4);
+
+    if (r1 < r2) {
+        std::swap(c1, c2);
+        std::swap(r1, r2);
+    }
+
+    double d = (c2 - c1).length();
+    if (d < r1 - r2) {
+        return 0;
+    }
+    if (EQ(d, r1 - r2)) {
+        auto v = c1 + (c2 - c1).normalized() * r1;
+        ans.push_back(v);
+        return 1;
+    }
+    
+    double theta = std::acos((r1 - r2) / d);
+    auto v = (c2 - c1).rotated(theta).normalized();
+    auto u = (c2 - c1).rotated(-theta).normalized();
+    ans.push_back(c1 + r1 * v);
+    ans.push_back(c1 + r1 * u);
+    ans.push_back(c2 + r2 * v);
+    ans.push_back(c2 + r2 * u);
+
+    if (d < r1 + r2) {
+        return 2;
+    }
+
+    if (EQ(d, r1 + r2)) {
+        auto w = c1 + (c2 - c1).normalized() * r1;
+        ans.push_back(w);
+        return 3;
+    }
+
+    double phi = std::acos((r1 + r2) / d);
+    auto x = (c2 - c1).rotated(phi).normalized();
+    auto y = (c2 - c1).rotated(-phi).normalized();
+    ans.push_back(c1 + r1 * x);
+    ans.push_back(c1 + r1 * y);
+    ans.push_back(c2 - r2 * x);
+    ans.push_back(c2 - r2 * y);
+    return 4;
 }
