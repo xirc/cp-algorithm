@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <vector>
 #include <tuple>
+#include <set>
 
 struct vector2 {
     double x, y;
@@ -564,4 +565,42 @@ int tangent_on_circles(
     ans.push_back(c2 - r2 * x);
     ans.push_back(c2 - r2 * y);
     return 4;
+}
+
+// Find the distance of the closest points.
+// Solved by line sweep technique.
+// O (N logN)
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/5/CGL_5_A
+double distance_closest_pair(const std::vector<vector2>& points) {
+    if (points.size() <= 1) return 0;
+
+    std::vector<vector2> PS(points.begin(), points.end());
+    std::sort(PS.begin(), PS.end());
+
+    const int N = PS.size();
+    struct less {
+        bool operator()(const vector2& lhs, const vector2& rhs) {
+            return lhs.y < rhs.y;
+        }
+    };
+    std::set<vector2, less> box;
+
+    double ans = std::numeric_limits<double>::max();
+    int left = 0;
+    box.insert(PS[0]);
+    for (int i = 1; i < N; ++i) {
+        while (left < i && PS[i].x - PS[left].x > ans) {
+            box.erase(PS[left]);
+            left++;
+        }
+        for (
+            auto it = box.lower_bound(vector2(0, PS[i].y - ans));
+            it != box.end() && LQ(it->y, PS[i].y + ans);
+            ++it
+        ) {
+            ans = std::min(ans, abs(PS[i] - *it));
+        }
+        box.insert(PS[i]);
+    }
+    return ans;
 }
