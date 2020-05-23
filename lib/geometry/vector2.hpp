@@ -510,7 +510,7 @@ int tangent_on_circle(
     return 2;
 }
 
-// Common tangent of two ircles (c1,r1) and (c2, r2)
+// Common tangent of two circles (c1,r1) and (c2, r2)
 // return:
 //   4) they do not cross (there are 4 common tangent lines)
 //   3) they are circumscribed (there are 3 common tanget lines)
