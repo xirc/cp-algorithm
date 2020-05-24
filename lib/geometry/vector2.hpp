@@ -604,3 +604,70 @@ double distance_closest_pair(const std::vector<vector2>& points) {
     }
     return ans;
 }
+
+// Find segments' intersections in Manhattan Geometry
+// O (N log N + K)
+//   where K = number of intersections
+// NOTE:
+//   if K will be N*N and you only need number of intersections,
+//   use ImplicitTreap instead of std::multiset, and don't iterate over intersections.
+// Verified https://onlinejudge.u-aizu.ac.jp/courses/library/4/CGL/6/CGL_6_A
+void intersection_ss_manhattan(
+    const std::vector<std::pair<vector2,vector2>>& ss,
+    std::vector<vector2>& ans
+) {
+    enum event_type { HIN=0, VT=1, HOUT=2 };
+    struct event {
+        event_type type;
+        vector2 s, e;
+        double key;
+        bool operator<(const event& o) const {
+            return !EQ(key, o.key) ? key < o.key : type < o.type;
+        }
+    };
+
+    const int N = ss.size();
+    std::vector<event> events;
+
+    events.reserve(2*N);
+    for (auto s : ss) {
+        auto v = s.first - s.second;
+        if (is_parallel(v, vector2(1,0))) {
+            // Horizontal Line
+            auto lx = std::min(s.first.x, s.second.x);
+            auto ux = std::max(s.first.x, s.second.x);
+            events.push_back({ HIN, s.first, s.second, lx });
+            events.push_back({ HOUT, s.first, s.second, ux });
+        } else if (is_orthogonal(v, vector2(1,0))) {
+            // Vertical Line
+            events.push_back({ VT, s.first, s.second, s.first.x });
+        } else throw;
+    }
+    std::sort(events.begin(), events.end());
+
+    struct less {
+        bool operator()(const vector2& lhs, const vector2& rhs) {
+            return lhs.y < rhs.y;
+        }
+    };
+    std::multiset<vector2, less> S;
+
+    ans.clear();
+    ans.reserve(N * std::log2(N));
+    for (auto e : events) {
+        if (e.type == HIN) {
+            S.insert(e.s);
+        } else if (e.type == HOUT) {
+            S.erase(S.find(e.s));
+        } else if (e.type == VT) {
+            auto ly = std::min(e.s.y, e.e.y);
+            auto uy = std::max(e.s.y, e.e.y);
+            auto bs = S.lower_bound(vector2(0, ly));
+            auto es = S.upper_bound(vector2(0, uy));
+            for (auto it = bs; it != es; ++it) {
+                auto v = vector2(e.s.x, it->y);
+                ans.push_back(v);
+            }
+        } else throw;
+    }
+}
