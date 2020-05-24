@@ -5,7 +5,7 @@ jobs:
       - image: gcc:latest
     steps:
       - checkout
-      - run: cd lib && make all
+      - run: cd lib && make -j $(nproc) all
 
 workflows:
   version: 2
