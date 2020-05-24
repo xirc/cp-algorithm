@@ -1,0 +1,4 @@
+init
+rect 0 0 3 4
+rect 1 2 4 3
+solve

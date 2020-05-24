@@ -46,6 +46,7 @@ This repository manages my competitive programming library & solutions.
 * Line Sweep
   * Distance of the Closest Pair
   * Segment Intersections in Manhattan Geometry
+  * Area of Union Rectangles
 
 ### Geometry (3D)
 
