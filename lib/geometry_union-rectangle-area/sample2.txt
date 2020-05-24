@@ -1,0 +1,5 @@
+init
+rect 1 1 2 5
+rect 2 1 5 2
+rect 1 2 2 5
+solve
