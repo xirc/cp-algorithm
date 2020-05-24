@@ -26,6 +26,7 @@ This repository manages my competitive programming library & solutions.
   * Segment-Segment
   * Line-Segment (w/o point)
   * Circle-Circle
+  * Circle-Line
 * Distance
   * Line-Point
   * Segment-Point
@@ -38,6 +39,13 @@ This repository manages my competitive programming library & solutions.
   * Containment (ON, IN, OUT)
   * Convex Hull
   * Convex Diameter
+* Circle
+  * Tangent Line
+    - Circle-Point
+    - Circle-Circle
+* Line Sweep
+  * Distance of the Closest Pair
+  * Segment Intersections in Manhattan Geometry
 
 ### Geometry (3D)
 
