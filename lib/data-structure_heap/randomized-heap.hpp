@@ -6,6 +6,7 @@
 
 // Heap (Randomized Heap)
 // Memory: O(N)
+// NOTE: You can merge other Heap which has same update operator.
 template <class T, class E = T, class less = std::less<T>>
 class Heap {
 public:
