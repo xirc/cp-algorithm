@@ -40,8 +40,8 @@ protected:
 
 public:
     Heap(
-        G update_op = [&](const T& l, const E& r) { return l + r; },
-        H lazy_op = [&](const E& l, const E& r) { return l + r; },
+        G update_op = [](const T& l, const E& r) { return l + r; },
+        H lazy_op = [](const E& l, const E& r) { return l + r; },
         E lazy_id = E()
     )
         : update_op(update_op)
