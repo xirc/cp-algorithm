@@ -56,11 +56,13 @@ public:
     }
     // O(logN)
     T top() {
+        if (root == nullptr) throw;
         pushdown(root);
         return root->value;
     }
     // O(logN)
     void pop() {
+        if (root == nullptr) throw;
         pushdown(root);
         root = merge(root->left, root->right);
     }
@@ -70,6 +72,9 @@ public:
     }
     // O(logN)
     void merge(Heap<T,E,less>& other) {
+        if (root == other.root) {
+            return;
+        }
         root = merge(root, other.root);
         other.root = nullptr;
     }
