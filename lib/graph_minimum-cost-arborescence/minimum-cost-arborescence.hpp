@@ -1,5 +1,8 @@
 #pragma
 
+// Verified
+// https://onlinejudge.u-aizu.ac.jp/courses/library/5/GRL/2/GRL_2_B
+
 #include <vector>
 #include <limits>
 #include "../data-structure_union-find-tree/union-find-tree.hpp"
