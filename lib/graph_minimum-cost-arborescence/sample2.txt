@@ -1,0 +1,12 @@
+init 6
+edge 0 2 7
+edge 0 1 1
+edge 0 3 5
+edge 1 4 9
+edge 2 1 6
+edge 1 3 2
+edge 3 4 3
+edge 4 2 2
+edge 2 5 8
+edge 3 5 3
+solve 0
