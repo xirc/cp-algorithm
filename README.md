@@ -91,6 +91,8 @@ This repository manages my competitive programming library & solutions.
 * Finding Cycle
 * Floyd Warshall  
   All Pairs Shortest Path
+* Minimum Spanning Tree
+* Minimum Cost Arborescence
 * Maximum Flow  
   * Dinic
   * Edmonds-Karp
