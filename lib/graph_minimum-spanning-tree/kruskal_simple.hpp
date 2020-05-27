@@ -13,6 +13,7 @@
 // NOTE: undirected, multi-edge, negative-weight
 class KruskalSimple {
     struct edge {
+        int index;
         int u, v;
         long long distance;
         bool operator<(const edge& other) const {
@@ -31,13 +32,13 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int u, int v, long long distance) {
+    void add_edge(int index, int u, int v, long long distance) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        edges.push_back({ u, v, distance });
+        edges.push_back({ index, u, v, distance });
     }
     // O(E logV + V^2)
-    bool solve(long long& out_distance, std::vector<std::pair<int,int>> &out_edges) {
+    bool solve(long long& out_distance, std::vector<int> &out_edges) {
         out_distance = 0;
         out_edges.clear();
 
@@ -52,7 +53,7 @@ public:
             if (tree_id[edge.u] == tree_id[edge.v]) continue;
 
             out_distance += edge.distance;
-            out_edges.push_back({ edge.u, edge. v });
+            out_edges.push_back(edge.index);
 
             int old_id = tree_id[edge.u], new_id = tree_id[edge.v];
             for (int i = 0; i< N; ++i) {
