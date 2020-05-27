@@ -14,6 +14,7 @@
 // NOTE: undirected, multi-edge, negative-weight
 class Kruskal {
     struct edge {
+        int index;
         int u, v;
         long long distance;
         bool operator<(const edge& other) const {
@@ -32,13 +33,13 @@ public:
         return N;
     }
     // O(1)
-    void add_edge(int u, int v, int distance) {
+    void add_edge(int index, int u, int v, int distance) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        edges.push_back({ u, v, distance });
+        edges.push_back({ index, u, v, distance });
     }
     // O (E logV)
-    bool solve(long long& out_distance, std::vector<std::pair<int,int>>& out_edges) {
+    bool solve(long long& out_distance, std::vector<int>& out_edges) {
         out_distance = 0;
         out_edges.clear();
 
@@ -49,7 +50,7 @@ public:
         for (auto edge : edges) {
             if (tree.find(edge.u).parent == tree.find(edge.v).parent) continue;
             out_distance += edge.distance;
-            out_edges.push_back({ edge.u, edge.v });
+            out_edges.push_back(edge.index);
             tree.unite(edge.u, edge.v);
         }
 

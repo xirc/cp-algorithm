@@ -1,12 +1,11 @@
 #include <iostream>
 #include <functional>
-#include <memory>
 #include "../template-main.hpp"
 
 template <class Solver>
 class SolverInterp {
-    using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = SolverPtr(new Solver());
+    std::vector<std::tuple<int,int,long long>> edges;
+    Solver solver;
 public:
     void action_init() {
         int size;
@@ -15,31 +14,36 @@ public:
             std::cout << "false" << std::endl;
             return;
         }
-        solver = SolverPtr(new Solver(size));
+        edges.clear();
+        solver = Solver(size);
     }
     void action_add_edge() {
         int u, v;
         long long distance;
         std::cin >> u >> v >> distance;
-        if (u < 0 || u >= solver->size() ||
-            v < 0 || v >= solver->size())
+        if (u < 0 || u >= solver.size() ||
+            v < 0 || v >= solver.size())
         {
             std::cout << "false" << std::endl;
             return;
         }
-        solver->add_edge(u, v, distance);
+        int index = edges.size();
+        edges.push_back(std::make_tuple(u, v, distance));
+        solver.add_edge(index, u, v, distance);
     }
     void action_solve() {
         long long distance;
-        std::vector<std::pair<int,int>> edges;
-        bool has_ans = solver->solve(distance, edges);
+        std::vector<int> out_edges;
+        bool has_ans = solver.solve(distance, out_edges);
         if (!has_ans) {
             std::cout << "false" << std::endl;
             return;
         }
         std::cout << distance << std::endl;
-        for (int i = 0; i < edges.size(); ++i) {
-            std::cout << edges[i].first << " - " << edges[i].second << std::endl;
+        for (int i : out_edges) {
+            int from, to; long long distance;
+            std::tie(from, to, distance) = edges[i];
+            std::cout << i << ": " << from << " -> " << to << " cost=" << distance << std::endl;
         }
     }
 };

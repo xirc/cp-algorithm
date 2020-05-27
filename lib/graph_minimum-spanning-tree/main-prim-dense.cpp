@@ -1,6 +1,6 @@
 #include <iostream>
 #include "../template-main.hpp"
-#include "./template-solver-interp.hpp"
+#include "./template-prim-solver-interp.hpp"
 #include "./prim-dense.hpp"
 
 using namespace std;
