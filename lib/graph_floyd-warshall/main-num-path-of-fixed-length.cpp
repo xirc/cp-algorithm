@@ -10,8 +10,7 @@
 
 using namespace std;
 
-using SolverPtr = shared_ptr<Solver>;
-SolverPtr solver = SolverPtr(new Solver());
+Solver solver;
 
 void action_init() {
     int size;
@@ -20,20 +19,20 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    solver = SolverPtr(new Solver(size));
+    solver = Solver(size);
     cout << "true" << endl;
 }
 
 void action_add_edge() {
     int from, to;
     cin >> from >> to;
-    if (from < 0 || from >= solver->size() ||
-        to < 0 || to >= solver->size())
+    if (from < 0 || from >= solver.size() ||
+        to < 0 || to >= solver.size())
     {
         cout << "false" << endl;
         return;
     }
-    solver->add_edge(from, to);
+    solver.add_edge(from, to);
     cout << "true" << endl;
 }
 
@@ -44,8 +43,8 @@ void action_solve() {
         cout << "false" << endl;
         return;
     }
-    const int N = solver->size();
-    auto G = solver->solve(length);
+    const int N = solver.size();
+    auto G = solver.solve(length);
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             if (j > 0) cout << " ";

@@ -1,42 +1,76 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_2_A
 
-#include <vector>
-#include <set>
-#include <algorithm>
+#include <bits/stdc++.h>
 
+// Union Find Tree (Disjoint Set Union)
+// Memory: O(N)
+class UnionFindTree {
+public:
+    struct node { int parent, rank; };
+
+protected:
+    int N;
+    std::vector<node> nodes;
+
+public:
+    // O(N)
+    UnionFindTree(int n = 0)
+        : N(n)
+        , nodes(n)
+    {
+        for (int i = 0; i < N; ++i) {
+            nodes[i] = { i, 0 };
+        }
+    }
+    // O(1)
+    int size() {
+        return N;
+    }
+    // O(a(N))
+    node find(int v) {
+        throw_if_invalid_index(v);
+        if (v != nodes[v].parent) {
+            // Path Compression
+            nodes[v] = find(nodes[v].parent);
+        }
+        return nodes[v];
+    }
+    // O(a(N))
+    bool same(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        return find(u).parent == find(v).parent;
+    }
+    // O(a(N))
+    bool unite(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        u = find(u).parent;
+        v = find(v).parent;
+        if (u == v) {
+            return false;
+        }
+        if (nodes[u].rank < nodes[v].rank) {
+            std::swap(u, v);
+        }
+        nodes[v].parent = u;
+        if (nodes[u].rank == nodes[v].rank) {
+            nodes[u].rank++;
+        }
+        return true;
+    }
+
+protected:
+    void throw_if_invalid_index(int v) {
+        if (v < 0 || v >= N) throw "index out of range";
+    }
+};
+
+// Minimum Spanning Tree
+// Kruskal's Algorithm
+// Memory: O(V + E)
+// NOTE: undirected, multi-edge, negative-weight
 class Kruskal {
-    struct UnionFindTree {
-        struct node { int parent, rank; };
-        int N;
-        std::vector<node> nodes;
-        UnionFindTree(int size)
-            : N(size)
-            , nodes(size)
-        {
-            for (int i = 0; i < size; ++i) {
-                nodes[i] = { i, 0 };
-            }
-        }
-        node find_set(int v) {
-            if (v != nodes[v].parent) {
-                nodes[v] = find_set(nodes[v].parent);
-            }
-            return nodes[v];
-        }
-        void union_set(int a, int b) {
-            a = find_set(a).parent;
-            b = find_set(b).parent;
-
-            if (a == b) return;
-            if (nodes[a].rank < nodes[b].rank) {
-                std::swap(a, b);
-            }
-            nodes[b].parent = a;
-            if (nodes[a].rank == nodes[b].rank) {
-                nodes[a].rank++;
-            }
-        }
-    };
     struct edge {
         int u, v;
         long long distance;
@@ -50,7 +84,7 @@ class Kruskal {
 
 public:
     // O(1)
-    Kruskal(int size): N(size) {}
+    Kruskal(int n = 0): N(n) {}
     // O(1)
     int size() {
         return N;
@@ -71,10 +105,10 @@ public:
         std::sort(edges.begin(), edges.end());
 
         for (auto edge : edges) {
-            if (tree.find_set(edge.u).parent == tree.find_set(edge.v).parent) continue;
+            if (tree.find(edge.u).parent == tree.find(edge.v).parent) continue;
             out_distance += edge.distance;
             out_edges.push_back({ edge.u, edge.v });
-            tree.union_set(edge.u, edge.v);
+            tree.unite(edge.u, edge.v);
         }
 
         return out_edges.size() == N - 1;
@@ -86,8 +120,6 @@ private:
     }
 };
 
-
-#include <iostream>
 
 using namespace std;
 

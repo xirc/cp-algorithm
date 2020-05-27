@@ -6,44 +6,13 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include "../data-structure_union-find-tree/union-find-tree.hpp"
 
 // Minimum Spanning Tree
 // Kruskal's Algorithm
 // Memory: O(V + E)
 // NOTE: undirected, multi-edge, negative-weight
 class Kruskal {
-    struct UnionFindTree {
-        struct node { int parent, rank; };
-        int N;
-        std::vector<node> nodes;
-        UnionFindTree(int size)
-            : N(size)
-            , nodes(size)
-        {
-            for (int i = 0; i < size; ++i) {
-                nodes[i] = { i, 0 };
-            }
-        }
-        node find_set(int v) {
-            if (v != nodes[v].parent) {
-                nodes[v] = find_set(nodes[v].parent);
-            }
-            return nodes[v];
-        }
-        void union_set(int a, int b) {
-            a = find_set(a).parent;
-            b = find_set(b).parent;
-
-            if (a == b) return;
-            if (nodes[a].rank < nodes[b].rank) {
-                std::swap(a, b);
-            }
-            nodes[b].parent = a;
-            if (nodes[a].rank == nodes[b].rank) {
-                nodes[a].rank++;
-            }
-        }
-    };
     struct edge {
         int u, v;
         long long distance;
@@ -78,10 +47,10 @@ public:
         std::sort(edges.begin(), edges.end());
 
         for (auto edge : edges) {
-            if (tree.find_set(edge.u).parent == tree.find_set(edge.v).parent) continue;
+            if (tree.find(edge.u).parent == tree.find(edge.v).parent) continue;
             out_distance += edge.distance;
             out_edges.push_back({ edge.u, edge.v });
-            tree.union_set(edge.u, edge.v);
+            tree.unite(edge.u, edge.v);
         }
 
         return out_edges.size() == N - 1;

@@ -4,41 +4,14 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C
 
 #include <vector>
+#include "../data-structure_union-find-tree/union-find-tree.hpp"
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V + E + Q)
 class LCA {
     struct Query { int u, idx; };
-    struct DSU {
-        struct node { int parent, rank; };
-        std::vector<node> nodes;
-        DSU(): DSU(0) {}
-        DSU(int n): nodes(n) {
-            for (int i = 0; i < n; ++i) {
-                nodes[i] = { i, 0 };
-            }
-        }
-        node find_set(int v) {
-            if (v != nodes[v].parent) {
-                nodes[v] = find_set(nodes[v].parent);
-            }
-            return nodes[v];
-        }
-        void union_set(int u, int v) {
-            u = find_set(u).parent;
-            v = find_set(v).parent;
-            if (u == v) return;
-            if (nodes[u].rank < nodes[v].rank) {
-                std::swap(u, v);
-            }
-            nodes[v].parent = u;
-            if (nodes[u].rank == nodes[v].rank) {
-                nodes[u].rank++;
-            }
-        }
-    };
 
-    DSU dsu;
+    UnionFindTree dsu;
     std::vector<bool> visited;
     std::vector<int> ancestor;
     std::vector<int> answer;
@@ -56,7 +29,7 @@ public:
             Q[u].push_back({ v, i });
             Q[v].push_back({ u, i });
         }
-        dsu = DSU(N);
+        dsu = UnionFindTree(N);
         visited.assign(N, false);
         ancestor.assign(N, -1);
         answer.assign(M, -1);
@@ -75,13 +48,13 @@ private:
         for (int u : adj[v]) {
             if (visited[u]) continue;
             dfs(adj, queries, u);
-            dsu.union_set(u, v);
-            int c = dsu.find_set(v).parent;
+            dsu.unite(u, v);
+            int c = dsu.find(v).parent;
             ancestor[c] = v;
         }
         for (auto query : queries[v]) {
             if (!visited[query.u]) continue;
-            int c = dsu.find_set(query.u).parent;
+            int c = dsu.find(query.u).parent;
             answer[query.idx] = ancestor[c];
         }
     }

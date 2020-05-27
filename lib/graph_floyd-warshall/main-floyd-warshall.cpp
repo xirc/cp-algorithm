@@ -8,8 +8,7 @@
 
 using namespace std;
 
-using SolverPtr = shared_ptr<FloydWarshall>;
-SolverPtr solver = SolverPtr(new FloydWarshall());
+FloydWarshall solver;
 
 void action_init() {
     int size;
@@ -18,27 +17,27 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    solver = SolverPtr(new FloydWarshall(size));
+    solver = FloydWarshall(size);
     cout << "true" << endl;
 }
 
 void action_define_edge() {
     int from, to; long long distance;
     cin >> from >> to >> distance;
-    if (from < 0 || from >= solver->size() ||
-        to < 0 || to >= solver->size())
+    if (from < 0 || from >= solver.size() ||
+        to < 0 || to >= solver.size())
     {
         cout << "false" << endl;
         return;
     }
-    solver->define_edge(from, to, distance);
+    solver.define_edge(from, to, distance);
 }
 
 void action_solve() {
-    const int N = solver->size();
+    const int N = solver.size();
     vector<vector<long long>> D;
     vector<vector<int>> P;
-    auto has_ans = solver->solve(D, P);
+    auto has_ans = solver.solve(D, P);
     if (!has_ans) {
         cout << "false" << endl;
         return;
@@ -46,7 +45,7 @@ void action_solve() {
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             if (i == j) continue;
-            auto path = solver->retrieve_path(D, P, i, j);
+            auto path = solver.retrieve_path(D, P, i, j);
             cout << i << " to " << j << ":";
             cout << " distance=" << D[i][j];
             cout << ", path=";
