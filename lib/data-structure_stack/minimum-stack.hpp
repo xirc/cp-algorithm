@@ -3,6 +3,9 @@
 #include <deque>
 #include <algorithm>
 
+// Verified
+// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
+
 // MinimumStack
 // Memory: O(N)
 template <class T>
