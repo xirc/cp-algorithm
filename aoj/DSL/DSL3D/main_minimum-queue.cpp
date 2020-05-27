@@ -1,37 +1,47 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
 
-#include <iostream>
-#include <vector>
-#include <stack>
-#include <algorithm>
+#include <bits/stdc++.h>
 
+// MinimumStack
+// Memory: O(N)
+template <class T>
+class MinimumStack {
+protected:
+    struct entry { T value, minimum; };
+    std::deque<entry> S;
+public:
+    // O(1)
+    bool empty() {
+        return S.empty();
+    }
+    // O(1)
+    void push(T value) {
+        T new_min = S.empty() ? value : std::min(value, S.back().minimum);
+        S.push_back({value, new_min});
+    }
+    // O(1)
+    void pop() {
+        S.pop_back();
+    }
+    // O(1)
+    T top() {
+        return S.back().value;
+    }
+    T bottom() {
+        return S.front().value;
+    }
+    // O(1)
+    T minimum() {
+        return S.back().minimum;
+    }
+};
+
+// MinimumQueue
+// Memory: O(N)
 template <class T>
 class MinimumQueue {
-    class MinimumStack {
-        struct entry { T value, minimum; };
-        std::deque<entry> S;
-    public:
-        bool empty() {
-            return S.empty();
-        }
-        void push(T value) {
-            T mini = S.empty() ? value : std::min(S.back().minimum, value);
-            S.push_back({value, mini});
-        }
-        void pop() {
-            S.pop_back();
-        }
-        T top() {
-            return S.back().value;
-        }
-        T bottom() {
-            return S.front().value;
-        }
-        T minimum() {
-            return S.back().minimum;
-        }
-    };
-    MinimumStack Sp, Sr;
+protected:
+    MinimumStack<T> Sp, Sr;
 
 public:
     // O(1)
@@ -68,7 +78,7 @@ public:
         }
     }
 
-private:
+protected:
     // O(N)
     void transfer_if_needed() {
         if (!Sr.empty()) return;
