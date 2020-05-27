@@ -1,12 +1,10 @@
 #include <iostream>
 #include <functional>
-#include <memory>
 #include "../template-main.hpp"
 
 template <class Solver>
 class SolverInterp {
-    using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = SolverPtr(new Solver());
+    Solver solver;
 public:
     void action_init() {
         int size;
@@ -15,24 +13,24 @@ public:
             std::cout << "false" << std::endl;
             return;
         }
-        solver = SolverPtr(new Solver(size));
+        solver = Solver(size);
     }
     void action_add_edge() {
         int u, v;
         long long distance;
         std::cin >> u >> v >> distance;
-        if (u < 0 || u >= solver->size() ||
-            v < 0 || v >= solver->size())
+        if (u < 0 || u >= solver.size() ||
+            v < 0 || v >= solver.size())
         {
             std::cout << "false" << std::endl;
             return;
         }
-        solver->add_edge(u, v, distance);
+        solver.add_edge(u, v, distance);
     }
     void action_solve() {
         long long distance;
         std::vector<std::pair<int,int>> edges;
-        bool has_ans = solver->solve(distance, edges);
+        bool has_ans = solver.solve(distance, edges);
         if (!has_ans) {
             std::cout << "false" << std::endl;
             return;
