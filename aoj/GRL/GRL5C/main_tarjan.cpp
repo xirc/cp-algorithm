@@ -1,41 +1,77 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 
+// Union Find Tree (Disjoint Set Union)
+// Memory: O(N)
+class UnionFindTree {
+public:
+    struct node { int parent, rank; };
+
+protected:
+    int N;
+    std::vector<node> nodes;
+
+public:
+    // O(N)
+    UnionFindTree(int n = 0)
+        : N(n)
+        , nodes(n)
+    {
+        for (int i = 0; i < N; ++i) {
+            nodes[i] = { i, 0 };
+        }
+    }
+    // O(1)
+    int size() {
+        return N;
+    }
+    // O(a(N))
+    node find(int v) {
+        throw_if_invalid_index(v);
+        if (v != nodes[v].parent) {
+            // Path Compression
+            nodes[v] = find(nodes[v].parent);
+        }
+        return nodes[v];
+    }
+    // O(a(N))
+    bool same(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        return find(u).parent == find(v).parent;
+    }
+    // O(a(N))
+    bool unite(int u, int v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        u = find(u).parent;
+        v = find(v).parent;
+        if (u == v) {
+            return false;
+        }
+        if (nodes[u].rank < nodes[v].rank) {
+            std::swap(u, v);
+        }
+        nodes[v].parent = u;
+        if (nodes[u].rank == nodes[v].rank) {
+            nodes[u].rank++;
+        }
+        return true;
+    }
+
+protected:
+    void throw_if_invalid_index(int v) {
+        if (v < 0 || v >= N) throw "index out of range";
+    }
+};
+
+// LCA: Lowest Common Ancestor
+// Memory: O(V + E + Q)
 class LCA {
     struct Query { int u, idx; };
-    struct DSU {
-        struct node { int parent, rank; };
-        std::vector<node> nodes;
-        DSU(): DSU(0) {}
-        DSU(int n): nodes(n) {
-            for (int i = 0; i < n; ++i) {
-                nodes[i] = { i, 0 };
-            }
-        }
-        node find_set(int v) {
-            if (v != nodes[v].parent) {
-                nodes[v] = find_set(nodes[v].parent);
-            }
-            return nodes[v];
-        }
-        void union_set(int u, int v) {
-            u = find_set(u).parent;
-            v = find_set(v).parent;
-            if (u == v) return;
-            if (nodes[u].rank < nodes[v].rank) {
-                std::swap(u, v);
-            }
-            nodes[v].parent = u;
-            if (nodes[u].rank == nodes[v].rank) {
-                nodes[u].rank++;
-            }
-        }
-    };
 
-    DSU dsu;
+    UnionFindTree dsu;
     std::vector<bool> visited;
     std::vector<int> ancestor;
     std::vector<int> answer;
@@ -53,7 +89,7 @@ public:
             Q[u].push_back({ v, i });
             Q[v].push_back({ u, i });
         }
-        dsu = DSU(N);
+        dsu = UnionFindTree(N);
         visited.assign(N, false);
         ancestor.assign(N, -1);
         answer.assign(M, -1);
@@ -72,17 +108,18 @@ private:
         for (int u : adj[v]) {
             if (visited[u]) continue;
             dfs(adj, queries, u);
-            dsu.union_set(u, v);
-            int c = dsu.find_set(v).parent;
+            dsu.unite(u, v);
+            int c = dsu.find(v).parent;
             ancestor[c] = v;
         }
         for (auto query : queries[v]) {
             if (!visited[query.u]) continue;
-            int c = dsu.find_set(query.u).parent;
+            int c = dsu.find(query.u).parent;
             answer[query.idx] = ancestor[c];
         }
     }
 };
+
 
 using namespace std;
 
