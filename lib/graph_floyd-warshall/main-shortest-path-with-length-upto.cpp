@@ -11,8 +11,7 @@
 
 using namespace std;
 
-using SolverPtr = shared_ptr<Solver>;
-SolverPtr solver = SolverPtr(new Solver());
+Solver solver;
 
 void action_init() {
     int size;
@@ -21,17 +20,17 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    solver = SolverPtr(new Solver(2 * size));
+    solver = Solver(2 * size);
     const int N = size;
     for (int i = 0; i < N; ++i) {
-        solver->add_edge(i, i + N, 0);
-        solver->add_edge(i + N, i + N, 0);
+        solver.add_edge(i, i + N, 0);
+        solver.add_edge(i + N, i + N, 0);
     }
     cout << "true" << endl;
 }
 
 void action_add_edge() {
-    const int N = solver->size() / 2;
+    const int N = solver.size() / 2;
     int from, to, distance;
     cin >> from >> to >> distance;
     if (from < 0 || from >= N ||
@@ -40,7 +39,7 @@ void action_add_edge() {
         cout << "false" << endl;
         return;
     }
-    solver->add_edge(from, to, distance);
+    solver.add_edge(from, to, distance);
     cout << "true" << endl;
 }
 
@@ -51,8 +50,8 @@ void action_solve() {
         cout << "false" << endl;
         return;
     }
-    const int N = solver->size() / 2;
-    auto G = solver->solve(length + 1);
+    const int N = solver.size() / 2;
+    auto G = solver.solve(length + 1);
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
             if (j > 0) cout << " ";
