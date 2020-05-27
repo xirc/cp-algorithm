@@ -1,6 +1,6 @@
 #pragma once
 
-#include <stack>
+#include <deque>
 #include <algorithm>
 
 // MinimumStack
@@ -9,7 +9,7 @@ template <class T>
 class MinimumStack {
 protected:
     struct entry { T value, minimum; };
-    std::stack<entry> S;
+    std::deque<entry> S;
 public:
     // O(1)
     bool empty() {
@@ -17,19 +17,22 @@ public:
     }
     // O(1)
     void push(T value) {
-        T new_min = S.empty() ? value : std::min(value, S.top().minimum);
-        S.push({value, new_min});
+        T new_min = S.empty() ? value : std::min(value, S.back().minimum);
+        S.push_back({value, new_min});
     }
     // O(1)
     void pop() {
-        S.pop();
+        S.pop_back();
     }
     // O(1)
     T top() {
-        return S.top().value;
+        return S.back().value;
+    }
+    T bottom() {
+        return S.front().value;
     }
     // O(1)
     T minimum() {
-        return S.top().minimum;
+        return S.back().minimum;
     }
 };
