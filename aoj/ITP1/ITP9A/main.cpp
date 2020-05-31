@@ -2,12 +2,10 @@
 
 using namespace std;
 
-string tolower(const string& in) {
-    vector<char> buf(in.size());
+void tolower_inplace(string& in) {
     for (int i = 0; i < in.size(); ++i) {
-        buf[i] = tolower(in[i]);
+        in[i] = tolower(in[i]);
     }
-    return string(buf.begin(), buf.end());
 }
 
 int main() {
@@ -17,9 +15,9 @@ int main() {
     int ans = 0;
     string w, t;
     cin >> w;
-    w = tolower(w);
+    tolower_inplace(w);
     while (cin >> t, t != "END_OF_TEXT") {
-        t = tolower(t);
+        tolower_inplace(t);
         if (w == t) ans++;
     }
     cout << ans << endl;
