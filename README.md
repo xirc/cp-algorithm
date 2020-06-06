@@ -111,6 +111,7 @@ This repository manages my competitive programming library & solutions.
 
 * bigint  
   Big Integer (not well-tested)
+* dice
 * two pointers  
   "しゃくとり法" in Japanese
 
