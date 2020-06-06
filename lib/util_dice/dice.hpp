@@ -31,7 +31,7 @@ public:
     // O(1)
     bool operator==(const Dice<T>& other) const {
         const auto &self = *this;
-        return self[TOP] = other[TOP] && self[BOTTOM] == other[BOTTOM] &&
+        return self[TOP] == other[TOP] && self[BOTTOM] == other[BOTTOM] &&
             self[FRONT] == other[FRONT] && self[BACK] == other[BACK] &&
             self[LEFT] == other[LEFT] && self[RIGHT] == other[RIGHT];
     }
