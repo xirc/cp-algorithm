@@ -71,12 +71,12 @@ public:
         for (int k = 0; k < 6; k++) {
             for (int i = 0; i < 4; ++i) {
                 ans.push_back(dice);
-                dice.roll_y();
+                dice.roll_ly();
             }
             if (k & 1) {
-                dice.roll_x();
+                dice.roll_lx();
             } else {
-                dice.roll_z();
+                dice.roll_lz();
             }
         }
         return ans;
