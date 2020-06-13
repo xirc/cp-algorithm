@@ -10,23 +10,20 @@ void dump(vector<int>& A) {
     cout << endl;
 }
 
+const int inf = 1e9+1;
 int merge(vector<int>& A, int l, int m, int r) {
     int count = 0;
     const int n1 = m - l;
     const int n2 = r - m;
-    vector<int> L(n1), R(n2);
+    vector<int> L(n1 + 1), R(n2 + 1);
     copy(A.begin() + l, A.begin() + m, L.begin());
     copy(A.begin() + m, A.begin() + r, R.begin());
+    L[n1] = inf;
+    R[n2] = inf;
     int i = 0, j = 0;
     for (int k = l; k < r; ++k) {
         count++;
-        if (j == n2) {
-            A[k] = L[i];
-            i++;
-        } else if (i == n1) {
-            A[k] = R[j];
-            j++;
-        } else if (L[i] <= R[j]) {
+        if (L[i] <= R[j]) {
             A[k] = L[i];
             i++;
         } else {
