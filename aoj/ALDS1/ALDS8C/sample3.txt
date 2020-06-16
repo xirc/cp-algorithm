@@ -1,0 +1,44 @@
+43
+insert 30
+insert 17
+insert 88
+insert 53
+insert 5
+insert 20
+insert 18
+insert 28
+insert 27
+insert 60
+print
+find -1
+find 2
+find 3
+find 4
+find 5
+find 6
+find 10
+find 17
+find 28
+find 29
+find 30
+find 31
+find 50
+find 51
+find 52
+find 53
+find 54
+find 60
+find 88
+find 89
+insert 2000000000
+insert 55
+insert 63
+insert -1
+insert 8
+print
+delete 53
+delete 2000000000
+delete 20
+delete 5
+delete 8
+print
