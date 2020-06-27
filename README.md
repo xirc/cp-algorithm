@@ -10,6 +10,7 @@ This repository manages my competitive programming library & solutions.
 
 * Binary Exponentation
 * GCD, LCM
+* Extended Euclidean Algorithm
 
 ### Geometry (2D)
 
