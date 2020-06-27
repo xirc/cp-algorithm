@@ -3,6 +3,7 @@
 // ExtendedGCD(a,b)
 // a * x + b * y = gcd(a,b)
 // Time: O( log(min(a,b)) )
+// Verified: https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
 long long extended_gcd(long long a, long long b, long long &x, long long &y) {
     if (b == 0) {
         x = 1;
