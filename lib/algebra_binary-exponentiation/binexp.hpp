@@ -5,6 +5,7 @@
 // Binary Exponentation
 // Time: O(logN)
 // Memory: O(1)
+// Verified: https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_B
 template<class T>
 T binexp(
     const T& a,
