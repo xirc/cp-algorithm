@@ -19,7 +19,8 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    cout << binexp(x, n, m) << endl;
+    auto ans = binexp(x, n, m);
+    cout << ans << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {

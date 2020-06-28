@@ -25,8 +25,9 @@ mat operator*(const mat& lhs, const mat& rhs) {
     return ans;
 }
 
-mat binexp(mat a, int b) {
-    return binexp<mat>(a, b, id(a.size()));
+// O(logN)
+mat binexp(const mat& a, int n) {
+    return binexp<mat>(a, n, id(a.size()));
 }
 
 // O(logN)
@@ -47,7 +48,8 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    cout << fib(n) << endl;
+    auto ans = fib(n);
+    cout << ans << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
