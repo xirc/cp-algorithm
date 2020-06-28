@@ -1,21 +1,15 @@
 #include <iostream>
 #include "../template-main.hpp"
+#include "./binexp.hpp"
 
 using namespace std;
 
 // Compute (x^n) mod m
 // O(logN)
-long long powmod(long long x, long long n, long long m) {
-    x %= m;
-    long long ans = 1;
-    while (n > 0) {
-        if (n & 1) {
-            ans = (ans * x) % m;
-        }
-        x = (x * x) % m;
-        n >>= 1;
-    }
-    return ans;
+long long binexp(long long x, long long n, long long m) {
+    return binexp<long long>(x, n, 1, [&](auto const& lhs, auto const& rhs) {
+        return (lhs * rhs) % m;
+    });
 }
 
 void action_eval() {
@@ -25,7 +19,7 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    cout << powmod(x, n, m) << endl;
+    cout << binexp(x, n, m) << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
