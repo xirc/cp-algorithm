@@ -25,8 +25,9 @@ mat operator*(const mat& lhs, const mat& rhs) {
     return ans;
 }
 
-mat binpow(mat a, int b) {
-    return binpow<mat>(a, b, id(a.size()));
+// O(logN)
+mat binexp(const mat& a, int n) {
+    return binexp<mat>(a, n, id(a.size()));
 }
 
 // O(logN)
@@ -35,7 +36,7 @@ long long fib(int n) {
     if (n == 1 || n == 2) return 1;
 
     mat a = { { 0, 1 }, { 1, 1 } };
-    mat f = binpow(a, n - 2);
+    mat f = binexp(a, n - 2);
     mat b = f * mat { { 1 }, { 1 } };
     return b[1][0];
 }
@@ -47,7 +48,8 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    cout << fib(n) << endl;
+    auto ans = fib(n);
+    cout << ans << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {

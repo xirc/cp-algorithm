@@ -4,9 +4,10 @@
 
 using namespace std;
 
+// a ^ b
 // O(logN)
-long long binpow(long long a, int b) {
-    return binpow<long long>(a, b, 1);
+long long pow(long long a, int b) {
+    return binexp<long long>(a, b, 1);
 }
 
 void action_eval() {
@@ -16,7 +17,8 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    cout << binpow(a, b) << endl;
+    auto ans = pow(a, b);
+    cout << ans << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {

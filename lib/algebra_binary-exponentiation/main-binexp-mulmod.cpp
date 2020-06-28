@@ -1,19 +1,15 @@
 #include <iostream>
 #include "../template-main.hpp"
+#include "./binexp.hpp"
 
 using namespace std;
 
 // (a * b) mod m
 // O(logN)
 long long mulmod(long long a, long long b, long long m) {
-    if (a == 0) return 0;
-    long long half = mulmod(a / 2, b, m);
-    long long value = (half + half) % m;
-    if (a & 1) {
-        return (value + b) % m;
-    } else {
-        return value;
-    }
+    return binexp<long long>(a, b, 0, [&](auto const& lhs, auto const& rhs){
+        return (lhs + rhs) % m;
+    });
 }
 
 void action_eval() {
