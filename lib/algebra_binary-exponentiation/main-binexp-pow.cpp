@@ -6,7 +6,7 @@ using namespace std;
 
 // a ^ b
 // O(logN)
-long long binexp(long long a, int b) {
+long long pow(long long a, int b) {
     return binexp<long long>(a, b, 1);
 }
 
@@ -17,7 +17,7 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    auto ans = binexp(a, b);
+    auto ans = pow(a, b);
     cout << ans << endl;
 }
 

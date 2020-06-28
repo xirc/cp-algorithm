@@ -6,7 +6,7 @@ using namespace std;
 
 // Compute (x^n) mod m
 // O(logN)
-long long binexp(long long x, long long n, long long m) {
+long long powmod(long long x, long long n, long long m) {
     return binexp<long long>(x, n, 1, [&](auto const& lhs, auto const& rhs) {
         return (lhs * rhs) % m;
     });
@@ -19,7 +19,7 @@ void action_eval() {
         cout << "false" << endl;
         return;
     }
-    auto ans = binexp(x, n, m);
+    auto ans = powmod(x, n, m);
     cout << ans << endl;
 }
 

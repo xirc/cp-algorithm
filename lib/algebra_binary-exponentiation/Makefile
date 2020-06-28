@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = \
-main-binexp-simple \
-main-binexp-expmod \
+main-binexp-pow \
+main-binexp-powmod \
 main-binexp-fibonacci \
 main-binexp-mulmod
 
