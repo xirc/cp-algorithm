@@ -25,8 +25,8 @@ mat operator*(const mat& lhs, const mat& rhs) {
     return ans;
 }
 
-mat binpow(mat a, int b) {
-    return binpow<mat>(a, b, id(a.size()));
+mat binexp(mat a, int b) {
+    return binexp<mat>(a, b, id(a.size()));
 }
 
 // O(logN)
@@ -35,7 +35,7 @@ long long fib(int n) {
     if (n == 1 || n == 2) return 1;
 
     mat a = { { 0, 1 }, { 1, 1 } };
-    mat f = binpow(a, n - 2);
+    mat f = binexp(a, n - 2);
     mat b = f * mat { { 1 }, { 1 } };
     return b[1][0];
 }

@@ -6,7 +6,7 @@
 // Time: O(logN)
 // Memory: O(1)
 template<class T>
-T binpow(
+T binexp(
     T a,
     long long n,
     const T& id,
