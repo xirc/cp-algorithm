@@ -5,32 +5,12 @@ using namespace std;
 bool solve(vector<int>& A) {
     int mini = *min_element(A.begin(), A.end());
 
-    vector<int> fixedValue;
-    vector<int> fixedIndex;
-    for (int i = 0; i < A.size(); ++i) {
-        if (A[i] % mini != 0) {
-            fixedValue.push_back(A[i]);
-            fixedIndex.push_back(i);
-        }
-    }
-    for (int i = 1; i < fixedValue.size(); ++i) {
-        if (fixedValue[i] < fixedValue[i-1]) {
-            return false;
-        }
-    }
+    vector<int> sortedA = A;
+    sort(sortedA.begin(), sortedA.end());
 
-    vector<int> inout(fixedIndex.size() + 1);
     for (int i = 0; i < A.size(); ++i) {
-        if (binary_search(fixedIndex.begin(), fixedIndex.end(), i)) continue;
-        auto vit = upper_bound(fixedValue.begin(), fixedValue.end(), A[i]);
-        int vi = distance(fixedValue.begin(), vit);
-        auto iit = upper_bound(fixedIndex.begin(), fixedIndex.end(), i);
-        int ii = distance(fixedIndex.begin(), iit);
-        inout[vi]++;
-        inout[ii]--;
-    }
-    for (int i = 0; i < inout.size(); ++i) {
-        if (inout[i] != 0) return false;
+        if (A[i] == sortedA[i]) continue;
+        if (A[i] % mini != 0) return false;
     }
     return true;
 }
