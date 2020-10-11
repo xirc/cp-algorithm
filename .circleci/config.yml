@@ -3,6 +3,9 @@ jobs:
   compile:
     docker:
       - image: gcc:latest
+        auth:
+              username: $DOCKERHUB_USERNAME
+              password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run: cd lib && make -j $(nproc) all
