@@ -128,14 +128,6 @@ https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-cont
 * <https://www.topcoder.com/community/competitive-programming/tutorials/>
 * <https://cp-algorithms.com/>
 
-## My status
-
-I am still newbee :-)
-
-* Codeforces <http://codeforces.com/profile/ninja>
-* AtCorder <https://atcoder.jp/users/xirc>
-* CodeCheff <https://www.codechef.com/users/xirc>
-
 ## TODO
 
 * Organize categories
