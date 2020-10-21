@@ -7,14 +7,14 @@ int N, M;
 vector<int> A, B;
 
 ll solve() {
-    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> Q;
+    vector<pair<int,int>> AB;
     for (int i = 0; i < N; ++i) {
-        Q.push({ A[i], B [i] });
+        AB.push_back({ A[i], B[i] });
     }
+    sort(AB.begin(), AB.end());
     ll ans = 0;
-    while (M > 0) {
-        auto ab = Q.top(); Q.pop();
-        auto a = ab.first, b = ab.second;
+    for (int i = 0; i < AB.size() && M > 0; ++i) {
+        auto a = AB[i].first, b = AB[i].second;
         auto c = min(M, b);
         ans += (ll)a * c;
         M -= c;
