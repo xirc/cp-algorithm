@@ -3,27 +3,13 @@
 using namespace std;
 using ll = long long;
 
-ll base(ll v) {
-    assert(v >= 1);
-    ll b = 1;
-    while (v >= b * 2) {
-        b *= 2;
-    }
-    return b;
-}
-
 ll f(ll v) {
-    if (v == 0) return 0;
-    if (v == 1) return 1;
-    if (v == 2) return 3;
-    ll m = base(v);
-    if (m == v) return m;
-    if (v == 2 * m - 1) return 0;
-    ll u = v - m;
-    if (u % 2) {
-        return f(u);
+    if (v % 2) {
+        ll u = (v + 1) / 2;
+        return u % 2;
     } else {
-        return m ^ f(u);
+        ll u = v / 2;
+        return v + u % 2;
     }
 }
 
