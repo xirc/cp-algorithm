@@ -8,23 +8,23 @@ int A, B, Q;
 vector<ll> S, T;
 
 void build() {
+    S.push_back(inf);
+    S.push_back(-inf);
+    A += 2;
     sort(S.begin(), S.end());
+
+    T.push_back(inf);
+    T.push_back(-inf);
+    B += 2;
     sort(T.begin(), T.end());
 }
 
 vector<ll> distLR(vector<ll> const& A, ll x) {
     assert(A.size() >= 1);
     auto it = lower_bound(A.begin(), A.end(), x);
-    if (it == A.end()) {
-        return { x - A[A.size()-1], inf };
-    }
-    if (it == A.begin()) {
-        return  { inf, A[0] - x };
-    }
     auto dr = abs(*it - x);
     --it;
     auto dl = abs(*it - x);
-
     return { dl, dr };
 }
 
