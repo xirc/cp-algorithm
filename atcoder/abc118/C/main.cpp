@@ -5,17 +5,22 @@ using namespace std;
 int N;
 vector<int> A;
 
-int solve() {
-    while (true) {
-        int mini = *min_element(A.begin(), A.end());
-        if (mini == 1) return mini;
-        for (int i = 0; i < N; ++i) {
-            A[i] -= (A[i] - 1) / mini * mini;
-        }
-        int mini2 = *min_element(A.begin(), A.end());
-        if (mini == mini2) return mini;
+int gcd(int a, int b) {
+    while (b > 0) {
+        int c = a % b;
+        a = b;
+        b = c;
     }
-    throw;
+    return a;
+}
+
+int solve() {
+    assert(N > 0);
+    int ans = A[0];
+    for (int i = 0; i < N; ++i) {
+        ans = gcd(ans, A[i]);
+    }
+    return ans;
 }
 
 int main() {
