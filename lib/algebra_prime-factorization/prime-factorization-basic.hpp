@@ -2,6 +2,9 @@
 
 #include <unordered_map>
 
+// Verified:
+// - https://atcoder.jp/contests/abc110/tasks/abc110_d
+//
 // Prime Factorization
 // Time: O(sqrt(N))
 // Memory: O(1)
