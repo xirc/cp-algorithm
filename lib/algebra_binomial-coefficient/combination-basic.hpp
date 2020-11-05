@@ -2,6 +2,13 @@
 
 #include <vector>
 
+// Verified
+// - https://atcoder.jp/contests/abc110/tasks/abc110_d
+//
+// See:
+// - https://algo-logic.info/combination/#toc_id_1_1
+//
+//
 // Binomial Coefficient (Combination)
 // Time: O(N)
 // Memory: O(N)
