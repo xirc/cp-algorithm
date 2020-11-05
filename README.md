@@ -2,16 +2,16 @@
 
 [![CircleCI](https://circleci.com/gh/xirc/cp-algorithm.svg?style=shield)](https://circleci.com/gh/xirc/cp-algorithm)
 
-This repository manages my competitive programming library & solutions.
+This repository contains my competitive programming library & solutions.
 
 ## Categories
 
 ### Algebra
 
 * Binary Exponentation
-* GCD, LCM
-* Extended Euclidean Algorithm
 * Binomial Coefficient (nCk)
+* Extended Euclidean Algorithm
+* GCD, LCM
 * Prime Factorization
 
 ### Geometry (2D)
@@ -120,16 +120,26 @@ This repository manages my competitive programming library & solutions.
 
 ## Provisioning Development Environment in Visual Studio Code
 
-Install _Visual Studio Remote Containers_
+Install _Visual Studio Remote Containers_  
 https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 
 
 ## References & Learning site
 
+### English
+* Topcoder Competitive Programming Tutorials  
+<https://www.topcoder.com/community/competitive-programming/tutorials/>
+* E-Maxx Algorithms in English  
+<https://cp-algorithms.com/>
+* SecondThread  
+<https://www.youtube.com/channel/UCXbCohpE9IoVQUD2Ifg1d1g?>
+
+### Japanese
+* アルゴリズムロジック  
+<https://algo-logic.info/>
+* 各種アルゴリズムの C++ による実装  
+<http://www.prefield.com/algorithm/>
+
+### References
+
 * <http://www.cplusplus.com/reference/>
-* <https://www.topcoder.com/community/competitive-programming/tutorials/>
-* <https://cp-algorithms.com/>
-
-## TODO
-
-* Organize categories
