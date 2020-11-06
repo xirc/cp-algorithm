@@ -11,7 +11,7 @@ This repository contains my competitive programming library & solutions.
 * Binary Exponentation
 * Binomial Coefficient (nCk)
 * Extended Euclidean Algorithm
-* GCD, LCM
+* GCD, LCM, Binary GCD
 * Prime Factorization
 
 ### Geometry (2D)
