@@ -2,8 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = \
+main-bingcd \
 main-gcd \
-main-gcdbin \
 main-lcm
 
 .PHONY: all clean
