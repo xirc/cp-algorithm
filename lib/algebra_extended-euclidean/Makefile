@@ -2,7 +2,8 @@ CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = \
-main-extended-euclidean
+main-extgcd-recursive \
+main-extgcd-iterative \
 
 .PHONY: all clean
 all: ${MAIN}
