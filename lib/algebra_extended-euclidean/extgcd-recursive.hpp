@@ -17,6 +17,7 @@
 //   y = x1 - y1 * (a / b)
 //
 // Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
 //  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
 //
 long long extgcd(long long a, long long b, long long &x, long long &y) {

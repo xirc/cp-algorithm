@@ -1,15 +1,5 @@
-#pragma
-
 #include <bits/stdc++.h>
 
-// Extended Euclidean Algorithm (Iterative)
-// Find x and y for given a and b
-//    a * x + b * y = gcd(a,b)
-//
-// Verified:
-//  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
-//  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
-//
 long long extgcd(long long a, long long b, long long &x, long long &y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1, a1 = a, b1 = b;
@@ -22,4 +12,18 @@ long long extgcd(long long a, long long b, long long &x, long long &y) {
         std::tie(a1, b1) = std::make_tuple(b1, a1 - q * b1);
     }
     return a1;
+}
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+
+    long long a, b, x, y;
+    cin >> a >> b;
+    extgcd(a, b, x, y);
+    cout << x << " " << y << endl;
+
+    return 0;
 }
