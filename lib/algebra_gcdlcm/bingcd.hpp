@@ -13,15 +13,17 @@ long long gcd(long long a, long long b) {
 
     long long g = 1;
     while (b > 0) {
-        if (a & 1 == 0 && b & 1 == 0) {
+        if ((a & 1) == 0 && (b & 1) == 0) {
             g <<= 1;
-        } else if (a & 1 == 0) {
             a >>= 1;
-        } else if (b & 1 == 0) {
+            b >>= 1;
+        } else if ((a & 1) == 0) {
+            a >>= 1;
+        } else if ((b & 1) == 0) {
             b >>= 1;
         } else {
-            if (a < b) std::swap(a, b);
-            a -= b;
+            if (a > b) std::swap(a, b);
+            b -= a;
         }
     }
     return g * a;
