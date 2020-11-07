@@ -2,7 +2,7 @@ CXX = g++
 CXXFLAGS = -std=c++14
 
 MAIN = \
-main-extended-euclidean
+main-extgcd
 
 .PHONY: all clean
 all: ${MAIN}
