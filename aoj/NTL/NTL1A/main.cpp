@@ -1,14 +1,5 @@
-#pragma once
+#include <bits/stdc++.h>
 
-#include <unordered_map>
-
-// Prime Factorization
-// Time: O(sqrt(N))
-// Memory: O(1)
-//
-// Verified:
-// - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
-//
 std::vector<long long> prime_factorization(long long M) {
     std::vector<long long> factors;
     long long mm = M;
@@ -22,4 +13,23 @@ std::vector<long long> prime_factorization(long long M) {
         factors.push_back(mm);
     }
     return factors;
+}
+
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0); cout.tie(0);
+
+    int N;
+    cin >> N;
+    auto factors = prime_factorization(N);
+    cout << N << ":";
+    for (auto p : factors) {
+        cout << " " << p;
+    }
+    cout << endl;
+
+    return 0;
 }

@@ -7,12 +7,12 @@ using namespace std;
 void action_eval() {
     long long n;
     cin >> n;
-    auto ans = prime_factorization(n);
-    for (auto f : ans) {
-        auto b = f.first;
-        auto e = f.second;
-        cout << b << " ** " << e << endl;
+    auto factors = prime_factorization(n);
+    for (size_t i = 0; i < factors.size(); ++i) {
+        if (i > 0) cout << " * ";
+        cout << factors[i];
     }
+    cout << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
