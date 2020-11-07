@@ -16,6 +16,9 @@
 //   x = y1
 //   y = x1 - y1 * (a / b)
 //
+// Verified:
+//  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
+//
 long long extgcd(long long a, long long b, long long &x, long long &y) {
     if (b == 0) {
         x = 1, y = 0;
@@ -31,6 +34,10 @@ long long extgcd(long long a, long long b, long long &x, long long &y) {
 // Extended Euclidean Algorithm (Iterative)
 // Find x and y for given a and b
 //    a * x + b * y = gcd(a,b)
+//
+// Verified:
+//  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
+//
 long long extgcdi(long long a, long long b, long long &x, long long &y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1, a1 = a, b1 = b;
