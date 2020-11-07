@@ -1,8 +1,8 @@
 #include <iostream>
 #include "../template-main.hpp"
-#include "gcdlcm.hpp"
+#include "bingcd.hpp"
 
-// Compute GCD(a,b)
+// Compute Binary GCD(a,b)
 // Time: O( log(min(a,b)) )
 
 using namespace std;
@@ -10,7 +10,7 @@ using namespace std;
 void action_eval() {
     long long a, b;
     cin >> a >> b;
-    long long ans = bingcd(a, b);
+    long long ans = gcd(a, b);
     cout << ans << endl;
 }
 
