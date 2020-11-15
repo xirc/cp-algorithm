@@ -14,9 +14,6 @@ struct Data {
     Data(): value(0), times(0) {}
     Data(int value): value(value), times(!value) {}
 };
-string to_string(const Data& value) {
-    return "(" + to_string(value.value) + "," + to_string(value.times) + ")";
-}
 
 struct Query {
     const Data id = Data();
@@ -84,6 +81,9 @@ public:
         cin >> i >> v;
         bool ans = m_tree->update(i, E(v));
         cout << (ans ? "true" : "false") << endl;
+    }
+    string to_string(const Data& value) override {
+        return "(" + to_string(value.value) + "," + to_string(value.times) + ")";
     }
 };
 

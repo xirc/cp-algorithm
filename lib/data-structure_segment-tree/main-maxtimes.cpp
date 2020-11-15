@@ -11,10 +11,6 @@ struct Data {
     Data(): maximum(0), times(0) {}
     Data(int value): maximum(value), times(1) {}
 };
-string to_string(const Data& value) {
-    return "(" + to_string(value.maximum) + "," + to_string(value.times) + ")";
-}
-
 struct Query {
     const Data id = Data();
     Data operator()(const Data& lhs, const Data& rhs) const {
@@ -35,7 +31,11 @@ struct Update {
         return Data(rhs);
     }
 };
-using SegmentTreeInterp = SegmentTreeInterpPURQ<SegmentTree<Data,int>,Query,Update>;
+class SegmentTreeInterp : public SegmentTreeInterpPURQ<SegmentTree<Data,int>,Query,Update> {
+    string to_string(const Data& value) override {
+        return "(" + to_string(value.maximum) + "," + to_string(value.times) + ")";
+    }
+};
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string &header, map<string,Command>& commands) {

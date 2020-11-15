@@ -19,7 +19,7 @@ public:
         int l, r;
         std::cin >> l >> r;
         auto ans = this->m_tree->query(l, r);
-        std::cout << to_string(ans) << std::endl;
+        std::cout << this->to_string(ans) << std::endl;
     }
     void action_update() {
         int i, v;

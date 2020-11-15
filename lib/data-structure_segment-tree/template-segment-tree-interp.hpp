@@ -54,6 +54,8 @@ public:
         }
         std::cout << std::endl;
     }
+
+    virtual std::string to_string(const T& value) = 0;
 };
 
 template<class SegmentTreeInterp>

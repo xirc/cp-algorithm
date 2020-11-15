@@ -35,7 +35,11 @@ struct Update {
         return rhs;
     }
 };
-using SegmentTreeInterp = SegmentTreeInterpPURQ<SegmentTree<int,int>,Query,Update>;
+class SegmentTreeInterp : public SegmentTreeInterpPURQ<SegmentTree<int,int>,Query,Update> {
+    string to_string(const int& value) override {
+        return std::to_string(value);
+    }
+};
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
 void setup(string& header, map<string,Command>& commands) {

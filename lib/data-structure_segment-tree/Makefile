@@ -1,6 +1,5 @@
-# TODO Remove -fpermissinve
 CXX = g++
-CXXFLAGS = -std=c++14 -fpermissive
+CXXFLAGS = -std=c++14
 
 MAIN = main-sum main-maximum main-maxtimes \
 main-gcd main-lcm main-kth-zero main-prefix-amount \
