@@ -17,7 +17,7 @@ public:
     using F = std::function<T(const T&, const T&)>;
 
     struct node {
-        int parent, rank;
+        int leader, rank;
         T weight;
     };
 
@@ -53,10 +53,10 @@ public:
     // O(a(N))
     node find(int v) {
         throw_if_invalid_index(v);
-        if (v != nodes[v].parent) {
+        if (v != nodes[v].leader) {
             // Path Compression
-            auto root = find(nodes[v].parent);
-            nodes[v].parent = root.parent;
+            auto root = find(nodes[v].leader);
+            nodes[v].leader = root.leader;
             nodes[v].rank = root.rank;
             nodes[v].weight = group_plus(
                 nodes[v].weight,
@@ -69,7 +69,7 @@ public:
     bool same(int u, int v) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        return find(u).parent == find(v).parent;
+        return find(u).leader == find(v).leader;
     }
     // O(a(N))
     // weight(u) - weight(v) = w;
@@ -78,8 +78,8 @@ public:
         throw_if_invalid_index(v);
         w = group_minus(w, weight(u));
         w = group_plus(w, weight(v));
-        u = find(u).parent;
-        v = find(v).parent;
+        u = find(u).leader;
+        v = find(v).leader;
         if (u == v) {
             return false;
         }
@@ -88,7 +88,7 @@ public:
             std::swap(u, v);
             w = group_minus(group_id, w);
         }
-        nodes[v].parent = u;
+        nodes[v].leader = u;
         if (nodes[u].rank == nodes[v].rank) {
             nodes[u].rank++;
         }

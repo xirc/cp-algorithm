@@ -8,7 +8,7 @@ using namespace std;
 UnionFindTree tree;
 
 string to_string(UnionFindTree::node value) {
-    return to_string(value.parent);
+    return to_string(value.leader);
 }
 
 void action_init() {

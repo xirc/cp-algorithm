@@ -72,7 +72,7 @@ public:
 
                 if (come[c].empty()) return inf;
                 auto e = come[c].top(); come[c].pop();
-                auto fc = uftree.find(e.from).parent;
+                auto fc = uftree.find(e.from).leader;
                 if (fc == c) continue;
 
                 from[c] = fc;
@@ -90,12 +90,12 @@ public:
                     come[p].update(-from_cost[p]);
                     if (p != c) {
                         uftree.unite(p, c);
-                        int n = uftree.find(c).parent;
+                        int n = uftree.find(c).leader;
                         come[c].merge(come[p]);
                         come[n].merge(come[c]);
                         c = n;
                     }
-                    p = uftree.find(from[p]).parent;
+                    p = uftree.find(from[p]).leader;
                 } while (p != c);
             }
             for (auto v : nodes) {

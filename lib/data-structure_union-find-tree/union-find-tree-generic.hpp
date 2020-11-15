@@ -17,7 +17,7 @@ public:
     using H = std::function<void(T&, T&, const T&, const T&)>;
 
     struct node {
-        int parent, rank;
+        int leader, rank;
         T value;
     };
 
@@ -54,10 +54,10 @@ public:
     node find(int v) {
         throw_if_invalid_index(v);
         auto& node = nodes[v];
-        if (v != node.parent) {
+        if (v != node.leader) {
             // Path Compression
-            auto root = find(node.parent);
-            node.parent = root.parent;
+            auto root = find(node.leader);
+            node.leader = root.leader;
             node.rank = root.rank;
             compress(node.value, root.value);
         }
@@ -67,7 +67,7 @@ public:
     bool same(int u, int v) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        return find(u).parent == find(v).parent;
+        return find(u).leader == find(v).leader;
     }
     // O(a(N))
     bool unite(int u, int v) {
@@ -75,8 +75,8 @@ public:
         throw_if_invalid_index(v);
         auto nu = find(u);
         auto nv = find(v);
-        u = nu.parent;
-        v = nv.parent;
+        u = nu.leader;
+        v = nv.leader;
         if (u == v) {
             unite_same(nodes[u].value, nu.value, nv.value);
             return false;
@@ -86,7 +86,7 @@ public:
                 std::swap(u, v);
                 std::swap(nu, nv);
             }
-            nodes[v].parent = u;
+            nodes[v].leader = u;
             if (nodes[u].rank == nodes[v].rank) {
                 nodes[u].rank++;
             }
