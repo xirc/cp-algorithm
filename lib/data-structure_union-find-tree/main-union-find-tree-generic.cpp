@@ -26,7 +26,7 @@ struct Value {
 UnionFindTree<Value> tree;
 
 string to_string(UnionFindTree<Value>::node node) {
-    return "(" + to_string(node.parent) + "," + to_string(node.value.bipartite) + ")";
+    return "(" + to_string(node.leader) + "," + to_string(node.value.bipartite) + ")";
 }
 
 void action_init() {

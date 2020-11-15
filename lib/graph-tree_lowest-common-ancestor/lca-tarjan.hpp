@@ -49,12 +49,12 @@ private:
             if (visited[u]) continue;
             dfs(adj, queries, u);
             dsu.unite(u, v);
-            int c = dsu.find(v).parent;
+            int c = dsu.find(v).leader;
             ancestor[c] = v;
         }
         for (auto query : queries[v]) {
             if (!visited[query.u]) continue;
-            int c = dsu.find(query.u).parent;
+            int c = dsu.find(query.u).leader;
             answer[query.idx] = ancestor[c];
         }
     }

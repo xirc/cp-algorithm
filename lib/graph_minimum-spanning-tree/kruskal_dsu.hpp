@@ -48,7 +48,7 @@ public:
         std::sort(edges.begin(), edges.end());
 
         for (auto edge : edges) {
-            if (tree.find(edge.u).parent == tree.find(edge.v).parent) continue;
+            if (tree.find(edge.u).leader == tree.find(edge.v).leader) continue;
             out_distance += edge.distance;
             out_edges.push_back(edge.index);
             tree.unite(edge.u, edge.v);
