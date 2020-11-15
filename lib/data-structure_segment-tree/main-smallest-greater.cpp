@@ -53,6 +53,9 @@ public:
         bool ans = m_tree->update(i, make_value(v));
         cout << (ans ? "true" : "false") << endl;
     }
+    string to_string(const int& value) override {
+        return std::to_string(value);
+    }
 };
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();

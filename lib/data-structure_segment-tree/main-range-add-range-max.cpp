@@ -52,6 +52,9 @@ public:
         cin >> l >> r >> v;
         m_tree->update(l, r, E(v));
     }
+    string to_string(const int& value) override {
+        return std::to_string(value);
+    }
 };
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();

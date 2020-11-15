@@ -62,6 +62,9 @@ public:
         auto ans = m_tree->update(l, r, E(v), history);
         cout << (ans ? "true" : "false") << endl;
     }
+    string to_string(const long long& value) override {
+        return std::to_string(value);
+    }
 };
 
 SegmentTreeInterp* interp = new SegmentTreeInterp();
