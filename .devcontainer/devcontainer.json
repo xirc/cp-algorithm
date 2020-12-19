@@ -1,7 +1,6 @@
 {
 	"name": "cp-algorithm",
-	"context": "..",
-	"dockerFile": "Dockerfile",
+	"image": "xirc/cp-algorithm",
 	"runArgs": [
 		"--cap-add=SYS_PTRACE",
 		"--security-opt",
@@ -11,7 +10,8 @@
 		"terminal.integrated.shell.linux": "/bin/bash"
 	},
 	"extensions": [
-		"ms-vscode.cpptools"
+		"ms-vscode.cpptools",
+		"bazelbuild.vscode-bazel"
 	],
 	"postCreateCommand": "g++ -v",
 }
