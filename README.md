@@ -2,11 +2,12 @@
 
 [![CircleCI](https://circleci.com/gh/xirc/cp-algorithm.svg?style=shield)](https://circleci.com/gh/xirc/cp-algorithm)
 
-This repository contains my competitive programming library & solutions.
+This project contains my competitive programming library, examples, and solutions.
 
-## Categories
 
-### Algebra
+## Library
+
+### [Algebra](/lib/cpalgo/algebra)
 
 * Binary Exponentation
 * Binomial Coefficient (nCk)
@@ -14,7 +15,7 @@ This repository contains my competitive programming library & solutions.
 * GCD, LCM, Binary GCD
 * Prime Factorization
 
-### Geometry (2D)
+### [Geometry (2D)](/lib/cpalgo/geometry)
 
 * Basic Operations
 * Projection, Rejection
@@ -51,12 +52,12 @@ This repository contains my competitive programming library & solutions.
   * Segment Intersections in Manhattan Geometry
   * Area of Union Rectangles
 
-### Geometry (3D)
+### [Geometry (3D)](/lib/cpalgo/geometry)
 
 * Basic Operations
 * Projection, Rejection
 
-### Data Structure
+### [Data Structures](/lib/cpalgo/ds)
 
 * Binary Indexed Tree (Fenwick Tree)
 * Cartesian Tree
@@ -72,7 +73,7 @@ This repository contains my competitive programming library & solutions.
 * Union Find Tree (Disjoint Set Union)
 * kD Tree (n-dimensional)
 
-### Graph (Tree)
+### [Tree](/lib/cpalgo/tree)
 
 * Diameter
 * Euler Tour
@@ -80,7 +81,7 @@ This repository contains my competitive programming library & solutions.
 * Height
 * Lowest Common Ancestor
 
-### Graph
+### [Graph](/lib/cpalgo/graph)
 
 * Articulation Points
 * Bellman Ford  
@@ -109,8 +110,7 @@ This repository contains my competitive programming library & solutions.
 * Strongly Connected Components
 * Topological Sort
 
-
-### etc
+### [Utilities](/lib/cpalgo/util)
 
 * bigint  
   Big Integer (not well-tested)
@@ -118,13 +118,19 @@ This repository contains my competitive programming library & solutions.
 * two pointers  
   "しゃくとり法" in Japanese
 
-## Provisioning Development Environment in Visual Studio Code
 
-Install _Visual Studio Remote Containers_  
+## How to provision development environment
+
+Use _Visual Studio Remote Containers_  
 https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
 
 
-## References & Learning site
+## How to build library and examples
+
+See [lib/README.md](lib/README.md)
+
+
+## References & Learning sites
 
 ### English
 * Topcoder Competitive Programming Tutorials  
