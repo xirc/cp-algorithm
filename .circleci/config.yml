@@ -5,7 +5,7 @@ executors:
     docker:
       - image: xirc/cp-algorithm
         auth:
-          username: $DOCKERHUB_USERNAME
+          username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
 
 jobs:
