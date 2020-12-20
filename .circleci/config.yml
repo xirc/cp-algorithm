@@ -37,7 +37,7 @@ jobs:
           name: Build All
           command: |
             cd lib
-            bazel build //cpalgo/...:* //main/...:*
+            bazelisk build //cpalgo/...:* //main/...:*
       - save_cache:
           key: bazel
           paths:
