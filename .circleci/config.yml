@@ -49,7 +49,11 @@ workflows:
   version: 2
   build:
     jobs:
-      - bazel-lint
+      - bazel-lint:
+          context:
+            - docker-hub
       - build:
           requires:
             - bazel-lint
+          context:
+            - docker-hub
