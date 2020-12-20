@@ -1,19 +1,55 @@
-version: 2.0
-jobs:
-  compile:
+version: 2.1
+
+executors:
+  cpalgo:
     docker:
-      - image: gcc:latest
+      - image: xirc/cp-algorithm
         auth:
-              username: $DOCKERHUB_USERNAME
-              password: $DOCKERHUB_PASSWORD
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+
+jobs:
+  bazel-lint:
+    executor: cpalgo
     steps:
       - checkout
-      - run: cd lib && make -j $(nproc) all
+      - restore_cache:
+          keys:
+            - bazel
+      - run:
+          name: Lint All
+          command: |
+            buildifier --mode=diff --lint=warn --warnings=all -r lib
+      - save_cache:
+          key: bazel
+          paths:
+            - lib/bazel-bin
+            - lib/bazel-lib
+            - lib/bazel-out
+  build:
+    executor: cpalgo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - bazel
+      - run:
+          name: Build All
+          command: |
+            cd lib
+            bazel build //cpalgo/...:* //main/...:*
+      - save_cache:
+          key: bazel
+          paths:
+            - lib/bazel-bin
+            - lib/bazel-lib
+            - lib/bazel-out
 
 workflows:
   version: 2
   build:
     jobs:
-      - compile:
-          context:
-            - docker-hub
+      - bazel-lint
+      - build:
+          requires:
+            - bazel-lint
