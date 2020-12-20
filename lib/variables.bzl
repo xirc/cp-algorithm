@@ -1,3 +1,3 @@
 "Library Module variables"
 
-COPTS = [ "-std=c++14" ]
+COPTS = ["-std=c++14"]
