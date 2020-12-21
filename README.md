@@ -149,3 +149,19 @@ See [lib/README.md](lib/README.md)
 ### References
 
 * <http://www.cplusplus.com/reference/>
+
+
+## Tips
+
+### GCC Compiler Flags
+
+It would be better to use the following compiler flags.
+In the _Visual Studio Code Remote Container_ environment,
+the flags are used as default by the command alias. See [Dockerfile](/.devcontainer/Dockerfile).
+
+
+- `-D_GLIBCXX_DEBUG`  
+See [Macros](https://gcc.gnu.org/onlinedocs/libstdc++/manual/using_macros.html)
+
+- `-fsanitize=undefined`  
+See [Program Instrumentation Options](https://gcc.gnu.org/onlinedocs/gcc/Instrumentation-Options.html)
