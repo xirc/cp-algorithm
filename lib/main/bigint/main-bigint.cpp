@@ -30,10 +30,10 @@ int main() {
     PRINT(b.digits());
     PRINT(a.trailing_zeros());
     PRINT(b.trailing_zeros());
-    for (int i = 0, n = a.digits(); i < n; ++i) {
+    for (size_t i = 0, n = a.digits(); i < n; ++i) {
         std::cout << "a[" << i << "]: " << a[i] << std::endl;
     }
-    for (int i = 0, n = b.digits(); i < n; ++i) {
+    for (size_t i = 0, n = b.digits(); i < n; ++i) {
         std::cout << "b[" << i << "]: " << b[i] << std::endl;
     }
 
