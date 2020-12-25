@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
 #include "cpalgo/geometry/vector3.hpp"
 
