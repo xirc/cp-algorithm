@@ -60,7 +60,7 @@ void action_query() {
 }
 
 void action_dump() {
-    for (int i = 0; i < buffer.size(); ++i) {
+    for (size_t i = 0; i < buffer.size(); ++i) {
         if (i > 0) cout << " ";
         cout << buffer[i];
     }
