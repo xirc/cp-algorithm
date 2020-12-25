@@ -123,7 +123,7 @@ bigint& bigint::operator+=(const bigint& x) {
         a.resize(x.a.size());
     }
     int K = 0;
-    for (int i = 0; i < a.size(); ++i) {
+    for (size_t i = 0; i < a.size(); ++i) {
         a[i] += (i < x.a.size() ? x.a[i] : 0) + K;
         K = a[i] / BASE;
         a[i] %= BASE;
@@ -140,7 +140,7 @@ bigint& bigint::operator-=(const bigint& x) {
         a.swap(b);
         negative ^= true;
     }
-    for (int i = 0, K = 0; i < a.size(); ++i) {
+    for (size_t i = 0, K = 0; i < a.size(); ++i) {
         a[i] += BASE - (i < b.size() ? b[i] : 0) + K;
         K = a[i] / BASE - 1;
         a[i] %= BASE;
@@ -150,9 +150,9 @@ bigint& bigint::operator-=(const bigint& x) {
 bigint& bigint::operator*=(const bigint& x) {
     negative ^= x.negative;
     std::vector<int> c(a.size() * x.a.size() + 1);
-    for (int i = 0; i < a.size(); ++i) {
+    for (size_t i = 0; i < a.size(); ++i) {
         long long K = 0;
-        for (int j = 0; j < x.a.size(); ++j) {
+        for (size_t j = 0; j < x.a.size(); ++j) {
             long long V = (long long)a[i] * x.a[j] + c[i+j] + K;
             K = V / BASE;
             c[i+j] = (int)(V % BASE);
@@ -239,7 +239,7 @@ int bigint::trailing_zeros() const {
     if (a.empty() || (a.size() == 1 && a[0] == 0)) return 1;
 
     int zeros = 0;
-    int i;
+    size_t i;
     for (i = 0; i < a.size() && a[i] == 0; ++i) {
         zeros += bigint::L;
     }
@@ -256,7 +256,7 @@ int bigint::trailing_zeros() const {
 //
 bigint bigint::parse(const std::string& s) {
     bool neg = false;
-    int p = 0;
+    size_t p = 0;
     bigint value(0);
 
     if (s[p] == '-') {

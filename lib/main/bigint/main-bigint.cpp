@@ -1,7 +1,9 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include "cpalgo/bigint/bigint.hpp"
 
-#define PRINT(x) std::cout << #x": "<< (x) << std::endl;
+using namespace std;
+
+#define PRINT(x) cout << #x": "<< (x) << endl;
 
 int main() {
     bigint a, b(1234567890);
@@ -30,11 +32,11 @@ int main() {
     PRINT(b.digits());
     PRINT(a.trailing_zeros());
     PRINT(b.trailing_zeros());
-    for (int i = 0, n = a.digits(); i < n; ++i) {
-        std::cout << "a[" << i << "]: " << a[i] << std::endl;
+    for (size_t i = 0, n = a.digits(); i < n; ++i) {
+        cout << "a[" << i << "]: " << a[i] << endl;
     }
-    for (int i = 0, n = b.digits(); i < n; ++i) {
-        std::cout << "b[" << i << "]: " << b[i] << std::endl;
+    for (size_t i = 0, n = b.digits(); i < n; ++i) {
+        cout << "b[" << i << "]: " << b[i] << endl;
     }
 
     return 0;
