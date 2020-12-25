@@ -1,4 +1,4 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include "cpalgo/bigint/bigint.hpp"
 
 #define PRINT(x) std::cout << #x": "<< (x) << std::endl;
