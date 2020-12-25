@@ -14,7 +14,7 @@ T union_rectangle_area(const std::vector<std::array<std::complex<T>,2>>& rs) {
 
     enum code { LL = 0, UR = 1 };
     struct event {
-        int index;
+        size_t index;
         code type;
     };
     const auto less_x = [&](const event& l, const event& r) {
@@ -25,7 +25,7 @@ T union_rectangle_area(const std::vector<std::array<std::complex<T>,2>>& rs) {
     };
 
     std::vector<event> ves, hes;
-    for (int i = 0; i < rs.size(); ++i) {
+    for (size_t i = 0; i < rs.size(); ++i) {
         ves.push_back({ i, LL });
         ves.push_back({ i, UR });
         hes.push_back({ i, LL });
