@@ -1,27 +1,18 @@
 #include <bits/stdc++.h>
 
-// GCD (a,b)
-// Time: O( log(min(a,b) )
-long long gcd(long long a, long long b) {
-    while (b > 0) {
+inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
+    while (b != 0) {
         a %= b;
         std::swap(a, b);
     }
     return a;
 }
 
-// LCM (a,b)
-// Time: O( log(min(a,b)) )
-long long lcm(long long a, long long b) {
+inline unsigned long long lcm(unsigned long long a, unsigned long long b) {
+    if (a == 0 && b == 0) return 0;
     return a / gcd(a, b) * b;
 }
 
-
-#include <bits/stdc++.h>
-#include <iostream>
-#include <iomanip>
-#include <algorithm>
-#include <vector>
 
 using namespace std;
 

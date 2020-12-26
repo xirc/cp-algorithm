@@ -1,13 +1,14 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/algebra/combination-basic.hpp"
+#include "cpalgo/algebra/combination_basic.hpp"
 
 using namespace std;
 
 Combination solver;
 
 void action_init() {
-    int N, MOD;
+    size_t N;
+    unsigned long long MOD;
     cin >> N >> MOD;
     if (N < 2) {
         cout << "false" << endl;
@@ -17,9 +18,9 @@ void action_init() {
 }
 
 void action_eval() {
-    int n, k;
+    size_t n, k;
     cin >> n >> k;
-    if (k < 0 || n < 0 || n >= solver.size() || n < k) {
+    if (n >= solver.size() || n < k) {
         cout << "false" << endl;
         return;
     }

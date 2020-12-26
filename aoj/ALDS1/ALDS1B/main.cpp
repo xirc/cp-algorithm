@@ -1,14 +1,13 @@
 #include <bits/stdc++.h>
 
-// GCD (a,b)
-// Time: O( log(min(a,b) )
-long long gcd(long long a, long long b) {
-    while (b > 0) {
+inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
+    while (b != 0) {
         a %= b;
         std::swap(a, b);
     }
     return a;
 }
+
 
 using namespace std;
 

@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 
-long long gcd(long long a, long long b) {
+inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
     if (a == 0) return b;
     if (b == 0) return a;
 
-    long long g = 1;
+    unsigned long long g = 1;
     while (b > 0) {
         if ((a & 1) == 0 && (b & 1) == 0) {
             g <<= 1;
@@ -21,6 +21,7 @@ long long gcd(long long a, long long b) {
     }
     return g * a;
 }
+
 
 using namespace std;
 

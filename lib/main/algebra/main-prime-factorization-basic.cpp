@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/algebra/prime-factorization-basic.hpp"
+#include "cpalgo/algebra/prime_factorization_basic.hpp"
 
 using namespace std;
 

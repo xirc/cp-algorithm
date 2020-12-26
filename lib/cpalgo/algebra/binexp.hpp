@@ -2,19 +2,24 @@
 
 #include <functional>
 
+
 // Binary Exponentation
 // Time: O(logN)
 // Memory: O(1)
-// Verified: https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_B
+//
+// See:
+//  - https://cp-algorithms.com/algebra/euclid-algorithm.html
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_B
+//
 template<class T>
-T binexp(
+inline T binexp(
     const T& a,
-    long long n,
+    unsigned long long n,
     const T& id,
     const std::function<T(const T&, const T&)> op = std::multiplies<T>()
 ) {
-    if (n < 0) throw;
-
     auto ans = id;
     auto p = a;
     while (n > 0) {

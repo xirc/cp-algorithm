@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
 #include "template-extgcd-interop.hpp"
-#include "cpalgo/algebra/extgcd-iterative.hpp"
+#include "cpalgo/algebra/extgcd_iterative.hpp"
 
 using namespace std;
 
