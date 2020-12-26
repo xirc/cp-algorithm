@@ -2,6 +2,7 @@
 
 #include <vector>
 
+
 // Verified
 // - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //

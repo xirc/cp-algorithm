@@ -1,6 +1,5 @@
 #pragma once
 
-#include <bits/stdc++.h>
 
 // Extended Euclidean Algorithm (Recursive)
 // Find x and y for given a and b

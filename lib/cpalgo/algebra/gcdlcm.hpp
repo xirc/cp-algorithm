@@ -1,6 +1,6 @@
 #pragma once
 
-#include <bits/stdc++.h>
+#include <utility>
 
 // GCD (a,b)
 // Time: O( log(min(a,b)) )

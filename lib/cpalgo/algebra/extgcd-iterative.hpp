@@ -1,6 +1,7 @@
 #pragma once
 
-#include <bits/stdc++.h>
+#include <tuple>
+
 
 // Extended Euclidean Algorithm (Iterative)
 // Find x and y for given a and b

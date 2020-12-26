@@ -1,6 +1,8 @@
 #pragma once
 
 #include <unordered_map>
+#include <vector>
+
 
 // Prime Factorization
 // Time: O(sqrt(N))

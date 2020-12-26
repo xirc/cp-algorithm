@@ -2,6 +2,7 @@
 
 #include <functional>
 
+
 // Binary Exponentation
 // Time: O(logN)
 // Memory: O(1)
