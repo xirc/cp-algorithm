@@ -3,7 +3,7 @@
 #include <vector>
 
 
-// Binomial Coefficient (Combination)
+// Binomial Coefficient (Combination) modulo M
 // Time: O(N)
 // Memory: O(N)
 //   where N <= 10^7
