@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/algebra/combination-basic.hpp"
+#include "cpalgo/algebra/combination_basic.hpp"
 
 using namespace std;
 

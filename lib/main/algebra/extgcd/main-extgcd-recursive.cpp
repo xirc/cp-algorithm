@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
 #include "template-extgcd-interop.hpp"
-#include "cpalgo/algebra/extgcd-recursive.hpp"
+#include "cpalgo/algebra/extgcd_recursive.hpp"
 
 using namespace std;
 
