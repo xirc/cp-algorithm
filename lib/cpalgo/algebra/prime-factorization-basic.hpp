@@ -11,7 +11,7 @@
 // Verified:
 // - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
 //
-std::vector<long long> prime_factorization(long long M) {
+inline std::vector<long long> prime_factorization(long long M) {
     std::vector<long long> factors;
     long long mm = M;
     for (long long i = 2; i * i < M; ++i) {
