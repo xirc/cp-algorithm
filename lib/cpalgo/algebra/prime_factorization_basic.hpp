@@ -8,8 +8,10 @@
 // Time: O(sqrt(N))
 // Memory: O(1)
 //
+// See:
+//  - https://cp-algorithms.com/algebra/factorization.html
 // Verified:
-// - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
+//  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
 //
 inline std::vector<long long> prime_factorization(long long M) {
     std::vector<long long> factors;
