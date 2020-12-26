@@ -7,6 +7,7 @@
 // Time: O ( log(min(a,b)) )
 // The optimized Euclidean algorithm.
 // The time complexity is same, but a lot faster than normal one that is using modulo operation.
+// See: https://cp-algorithms.com/algebra/euclid-algorithm.html
 // Verified: https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_B
 long long gcd(long long a, long long b) {
     if (a == 0) return b;
