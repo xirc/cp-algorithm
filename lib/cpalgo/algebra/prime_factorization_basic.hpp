@@ -16,7 +16,7 @@
 //
 inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
     std::vector<unsigned long long> factors;
-    for (unsigned long long i = 2; i * i < M; ++i) {
+    for (unsigned long long i = 2; i * i <= M; ++i) {
         while (M % i == 0) {
             factors.push_back(i);
             M /= i;
