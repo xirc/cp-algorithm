@@ -9,12 +9,10 @@
 template<class T>
 T binexp(
     const T& a,
-    long long n,
+    unsigned long long n,
     const T& id,
     const std::function<T(const T&, const T&)> op = std::multiplies<T>()
 ) {
-    if (n < 0) throw;
-
     auto ans = id;
     auto p = a;
     while (n > 0) {
