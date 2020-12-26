@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/algebra/gcdlcm.hpp"
+#include "cpalgo/algebra/lcm.hpp"
 
 // Compute GCD(a,b)
 // Time: O( log(min(a,b)) )
