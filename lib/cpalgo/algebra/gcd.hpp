@@ -5,6 +5,7 @@
 
 // GCD (a,b)
 // Time: O( log(min(a,b)) )
+// See: https://cp-algorithms.com/algebra/euclid-algorithm.html
 // Verified: https://www.codechef.com/problems/FLOW016
 // Verified: https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_B
 long long gcd(long long a, long long b) {
