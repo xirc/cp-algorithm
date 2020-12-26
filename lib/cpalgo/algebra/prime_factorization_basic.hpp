@@ -13,6 +13,7 @@
 //
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
+//  - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
 inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
     std::vector<unsigned long long> factors;

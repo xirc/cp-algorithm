@@ -1,19 +1,14 @@
 #include <bits/stdc++.h>
 
-// Binomial Coefficient (Combination)
-// Time: O(N)
-// Memory: O(N)
-// N <= 10^7
 class Combination {
-    int N;
-    long long MOD;
-    std::vector<long long> factorial, inverse, factorial_inverse;
+    size_t N;
+    unsigned long long MOD;
+    std::vector<unsigned long long> factorial, inverse, factorial_inverse;
 
 public:
     // O(N)
     // MOD should be a prime number
-    Combination(int N = 10000000, long long MOD = 1000000007) {
-        if (N < 2) throw;
+    Combination(size_t N = 10000000, unsigned long long MOD = 1000000007) {
         this->N = N;
         this->MOD = MOD;
         build();
@@ -21,14 +16,13 @@ public:
 
     // nCk
     // O(1)
-    long long operator()(int n, int k) {
-        if (n < 0 || k < 0) throw;
+    unsigned long long operator()(size_t n, size_t k) {
         if (n < k || n >= N) throw;
         return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
     }
 
     // O(1)
-    int size() {
+    size_t size() {
         return N;
     }
 
@@ -41,7 +35,7 @@ private:
         factorial_inverse[0] = factorial_inverse[1] = 1;
         inverse[0] = 0;
         inverse[1] = 1;
-        for (int i = 2; i < N; ++i) {
+        for (size_t i = 2; i < N; ++i) {
             factorial[i] = factorial[i-1] * i % MOD;
             inverse[i] = MOD - inverse[MOD % i] * (MOD / i) % MOD;
             factorial_inverse[i] = factorial_inverse[i-1] * inverse[i] % MOD;
@@ -49,20 +43,16 @@ private:
     }
 };
 
-// Prime Factorization
-// Time: O(sqrt(N))
-// Memory: O(1)
-std::unordered_map<long long, int> prime_factorization(long long M) {
-    std::unordered_map<long long, int> factors;
-    long long mm = M;
-    for (long long i = 2; i * i < M; ++i) {
-        while (mm % i == 0) {
-            ++factors[i];
-            mm /= i;
+inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
+    std::vector<unsigned long long> factors;
+    for (unsigned long long i = 2; i * i <= M; ++i) {
+        while (M % i == 0) {
+            factors.push_back(i);
+            M /= i;
         }
     }
-    if (mm > 1) {
-        ++factors[mm];
+    if (M > 1) {
+        factors.push_back(M);
     }
     return factors;
 }
@@ -76,8 +66,14 @@ Combination comb(200000, MOD);
 
 ll solve(int N, int M) {
     auto factors = prime_factorization(M);
-    ll ans = 1;
+
+    map<unsigned long long, int> counter;
     for (auto f : factors) {
+        ++counter[f];
+    }
+
+    ll ans = 1;
+    for (auto f : counter) {
         auto e = f.second;
         ans *= comb(e + N - 1, e);
         ans %= MOD;

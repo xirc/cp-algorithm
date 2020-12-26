@@ -1,20 +1,18 @@
 #include <bits/stdc++.h>
 
-std::vector<long long> prime_factorization(long long M) {
-    std::vector<long long> factors;
-    long long mm = M;
-    for (long long i = 2; i * i < M; ++i) {
-        while (mm % i == 0) {
+inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
+    std::vector<unsigned long long> factors;
+    for (unsigned long long i = 2; i * i <= M; ++i) {
+        while (M % i == 0) {
             factors.push_back(i);
-            mm /= i;
+            M /= i;
         }
     }
-    if (mm > 1) {
-        factors.push_back(mm);
+    if (M > 1) {
+        factors.push_back(M);
     }
     return factors;
 }
-
 
 using namespace std;
 
