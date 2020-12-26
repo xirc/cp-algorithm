@@ -44,6 +44,24 @@ jobs:
             - lib/bazel-bin
             - lib/bazel-lib
             - lib/bazel-out
+  test:
+    executor: cpalgo
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            -bazel
+      - run:
+          name: Test library
+          command: |
+            cd lib
+            bazelisk test //cpalgo/...:*
+      - save_cache:
+          key: bazel
+          paths:
+            - lib/bazel-bin
+            - lib/bazel-lib
+            - lib/bazel-out
 
 workflows:
   version: 2
@@ -55,5 +73,10 @@ workflows:
       - build:
           requires:
             - bazel-lint
+          context:
+            - docker-hub
+      - test:
+          requires:
+            - build
           context:
             - docker-hub
