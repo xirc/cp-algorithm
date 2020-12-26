@@ -4,20 +4,20 @@
 
 
 TEST(BingcdTest, ShouldHandleZero) {
-    EXPECT_EQ(gcd(3, 0), 3ULL);
-    EXPECT_EQ(gcd(0, 4), 4ULL);
-    EXPECT_EQ(gcd(0, 0), 0ULL);
+    EXPECT_EQ(3ULL, gcd(3, 0));
+    EXPECT_EQ(4ULL, gcd(0, 4));
+    EXPECT_EQ(0ULL, gcd(0, 0));
 }
 
 TEST(BingcdTest, ShouldComputeGreatestCommonDivisor) {
-    EXPECT_EQ(gcd(2, 3), 1ULL);
-    EXPECT_EQ(gcd(5, 7), 1ULL);
+    EXPECT_EQ(1ULL, gcd(2, 3));
+    EXPECT_EQ(1ULL, gcd(5, 7));
 
-    EXPECT_EQ(gcd(12, 8), 4ULL);
-    EXPECT_EQ(gcd(6, 8), 2ULL);
-    EXPECT_EQ(gcd(81, 36), 9ULL);
-    EXPECT_EQ(gcd(147, 105), 21ULL);
-    EXPECT_EQ(gcd(120, 140), 20ULL);
-    EXPECT_EQ(gcd(10213, 312), 1ULL);
-    EXPECT_EQ(gcd(10, 30), 10ULL);
+    EXPECT_EQ(4ULL, gcd(12, 8));
+    EXPECT_EQ(2ULL, gcd(6, 8));
+    EXPECT_EQ(9ULL, gcd(81, 36));
+    EXPECT_EQ(21ULL, gcd(147, 105));
+    EXPECT_EQ(20ULL, gcd(120, 140));
+    EXPECT_EQ(1ULL, gcd(10213, 312));
+    EXPECT_EQ(10ULL, gcd(10, 30));
 }
