@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "lcm.hpp"
+#include "cpalgo/algebra/lcm.hpp"
 
 
 TEST(LcmTest, ShouldHandleZero) {

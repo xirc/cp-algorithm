@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "prime_factorization_basic.hpp"
+#include "cpalgo/algebra/prime_factorization_basic.hpp"
 
 
 TEST(PrimeFactorizationBasicTest, ShouldFactorize) {

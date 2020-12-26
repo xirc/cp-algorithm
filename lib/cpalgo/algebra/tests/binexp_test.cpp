@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "binexp.hpp"
+#include "cpalgo/algebra/binexp.hpp"
 
 TEST(BinExpTest, ComputePowerOfTwo) {
     EXPECT_EQ(binexp<int>(2, 0, 1), 1);

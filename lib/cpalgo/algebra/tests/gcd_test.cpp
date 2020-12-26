@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "bingcd.hpp"
+#include "cpalgo/algebra/gcd.hpp"
 
 
-TEST(BingcdTest, ShouldHandleZero) {
+TEST(GcdTest, ShouldHandleZero) {
     EXPECT_EQ(gcd(3, 0), 3ULL);
     EXPECT_EQ(gcd(0, 4), 4ULL);
     EXPECT_EQ(gcd(0, 0), 0ULL);
 }
 
-TEST(BingcdTest, ShouldComputeGreatestCommonDivisor) {
+TEST(GcdTest, ShouldComputeGreatestCommonDivisor) {
     EXPECT_EQ(gcd(2, 3), 1ULL);
     EXPECT_EQ(gcd(5, 7), 1ULL);
 
