@@ -12,7 +12,7 @@
 //
 long long extgcd(long long a, long long b, long long &x, long long &y) {
     x = 1, y = 0;
-    int x1 = 0, y1 = 1, a1 = a, b1 = b;
+    long long x1 = 0, y1 = 1, a1 = a, b1 = b;
     // a * x  + b * y  = a1
     // a * x1 + b * y1 = b1
     while (b1 > 0) {
