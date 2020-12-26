@@ -7,7 +7,6 @@ cc_library(
     name = "main",
     hdrs = glob(["**/*.hpp"]),
     copts = COPTS,
-    include_prefix = "cpalgo",
     visibility = ["//visibility:public"],
 )
 
