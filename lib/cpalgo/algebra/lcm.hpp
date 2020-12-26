@@ -8,6 +8,6 @@
 // See: https://cp-algorithms.com/algebra/euclid-algorithm.html
 // Verified: https://www.codechef.com/problems/FLOW016
 // Verified: https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_C
-long long lcm(long long a, long long b) {
+unsigned long long lcm(unsigned long long a, unsigned long long b) {
     return a / gcd(a, b) * b;
 }
