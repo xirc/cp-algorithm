@@ -7,6 +7,9 @@
 // Find x and y for given a and b
 //    a * x + b * y = gcd(a,b)
 //
+// See:
+//  - https://cp-algorithms.com/algebra/extended-euclid-algorithm.html
+//
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
 //  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045

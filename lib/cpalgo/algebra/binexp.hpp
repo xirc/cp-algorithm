@@ -6,8 +6,13 @@
 // Binary Exponentation
 // Time: O(logN)
 // Memory: O(1)
-// See: https://cp-algorithms.com/algebra/euclid-algorithm.html
-// Verified: https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_B
+//
+// See:
+//  - https://cp-algorithms.com/algebra/euclid-algorithm.html
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_B
+//
 template<class T>
 inline T binexp(
     const T& a,

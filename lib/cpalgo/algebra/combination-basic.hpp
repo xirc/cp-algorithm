@@ -3,17 +3,17 @@
 #include <vector>
 
 
-// Verified
-// - https://atcoder.jp/contests/abc110/tasks/abc110_d
+// Binomial Coefficient (Combination)
+// Time: O(N)
+// Memory: O(N)
+//   where N <= 10^7
 //
 // See:
 // - https://algo-logic.info/combination/#toc_id_1_1
 //
+// Verified
+// - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
-// Binomial Coefficient (Combination)
-// Time: O(N)
-// Memory: O(N)
-// N <= 10^7
 class Combination {
     int N;
     long long MOD;
