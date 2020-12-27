@@ -1,41 +1,36 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C
+#include <functional>
 
 // Two Pointers
-template <class T>
-class TwoPointers {
-protected:
-    int N;
-    virtual T id() = 0;
-    // O(K), [l,r)
-    virtual bool should_move_right(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void move_left(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void move_right(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void update(T& ans, int l, int r) = 0;
-public:
-    // O(1)
-    TwoPointers(int n): N(n) {}
-    // O(KN)
-    T solve() {
-        T ans = id();
-        int r = 0;
-        for (int l = 0; l < N; ++l) {
-            while (r < l) {
-                move_right(l, r);
-                ++r;
-            }
-            while (r < N && should_move_right(l,r)) {
-                move_right(l, r);
-                ++r;
-            }
-            update(ans, l, r);
-            move_left(l, r);
+// O(KN)
+// O(K), [l,r), l = [0,N), r = [0, N)
+//
+// See:
+//  - https://qiita.com/drken/items/ecd1a472d3a0e7db8dce
+//
+// Verified:
+//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C
+//
+inline void iterate_with_two_pointers(
+    size_t N,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<bool(size_t, size_t)> should_move_right,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> pre_move_left,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> pre_move_right,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> update
+) {
+    size_t r = 0;
+    for (size_t l = 0; l < N; ++l) {
+        while (r < N && should_move_right(l,r)) {
+            pre_move_right(l, r);
+            ++r;
         }
-        return ans;
+        update(l, r);
+        if (l == r) ++r;
+        else pre_move_left(l, r);
     }
-};
+}
