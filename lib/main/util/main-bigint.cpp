@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#include "cpalgo/bigint/bigint.hpp"
+#include "cpalgo/util/bigint.hpp"
 
 using namespace std;
 
