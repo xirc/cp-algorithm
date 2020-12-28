@@ -34,7 +34,7 @@ TEST(TwoPointersTest, ShouldComputeIntervalCounts) {
 }
 
 
-TEST(TwoPointersTest, ShouldCompute) {
+TEST(TwoPointersTest, ShouldComputeEmptyIntervals) {
     size_t const N = 1000000;
     size_t num_of_call_pre_move_l = 0;
     size_t num_of_call_pre_move_r = 0;
@@ -52,6 +52,7 @@ TEST(TwoPointersTest, ShouldCompute) {
         },
         [&](size_t l, size_t r) {
             ++num_of_call_update;
+            EXPECT_TRUE(l == r);
         }
     );
     EXPECT_EQ(size_t(0), num_of_call_pre_move_l);
