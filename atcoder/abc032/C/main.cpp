@@ -23,28 +23,33 @@ inline void iterate_with_two_pointers(
     }
 }
 
+
 using namespace std;
 using ll = long long;
 
-int N;
-vector<int> A;
+int N, K;
+vector<int> S;
 
-ll solve() {
-    ll ans = 0;
-    ll x = 0;
+int solve() {
+    for (int i = 0; i < N; ++i) {
+        if (S[i] == 0) return N;
+    }
+
+    int ans = 0;
+    ll pr = 1;
     iterate_with_two_pointers(
         N,
         [&](size_t l, size_t r) {
-            return (x & A[r]) == 0;
+            return pr * S[r] <= K;
         },
         [&](size_t l, size_t r) {
-            x ^= A[l];
+            pr /= S[l];
         },
         [&](size_t l, size_t r) {
-            x ^= A[r];
+            pr *= S[r];
         },
         [&](size_t l, size_t r) {
-            ans += (r - l);
+            ans = max(ans, int(r - l));
         }
     );
     return ans;
@@ -54,10 +59,10 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-    cin >> N;
-    A.assign(N, 0);
+    cin >> N >> K;
+    S.assign(N, 0);
     for (int i = 0; i < N; ++i) {
-        cin >> A[i];
+        cin >> S[i];
     }
     cout << solve() << endl;
 

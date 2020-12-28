@@ -23,32 +23,33 @@ inline void iterate_with_two_pointers(
     }
 }
 
+
 using namespace std;
-using ll = long long;
 
 int N;
 vector<int> A;
 
-ll solve() {
-    ll ans = 0;
-    ll x = 0;
+int solve() {
+    set<int> flavaors;
+    int ans = 0;
     iterate_with_two_pointers(
         N,
         [&](size_t l, size_t r) {
-            return (x & A[r]) == 0;
+            return flavaors.count(A[r]) == 0;
         },
         [&](size_t l, size_t r) {
-            x ^= A[l];
+            flavaors.erase(A[l]);
         },
         [&](size_t l, size_t r) {
-            x ^= A[r];
+            flavaors.insert(A[r]);
         },
         [&](size_t l, size_t r) {
-            ans += (r - l);
+            ans = max(ans, int(r - l));
         }
     );
     return ans;
 }
+
 
 int main() {
     ios_base::sync_with_stdio(false);

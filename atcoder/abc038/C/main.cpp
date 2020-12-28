@@ -23,6 +23,7 @@ inline void iterate_with_two_pointers(
     }
 }
 
+
 using namespace std;
 using ll = long long;
 
@@ -31,17 +32,17 @@ vector<int> A;
 
 ll solve() {
     ll ans = 0;
-    ll x = 0;
     iterate_with_two_pointers(
         N,
         [&](size_t l, size_t r) {
-            return (x & A[r]) == 0;
+            if (l == r) return true;
+            return A[r] > A[r-1];
         },
         [&](size_t l, size_t r) {
-            x ^= A[l];
+            // Do nothing
         },
         [&](size_t l, size_t r) {
-            x ^= A[r];
+            // Do nothing
         },
         [&](size_t l, size_t r) {
             ans += (r - l);

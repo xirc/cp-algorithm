@@ -1,44 +1,40 @@
-#include <iostream>
-#include <algorithm>
-#include <random>
-#include <string>
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
-#include "cpalgo/util/two-pointers.hpp"
+#include "cpalgo/util/two_pointers.hpp"
 
 using namespace std;
 
 // Find the smallest sub-array size
 // where the sum of the sub-array is greater than or equal to S.
-class Solver : public TwoPointers<int> {
-    vector<long long> A;
-    long long S;
-    long long sum;
-public:
-    Solver(const vector<long long>& array, long long S)
-        : TwoPointers(array.size())
-        , A(array), S(S), sum(0) {}
-protected:
-    int id() override {
-        return N + 1;
-    }
-    bool should_move_right(int l, int r) override {
-        return sum >= S;
-    }
-    void move_left(int l, int r) override {
-        sum -= A[l];
-    }
-    void move_right(int l, int r) override {
-        sum += A[r];
-    }
-    void update(int& ans, int l, int r) override {
-        ans = min(ans, r - l);
-    }
-};
+size_t solve(vector<int> const& A, long long const S) {
+    const size_t N = A.size();
+    long long sum = 0;
+    size_t ans = N + 1;
+    iterate_with_two_pointers(
+        N,
+        [&](size_t l, size_t r) {
+            return sum < S;
+        },
+        [&](size_t l, size_t r) {
+            sum -= A[l];
+        },
+        [&](size_t l, size_t r) {
+            sum += A[r];
+        },
+        [&](size_t l, size_t r) {
+            if (sum >= S) {
+                ans = min(ans, r - l);
+            }
+        }
+    );
+    return ans;
+}
 
-vector<long long> buffer;
+vector<int> buffer;
 
 void action_init() {
-    int size; long long min, max;
+    size_t size;
+    int min, max;
     cin >> size >> min >> max;
     if (size < 0) {
         cout << "false" << endl;
@@ -46,17 +42,16 @@ void action_init() {
     }
     buffer.assign(size, 0);
     mt19937_64 random;
-    for (int i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i) {
         buffer[i] = random() % (max - min) + min;
     }
     cout << "true" << endl;
 }
 
 void action_query() {
-    int S;
+    long long S;
     cin >> S;
-    Solver solver(buffer, S);
-    cout << solver.solve() << endl;
+    cout << solve(buffer, S) << endl;
 }
 
 void action_dump() {

@@ -1,88 +1,72 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_C
 
-template <class T>
-class TwoPointers {
-protected:
-    int N;
-    virtual T id() = 0;
-    // O(K), [l,r)
-    virtual bool should_move_right(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void move_left(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void move_right(int l, int r) = 0;
-    // O(K), [l,r)
-    virtual void update(T& ans, int l, int r) = 0;
-public:
-    TwoPointers(int n): N(n) {}
-    // O(KN)
-    T solve() {
-        T ans = id();
-        int r = 0;
-        for (int l = 0; l < N; ++l) {
-            while (r < l) {
-                move_right(l, r);
-                ++r;
-            }
-            while (r < N && should_move_right(l,r)) {
-                move_right(l, r);
-                ++r;
-            }
-            update(ans, l, r);
-            move_left(l, r);
-        }
-        return ans;
-    }
-};
+#include <bits/stdc++.h>
 
-#include <iostream>
-#include <vector>
+inline void iterate_with_two_pointers(
+    size_t N,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<bool(size_t, size_t)> should_move_right,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> pre_move_left,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> pre_move_right,
+    // O(K), [l,r), l = [0,N), r = [0, N)
+    std::function<void(size_t, size_t)> update
+) {
+    size_t r = 0;
+    for (size_t l = 0; l < N; ++l) {
+        while (r < N && should_move_right(l,r)) {
+            pre_move_right(l, r);
+            ++r;
+        }
+        update(l, r);
+        if (l == r) ++r;
+        else pre_move_left(l, r);
+    }
+}
+
 
 using namespace std;
+using ll = long long;
 
+int N, Q;
 vector<int> A;
 
-class Solver : public TwoPointers<long long> {
-    long long X;
-    long long sum;
-
-public:
-    Solver(int N, long long x) : TwoPointers(N), X(x), sum(0) {}
-
-protected:
-    long long id() override {
-        return 0;
-    }
-    bool should_move_right(int l, int r) override {
-        return sum + A[r] <= X;
-    }
-    void move_left(int l, int r) override {
-        sum -= A[l];
-    }
-    void move_right(int l, int r) override {
-        sum += A[r];
-    }
-    void update(long long& ans, int l, int r) override {
-        ans += r - l;
-    }
-};
+ll solve(ll X) {
+    ll sum = 0;
+    ll ans = 0;
+    iterate_with_two_pointers(
+        N,
+        [&](size_t l, size_t r) {
+            return sum + A[r] <= X;
+        },
+        [&](size_t l, size_t r) {
+            sum -= A[l];
+        },
+        [&](size_t l, size_t r) {
+            sum += A[r];
+        },
+        [&](size_t l, size_t r) {
+            ans += ll(r - l);
+        }
+    );
+    return ans;
+}
 
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-    int N, Q;
     cin >> N >> Q;
     A.assign(N, 0);
     for (int i = 0; i < N; ++i) {
         cin >> A[i];
     }
     for (int i = 0; i < Q; ++i) {
-        long long x;
-        cin >> x;
-        Solver solver(N, x);
-        cout << solver.solve() << endl;
+        ll X;
+        cin >> X;
+        cout << solve(X) << endl;
     }
 
     return 0;

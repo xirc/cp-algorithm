@@ -1,3 +1,5 @@
+// https://onlinejudge.u-aizu.ac.jp/challenges/sources/JOI/Final/0600?year=2014
+
 #include <bits/stdc++.h>
 
 inline void iterate_with_two_pointers(
@@ -23,32 +25,64 @@ inline void iterate_with_two_pointers(
     }
 }
 
+
 using namespace std;
 using ll = long long;
 
 int N;
 vector<int> A;
 
-ll solve() {
-    ll ans = 0;
-    ll x = 0;
+// O(N)
+bool ok(ll K) {
+    ll sum = 0;
+    vector<int> rs(2*N, 2*N);
     iterate_with_two_pointers(
-        N,
+        2 * N,
         [&](size_t l, size_t r) {
-            return (x & A[r]) == 0;
+            return sum < K;
         },
         [&](size_t l, size_t r) {
-            x ^= A[l];
+            sum -= A[l];
         },
         [&](size_t l, size_t r) {
-            x ^= A[r];
+            sum += A[r];
         },
         [&](size_t l, size_t r) {
-            ans += (r - l);
+            if (sum >= K) {
+                rs[l] = min(rs[l], (int)r);
+            }
         }
     );
-    return ans;
+    for (int i0 = 0; i0 < N; ++i0) {
+        int i1 = rs[i0];
+        if (i1 > N + i0) continue;
+        int i2 = rs[i1];
+        if (i2 > N + i0) continue;
+        int i3 = rs[i2];
+        if (i3 > N + i0) continue;
+        return true;
+    }
+    return false;
 }
+
+ll solve() {
+    // make loop
+    for (int i = 0; i < N; ++i) {
+        A.push_back(A[i]);
+    }
+    // binary search
+    ll l = 0, r = 1e16;
+    while (l < r) {
+        ll m = (l + r + 1) >> 1;
+        if (ok(m)) {
+            l = m;
+        } else {
+            r = m - 1;
+        }
+    }
+    return l;
+}
+
 
 int main() {
     ios_base::sync_with_stdio(false);

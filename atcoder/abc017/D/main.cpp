@@ -23,41 +23,49 @@ inline void iterate_with_two_pointers(
     }
 }
 
+
 using namespace std;
 using ll = long long;
 
-int N;
-vector<int> A;
+const ll MOD = 1e9+7;
+int N, M;
+vector<int> F;
 
 ll solve() {
-    ll ans = 0;
-    ll x = 0;
+    set<int> fs;
+    vector<int> DP(N+1, 0);
+    // ACC[i] = DP[i] + DP[i-1] + ... + DP[1] + DP[0]
+    vector<int> ACC(N+1, 0);
+    DP[0] = ACC[0] = 1;
     iterate_with_two_pointers(
         N,
         [&](size_t l, size_t r) {
-            return (x & A[r]) == 0;
+            return fs.count(F[r]) == 0;
         },
         [&](size_t l, size_t r) {
-            x ^= A[l];
+            fs.erase(F[l]);
         },
         [&](size_t l, size_t r) {
-            x ^= A[r];
+            fs.insert(F[r]);
+            // DP[r+1] = DP[l] + DP[l+1], ... DP[r]
+            DP[r+1] = (ACC[r] - (l > 0 ? ACC[l-1] : 0) + MOD) % MOD;
+            ACC[r+1] = (DP[r+1] + ACC[r]) % MOD;
         },
         [&](size_t l, size_t r) {
-            ans += (r - l);
+            // Do nothing
         }
     );
-    return ans;
+    return DP[N];
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
-
-    cin >> N;
-    A.assign(N, 0);
+    
+    cin >> N >> M;
+    F.assign(N, 0);
     for (int i = 0; i < N; ++i) {
-        cin >> A[i];
+        cin >> F[i];
     }
     cout << solve() << endl;
 
