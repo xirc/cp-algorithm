@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
-#include "cpalgo/util/two-pointers.hpp"
+#include "cpalgo/util/two_pointers.hpp"
 
 using namespace std;
 
