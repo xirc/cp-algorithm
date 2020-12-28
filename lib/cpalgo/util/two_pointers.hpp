@@ -3,8 +3,9 @@
 #include <functional>
 
 // Two Pointers
-// O(KN)
-// O(K), [l,r), l = [0,N), r = [0, N)
+//
+// Time: O(KN)
+// Space: O(1)
 //
 // See:
 //  - https://qiita.com/drken/items/ecd1a472d3a0e7db8dce
@@ -14,13 +15,13 @@
 //
 inline void iterate_with_two_pointers(
     size_t N,
-    // O(K), [l,r), l = [0,N), r = [0, N)
+    // O(K), l = [0,N), r = [0,N)
     std::function<bool(size_t, size_t)> should_move_right,
-    // O(K), [l,r), l = [0,N), r = [0, N)
+    // O(K), l = [0,N), r = [0,N]
     std::function<void(size_t, size_t)> pre_move_left,
-    // O(K), [l,r), l = [0,N), r = [0, N)
+    // O(K), l = [0,N), r = [0,N)
     std::function<void(size_t, size_t)> pre_move_right,
-    // O(K), [l,r), l = [0,N), r = [0, N)
+    // O(K), l = [0,N), r = [0,N]
     std::function<void(size_t, size_t)> update
 ) {
     size_t r = 0;
