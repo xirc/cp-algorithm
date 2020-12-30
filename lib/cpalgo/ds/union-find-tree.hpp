@@ -1,37 +1,46 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_A
-
 #include <vector>
 #include <algorithm>
+#include <stdexcept>
 
-// Union Find Tree (Disjoint Set Union)
-// Memory: O(N)
+
+// Union Find Tree
+// (aka Disjoint Set Union)
+//
+// Space: O(N)
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A
+//
 class UnionFindTree {
 public:
-    struct node { int leader, rank; };
+    struct node {
+        size_t leader;
+        size_t rank;
+    };
 
-protected:
-    int N;
+private:
+    size_t N;
     std::vector<node> nodes;
 
 public:
-    // O(N)
-    UnionFindTree(int n = 0)
-        : N(n)
-        , nodes(n)
+    // Time: O(N)
+    UnionFindTree(size_t const N = 0)
+        : N(N)
+        , nodes(N)
     {
-        for (int i = 0; i < N; ++i) {
+        for (size_t i = 0; i < N; ++i) {
             nodes[i] = { i, 0 };
         }
     }
-    // O(1)
-    int size() {
+    // Time: O(1)
+    size_t size() {
         return N;
     }
-    // O(a(N))
-    node find(int v) {
+    // v = [0,N)
+    // Time: O(a(N))
+    node find(size_t const v) {
         throw_if_invalid_index(v);
         if (v != nodes[v].leader) {
             // Path Compression
@@ -39,14 +48,16 @@ public:
         }
         return nodes[v];
     }
-    // O(a(N))
-    bool same(int u, int v) {
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool same(size_t const u, size_t const v) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         return find(u).leader == find(v).leader;
     }
-    // O(a(N))
-    bool unite(int u, int v) {
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool unite(size_t u, size_t v) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         u = find(u).leader;
@@ -64,8 +75,8 @@ public:
         return true;
     }
 
-protected:
-    void throw_if_invalid_index(int v) {
-        if (v < 0 || v >= N) throw "index out of range";
+private:
+    void throw_if_invalid_index(size_t const v) {
+        if (v >= N) throw std::out_of_range("index out of range");
     }
 };
