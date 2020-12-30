@@ -1,61 +1,76 @@
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_A
+// https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_A
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
+
 
 class UnionFindTree {
 public:
-    struct node { int parent, rank; };
+    struct node {
+        size_t leader;
+        size_t rank;
+    };
 
 private:
-    int m_size;
-    std::vector<node> m_nodes;
+    size_t N;
+    std::vector<node> nodes;
 
 public:
-    UnionFindTree(int size)
-        : m_size(size)
-        , m_nodes(size)
+    // Time: O(N)
+    UnionFindTree(size_t const N = 0)
+        : N(N)
+        , nodes(N)
     {
-        for (int i = 0; i < size; ++i) {
-            m_nodes[i] = { i, 0 };
+        for (size_t i = 0; i < N; ++i) {
+            nodes[i] = { i, 0 };
         }
     }
-    int size() {
-        return m_size;
+    // Time: O(1)
+    size_t size() {
+        return N;
     }
-    // O(a(N))
-    node find_set(int index) {
-        throw_if_invalid_index(index);
-        if (index != m_nodes[index].parent) {
+    // v = [0,N)
+    // Time: O(a(N))
+    node find(size_t const v) {
+        throw_if_invalid_index(v);
+        if (v != nodes[v].leader) {
             // Path Compression
-            m_nodes[index] = find_set(m_nodes[index].parent);
+            nodes[v] = find(nodes[v].leader);
         }
-        return m_nodes[index];
+        return nodes[v];
     }
-    // O(a(N))
-    void union_set(int a, int b) {
-        throw_if_invalid_index(a);
-        throw_if_invalid_index(b);
-        a = find_set(a).parent;
-        b = find_set(b).parent;
-        if (a == b) {
-            return;
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool same(size_t const u, size_t const v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        return find(u).leader == find(v).leader;
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool unite(size_t u, size_t v) {
+        throw_if_invalid_index(u);
+        throw_if_invalid_index(v);
+        u = find(u).leader;
+        v = find(v).leader;
+        if (u == v) {
+            return false;
         }
-        if (m_nodes[a].rank < m_nodes[b].rank) {
-            std::swap(a, b);
+        if (nodes[u].rank < nodes[v].rank) {
+            std::swap(u, v);
         }
-        m_nodes[b].parent = a;
-        if (m_nodes[a].rank == m_nodes[b].rank) {
-            m_nodes[a].rank++;
+        nodes[v].leader = u;
+        if (nodes[u].rank == nodes[v].rank) {
+            nodes[u].rank++;
         }
+        return true;
     }
 
 private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= m_size) throw "index out of range";
+    void throw_if_invalid_index(size_t const v) {
+        if (v >= N) throw std::out_of_range("index out of range");
     }
 };
+
 
 using namespace std;
 
@@ -71,11 +86,12 @@ int main() {
         int c, x, y;
         cin >> c >> x >> y;
         if (c == 0) {
-            tree.union_set(x, y);
+            tree.unite(x, y);
         } else if (c == 1) {
-            auto nx = tree.find_set(x);
-            auto ny = tree.find_set(y);
-            cout << (nx.parent == ny.parent) << endl;
+            auto nx = tree.find(x);
+            auto ny = tree.find(y);
+            auto res = tree.same(x,y) ? "1" : "0";
+            cout << res << endl;
         } else throw;
     }
 
