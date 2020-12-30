@@ -1,5 +1,4 @@
-#include <map>
-#include <string>
+#include <bits/stdc++.h>
 #include "cpalgo/ds/union-find-tree-group.hpp"
 #include "template/template-main.hpp"
 
@@ -12,20 +11,16 @@ string to_string(UnionFindTree<int>::node node) {
 }
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     tree = UnionFindTree<int>(size);
     cout << "true" << endl;
 }
 
 void action_find() {
-    int v;
+    size_t v;
     cin >> v;
-    if (v < 0 || v >= tree.size()) {
+    if (v >= tree.size()) {
         cout << -1 << endl;
         return;
     }
@@ -33,14 +28,15 @@ void action_find() {
     cout << to_string(ans) << endl;
 }
 
-void action_union() {
-    int u, v, w;
+void action_unite() {
+    size_t u, v;
+    int w;
     cin >> u >> v >> w;
-    if (u < 0 || u >= tree.size()) {
+    if (u >= tree.size()) {
         cout << "false" << endl;
         return;
     }
-    if (v < 0 || v >= tree.size()) {
+    if (v >= tree.size()) {
         cout << "false" << endl;
         return;
     }
@@ -49,13 +45,13 @@ void action_union() {
 }
 
 void action_diff() {
-    int u, v;
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= tree.size()) {
+    if (u >= tree.size()) {
         cout << "false" << endl;
         return;
     }
-    if (v < 0 || v >= tree.size()) {
+    if (v >= tree.size()) {
         cout << "false" << endl;
         return;
     }
@@ -68,8 +64,8 @@ void action_diff() {
 }
 
 void action_dump() {
-    for (int i = 0; i < tree.size(); ++i) {
-        if (i != 0) cout << " ";
+    for (size_t i = 0; i < tree.size(); ++i) {
+        if (i > 0) cout << " ";
         auto value = tree.find(i);
         cout << to_string(value);
     }
@@ -80,7 +76,7 @@ void setup(string& header, map<string,Command>& commands) {
     header = "Weighted Union Find Tree";
     commands["init"] = { "init {size}", action_init };
     commands["find"] = { "find {v}", action_find };
-    commands["union"] = { "union {u} {v} {w}", action_union };
+    commands["unite"] = { "unite {u} {v} {w}", action_unite };
     commands["diff"] = { "diff {u} {v}", action_diff };
     commands["dump"] = { "dump", action_dump };
 }
