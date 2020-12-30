@@ -1,57 +1,70 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_1_B
-
 #include <vector>
 #include <functional>
-#include <algorithm>
+#include <stdexcept>
 
-// Union Find Tree (Disjoint Set Union)
-// Memory: O(N)
-template <class T>
+
+// Union Find Tree
+// (aka Disjoint Set Union)
+//
+// Space: O(N)
+//
+// Verified
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_B
+//
+template <typename T, typename U>
 class UnionFindTree {
 public:
-    using F = std::function<void(T&, const T&)>;
-    using G = std::function<void(T&, const T&, const T&)>;
-    using H = std::function<void(T&, T&, const T&, const T&)>;
-
+    using D = std::function<T(size_t const idx)>;
+    using E = std::function<U(U const& w)>;
+    using F = std::function<void(T& node, T const& leader)>;
+    using G = std::function<void(T& leader, T const& u, T const& v, U const& w)>;
+    using H = std::function<void(T& leader, T& follower, T const& u, T const& v, U const& w)>;
     struct node {
-        int leader, rank;
+        size_t leader;
+        size_t rank;
         T value;
     };
 
-protected:
-    int N;
+private:
+    size_t N;
     std::vector<node> nodes;
+    D apply;
+    E inverse;
     F compress;
     G unite_same;
     H unite_diff;
 
 public:
-    // O(N)
+    // Time: O(N)
     UnionFindTree(
-        int n = 0,
-        const F& compress = &T::compress,
-        const G& unite_same = &T::unite_same,
-        const H& unite_diff = &T::unite_diff
+        size_t const N = 0,
+        D const& apply = [](size_t const idx) { return T(idx); },
+        E const& inverse = std::negate<U>(),
+        F const& compress = &T::compress,
+        G const& unite_same = &T::unite_same,
+        H const& unite_diff = &T::unite_diff
     )
-        : N(n)
+        : N(N)
+        , apply(apply)
+        , inverse(inverse)
         , compress(compress)
         , unite_same(unite_same)
         , unite_diff(unite_diff)
     {
         nodes.reserve(N);
-        for (int i = 0; i < N; ++i) {
-            nodes.push_back({ i, 0, T(i) });
+        for (size_t i = 0; i < N; ++i) {
+            nodes.push_back({ i, 0, apply(i) });
         }
     }
-    // O(1)
-    int size() {
+    // Time: O(1)
+    size_t size() {
         return N;
     }
-    // O(a(N))
-    node find(int v) {
+    // v = [0,N)
+    // Time: O(a(N))
+    node find(size_t const v) {
         throw_if_invalid_index(v);
         auto& node = nodes[v];
         if (v != node.leader) {
@@ -63,40 +76,39 @@ public:
         }
         return node;
     }
-    // O(a(N))
-    bool same(int u, int v) {
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool same(size_t const u, size_t const v) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
         return find(u).leader == find(v).leader;
     }
-    // O(a(N))
-    bool unite(int u, int v) {
+    // u = [0,N), v = [0,N)
+    // Time: O(a(N))
+    bool unite(size_t u, size_t v, U w) {
         throw_if_invalid_index(u);
         throw_if_invalid_index(v);
-        auto nu = find(u);
-        auto nv = find(v);
-        u = nu.leader;
-        v = nv.leader;
-        if (u == v) {
-            unite_same(nodes[u].value, nu.value, nv.value);
+        auto lu = find(u).leader;
+        auto lv = find(v).leader;
+        if (lu == lv) {
+            unite_same(nodes[lu].value, nodes[u].value, nodes[v].value, w);
             return false;
-        } else {
-            static const auto less = std::less<int>(); // NOTE: a < b raise compile error ;(
-            if (less(nodes[u].rank, nodes[v].rank)) {
-                std::swap(u, v);
-                std::swap(nu, nv);
-            }
-            nodes[v].leader = u;
-            if (nodes[u].rank == nodes[v].rank) {
-                nodes[u].rank++;
-            }
-            unite_diff(nodes[u].value, nodes[v].value, nu.value, nv.value);
-            return true;
         }
+        if (nodes[lu].rank < nodes[lv].rank) {
+            std::swap(lu, lv);
+            std::swap(u, v);
+            w = inverse(w);
+        }
+        nodes[lv].leader = lu;
+        if (nodes[lu].rank == nodes[lv].rank) {
+            nodes[lu].rank++;
+        }
+        unite_diff(nodes[lu].value, nodes[lv].value, nodes[u].value, nodes[v].value, w);
+        return true;
     }
 
-protected:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
+private:
+    void throw_if_invalid_index(size_t const index) {
+        if (index >= N) throw std::out_of_range("index out of range");
     }
 };
