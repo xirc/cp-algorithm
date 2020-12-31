@@ -1,7 +1,6 @@
-#include <map>
-#include <string>
-#include "cpalgo/ds/union-find-tree.hpp"
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
+#include "cpalgo/ds/union_find_tree.hpp"
 
 using namespace std;
 
@@ -12,20 +11,16 @@ string to_string(UnionFindTree::node value) {
 }
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     tree = UnionFindTree(size);
     cout << "true" << endl;
 }
 
 void action_find() {
-    int v;
+    size_t v;
     cin >> v;
-    if (v < 0 || v >= tree.size()) {
+    if (v >= tree.size()) {
         cout << -1 << endl;
         return;
     }
@@ -33,14 +28,14 @@ void action_find() {
     cout << to_string(ans) << endl;
 }
 
-void action_union() {
-    int u, v;
+void action_unite() {
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= tree.size()) {
+    if (u >= tree.size()) {
         cout << "false" << endl;
         return;
     }
-    if (v < 0 || v >= tree.size()) {
+    if (v >= tree.size()) {
         cout << "false" << endl;
         return;
     }
@@ -49,7 +44,7 @@ void action_union() {
 }
 
 void action_dump() {
-    for (int i = 0; i < tree.size(); ++i) {
+    for (size_t i = 0; i < tree.size(); ++i) {
         if (i != 0) cout << " ";
         auto value = tree.find(i);
         cout << to_string(value);
@@ -58,9 +53,9 @@ void action_dump() {
 }
 
 void setup(string& header, map<string,Command>& commands) {
-    header = "Union Find Tree";
+    header = "Union Find Tree (aka Disjoint Set Union)";
     commands["init"] = { "init {size}", action_init };
     commands["find"] = { "find {v}", action_find };
-    commands["union"] = { "union {u} {v}", action_union };
+    commands["unite"] = { "unite {u} {v}", action_unite };
     commands["dump"] = { "dump", action_dump };
 }

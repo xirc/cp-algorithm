@@ -1,8 +1,18 @@
-// https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_B
+#pragma once
 
-#include <bits/stdc++.h>
+#include <vector>
+#include <functional>
+#include <stdexcept>
 
 
+// Union Find Tree
+// (aka Disjoint Set Union)
+//
+// Space: O(N)
+//
+// Verified
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_1_B
+//
 template <typename T, typename U>
 class UnionFindTree {
 public:
@@ -102,56 +112,3 @@ private:
         if (index >= N) throw std::out_of_range("index out of range");
     }
 };
-
-
-using namespace std;
-
-struct Data {
-    long long value;
-    Data(size_t i): value(0) {}
-    static void compress(Data& node, const Data& leader) {
-        node.value += leader.value;
-    }
-    static void unite_same(Data& leader, const Data& u, const Data& v, int const& w) {
-        // Do nothing
-    }
-    static void unite_diff(Data& leader, Data& follower, const Data& a, const Data& b, int w) {
-        w -= a.value;
-        w += b.value;
-        follower.value = -w;
-    }
-};
-
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-    int N, Q;
-    cin >> N >> Q;
-
-    UnionFindTree<Data, int> tree(N);
-
-    for (int i = 0; i < Q; ++i) {
-        int c;
-        cin >> c;
-        if (c == 0) {
-            int x, y, z;
-            cin >> x >> y >> z;
-            tree.unite(y, x, z);
-        } else if (c == 1) {
-            int x, y; long long w;
-            cin >> x >> y;
-            if (tree.same(x, y)) {
-                auto vx = tree.find(x);
-                auto vy = tree.find(y);
-                auto w = vy.value.value - vx.value.value;
-                cout << w << endl;
-            } else {
-                cout << "?" << endl;
-            }
-        } else throw;
-    }
-
-    return 0;
-}

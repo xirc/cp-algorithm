@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <limits>
-#include "cpalgo/ds/union-find-tree.hpp"
+#include "cpalgo/ds/union_find_tree.hpp"
 #include "cpalgo/ds/randomized-heap.hpp"
 
 // Minimum Cost Arborescence
