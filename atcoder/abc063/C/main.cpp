@@ -6,21 +6,26 @@ int N;
 vector<int> S;
 
 int solve() {
-    int const M = 10000 + 1;
-    vector<bool> scores(M, false);
-    scores[0] = true;
-    for (int si : S) {
-        for (int i = M - 1 - si; i >= 0; --i) {
-            if (!scores[i]) continue;
-            scores[i+si] = true;
-        }
+    int sum = 0;
+    for (auto si : S) {
+        sum += si;
     }
-    for (int i = M - 1; i >= 0; --i) {
-        if (i % 10 != 0 && scores[i]) {
-            return i;
-        }
+    if (sum % 10 != 0) {
+        return sum;
     }
-    return 0;
+
+    bool found = false;
+    int mini = 100;
+    for (auto si : S) {
+        if (si % 10 == 0) continue;
+        found = true;
+        mini = min(mini, si);
+    }
+    
+    if (!found) {
+        return 0;
+    }
+    return sum - mini;
 }
 
 int main() {
