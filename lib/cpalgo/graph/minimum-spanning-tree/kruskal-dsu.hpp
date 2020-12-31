@@ -6,7 +6,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
-#include "cpalgo/ds/union-find-tree.hpp"
+#include "cpalgo/ds/union_find_tree.hpp"
 
 // Minimum Spanning Tree
 // Kruskal's Algorithm

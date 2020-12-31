@@ -4,7 +4,7 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_C
 
 #include <vector>
-#include "cpalgo/ds/union-find-tree.hpp"
+#include "cpalgo/ds/union_find_tree.hpp"
 
 // LCA: Lowest Common Ancestor
 // Memory: O(V + E + Q)
