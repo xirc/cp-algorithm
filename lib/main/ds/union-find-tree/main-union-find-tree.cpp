@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
-#include "cpalgo/ds/union-find-tree.hpp"
 #include "template/template-main.hpp"
+#include "cpalgo/ds/union_find_tree.hpp"
 
 using namespace std;
 
