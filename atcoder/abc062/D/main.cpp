@@ -7,51 +7,45 @@ int N;
 vector<int> A;
 
 ll solve() {
-    ll suml = 0;
-    multiset<int, less<int>> best;
-    ll sumr = 0;
-    multiset<int, greater<int>> worst1;
-    multiset<int, less<int>> worst2;
+    ll sum;
+    vector<ll> lsum(N+1, 0);
+    vector<ll> rsum(N+1, 0);
 
+    sum = 0;
+    priority_queue<int, vector<int>, greater<int>> ql;
     for (int i = 0; i < N; ++i) {
-        suml += A[i];
-        best.insert(A[i]);
+        ql.push(A[i]);
+        sum += A[i];
     }
-    for (int i = N; i < 3 * N; ++i) {
-        sumr += A[i];
-        worst1.insert(A[i]);
-        if (worst1.size() > N) {
-            // pick max
-            auto u = worst1.begin();
-            sumr -= *u;
-            worst2.insert(*u);
-            worst1.erase(u);
-        }
+    lsum[0] = sum;
+    for (int i = 0; i < N; ++i) {
+        auto v = A[N+i];
+        ql.push(v);
+        sum += v;
+        sum -= ql.top();
+        ql.pop();
+        lsum[i+1] = sum;
     }
 
-    ll ans = suml - sumr;
-    for (int i = N; i < 2 * N; ++i) {
-        suml += A[i];
-        best.insert(A[i]);
-        // pick min
-        auto u = best.begin();
-        suml -= *u;
-        best.erase(u);
+    sum = 0;
+    priority_queue<int, vector<int>, less<int>> qr;
+    for (int i = 2 * N; i < 3 * N; ++i) {
+        qr.push(A[i]);
+        sum += A[i];
+    }
+    rsum[0] = sum;
+    for (int i = 0; i < N; ++i) {
+        auto v = A[2*N-1-i];
+        qr.push(A[2*N-1-i]);
+        sum += v;
+        sum -= qr.top();
+        qr.pop();
+        rsum[i+1] = sum;
+    }
 
-        if (worst1.count(A[i]) > 0) {
-            sumr -= A[i];
-            worst1.erase(worst1.find(A[i]));
-            // pick min
-            auto v = worst2.begin();
-            sumr += *v;
-            worst1.insert(*v);
-            worst2.erase(v);
-        } else {
-            assert(worst2.count(A[i]) > 0);
-            worst2.erase(worst2.find(A[i]));
-        }
-
-        ans = max(ans, suml - sumr);
+    ll ans = numeric_limits<ll>::lowest();
+    for (int i = 0; i <= N; ++i) {
+        ans = max(ans, lsum[i] - rsum[N-i]);
     }
     return ans;
 }
