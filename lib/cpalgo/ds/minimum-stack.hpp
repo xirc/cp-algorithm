@@ -10,7 +10,7 @@
 // Space: O(N)
 //
 // Verified
-//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D
 //
 template <class T, class Less = std::less<T>>
 class MinimumStack {

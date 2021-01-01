@@ -1,91 +1,101 @@
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
+// https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D
 
 #include <bits/stdc++.h>
 
-// MinimumStack
-// Memory: O(N)
-template <class T>
+template <class T, class Less = std::less<T>>
 class MinimumStack {
-protected:
-    struct entry { T value, minimum; };
+private:
+    struct entry {
+        T value;
+        T minimum;
+    };
     std::deque<entry> S;
+    Less less;
+
 public:
-    // O(1)
-    bool empty() {
+    // Time: O(1)
+    bool empty() const {
         return S.empty();
     }
-    // O(1)
-    void push(T value) {
-        T new_min = S.empty() ? value : std::min(value, S.back().minimum);
-        S.push_back({value, new_min});
+    // Time: O(1)
+    size_t size() const {
+        return S.size();
     }
-    // O(1)
+    // Time: O(1)
+    void push(T const& value) {
+        T new_min =
+            (S.empty() || less(value, S.back().minimum)) ? value : S.back().minimum;
+        S.push_back({ value, new_min });
+    }
+    // Time: O(1)
     void pop() {
         S.pop_back();
     }
-    // O(1)
-    T top() {
+    // Time: O(1)
+    T top() const {
         return S.back().value;
     }
-    T bottom() {
+    // Time: O(1)
+    T bottom() const {
         return S.front().value;
     }
-    // O(1)
-    T minimum() {
+    // Time: O(1)
+    T minimum() const {
         return S.back().minimum;
     }
 };
 
-// MinimumQueue
-// Memory: O(N)
-template <class T>
+template <class T, class Less = std::less<T>>
 class MinimumQueue {
-protected:
-    MinimumStack<T> Sp, Sr;
+private:
+    MinimumStack<T, Less> Sp, Sr;
+    Less less;
 
 public:
-    // O(1)
-    bool empty() {
+    // Time: O(1)
+    bool empty() const {
         return Sp.empty() && Sr.empty();
     }
-    // O(1)
-    void push_back(T value) {
+    // Time: O(1)
+    size_t size() const {
+        return Sp.size() + Sr.size();
+    }
+    // Time: O(1)
+    void push(T const& value) {
         Sp.push(value);
     }
-    // O(N)
-    void pop_front() {
-        transfer_if_needed();
+    // Time: O(N), amortized O(1)
+    void pop() {
+        if (Sr.empty()) {
+            while (!Sp.empty()) {
+                auto value = Sp.top();
+                Sp.pop();
+                Sr.push(value);
+            }
+        }
         Sr.pop();
     }
-    // O(N)
-    T front() {
-        transfer_if_needed();
+    // Time: O(1)
+    T front() const {
+        if (Sr.empty()) {
+            return Sp.bottom();
+        }
         return Sr.top();
     }
-    // O(1)
-    T back() {
+    // Time: O(1)
+    T back() const {
         if (!Sp.empty()) {
             return Sp.top();
         }
         return Sr.bottom();
     }
-    // O(1)
-    T minimum() {
+    // Time: O(1)
+    T minimum() const {
         if (Sp.empty() || Sr.empty()) {
             return Sp.empty() ? Sr.minimum() : Sp.minimum();
         } else {
-            return std::min(Sp.minimum(), Sr.minimum());
-        }
-    }
-
-protected:
-    // O(N)
-    void transfer_if_needed() {
-        if (!Sr.empty()) return;
-        while (!Sp.empty()) {
-            T value = Sp.top();
-            Sp.pop();
-            Sr.push(value);
+            auto m1 = Sp.minimum(), m2 = Sr.minimum();
+            return less(m1, m2) ? m1 : m2;
         }
     }
 };
@@ -105,12 +115,12 @@ int main() {
 
     MinimumQueue<int> Q;
     for (int i = 0; i < L; ++i) {
-        Q.push_back(array[i]);
+        Q.push(array[i]);
     }
     cout << Q.minimum();
     for (int i = L; i < N; ++i) {
-        Q.pop_front();
-        Q.push_back(array[i]);
+        Q.pop();
+        Q.push(array[i]);
         cout << " " << Q.minimum();
     }
     cout << endl;
