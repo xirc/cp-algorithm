@@ -1,41 +1,56 @@
 #pragma once
 
-#include <deque>
 #include <algorithm>
+#include <deque>
+#include <functional>
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
 
 // MinimumStack
-// Memory: O(N)
-template <class T>
+//
+// Space: O(N)
+//
+// Verified
+//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_3_D
+//
+template <class T, class Less = std::less<T>>
 class MinimumStack {
-protected:
-    struct entry { T value, minimum; };
+private:
+    struct entry {
+        T value;
+        T minimum;
+    };
     std::deque<entry> S;
+    Less less;
+
 public:
-    // O(1)
-    bool empty() {
+    // Time: O(1)
+    bool empty() const {
         return S.empty();
     }
-    // O(1)
-    void push(T value) {
-        T new_min = S.empty() ? value : std::min(value, S.back().minimum);
-        S.push_back({value, new_min});
+    // Time: O(1)
+    size_t size() const {
+        return S.size();
     }
-    // O(1)
+    // Time: O(1)
+    void push(T const& value) {
+        T new_min =
+            (S.empty() || less(value, S.back().minimum)) ? value : S.back().minimum;
+        S.push_back({ value, new_min });
+    }
+    // Time: O(1)
     void pop() {
         S.pop_back();
     }
-    // O(1)
-    T top() {
+    // Time: O(1)
+    T top() const {
         return S.back().value;
     }
-    T bottom() {
+    // Time: O(1)
+    T bottom() const {
         return S.front().value;
     }
-    // O(1)
-    T minimum() {
+    // Time: O(1)
+    T minimum() const {
         return S.back().minimum;
     }
 };
