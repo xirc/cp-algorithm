@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/ds/minimum-queue.hpp"
+#include "cpalgo/ds/minimum_queue.hpp"
 
 
 TEST(MinimumQueueTest, IsEmptyInitially) {

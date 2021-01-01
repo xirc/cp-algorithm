@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/ds/minimum-stack.hpp"
+#include "cpalgo/ds/minimum_stack.hpp"
 
 
 TEST(MinimumStackTest, IsEmptyInitially) {

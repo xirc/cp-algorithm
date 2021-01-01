@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/ds/minimum-queue.hpp"
+#include "cpalgo/ds/minimum_queue.hpp"
 
 using namespace std;
 
