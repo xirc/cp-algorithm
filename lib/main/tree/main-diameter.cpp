@@ -7,22 +7,18 @@ using namespace std;
 TreeDiameter solver;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     solver = TreeDiameter(size);
     cout << "true" << endl;
 }
 
 void action_edge() {
-    int u, v;
-    long long w;
+    size_t u, v;
+    unsigned long long w;
     cin >> u >> v >> w;
-    if (u < 0 || u >= solver.size() ||
-        v < 0 || v >= solver.size())
+    if (u >= solver.size() ||
+        v >= solver.size())
     {
         cout << "false" << endl;
         return;
@@ -32,10 +28,9 @@ void action_edge() {
 }
 
 void action_solve() {
-    int u, v;
-    long long w;
-    auto e = solver.solve();
-    tie(u, v, w) = e;
+    size_t u, v;
+    unsigned long long w;
+    tie(u, v, w) = solver.solve();
     cout << u << " " << v << " " << w << endl;
 }
 

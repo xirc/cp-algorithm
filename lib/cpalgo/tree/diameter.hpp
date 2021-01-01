@@ -1,43 +1,67 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_A
-
-#include <vector>
+#include <limits>
 #include <queue>
+#include <stdexcept>
 #include <tuple>
+#include <vector>
+
 
 // Diameter of a Tree
-// Memory: O(V + E)
-// NOTE: undirected, no-negative-weight
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - undirected edge
+//  - non-loop
+//  - non-multi-edge
+//  - non-negative weight
+//  - it can handle a forest
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_A
+//
 class TreeDiameter {
+private:
     struct edge {
-        int to;
-        long long weight;
+        size_t to;
+        unsigned long long weight;
     };
 
-    int N;
+    size_t N;
     std::vector<std::vector<edge>> adj;
+    unsigned long long inf;
 
 public:
-    static const long long inf;
-    // O(V)
-    TreeDiameter(int n = 0): N(n), adj(n) {}
-    // O(1)
-    int size() {
+    // Time: O(V)
+    TreeDiameter(
+        size_t const N = 0,
+        unsigned long long const inf = std::numeric_limits<unsigned long long>::max()
+    )
+      : N(N)
+      , adj(N)
+      , inf(inf)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int u, int v, long long w) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
-        if (w < 0) throw;
+    // u = [0,N), v = [0,N), w = [0,inf)
+    // Time: O(1)
+    void add_edge(size_t const u, size_t const v, unsigned long long const w) {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("u");
+        if (w >= inf) throw std::out_of_range("w");
         adj[u].push_back({ v, w });
         adj[v].push_back({ u, w });
     }
-    // O(E)
-    std::tuple<int, int, long long> solve(int s = 0) {
-        int u, v, w;
+    // s = [0,N)
+    // Time: O(E)
+    std::tuple<size_t, size_t, unsigned long long> solve(size_t s = 0) const {
+        size_t u, v;
+        unsigned long long w;
         std::tie(u, w) = bfs(s);
         std::tie(v, w) = bfs(u);
         if (u > v) std::swap(u, v);
@@ -45,31 +69,27 @@ public:
     }
 
 private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
-    }
-    std::pair<int, long long> bfs(int s) {
-        std::vector<long long> D(N, inf);
-        std::queue<int> Q;
+    std::pair<size_t, unsigned long long> bfs(size_t s) const {
+        std::vector<unsigned long long> D(N, inf);
+        std::queue<size_t> Q;
         Q.push(s);
         D[s] = 0;
         while (Q.size()) {
-            int u = Q.front(); Q.pop();
-            for (auto& e : adj[u]) {
+            size_t u = Q.front(); Q.pop();
+            for (auto const& e : adj[u]) {
                 if (D[e.to] == inf) {
                     D[e.to] = D[u] + e.weight;
                     Q.push(e.to);
                 }
             }
         }
-        int v = -1;
-        for (int i = 0; i < N; ++i) {
+        size_t v = N;
+        for (size_t i = 0; i < N; ++i) {
             if (D[i] == inf) continue;
-            if (v == -1 || D[i] > D[v]) {
+            if (v == N || D[i] > D[v]) {
                 v = i;
             }
         }
         return std::make_pair(v, D[v]);
     }
 };
-const long long TreeDiameter::inf = 1e18;
