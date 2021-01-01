@@ -1,7 +1,0 @@
-init 6
-edge 0 1 1
-edge 0 2 1
-edge 2 3 1
-edge 2 5 1
-edge 5 4 1
-solve
