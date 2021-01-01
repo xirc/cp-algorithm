@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/ds/minimum-queue.hpp"
+#include "cpalgo/ds/minimum_queue.hpp"
 
 using namespace std;
 
@@ -10,15 +10,15 @@ void action_init() {
     minqueue = MinimumQueue<int>();
 }
 
-void action_push_back() {
+void action_push() {
     int value;
     cin >> value;
-    minqueue.push_back(value);
+    minqueue.push(value);
 }
 
-void action_pop_front() {
+void action_pop() {
     if (minqueue.empty()) return;
-    minqueue.pop_front();
+    minqueue.pop();
 }
 
 void action_front() {
@@ -39,8 +39,8 @@ void action_minimum() {
 void setup(string& header, map<string,Command>& commands) {
     header = "Minimum Stack";
     commands["init"] = { "init", action_init };
-    commands["push"] = { "push {value}", action_push_back };
-    commands["pop"] = { "pop", action_pop_front };
+    commands["push"] = { "push {value}", action_push };
+    commands["pop"] = { "pop", action_pop };
     commands["front"] = { "front", action_front };
     commands["back"] = { "back", action_back };
     commands["min"] = { "min", action_minimum };
