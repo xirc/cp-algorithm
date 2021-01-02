@@ -8,21 +8,18 @@ using namespace std;
 TreeHeight solver;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     solver = TreeHeight(size);
     cout << "true" << endl;
 }
 
 void action_edge() {
-    int u, v, w;
+    size_t u, v;
+    unsigned long long w;
     cin >> u >> v >> w;
-    if (u < 0 || u >= solver.size() ||
-        v < 0 || v >= solver.size())
+    if (u >= solver.size() ||
+        v >= solver.size())
     {
         cout << "false" << endl;
         return;
@@ -33,7 +30,7 @@ void action_edge() {
 
 void action_solve() {
     auto height = solver.solve();
-    for (int v = 0; v < height.size(); ++v) {
+    for (size_t v = 0; v < height.size(); ++v) {
         if (v > 0) cout << " ";
         cout << height[v];
     }
