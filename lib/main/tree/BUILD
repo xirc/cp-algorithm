@@ -22,3 +22,10 @@ cc_binary(
     copts = COPTS,
     deps = DEPS,
 )
+
+cc_binary(
+    name = "height",
+    srcs = ["main-height.cpp"],
+    copts = COPTS,
+    deps = DEPS,
+)
