@@ -1,42 +1,61 @@
-#include <vector>
-#include <queue>
-#include <tuple>
+// https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_B
+
+#include <bits/stdc++.h>
+
 
 class TreeHeight {
+private:
     struct edge {
-        int to;
-        long long w;
+        size_t to;
+        unsigned long long w;
     };
-    int N;
+    size_t N;
     std::vector<std::vector<edge>> adj;
+    unsigned long long inf;
 
 public:
-    static const long long inf = 1e18;
-    // O(V)
-    TreeHeight(int size): N(size), adj(size){}
-    // O(1)
-    int size() {
+    // Time: O(V)
+    TreeHeight(
+        size_t const N = 0,
+        unsigned long long const inf = std::numeric_limits<unsigned long long>::max()
+    )
+        : N(N)
+        , adj(N)
+        , inf(inf)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int u, int v, long long w) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
-        if (w < 0) throw;
+    // Time: O(1)
+    unsigned long long infinity() {
+        return inf;
+    }
+    // u = [0,N), v = [0,N), w = [0,inf)
+    // Time: O(1)
+    void add_edge(size_t const u, size_t const v, unsigned long long const w) {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
+        if (w >= inf) throw std::out_of_range("w");
         adj[u].push_back({ v, w });
         adj[v].push_back({ u, w });
     }
-    // O(V + E)
-    std::vector<long long> solve(int s = 0) {
-        int u, v;
-        long long w;
+    // s = [0,N)
+    // Time: O(V + E)
+    std::vector<unsigned long long> solve(size_t const s = 0) const {
+        if (s >= N) throw std::out_of_range("s");
+
+        size_t u, v;
+        unsigned long long w;
 
         std::tie(u, v, w) = diameter(s);
         auto Du = distance(u);
         auto Dv = distance(v);
 
-        std::vector<long long> ans(N, 0);
-        for (int i = 0; i < N; ++i) {
+        std::vector<unsigned long long> ans(N, 0);
+        for (size_t i = 0; i < N; ++i) {
             if (i == u || i == v) {
                 ans[i] = w;
             } else {
@@ -47,24 +66,25 @@ public:
     }
 
 private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
-    }
-    std::tuple<int, int, long long> diameter(int s) {
-        int u, v;
-        long long w;
+    // s = [0,N)
+    // Time: O(V + E)
+    std::tuple<size_t, size_t, unsigned long long> diameter(size_t s) const {
+        size_t u, v;
+        unsigned long long w;
         std::tie(u, w) = farther(s);
         std::tie(v, w) = farther(u);
         return std::make_tuple(u, v, w);
     }
-    std::vector<long long> distance(int s) {
-        std::vector<long long> D(N, inf);
-        std::queue<int> Q;
+    // s = [0,N)
+    // Time: O(V + E)
+    std::vector<unsigned long long> distance(size_t s) const {
+        std::vector<unsigned long long> D(N, inf);
+        std::queue<size_t> Q;
         Q.push(s);
         D[s] = 0;
         while (Q.size()) {
-            int u = Q.front(); Q.pop();
-            for (auto& e : adj[u]) {
+            auto u = Q.front(); Q.pop();
+            for (auto const& e : adj[u]) {
                 if (D[e.to] == inf) {
                     D[e.to] = D[u] + e.w;
                     Q.push(e.to);
@@ -73,12 +93,14 @@ private:
         }
         return D;
     }
-    std::pair<int, long long> farther(int s) {
+    // s = [0,N)
+    // Time: O(V + E)
+    std::pair<size_t, unsigned long long> farther(size_t s) const {
         auto D = distance(s);
-        int v = -1;
-        for (int i = 0; i < N; ++i) {
+        size_t v = N;
+        for (size_t i = 0; i < N; ++i) {
             if (D[i] == inf) continue;
-            if (v == -1 || D[i] > D[v]) {
+            if (v == N || D[i] > D[v]) {
                 v = i;
             }
         }
@@ -86,8 +108,6 @@ private:
     }
 };
 
-
-#include <iostream>
 
 using namespace std;
 
