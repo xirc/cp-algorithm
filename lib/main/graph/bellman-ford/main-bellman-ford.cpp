@@ -1,5 +1,5 @@
 #include "template-main-bellman-ford-interp.hpp"
-#include "cpalgo/graph/bellman-ford.hpp"
+#include "cpalgo/graph/bellman_ford.hpp"
 
 using namespace std;
 

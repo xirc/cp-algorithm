@@ -1,28 +1,23 @@
-#include <iostream>
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
 #include "cpalgo/tree/lowest-common-ancestor/lca-tarjan.hpp"
 
 using namespace std;
 
-LCA lca;
-vector<vector<int>> adj;
+
+vector<vector<size_t>> adj;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
-    adj.assign(size, vector<int>());
+    adj.assign(size, vector<size_t>());
 }
 
 void action_edge() {
-    const int N = adj.size();
-    int u, v;
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= N ||
-        v < 0 || v >= N)
+    if (u >= adj.size() ||
+        v >= adj.size())
     {
         cout << "false" << endl;
         return;
@@ -33,27 +28,22 @@ void action_edge() {
 }
 
 void action_solve() {
-    const int N = adj.size();
-    int Q;
+    size_t Q;
     cin >> Q;
-    if (Q < 0) {
-        cout << "false" << endl;
-        return;
-    }
-    vector<pair<int,int>> queries(Q);
-    for (int i = 0; i < Q; ++i) {
-        int u, v;
+    vector<pair<size_t,size_t>> queries(Q);
+    for (size_t i = 0; i < Q; ++i) {
+        size_t u, v;
         cin >> u >> v;
-        if (u < 0 || u >= N ||
-            v < 0 || v >= N)
+        if (u >= adj.size() ||
+            v >= adj.size())
         {
             cout << "false" << endl;
             return;
         }
         queries[i] = { u, v };
     }
-    auto ans = lca.solve(adj, queries);
-    for (int i = 0; i < Q; ++i) {
+    auto ans = lca(adj, queries);
+    for (size_t i = 0; i < Q; ++i) {
         cout << queries[i].first << " " << queries[i].second << ": " << ans[i] << endl;
     }
 }

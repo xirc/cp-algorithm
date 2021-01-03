@@ -1,8 +1,26 @@
-// https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_B
+#pragma once
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <cmath>
+#include <limits>
+#include <memory>
+#include <stdexcept>
+#include <vector>
 
 
+// Bellman Ford Algorith
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - directed
+//  - multi-edge
+//  - self-loop
+//  - negative-weight
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_B
+//
 class BellmanFord {
 private:
     struct edge {
@@ -69,35 +87,3 @@ public:
         return !any_update;
     }
 };
-
-
-using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-    int V, E, R;
-    cin >> V >> E >> R;
-
-    BellmanFord solver(V);
-    for (int i = 0; i < E; ++i) {
-        int u, v, w;
-        cin >> u >> v >> w;
-        solver.add_edge(u, v, w);
-    }
-
-    vector<long long> D;
-    vector<size_t> P;
-    bool has_ans = solver.solve(R, D, P);
-    if (!has_ans) {
-        cout << "NEGATIVE CYCLE" << endl;
-        return 0;
-    }
-    for (int i = 0; i < V; ++i) {
-        if (D[i] == solver.infinity()) cout << "INF" << endl;
-        else cout << D[i] << endl;
-    }
-
-    return 0;
-}

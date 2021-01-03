@@ -1,32 +1,28 @@
 #pragma once
 
-#include <functional>
-#include <memory>
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
+
 
 template <class Solver>
 class SolverInterp {
     using SolverPtr = std::shared_ptr<Solver>;
     SolverPtr solver = SolverPtr(nullptr);
-    std::vector<std::vector<int>> adj;
+    std::vector<std::vector<size_t>> adj;
 
 public:
     void action_init() {
-        int size;
+        size_t size;
         std::cin >> size;
-        if (size < 0) {
-            std::cout << "false" << std::endl;
-            return;
-        }
-        adj.assign(size, std::vector<int>());
+        adj.assign(size, std::vector<size_t>());
         solver = nullptr;
         std::cout << "true" << std::endl;
     }
     void action_add_edge() {
-        int u, v;
+        size_t u, v;
         std::cin >> u >> v;
-        if (u < 0 || u >= adj.size() ||
-            v < 0 || v >= adj.size())
+        if (u >= adj.size() ||
+            v >= adj.size())
         {
             std::cout << "false" << std::endl;
             return;
@@ -37,10 +33,10 @@ public:
         std::cout << "true" << std::endl;
     }
     void action_query() {
-        int u, v;
+        size_t u, v;
         std::cin >> u >> v;
-        if (u < 0 || u >= adj.size() ||
-            v < 0 || v >= adj.size())
+        if (u >= adj.size() ||
+            v >= adj.size())
         {
             std::cout << "false" << std::endl;
             return;
@@ -48,7 +44,7 @@ public:
         if (solver == nullptr) {
             solver = SolverPtr(new Solver(adj));
         }
-        int ans = solver->query(u, v);
+        size_t ans = solver->query(u, v);
         std::cout << ans << std::endl;
     }
 };
