@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 
 class BellmanFord {
+private:
     struct edge {
         size_t from;
         size_t to;
@@ -11,26 +12,37 @@ class BellmanFord {
     long long inf;
 
 public:
+    // Time: O(1)
     BellmanFord(
-        size_t N = 0,
+        size_t const N = 0,
         long long inf = std::numeric_limits<long long>::max() / 2
     )
         : N(N)
-        , edges()
         , inf(inf)
     {
         // Do nothing
     }
+    // Time: O(1)
     size_t size() const {
         return N;
     }
+    // Time: O(1)
+    long long infinity() const {
+        return inf;
+    }
+    // from = [0,N), to = [0,N), cost = (-inf,inf)
+    // Time: O(1)
     void add_edge(size_t const from, size_t const to, long long const cost) {
         if (from >= N) throw std::out_of_range("from");
         if (to >= N) throw std::out_of_range("to");
+        if (std::abs(cost) >= inf) std::out_of_range("cost");
         edges.push_back({ from, to, cost });
     }
-    bool solve(size_t from, std::vector<long long>& D, std::vector<size_t>& P) const {
+    // from = [0,N)
+    // time: O (EV)
+    bool solve(size_t const from, std::vector<long long>& D, std::vector<size_t>& P) const {
         if (from >= N) throw std::out_of_range("from");
+
         D.assign(N, inf);
         P.assign(N, N);
 
@@ -49,6 +61,7 @@ public:
             }
             if (!any_update) break;
         }
+
         // if any_update == true, a negative cycle is found.
         return !any_update;
     }
