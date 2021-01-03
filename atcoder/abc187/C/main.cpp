@@ -6,21 +6,13 @@ int N;
 vector<string> S;
 
 string solve() {
-    set<string> keys;
+    unordered_set<string> ss;
 
-    set<string> ps, ns;
     for (auto const& s : S) {
-        bool neg = s[0] == '!';
-        auto ss = neg ? s.substr(1) : s;
-        keys.insert(ss);
-        if (neg) {
-            ns.insert(ss);
-        } else {
-            ps.insert(ss);
-        }
+        ss.insert(s);
     }
-    for (auto s : keys) {
-        if (ps.count(s) > 0 && ns.count(s) > 0) {
+    for (auto const& s : S) {
+        if (ss.count("!" + s) > 0) {
             return s;
         }
     }
