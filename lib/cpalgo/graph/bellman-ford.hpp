@@ -1,46 +1,77 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B
-
-#include <memory>
-#include <vector>
 #include <algorithm>
+#include <cmath>
+#include <limits>
+#include <memory>
+#include <stdexcept>
+#include <vector>
+
 
 // Bellman Ford Algorith
-// Memory: O(V + E)
-// NOTE: directed, multi-edge, self-loop, negative-weight
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - directed
+//  - multi-edge
+//  - self-loop
+//  - negative-weight
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_B
+//
 class BellmanFord {
-    struct edge { int from, to; long long cost; };
-    int N;
+private:
+    struct edge {
+        size_t from;
+        size_t to;
+        long long cost;
+    };
+    size_t N;
     std::vector<edge> edges;
+    long long inf;
 
 public:
-    static const long long inf;
-    // O(1)
-    BellmanFord(int n = 0): N(n) {}
-    // O(1)
-    int size() {
+    // Time: O(1)
+    BellmanFord(
+        size_t const N = 0,
+        long long inf = std::numeric_limits<long long>::max() / 2
+    )
+        : N(N)
+        , inf(inf)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int from, int to, long long cost) {
-        throw_if_invalid_index(from);
-        throw_if_invalid_index(to);
+    // Time: O(1)
+    long long infinity() const {
+        return inf;
+    }
+    // from = [0,N), to = [0,N), cost = (-inf,inf)
+    // Time: O(1)
+    void add_edge(size_t const from, size_t const to, long long const cost) {
+        if (from >= N) throw std::out_of_range("from");
+        if (to >= N) throw std::out_of_range("to");
+        if (std::abs(cost) >= inf) std::out_of_range("cost");
         edges.push_back({ from, to, cost });
     }
-    // O (E V)
-    bool solve(int from, std::vector<long long>& D, std::vector<int>& P) {
-        throw_if_invalid_index(from);
+    // from = [0,N)
+    // time: O (EV)
+    bool solve(size_t const from, std::vector<long long>& D, std::vector<size_t>& P) const {
+        if (from >= N) throw std::out_of_range("from");
+
         D.assign(N, inf);
-        P.assign(N, -1);
+        P.assign(N, N);
 
         bool any_update = false;
         D[from] = 0;
-        for (int i = 0; i < N; ++i) {
+        for (size_t i = 0; i < N; ++i) {
             any_update = false;
-            for (int j = 0; j < edges.size(); ++j) {
-                auto e = edges[j];
+            for (auto const& e : edges) {
                 if (D[e.from] >= inf) continue;
                 if (D[e.to] > D[e.from] + e.cost) {
                     // suppress negative overflow
@@ -55,10 +86,4 @@ public:
         // if any_update == true, a negative cycle is found.
         return !any_update;
     }
-
-private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index of of range";
-    }
 };
-const long long BellmanFord::inf = 1e18;
