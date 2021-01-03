@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/graph/bellman-ford.hpp"
+#include "cpalgo/graph/bellman_ford.hpp"
 
 using namespace std;
 
