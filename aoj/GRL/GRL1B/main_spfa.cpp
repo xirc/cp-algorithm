@@ -1,44 +1,64 @@
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_1_B
+//https://onlinejudge.u-aizu.ac.jp/problems/GRL_1_B
 
-#include <vector>
-#include <queue>
+#include <bits/stdc++.h>
 
-// More faster than Bellman-Ford on average.
+
 class SPFA {
-    struct edge { int to; long long cost; };
-    int N;
+private:
+    struct edge {
+        size_t to;
+        long long cost;
+    };
+    size_t N;
     std::vector<std::vector<edge>> edges;
+    long long inf;
 
 public:
-    static const long long inf = 1e18;
-    // O(V)
-    SPFA(int size): N(size), edges(size) {}
-    // O(1)
-    int size() {
+    // Time: O(V)
+    SPFA(
+        size_t const N = 0,
+        long long const inf = std::numeric_limits<long long>::max() / 2
+    )
+        : N(N)
+        , edges(N)
+        , inf(inf)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
+    // Time: O(1)
+    long long infinity() const {
+        return inf;
+    }
+    // from = [0,N), to = [0,N), cost = (-inf,inf)
     // O(1)
-    void add_edge(int from, int to, long long cost) {
-        throw_if_invalid_index(from);
-        throw_if_invalid_index(to);
+    void add_edge(size_t const from, size_t const to, long long const cost) {
+        if (from >= N) throw std::out_of_range("from");
+        if (to >= N) throw std::out_of_range("to");
+        if (std::abs(cost) >= inf) throw std::out_of_range("cost");
         edges[from].push_back({ to, cost });
     }
+    // from = [0,N)
     // O (E V)
-    bool solve(int from, std::vector<long long>& D, std::vector<int>& P) {
+    bool solve(size_t const from, std::vector<long long>& D, std::vector<size_t>& P) const {
+        if (from >= N) throw std::out_of_range("from");
+
         D.assign(N, inf);
-        P.assign(N, -1);
-        std::vector<int> count(N, 0);
+        P.assign(N, N);
+        std::vector<size_t> count(N, 0);
         std::vector<bool> inqueue(N, false);
-        std::queue<int> Q;
+        std::queue<size_t> Q;
 
         D[from] = 0;
         Q.push(from);
         inqueue[from] = true;
         while (!Q.empty()) {
-            int v = Q.front(); Q.pop();
+            size_t v = Q.front(); Q.pop();
             inqueue[v] = false;
-
-            for (auto edge : edges[v]) {
+            for (auto const& edge : edges[v]) {
                 if (D[edge.to] <= D[v] + edge.cost) continue;
                 D[edge.to] = D[v] + edge.cost;
                 P[edge.to] = v;
@@ -54,15 +74,8 @@ public:
         }
         return true;
     }
-
-private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index of of range";
-    }
 };
 
-
-#include <iostream>
 
 using namespace std;
 
@@ -81,14 +94,14 @@ int main() {
     }
 
     vector<long long> D;
-    vector<int> P;
+    vector<size_t> P;
     bool has_ans = solver.solve(R, D, P);
     if (!has_ans) {
         cout << "NEGATIVE CYCLE" << endl;
         return 0;
     }
     for (int i = 0; i < V; ++i) {
-        if (D[i] == SPFA::inf) cout << "INF" << endl;
+        if (D[i] == solver.infinity()) cout << "INF" << endl;
         else cout << D[i] << endl;
     }
 

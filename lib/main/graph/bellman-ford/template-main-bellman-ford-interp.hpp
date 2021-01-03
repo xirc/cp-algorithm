@@ -1,66 +1,57 @@
 #pragma once
 
-#include <iostream>
-#include <algorithm>
-#include <functional>
-#include <string>
-#include <map>
-#include <memory>
+#include <bits/stdc++.h>
 #include "template/template-main.hpp"
 
 template <class Solver>
 class SolverInterp {
-    using SolverPtr = std::shared_ptr<Solver>;
-    SolverPtr solver = SolverPtr(new Solver());
+    Solver solver;
 
 public:
     void action_init() {
-        int n;
+        size_t n;
         std::cin >> n;
-        if (n < 0) {
-            std::cout << "false" << std::endl;
-            return;
-        }
-        solver = SolverPtr(new Solver(n));
+        solver = Solver(n);
     }
     void action_add_edge() {
-        int from, to; long long cost;
+        size_t from, to;
+        long long cost;
         std::cin >> from >> to >> cost;
-        if (from < 0 || from >= solver->size() ||
-            to < 0 || to >= solver->size())
+        if (from >= solver.size() ||
+            to >= solver.size())
         {
             std::cout << "false" << std::endl;
             return;
         }
-        solver->add_edge(from, to, cost);
+        solver.add_edge(from, to, cost);
     }
     void action_solve() {
-        int from;
+        size_t from;
         std::vector<long long> distance;
-        std::vector<int> predecessor;
+        std::vector<size_t> predecessor;
         std::cin >> from;
-        if (from < 0 || from >= solver->size())
+        if (from >= solver.size())
         {
             std::cout << "false" << std::endl;
             return;
         }
-        bool has_ans = solver->solve(from, distance, predecessor);
+        bool has_ans = solver.solve(from, distance, predecessor);
         if (!has_ans) {
             std::cout << "false" << std::endl;
             return;
         }
-        for (int to = 0; to < solver->size(); ++to) {
+        for (size_t to = 0; to < solver.size(); ++to) {
             std::cout << "distance: " << distance[to] << ", ";
             std::cout << "path: ";
-            std::vector<int> path;
-            for (int v = predecessor[to]; v != -1; v = predecessor[v]) {
+            std::vector<size_t> path;
+            for (size_t v = predecessor[to]; v != solver.size(); v = predecessor[v]) {
                 path.push_back(v);
             }
             reverse(path.begin(), path.end());
             if (path.size() > 0) {
                 path.push_back(to);
             }
-            for (int i = 0; i < path.size(); ++i) {
+            for (size_t i = 0; i < path.size(); ++i) {
                 if (i > 0) std::cout << " ";
                 std::cout << path[i];
             }
