@@ -38,7 +38,7 @@ jobs:
           name: Build All
           command: |
             cd lib
-            bazelisk build //cpalgo/...:* //main/...:*
+            bazelisk build --jobs=HOST_RAM //cpalgo/...:* //main/...:*
       - save_cache:
           key: bazel
           paths:
@@ -57,7 +57,7 @@ jobs:
           name: Test library
           command: |
             cd lib
-            bazelisk test //cpalgo/...:*
+            bazelisk test --jobs=HOST_RAM //cpalgo/...:*
       - save_cache:
           key: bazel
           paths:
