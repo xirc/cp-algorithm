@@ -22,6 +22,18 @@ commands:
           key: bazel-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/.cache/bazel
+  restore_bazelisk_cache:
+    steps:
+      - restore_cache:
+          keys:
+            - bazelisk-{{ checksum ".bazelversion" }}
+            - bazelisk
+  store_bazelisk_cache:
+    steps:
+      - save_cache:
+          key: bazelisk-{{ checksum ".bazelversion" }}
+          paths:
+            - ~/.cache/bazelisk
 
 jobs:
   bazel-lint:
@@ -36,6 +48,7 @@ jobs:
     executor: cpalgo
     steps:
       - checkout
+      - restore_bazelisk_cache
       - restore_bazel_cache
       - run:
           name: Build All
@@ -46,6 +59,7 @@ jobs:
     executor: cpalgo
     steps:
       - checkout
+      - restore_bazelisk_cache
       - restore_bazel_cache
       - run:
           name: Test library
@@ -53,6 +67,7 @@ jobs:
             cd lib
             bazelisk test --jobs=HOST_RAM //cpalgo/...:*
       - store_bazel_cache
+      - store_bazelisk_cache
 
 workflows:
   version: 2
