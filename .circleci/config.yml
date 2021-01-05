@@ -8,63 +8,94 @@ executors:
           username: $DOCKERHUB_USER
           password: $DOCKERHUB_PASSWORD
 
+commands:
+  restore_source_cache:
+    steps:
+      - restore_cache:
+          name: Restoring Source Cache
+          keys:
+            - source-{{ .Branch }}-{{ .Revision }}
+            - source-{{ .Branch }}
+            - source
+  save_source_cache:
+    steps:
+      - run:
+          name: Running git gc
+          command: git gc
+      - save_cache:
+          name: Saving Source Cache
+          key: source-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - .git
+  restore_bazel_cache:
+    steps:
+      - restore_cache:
+          name: Restoring bazel cache
+          keys:
+            - bazel-{{ .Branch }}-{{ .Revision }}
+            - bazel-{{ .Branch }}
+            - bazel
+  save_bazel_cache:
+    steps:
+      - save_cache:
+          name: Saving bazel cache
+          key: bazel-{{ .Branch }}-{{ .Revision }}
+          paths:
+            - ~/.cache/bazel
+  restore_bazelisk_cache:
+    steps:
+      - restore_cache:
+          name: Restoring bazelisk cache
+          keys:
+            - bazelisk-{{ checksum ".bazelversion" }}
+            - bazelisk
+  save_bazelisk_cache:
+    steps:
+      - save_cache:
+          name: Saving bazelisk cache
+          key: bazelisk-{{ checksum ".bazelversion" }}
+          paths:
+            - ~/.cache/bazelisk
+
 jobs:
   bazel-lint:
     executor: cpalgo
     steps:
+      - restore_source_cache
       - checkout
-      - restore_cache:
-          keys:
-            - bazel
       - run:
           name: Lint All
           command: |
             buildifier --mode=diff --lint=warn --warnings=all -r lib
-      - save_cache:
-          key: bazel
-          paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
   build:
     executor: cpalgo
     steps:
+      - restore_source_cache
       - checkout
-      - restore_cache:
-          keys:
-            - bazel
+      - restore_bazelisk_cache
+      - restore_bazel_cache
       - run:
           name: Build All
           command: |
             cd lib
-            bazelisk build //cpalgo/...:* //main/...:*
-      - save_cache:
-          key: bazel
-          paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
+            bazelisk build --jobs=HOST_RAM //cpalgo/...:* //main/...:*
   test:
     executor: cpalgo
     steps:
+      - restore_source_cache
       - checkout
-      - restore_cache:
-          keys:
-            -bazel
+      - restore_bazelisk_cache
+      - restore_bazel_cache
       - run:
-          name: Test library
+          name: Test All
           command: |
             cd lib
-            bazelisk test //cpalgo/...:*
-      - save_cache:
-          key: bazel
-          paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
+            bazelisk test --jobs=HOST_RAM //cpalgo/...:*
+      - store_test_results:
+          path: lib/bazel-testlogs/cpalgo
+      - save_bazel_cache
+      - save_bazelisk_cache
+      - save_source_cache
 
 workflows:
   version: 2
@@ -74,12 +105,8 @@ workflows:
           context:
             - docker-hub
       - build:
-          requires:
-            - bazel-lint
           context:
             - docker-hub
       - test:
-          requires:
-            - build
           context:
             - docker-hub
