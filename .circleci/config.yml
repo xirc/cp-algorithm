@@ -66,6 +66,8 @@ jobs:
           command: |
             cd lib
             bazelisk test --jobs=HOST_RAM //cpalgo/...:*
+      - store_test_results:
+          path: lib/bazel-testlogs/cpalgo
       - store_bazel_cache
       - store_bazelisk_cache
 
