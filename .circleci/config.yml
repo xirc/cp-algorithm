@@ -57,7 +57,6 @@ jobs:
     steps:
       - restore_source_cache
       - checkout
-      - store_source_cache
       - run:
           name: Lint All
           command: |
@@ -66,10 +65,9 @@ jobs:
     executor: cpalgo
     steps:
       - restore_source_cache
-      - checkout
-      - store_source_cache
       - restore_bazelisk_cache
       - restore_bazel_cache
+      - checkout
       - run:
           name: Build All
           command: |
@@ -79,10 +77,9 @@ jobs:
     executor: cpalgo
     steps:
       - restore_source_cache
-      - checkout
-      - store_source_cache
       - restore_bazelisk_cache
       - restore_bazel_cache
+      - checkout
       - run:
           name: Test library
           command: |
@@ -92,6 +89,7 @@ jobs:
           path: lib/bazel-testlogs/cpalgo
       - store_bazel_cache
       - store_bazelisk_cache
+      - store_source_cache
 
 workflows:
   version: 2
@@ -101,12 +99,8 @@ workflows:
           context:
             - docker-hub
       - build:
-          requires:
-            - bazel-lint
           context:
             - docker-hub
       - test:
-          requires:
-            - build
           context:
             - docker-hub
