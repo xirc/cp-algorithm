@@ -12,41 +12,47 @@ commands:
   restore_source_cache:
     steps:
       - restore_cache:
+          name: Restoring Source Cache
           keys:
             - source-{{ .Branch }}-{{ .Revision }}
             - source-{{ .Branch }}
             - source
-  store_source_cache:
+  save_source_cache:
     steps:
       - run:
-          name: Git GC
+          name: Running git gc
           command: git gc
       - save_cache:
+          name: Saving Source Cache
           key: source-{{ .Branch }}-{{ .Revision }}
           paths:
             - .git
   restore_bazel_cache:
     steps:
       - restore_cache:
+          name: Restoring bazel cache
           keys:
             - bazel-{{ .Branch }}-{{ .Revision }}
             - bazel-{{ .Branch }}
             - bazel
-  store_bazel_cache:
+  save_bazel_cache:
     steps:
       - save_cache:
+          name: Saving bazel cache
           key: bazel-{{ .Branch }}-{{ .Revision }}
           paths:
             - ~/.cache/bazel
   restore_bazelisk_cache:
     steps:
       - restore_cache:
+          name: Restoring bazelisk cache
           keys:
             - bazelisk-{{ checksum ".bazelversion" }}
             - bazelisk
-  store_bazelisk_cache:
+  save_bazelisk_cache:
     steps:
       - save_cache:
+          name: Saving bazelisk cache
           key: bazelisk-{{ checksum ".bazelversion" }}
           paths:
             - ~/.cache/bazelisk
@@ -81,15 +87,15 @@ jobs:
       - restore_bazel_cache
       - checkout
       - run:
-          name: Test library
+          name: Test All
           command: |
             cd lib
             bazelisk test --jobs=HOST_RAM //cpalgo/...:*
       - store_test_results:
           path: lib/bazel-testlogs/cpalgo
-      - store_bazel_cache
-      - store_bazelisk_cache
-      - store_source_cache
+      - save_bazel_cache
+      - save_bazelisk_cache
+      - save_source_cache
 
 workflows:
   version: 2
