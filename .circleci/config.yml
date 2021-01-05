@@ -15,56 +15,45 @@ jobs:
       - checkout
       - restore_cache:
           keys:
+            - bazel-{{ .Branch }}-{{ .Revision }}
+            - bazel-{{ .Branch }}
             - bazel
       - run:
           name: Lint All
           command: |
             buildifier --mode=diff --lint=warn --warnings=all -r lib
-      - save_cache:
-          key: bazel
-          paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
   build:
     executor: cpalgo
     steps:
       - checkout
       - restore_cache:
           keys:
+            - bazel-{{ .Branch }}-{{ .Revision }}
+            - bazel-{{ .Branch }}
             - bazel
       - run:
           name: Build All
           command: |
             cd lib
             bazelisk build --jobs=HOST_RAM //cpalgo/...:* //main/...:*
-      - save_cache:
-          key: bazel
-          paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
   test:
     executor: cpalgo
     steps:
       - checkout
       - restore_cache:
           keys:
-            -bazel
+            - bazel-{{ .Branch }}-{{ .Revision }}
+            - bazel-{{ .Branch }}
+            - bazel
       - run:
           name: Test library
           command: |
             cd lib
             bazelisk test --jobs=HOST_RAM //cpalgo/...:*
       - save_cache:
-          key: bazel
+          key: bazel-{{ .Branch }}-{{ .Revision }}
           paths:
-            - ~/.cache
-            - lib/bazel-bin
-            - lib/bazel-lib
-            - lib/bazel-out
+            - ~/.cache/bazel
 
 workflows:
   version: 2
