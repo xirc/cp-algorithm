@@ -7,12 +7,9 @@ int N;
 vector<int> A;
 
 int solve() {
-    sort(A.begin(), A.end());
-    int ans = 0;
-    for (int i = 1; i < N; ++i) {
-        ans += A[i] - A[i-1];
-    }
-    return ans;
+    int mini = *min_element(A.begin(), A.end());
+    int maxi = *max_element(A.begin(), A.end());
+    return maxi - mini;
 }
 
 int main() {
