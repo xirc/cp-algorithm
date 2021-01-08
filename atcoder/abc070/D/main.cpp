@@ -7,23 +7,18 @@ struct edge { int to; int w; };
 int N, K;
 vector<vector<edge>> G;
 
-vector<bool> done;
 vector<ll> ds;
-void dfs(int v) {
-    if (done[v]) return;
-    done[v] = true;
+void dfs(int v, int p) {
     for (auto const& e : G[v]) {
-        ds[e.to] = min(ds[e.to], ds[v] + e.w);
-        if (!done[e.to]) dfs(e.to);
+        if (e.to == p) continue;
+        ds[e.to] = ds[v] + e.w;
+        dfs(e.to, v);
     }
 }
 
 void build() {
-    const ll inf = numeric_limits<ll>::max() / 2;
-    done.assign(N, false);
-    ds.assign(N, inf);
-    ds[K] = 0;
-    dfs(K);
+    ds.assign(N, 0);
+    dfs(K, K);
 }
 
 ll query(int x, int y) { 
