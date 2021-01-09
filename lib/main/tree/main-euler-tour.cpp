@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
-#include "cpalgo/tree/euler-tour.hpp"
+#include "cpalgo/tree/euler_tour.hpp"
 
 using namespace std;
 

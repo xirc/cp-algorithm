@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/tree/euler-tour.hpp"
+#include "cpalgo/tree/euler_tour.hpp"
 
 using namespace std;
 
