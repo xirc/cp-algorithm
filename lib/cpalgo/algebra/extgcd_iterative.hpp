@@ -14,7 +14,13 @@
 //  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
 //  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
 //
-inline unsigned long long extgcd(unsigned long long a, unsigned long long b, long long &x, long long &y) {
+inline unsigned long long extgcd(
+    unsigned long long const a,
+    unsigned long long const b,
+    long long &x,
+    long long &y
+)
+{
     x = 1, y = 0;
     long long x1 = 0, y1 = 1;
     unsigned long long a1 = a, b1 = b;
