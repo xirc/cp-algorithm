@@ -1,53 +1,65 @@
 #pragma once
 
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_D
-
-#include <vector>
 #include <stack>
+#include <stdexcept>
+#include <vector>
+
 
 // Euler Tour in Tree
-// Memory: O(V + E)
-// NOTE: undirected
-class EulerTrour {
-    int N;
-    std::vector<std::vector<int>> adj;
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - undirected
+//  - non-loop
+//  - non-multi-edge
+//  - it can handle a forest
+//
+// Verified:
+//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_D
+//
+class EulerTour {
+private:
+    size_t N;
+    std::vector<std::vector<size_t>> adj;
 
 public:
-    // O(V)
-    EulerTrour(int n = 0): N(n), adj(n) {}
-    // O(1)
-    int size() {
+    // Time: O(V)
+    EulerTour(size_t const N = 0): N(N), adj(N) {}
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int u, int v) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
+    // u = [0,N), v = [0,N)
+    // Time: O(1)
+    void add_edge(size_t const u, size_t const v) {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    // O(E)
-    void solve(int r, std::vector<int>& tour, std::vector<int>& tin, std::vector<int>& tout) {
-        throw_if_invalid_index(r);
+    // r = [0,N)
+    // Time: O(E)
+    void solve(size_t r, std::vector<size_t>& tour, std::vector<size_t>& tin, std::vector<size_t>& tout) const {
+        if (r >= N) throw std::out_of_range("r");
 
-        std::stack<std::pair<int,int>> S;
+        std::stack<std::pair<size_t,int>> S;
         std::vector<bool> visited(N, false);
 
         tour.clear();
-        tin.assign(N, -1);
-        tout.assign(N, -1);
+        tin.assign(N, 2 * N);
+        tout.assign(N, 2 * N);
 
         S.push({r,-1});
         while (S.size()) {
-            int v = S.top().first;
+            size_t v = S.top().first;
             int& i = S.top().second;
             if (i < 0) {
                 visited[v] = true;
                 tour.push_back(v);
                 tin[v] = tour.size() - 1;
-            } else if (i < adj[v].size()) {
-                int u = adj[v][i];
+            } else if (size_t(i) < adj[v].size()) {
+                auto u = adj[v][i];
                 if (!visited[u]) S.push({u,-1});
             } else {
                 tour.push_back(v);
@@ -56,10 +68,5 @@ public:
             }
             i++;
         }
-    }
-
-private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
     }
 };
