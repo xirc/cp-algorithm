@@ -4,30 +4,32 @@ using namespace std;
 using ll = long long;
 
 int power(int dis) {
-     double v = round(double(dis * 10) / 60);
-     vector<int> ps = { 2, 15, 33, 54, 79, 107, 138, 171, 207, 244, 284, 326 };
+     vector<int> ps = { 24, 154, 334, 544, 794, 1074, 1384, 1714, 2074, 2444, 2844, 3264 };
+     assert(ps.size() == 12);
      for (int i = 0; i < 12; ++i) {
-         if (v <= ps[i]) return i;
+         if (dis * 100 <= ps[i] * 60) return i;
      }
      return 12;
 }
 
-string direction(int deg, int wp) {
-    if (wp == 0) return "C";
-    if (deg <= 112 || deg >= 3488) return "N";
-    vector<int> ds = { 337, 562, 787, 1012, 1237, 1462, 1687, 1912, 2137, 2362, 2587, 2812, 3037, 3262, 3487 };
-    vector<string> ss = { "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW" };
+string direction(int deg) {
+    vector<int> ds = {
+        112, 337, 562, 787, 1012, 1237, 1462, 1687, 1912, 2137, 2362, 2587, 2812, 3037, 3262, 3487
+    };
+    vector<string> ss = {
+        "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
+    };
     assert(ds.size() == ss.size());
     for (int i = 0; i < ds.size(); ++i) {
         if (deg <= ds[i]) return ss[i];
     }
-    throw;
+    return "N";
 }
 
 vector<string> solve(int deg, int dis) {
     string ans;
     int wp = power(dis);
-    string dir = direction(deg, wp);
+    string dir = wp > 0 ? direction(deg) : "C";
     return { dir, to_string(wp) };
 }
 
