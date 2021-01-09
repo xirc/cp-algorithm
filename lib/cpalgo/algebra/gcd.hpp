@@ -4,7 +4,9 @@
 
 
 // GCD (a,b)
+//
 // Time: O( log(min(a,b)) )
+// Space: O(1)
 //
 // See:
 //  - https://cp-algorithms.com/algebra/euclid-algorithm.html

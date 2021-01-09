@@ -1,12 +1,16 @@
 #pragma once
 
+#include <stdexcept>
 #include <vector>
 
 
 // Binomial Coefficient (Combination) modulo M
+//
+// Constraints:
+//   N <= 10^7
+//
 // Time: O(N)
-// Memory: O(N)
-//   where N <= 10^7
+// Space: O(N)
 //
 // See:
 // - https://algo-logic.info/combination/#toc_id_1_1
@@ -22,26 +26,19 @@ class Combination {
 public:
     // O(N)
     // MOD should be a prime number
-    Combination(size_t N = 10000000, unsigned long long MOD = 1000000007) {
+    Combination(
+        size_t const N = 10000000,
+        unsigned long long const MOD = 1000000007
+    )
+    {
+        build(N, MOD);
+    }
+
+    // Time: O(N)
+    void build(size_t const N, unsigned long long const MOD) {
         this->N = N;
         this->MOD = MOD;
-        build();
-    }
 
-    // nCk
-    // O(1)
-    unsigned long long operator()(size_t n, size_t k) {
-        if (n < k || n >= N) throw;
-        return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
-    }
-
-    // O(1)
-    size_t size() {
-        return N;
-    }
-
-private:
-    void build() {
         factorial.assign(N, 0);
         factorial_inverse.assign(N, 0);
         inverse.assign(N, 0);
@@ -54,5 +51,18 @@ private:
             inverse[i] = MOD - inverse[MOD % i] * (MOD / i) % MOD;
             factorial_inverse[i] = factorial_inverse[i-1] * inverse[i] % MOD;
         }
+    }
+
+    // nCk
+    // Time: O(1)
+    unsigned long long operator()(size_t const n, size_t const k) const {
+        if (k > n) throw std::out_of_range("k");
+        if (n >= N) throw std::out_of_range("n");
+        return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
+    }
+
+    // Time: O(1)
+    size_t size() const {
+        return N;
     }
 };

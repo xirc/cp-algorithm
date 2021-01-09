@@ -4,9 +4,12 @@
 
 
 // Binary GCD (a,b)
-// Time: O ( log(min(a,b)) )
+//
 // The optimized Euclidean algorithm.
 // The time complexity is same, but a lot faster than normal one that is using modulo operation.
+//
+// Time: O ( log(min(a,b)) )
+// Space: O(1)
 //
 // See:
 //  - https://cp-algorithms.com/algebra/euclid-algorithm.html

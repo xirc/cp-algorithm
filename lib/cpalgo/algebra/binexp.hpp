@@ -4,8 +4,9 @@
 
 
 // Binary Exponentation
-// Time: O(logN)
-// Memory: O(1)
+//
+// Time: O(log(N))
+// Space: O(1)
 //
 // See:
 //  - https://cp-algorithms.com/algebra/euclid-algorithm.html
@@ -15,11 +16,12 @@
 //
 template<class T>
 inline T binexp(
-    const T& a,
+    T const& a,
     unsigned long long n,
-    const T& id,
-    const std::function<T(const T&, const T&)> op = std::multiplies<T>()
-) {
+    T const& id,
+    std::function<T(T const& lhs, T const& rhs)> const& op = std::multiplies<T>()
+)
+{
     auto ans = id;
     auto p = a;
     while (n > 0) {
