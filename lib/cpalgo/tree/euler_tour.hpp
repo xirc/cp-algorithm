@@ -16,7 +16,7 @@
 //  - it can handle a forest
 //
 // Verified:
-//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_D
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_D
 //
 class EulerTour {
 private:
