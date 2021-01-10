@@ -6,8 +6,8 @@ using ll = long long;
 int N;
 string S;
 
-bool solve(vector<char>& ws, char c0, char c1, char c2) {
-    ws[0] = c1, ws[1] = c2, ws[N-1] = c0;
+bool solve(vector<char>& ws, char c0, char c1) {
+    ws[0] = c0, ws[1] = c1;
     for (int i = 1; i < N; ++i) {
         int j = (i - 1 + N) % N, k = (i + 1) % N;
         if (S[i] == 'o') {
@@ -36,14 +36,10 @@ bool solve(vector<char>& ws, char c0, char c1, char c2) {
 
 vector<char> solve() {
     vector<char> ws(N, ' ');
-    if (solve(ws, 'W', 'S', 'W')) return ws;
-    if (solve(ws, 'S', 'S', 'S')) return ws;
-    if (solve(ws, 'W', 'W', 'S')) return ws;
-    if (solve(ws, 'S', 'W', 'W')) return ws;
-    if (solve(ws, 'W', 'S', 'S')) return ws;
-    if (solve(ws, 'S', 'S', 'W')) return ws;
-    if (solve(ws, 'S', 'W', 'S')) return ws;
-    if (solve(ws, 'W', 'W', 'W')) return ws;
+    if (solve(ws, 'S', 'S')) return ws;
+    if (solve(ws, 'S', 'W')) return ws;
+    if (solve(ws, 'W', 'S')) return ws;
+    if (solve(ws, 'W', 'W')) return ws;
     return {};
 }
 
