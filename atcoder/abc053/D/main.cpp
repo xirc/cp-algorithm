@@ -7,25 +7,13 @@ int N;
 vector<int> A;
 
 int solve() {
-    unordered_map<int,int> mp;
+    unordered_set<int> s;
     for (auto a : A) {
-        ++mp[a];
+        s.insert(a);
     }
-
-    int ans = N;
-    int m = 0;
-    for (auto e : mp) {
-        auto c = e.second;
-        int r = (c - 1) % 2 + 1;
-        ans -= (c - r);
-        if (r == 2) ++m;
-    }
-    if (m % 2 == 0) {
-        ans -= m;
-    } else {
-        ans -= m + 1;
-    }
-    return ans;
+    int K = s.size();
+    if (K % 2 == 0) return K - 1;
+    else return K;
 }
 
 int main() {
