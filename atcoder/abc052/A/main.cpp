@@ -11,11 +11,7 @@ int main() {
     cin >> A >> B >> C >> D;
 
     int S = A * B, R = C * D;
-    if (S > R) {
-        cout << S << endl;
-    } else {
-        cout << R << endl;
-    }
+    cout << max(S, R) << endl;
 
     return 0;
 }
