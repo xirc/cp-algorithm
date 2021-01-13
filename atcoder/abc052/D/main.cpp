@@ -7,25 +7,10 @@ int N, A, B;
 vector<int> X;
 
 ll solve() {
-    vector<vector<int>> es;
-    for (int i = 1; i < N; ++i) {
-        int w = X[i] - X[i-1];
-        es.push_back({ w, i - 1, i });
-    }
-
-    vector<bool> has_next(N, false);
     ll ans = 0;
-    sort(es.begin(), es.end());
-    for (auto const& e : es) {
-        ll w = e[0];
-        int u = e[1];
-        if (w * A >= B) continue;
-        ans += w * A;
-        has_next[u] = true;
-    }
-    for (int i = 0; i < N - 1; ++i) {
-        if (has_next[i]) continue;
-        ans += B;
+    for (int i = 1; i < N; ++i) {
+        ll w = X[i] - X[i-1];
+        ans += min(w * A, ll(B));
     }
     return ans;
 }
