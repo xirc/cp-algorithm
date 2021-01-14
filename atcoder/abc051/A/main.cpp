@@ -9,10 +9,9 @@ int main() {
 
     string s;
     cin >> s;
-    string a = s.substr(0, 5);
-    string b = s.substr(6, 7);
-    string c = s.substr(14, 5);
-    cout << a << " " << b << " " << c << endl;
+    s[5] = ' ';
+    s[13] = ' ';
+    cout << s << endl;
 
     return 0;
 }
