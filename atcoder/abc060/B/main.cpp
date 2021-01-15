@@ -4,7 +4,7 @@ using namespace std;
 using ll = long long;
 
 bool solve(int A, int B, int C) {
-    for (int i = 1; i < 1000; ++i) {
+    for (int i = 1; i <= B; ++i) {
         if ((A * i) % B == C) return true;
     }
     return false;
