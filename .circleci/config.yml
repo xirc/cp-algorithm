@@ -72,6 +72,7 @@ jobs:
     steps:
       - restore_source_cache
       - checkout
+      - save_source_cache
       - restore_bazelisk_cache
       - restore_bazel_cache
       - run:
@@ -79,13 +80,6 @@ jobs:
           command: |
             cd lib
             bazelisk build --jobs=HOST_RAM //cpalgo/...:* //main/...:*
-  test:
-    executor: cpalgo
-    steps:
-      - restore_source_cache
-      - checkout
-      - restore_bazelisk_cache
-      - restore_bazel_cache
       - run:
           name: Test All
           command: |
@@ -93,9 +87,8 @@ jobs:
             bazelisk test --jobs=HOST_RAM //cpalgo/...:*
       - store_test_results:
           path: lib/bazel-testlogs/cpalgo
-      - save_bazel_cache
       - save_bazelisk_cache
-      - save_source_cache
+      - save_bazel_cache
 
 workflows:
   version: 2
@@ -105,8 +98,5 @@ workflows:
           context:
             - docker-hub
       - build:
-          context:
-            - docker-hub
-      - test:
           context:
             - docker-hub
