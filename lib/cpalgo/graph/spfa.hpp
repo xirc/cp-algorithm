@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <queue>
 #include <stdexcept>
@@ -24,17 +25,17 @@ class SPFA {
 private:
     struct edge {
         size_t to;
-        long long cost;
+        int64_t cost;
     };
     size_t N;
     std::vector<std::vector<edge>> edges;
-    long long inf;
+    int64_t inf;
 
 public:
     // Time: O(V)
     SPFA(
         size_t const N = 0,
-        long long const inf = std::numeric_limits<long long>::max() / 2
+        int64_t const inf = std::numeric_limits<int64_t>::max() / 2
     )
         : N(N)
         , edges(N)
@@ -47,12 +48,12 @@ public:
         return N;
     }
     // Time: O(1)
-    long long infinity() const {
+    int64_t infinity() const {
         return inf;
     }
     // from = [0,N), to = [0,N), cost = (-inf,inf)
     // O(1)
-    void add_edge(size_t const from, size_t const to, long long const cost) {
+    void add_edge(size_t const from, size_t const to, int64_t const cost) {
         if (from >= N) throw std::out_of_range("from");
         if (to >= N) throw std::out_of_range("to");
         if (std::abs(cost) >= inf) throw std::out_of_range("cost");
@@ -60,7 +61,7 @@ public:
     }
     // from = [0,N)
     // O (E V)
-    bool solve(size_t const from, std::vector<long long>& D, std::vector<size_t>& P) const {
+    bool solve(size_t const from, std::vector<int64_t>& D, std::vector<size_t>& P) const {
         if (from >= N) throw std::out_of_range("from");
 
         D.assign(N, inf);

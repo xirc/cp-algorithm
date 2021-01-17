@@ -20,7 +20,7 @@ TEST(BellmanFordTest, ShouldComputeAllDistancesOnConnectedGraph) {
     solver.add_edge(1, 3, 1);
     solver.add_edge(2, 3, 2);
 
-    vector<long long> D;
+    vector<int64_t> D;
     vector<size_t> P;
     auto no_cycle = solver.solve(0, D, P);
 
@@ -49,7 +49,7 @@ TEST(BellmanFordTest, ShouldFindNegativeCycle) {
     solver.add_edge(2, 3, 2);
     solver.add_edge(3, 1, 0);
 
-    vector<long long> D;
+    vector<int64_t> D;
     vector<size_t> P;
     auto no_cycle = solver.solve(0, D, P);
 
@@ -73,7 +73,7 @@ TEST(BellmanFordTest, ShouldComputeAllDistancesOnDisconnectedGraph) {
     solver.add_edge(1, 3, 1);
     solver.add_edge(2, 3, 2);
 
-    vector<long long> D;
+    vector<int64_t> D;
     vector<size_t> P;
     auto no_cycle = solver.solve(1, D, P);
 

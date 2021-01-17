@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <limits>
 #include <memory>
 #include <stdexcept>
@@ -26,17 +27,17 @@ private:
     struct edge {
         size_t from;
         size_t to;
-        long long cost;
+        int64_t cost;
     };
     size_t N;
     std::vector<edge> edges;
-    long long inf;
+    int64_t inf;
 
 public:
     // Time: O(1)
     BellmanFord(
         size_t const N = 0,
-        long long inf = std::numeric_limits<long long>::max() / 2
+        int64_t inf = std::numeric_limits<int64_t>::max() / 2
     )
         : N(N)
         , inf(inf)
@@ -48,12 +49,12 @@ public:
         return N;
     }
     // Time: O(1)
-    long long infinity() const {
+    int64_t infinity() const {
         return inf;
     }
     // from = [0,N), to = [0,N), cost = (-inf,inf)
     // Time: O(1)
-    void add_edge(size_t const from, size_t const to, long long const cost) {
+    void add_edge(size_t const from, size_t const to, int64_t const cost) {
         if (from >= N) throw std::out_of_range("from");
         if (to >= N) throw std::out_of_range("to");
         if (std::abs(cost) >= inf) std::out_of_range("cost");
@@ -61,7 +62,7 @@ public:
     }
     // from = [0,N)
     // time: O (EV)
-    bool solve(size_t const from, std::vector<long long>& D, std::vector<size_t>& P) const {
+    bool solve(size_t const from, std::vector<int64_t>& D, std::vector<size_t>& P) const {
         if (from >= N) throw std::out_of_range("from");
 
         D.assign(N, inf);
