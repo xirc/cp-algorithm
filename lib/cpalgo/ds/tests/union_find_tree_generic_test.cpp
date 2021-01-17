@@ -7,7 +7,7 @@ class UnionFindTreeGenericTest : public ::testing::Test {
 public:
     struct Data {
         size_t size;
-        long long weight;
+        int64_t weight;
         Data(size_t i): size(1), weight(0) {}
         static void compress(Data& node, const Data& leader) {
             node.weight += leader.weight;
