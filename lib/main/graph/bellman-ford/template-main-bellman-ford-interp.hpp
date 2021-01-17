@@ -27,7 +27,7 @@ public:
     }
     void action_solve() {
         size_t from;
-        std::vector<long long> distance;
+        std::vector<int64_t> distance;
         std::vector<size_t> predecessor;
         std::cin >> from;
         if (from >= solver.size())

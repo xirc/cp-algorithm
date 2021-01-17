@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <limits>
 #include <queue>
 #include <stdexcept>
@@ -25,18 +26,18 @@ class TreeDiameter {
 private:
     struct edge {
         size_t to;
-        unsigned long long weight;
+        uint64_t weight;
     };
 
     size_t N;
     std::vector<std::vector<edge>> adj;
-    unsigned long long inf;
+    uint64_t inf;
 
 public:
     // Time: O(V)
     TreeDiameter(
         size_t const N = 0,
-        unsigned long long const inf = std::numeric_limits<unsigned long long>::max()
+        uint64_t const inf = std::numeric_limits<uint64_t>::max()
     )
       : N(N)
       , adj(N)
@@ -50,7 +51,7 @@ public:
     }
     // u = [0,N), v = [0,N), w = [0,inf)
     // Time: O(1)
-    void add_edge(size_t const u, size_t const v, unsigned long long const w) {
+    void add_edge(size_t const u, size_t const v, uint64_t const w) {
         if (u >= N) throw std::out_of_range("u");
         if (v >= N) throw std::out_of_range("u");
         if (w >= inf) throw std::out_of_range("w");
@@ -59,9 +60,9 @@ public:
     }
     // s = [0,N)
     // Time: O(E)
-    std::tuple<size_t, size_t, unsigned long long> solve(size_t s = 0) const {
+    std::tuple<size_t, size_t, uint64_t> solve(size_t s = 0) const {
         size_t u, v;
-        unsigned long long w;
+        uint64_t w;
         std::tie(u, w) = bfs(s);
         std::tie(v, w) = bfs(u);
         if (u > v) std::swap(u, v);
@@ -69,8 +70,8 @@ public:
     }
 
 private:
-    std::pair<size_t, unsigned long long> bfs(size_t s) const {
-        std::vector<unsigned long long> D(N, inf);
+    std::pair<size_t, uint64_t> bfs(size_t s) const {
+        std::vector<uint64_t> D(N, inf);
         std::queue<size_t> Q;
         Q.push(s);
         D[s] = 0;

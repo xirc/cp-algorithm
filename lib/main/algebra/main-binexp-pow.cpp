@@ -6,8 +6,8 @@ using namespace std;
 
 // a ^ b
 // O(logN)
-long long pow(long long a, int b) {
-    return binexp<long long>(a, b, 1);
+int64_t pow(int64_t a, int b) {
+    return binexp<int64_t>(a, b, 1);
 }
 
 void action_eval() {

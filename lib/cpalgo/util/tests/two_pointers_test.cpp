@@ -8,7 +8,7 @@ TEST(TwoPointersTest, ShouldComputeIntervalCounts) {
     size_t num_of_call_pre_move_l = 0;
     size_t num_of_call_pre_move_r = 0;
     size_t num_of_call_update = 0;
-    unsigned long long num_of_intervals = 0;
+    uint64_t num_of_intervals = 0;
     iterate_with_two_pointers(
         N,
         [&](size_t l, size_t r) {
@@ -28,8 +28,8 @@ TEST(TwoPointersTest, ShouldComputeIntervalCounts) {
     EXPECT_EQ(N, num_of_call_pre_move_l);
     EXPECT_EQ(N, num_of_call_pre_move_r);
     EXPECT_EQ(N, num_of_call_update);
-    unsigned long long const expect_num_of_intervals =
-        (unsigned long long)(N) * (N + 1) / 2;
+    uint64_t const expect_num_of_intervals =
+        (uint64_t)(N) * (N + 1) / 2;
     EXPECT_EQ(expect_num_of_intervals, num_of_intervals);
 }
 

@@ -3,7 +3,7 @@
 #include "cpalgo/algebra/binexp.hpp"
 
 using namespace std;
-using vec = vector<long long>;
+using vec = vector<int64_t>;
 using mat = vector<vec>;
 
 mat id(int N) {
@@ -31,7 +31,7 @@ mat binexp(const mat& a, int n) {
 }
 
 // O(logN)
-long long fib(int n) {
+int64_t fib(int n) {
     if (n < 0) throw;
     if (n == 1 || n == 2) return 1;
 

@@ -1,23 +1,21 @@
 // https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_B
-
 #include <bits/stdc++.h>
-
 
 class TreeHeight {
 private:
     struct edge {
         size_t to;
-        unsigned long long w;
+        uint64_t w;
     };
     size_t N;
     std::vector<std::vector<edge>> adj;
-    unsigned long long inf;
+    uint64_t inf;
 
 public:
     // Time: O(V)
     TreeHeight(
         size_t const N = 0,
-        unsigned long long const inf = std::numeric_limits<unsigned long long>::max()
+        uint64_t const inf = std::numeric_limits<uint64_t>::max()
     )
         : N(N)
         , adj(N)
@@ -30,12 +28,12 @@ public:
         return N;
     }
     // Time: O(1)
-    unsigned long long infinity() {
+    uint64_t infinity() {
         return inf;
     }
     // u = [0,N), v = [0,N), w = [0,inf)
     // Time: O(1)
-    void add_edge(size_t const u, size_t const v, unsigned long long const w) {
+    void add_edge(size_t const u, size_t const v, uint64_t const w) {
         if (u >= N) throw std::out_of_range("u");
         if (v >= N) throw std::out_of_range("v");
         if (w >= inf) throw std::out_of_range("w");
@@ -44,17 +42,17 @@ public:
     }
     // s = [0,N)
     // Time: O(V + E)
-    std::vector<unsigned long long> solve(size_t const s = 0) const {
+    std::vector<uint64_t> solve(size_t const s = 0) const {
         if (s >= N) throw std::out_of_range("s");
 
         size_t u, v;
-        unsigned long long w;
+        uint64_t w;
 
         std::tie(u, v, w) = diameter(s);
         auto Du = distance(u);
         auto Dv = distance(v);
 
-        std::vector<unsigned long long> ans(N, 0);
+        std::vector<uint64_t> ans(N, 0);
         for (size_t i = 0; i < N; ++i) {
             if (i == u || i == v) {
                 ans[i] = w;
@@ -68,17 +66,17 @@ public:
 private:
     // s = [0,N)
     // Time: O(V + E)
-    std::tuple<size_t, size_t, unsigned long long> diameter(size_t s) const {
+    std::tuple<size_t, size_t, uint64_t> diameter(size_t s) const {
         size_t u, v;
-        unsigned long long w;
+        uint64_t w;
         std::tie(u, w) = farther(s);
         std::tie(v, w) = farther(u);
         return std::make_tuple(u, v, w);
     }
     // s = [0,N)
     // Time: O(V + E)
-    std::vector<unsigned long long> distance(size_t s) const {
-        std::vector<unsigned long long> D(N, inf);
+    std::vector<uint64_t> distance(size_t s) const {
+        std::vector<uint64_t> D(N, inf);
         std::queue<size_t> Q;
         Q.push(s);
         D[s] = 0;
@@ -95,7 +93,7 @@ private:
     }
     // s = [0,N)
     // Time: O(V + E)
-    std::pair<size_t, unsigned long long> farther(size_t s) const {
+    std::pair<size_t, uint64_t> farther(size_t s) const {
         auto D = distance(s);
         size_t v = N;
         for (size_t i = 0; i < N; ++i) {

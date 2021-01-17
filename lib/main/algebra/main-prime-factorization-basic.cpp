@@ -5,7 +5,7 @@
 using namespace std;
 
 void action_eval() {
-    long long n;
+    int64_t n;
     cin >> n;
     auto factors = prime_factorization(n);
     for (size_t i = 0; i < factors.size(); ++i) {

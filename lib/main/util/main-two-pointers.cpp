@@ -6,9 +6,9 @@ using namespace std;
 
 // Find the smallest sub-array size
 // where the sum of the sub-array is greater than or equal to S.
-size_t solve(vector<int> const& A, long long const S) {
+size_t solve(vector<int> const& A, int64_t const S) {
     const size_t N = A.size();
-    long long sum = 0;
+    int64_t sum = 0;
     size_t ans = N + 1;
     iterate_with_two_pointers(
         N,
@@ -49,7 +49,7 @@ void action_init() {
 }
 
 void action_query() {
-    long long S;
+    int64_t S;
     cin >> S;
     cout << solve(buffer, S) << endl;
 }

@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
+inline uint64_t gcd(uint64_t a, uint64_t b) {
     while (b != 0) {
         a %= b;
         std::swap(a, b);
@@ -8,7 +8,7 @@ inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
     return a;
 }
 
-inline unsigned long long lcm(unsigned long long a, unsigned long long b) {
+inline uint64_t lcm(uint64_t const a, uint64_t const b) {
     if (a == 0 && b == 0) return 0;
     return a / gcd(a, b) * b;
 }

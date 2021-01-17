@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <functional>
 
 
@@ -17,7 +18,7 @@
 template<class T>
 inline T binexp(
     T const& a,
-    unsigned long long n,
+    uint64_t n,
     T const& id,
     std::function<T(T const& lhs, T const& rhs)> const& op = std::multiplies<T>()
 )

@@ -6,14 +6,14 @@ using namespace std;
 
 // (a * b) mod m
 // O(logN)
-long long mulmod(long long a, long long b, long long m) {
-    return binexp<long long>(a, b, 0, [&](auto const& lhs, auto const& rhs){
+int64_t mulmod(int64_t a, int64_t b, int64_t m) {
+    return binexp<int64_t>(a, b, 0, [&](auto const& lhs, auto const& rhs){
         return (lhs + rhs) % m;
     });
 }
 
 void action_eval() {
-    long long a, b, m;
+    int64_t a, b, m;
     cin >> a >> b >> m;
     if (m <= 0) {
         cout << "false" << endl;

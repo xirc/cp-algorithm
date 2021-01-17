@@ -6,14 +6,14 @@ using namespace std;
 
 // Compute (x^n) mod m
 // O(logN)
-long long powmod(long long x, long long n, long long m) {
-    return binexp<long long>(x, n, 1, [&](auto const& lhs, auto const& rhs) {
+int64_t powmod(int64_t x, int64_t n, int64_t m) {
+    return binexp<int64_t>(x, n, 1, [&](auto const& lhs, auto const& rhs) {
         return (lhs * rhs) % m;
     });
 }
 
 void action_eval() {
-    long long x, n, m;
+    int64_t x, n, m;
     cin >> x >> n >> m;
     if (n < 0 || m <= 0) {
         cout << "false" << endl;

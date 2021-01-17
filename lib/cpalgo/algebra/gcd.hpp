@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <utility>
 
 
@@ -15,7 +16,7 @@
 //  - https://www.codechef.com/problems/FLOW016
 //  - https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_B
 //
-inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
+inline uint64_t gcd(uint64_t a, uint64_t b) {
     while (b != 0) {
         a %= b;
         std::swap(a, b);

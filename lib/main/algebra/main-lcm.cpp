@@ -8,9 +8,9 @@
 using namespace std;
 
 void action_eval() {
-    long long a, b;
+    int64_t a, b;
     cin >> a >> b;
-    long long ans = lcm(a, b);
+    int64_t ans = lcm(a, b);
     cout << ans << endl;
 }
 
