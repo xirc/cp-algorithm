@@ -16,7 +16,7 @@ void action_init() {
 
 void action_edge() {
     size_t u, v;
-    unsigned long long w;
+    uint64_t w;
     cin >> u >> v >> w;
     if (u >= solver.size() ||
         v >= solver.size())

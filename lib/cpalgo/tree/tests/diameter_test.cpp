@@ -18,7 +18,7 @@ TEST(DiameterTest, ShouldComputeDiameterOfATree) {
     solver.add_edge(2, 5, 2);
     solver.add_edge(5, 4, 1);
     size_t u, v;
-    unsigned long long w;
+    uint64_t w;
     tie(u, v, w) = solver.solve();
     EXPECT_EQ(3ULL, u);
     EXPECT_EQ(4ULL, v);
@@ -40,7 +40,7 @@ TEST(DiameterTest, ShouldComputeDiameterOfTrees) {
     solver.add_edge(9, 8, 1);
 
     size_t u, v;
-    unsigned long long w;
+    uint64_t w;
 
     tie(u, v, w) = solver.solve(1);
     EXPECT_EQ(1ULL, u);
