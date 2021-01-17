@@ -151,9 +151,9 @@ bigint& bigint::operator*=(const bigint& x) {
     negative ^= x.negative;
     std::vector<int> c(a.size() * x.a.size() + 1);
     for (size_t i = 0; i < a.size(); ++i) {
-        long long K = 0;
+        int64_t K = 0;
         for (size_t j = 0; j < x.a.size(); ++j) {
-            long long V = (long long)a[i] * x.a[j] + c[i+j] + K;
+            int64_t V = (int64_t)a[i] * x.a[j] + c[i+j] + K;
             K = V / BASE;
             c[i+j] = (int)(V % BASE);
         }
