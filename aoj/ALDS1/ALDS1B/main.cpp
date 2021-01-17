@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 
-inline unsigned long long gcd(unsigned long long a, unsigned long long b) {
+inline uint64_t gcd(uint64_t a, uint64_t b) {
     while (b != 0) {
         a %= b;
         std::swap(a, b);

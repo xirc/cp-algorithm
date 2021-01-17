@@ -7,9 +7,9 @@ TEST(BinExpTest, ComputePowerOfTwo) {
     EXPECT_EQ(1024, binexp<int>(2, 10, 1));
     EXPECT_EQ(1 << 31, binexp<int>(2, 31, 1));
 
-    EXPECT_EQ(1LL, binexp<long long>(2, 0, 1));
-    EXPECT_EQ(1024LL, binexp<long long>(2, 10, 1));
-    EXPECT_EQ(1LL << 61, binexp<long long>(2, 61, 1));
+    EXPECT_EQ(1LL, binexp<int64_t>(2, 0, 1));
+    EXPECT_EQ(1024LL, binexp<int64_t>(2, 10, 1));
+    EXPECT_EQ(1LL << 61, binexp<int64_t>(2, 61, 1));
 }
 
 TEST(BinExpTest, ComputePowerOfNumber) {
@@ -30,13 +30,13 @@ TEST(BinExpTest, ComputeWithCustomOperator) {
 }
 
 TEST(BinExpTest, ComputeWithLargeExponent) {
-    EXPECT_EQ(1234567890LL, binexp<long long>(1, 1234567890, 0, std::plus<long long>()));
+    EXPECT_EQ(1234567890LL, binexp<int64_t>(1, 1234567890, 0, std::plus<int64_t>()));
     EXPECT_EQ(
-        std::numeric_limits<long long>::max(),
-        binexp<long long>(1, std::numeric_limits<long long>::max(), 0, std::plus<long long>())
+        std::numeric_limits<int64_t>::max(),
+        binexp<int64_t>(1, std::numeric_limits<int64_t>::max(), 0, std::plus<int64_t>())
     );
-    EXPECT_EQ(2469135780LL, binexp<long long>(2, 1234567890L, 0, std::plus<long long>()));
-    EXPECT_EQ(1524157875019052100LL, binexp<long long>(1234567890L, 1234567890L, 0, std::plus<long long>()));
-    EXPECT_EQ(0LL, binexp<long long>(1, 1234567890L, 0, std::bit_xor<long long>()));
-    EXPECT_EQ(1LL, binexp<long long>(1, 1234567891L, 0, std::bit_xor<long long>()));
+    EXPECT_EQ(2469135780LL, binexp<int64_t>(2, 1234567890L, 0, std::plus<int64_t>()));
+    EXPECT_EQ(1524157875019052100LL, binexp<int64_t>(1234567890L, 1234567890L, 0, std::plus<int64_t>()));
+    EXPECT_EQ(0LL, binexp<int64_t>(1, 1234567890L, 0, std::bit_xor<int64_t>()));
+    EXPECT_EQ(1LL, binexp<int64_t>(1, 1234567891L, 0, std::bit_xor<int64_t>()));
 }

@@ -4,8 +4,8 @@
 
 
 TEST(ExtgcdRecursiveTest, ShouldComputeExtendedEuclidean) {
-    long long x, y;
-    unsigned long long g;
+    int64_t x, y;
+    uint64_t g;
 
     g = extgcd(4, 12, x, y);
     EXPECT_EQ(1LL,  x) << "  where 4 * x + 12 * y = g";

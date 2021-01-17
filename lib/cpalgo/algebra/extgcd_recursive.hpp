@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 
 // Extended Euclidean Algorithm (Recursive)
 // Find x and y for given a and b
@@ -20,20 +21,19 @@
 //
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E
-//  - https://uva.onlinejudge.org/index.php?option=com_onlinejudge&Itemid=8&page=show_problem&problem=1045
 //
-inline unsigned long long extgcd(
-    unsigned long long const a,
-    unsigned long long const b,
-    long long &x, long long &y
+inline uint64_t extgcd(
+    uint64_t const a,
+    uint64_t const b,
+    int64_t &x, int64_t &y
 )
 {
     if (b == 0) {
         x = 1, y = 0;
         return a;
     }
-    long long x1, y1;
-    unsigned long long g = extgcd(b, a % b, x1, y1);
+    int64_t x1, y1;
+    uint64_t g = extgcd(b, a % b, x1, y1);
     x = y1;
     y = x1 - y1 * (a / b);
     return g;

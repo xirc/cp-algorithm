@@ -3,8 +3,8 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
 
-void action_extgcd(std::function<long long (long long, long long, long long &, long long &)> const& extgcd) {
-    long long a, b, x, y, g;
+void action_extgcd(std::function<uint64_t(uint64_t, uint64_t, int64_t&, int64_t&)> const& extgcd) {
+    int64_t a, b, x, y, g;
     std::cin >> a >> b;
 
     g = extgcd(a, b, x, y);
@@ -16,7 +16,7 @@ void action_extgcd(std::function<long long (long long, long long, long long &, l
 void setup(
     std::string& header,
     std::map<std::string,Command>& commands,
-    std::function<long long (long long, long long, long long &, long long &)> const& extgcd
+    std::function<uint64_t(uint64_t, uint64_t, int64_t&, int64_t&)> const& extgcd
 ) {
     commands["extgcd"] =
         Command { "extgcd {a} {b}", std::bind(action_extgcd, extgcd) };

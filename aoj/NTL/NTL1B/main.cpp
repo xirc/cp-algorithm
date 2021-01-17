@@ -2,11 +2,12 @@
 
 template<class T>
 inline T binexp(
-    const T& a,
-    unsigned long long n,
-    const T& id,
-    const std::function<T(const T&, const T&)> op = std::multiplies<T>()
-) {
+    T const& a,
+    uint64_t n,
+    T const& id,
+    std::function<T(T const& lhs, T const& rhs)> const& op = std::multiplies<T>()
+)
+{
     auto ans = id;
     auto p = a;
     while (n > 0) {

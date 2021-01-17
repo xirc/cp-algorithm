@@ -8,7 +8,7 @@ Combination solver;
 
 void action_init() {
     size_t N;
-    unsigned long long MOD;
+    uint64_t MOD;
     cin >> N >> MOD;
     if (N < 2) {
         cout << "false" << endl;

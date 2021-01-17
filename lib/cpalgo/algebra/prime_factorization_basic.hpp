@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 
 
@@ -14,9 +15,9 @@
 //  - https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A
 //  - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
-inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
-    std::vector<unsigned long long> factors;
-    for (unsigned long long i = 2; i * i <= M; ++i) {
+inline std::vector<uint64_t> prime_factorization(uint64_t M) {
+    std::vector<uint64_t> factors;
+    for (uint64_t i = 2; i * i <= M; ++i) {
         while (M % i == 0) {
             factors.push_back(i);
             M /= i;

@@ -2,32 +2,24 @@
 
 class Combination {
     size_t N;
-    unsigned long long MOD;
-    std::vector<unsigned long long> factorial, inverse, factorial_inverse;
+    uint64_t MOD;
+    std::vector<uint64_t> factorial, inverse, factorial_inverse;
 
 public:
     // O(N)
     // MOD should be a prime number
-    Combination(size_t N = 10000000, unsigned long long MOD = 1000000007) {
+    Combination(
+        size_t const N = 10000000,
+        uint64_t const MOD = 1000000007
+    )
+    {
+        build(N, MOD);
+    }
+    // Time: O(N)
+    void build(size_t const N, uint64_t const MOD) {
         this->N = N;
         this->MOD = MOD;
-        build();
-    }
 
-    // nCk
-    // O(1)
-    unsigned long long operator()(size_t n, size_t k) {
-        if (n < k || n >= N) throw;
-        return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
-    }
-
-    // O(1)
-    size_t size() {
-        return N;
-    }
-
-private:
-    void build() {
         factorial.assign(N, 0);
         factorial_inverse.assign(N, 0);
         inverse.assign(N, 0);
@@ -41,11 +33,22 @@ private:
             factorial_inverse[i] = factorial_inverse[i-1] * inverse[i] % MOD;
         }
     }
+    // nCk
+    // Time: O(1)
+    uint64_t operator()(size_t const n, size_t const k) const {
+        if (k > n) throw std::out_of_range("k");
+        if (n >= N) throw std::out_of_range("n");
+        return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
+    }
+    // Time: O(1)
+    size_t size() const {
+        return N;
+    }
 };
 
-inline std::vector<unsigned long long> prime_factorization(unsigned long long M) {
-    std::vector<unsigned long long> factors;
-    for (unsigned long long i = 2; i * i <= M; ++i) {
+inline std::vector<uint64_t> prime_factorization(uint64_t M) {
+    std::vector<uint64_t> factors;
+    for (uint64_t i = 2; i * i <= M; ++i) {
         while (M % i == 0) {
             factors.push_back(i);
             M /= i;
