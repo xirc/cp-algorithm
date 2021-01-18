@@ -22,7 +22,7 @@
 // Verified
 // - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
-class Combination {
+class CombinationBasic {
     size_t N;
     uint64_t MOD;
     std::vector<uint64_t> factorial, inverse, factorial_inverse;
@@ -30,7 +30,7 @@ class Combination {
 public:
     // Time: O(N)
     // MOD should be a prime number
-    Combination(
+    CombinationBasic(
         size_t const N = 10000000,
         uint64_t const MOD = 1000000007
     )

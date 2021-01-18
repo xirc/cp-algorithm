@@ -4,7 +4,7 @@
 
 
 TEST(CombinationBasicTest, ShouldComputeBinomialCoefficients) {
-    Combination comb;
+    CombinationBasic comb;
 
     EXPECT_EQ(1ULL, comb(0, 0));
 

@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Combination solver;
+CombinationBasic solver;
 
 void action_init() {
     size_t N;
@@ -14,7 +14,7 @@ void action_init() {
         cout << "false" << endl;
         return;
     }
-    solver = Combination(N, MOD);
+    solver = CombinationBasic(N, MOD);
 }
 
 void action_eval() {
