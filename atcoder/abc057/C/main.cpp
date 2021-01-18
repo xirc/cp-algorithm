@@ -19,8 +19,8 @@ int f(ll a, ll b) {
 int solve(ll N) {
     int ans = f(1, N);
     for (ll a = 2; a * a <= N; ++a) {
+        if (N % a != 0) continue;
         ll b = N / a;
-        if (a * b != N) continue;
         ans = min(ans, f(a, b));
     }
     return ans;
