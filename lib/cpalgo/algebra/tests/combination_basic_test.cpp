@@ -3,7 +3,7 @@
 #include "cpalgo/algebra/combination_basic.hpp"
 
 
-TEST(ExtgcdIterativeTest, ShouldComputeBinomialCoefficients) {
+TEST(CombinationBasicTest, ShouldComputeBinomialCoefficients) {
     Combination comb;
 
     EXPECT_EQ(1ULL, comb(0, 0));
