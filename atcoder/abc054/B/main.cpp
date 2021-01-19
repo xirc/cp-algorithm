@@ -9,18 +9,12 @@ vector<string> A, B;
 bool solve() {
     assert(M <= N);
     for (int i = 0; i < N; ++i) {
+        if (i + M - 1 >= N) continue;
         for (int j = 0; j < N; ++j) {
+            if (j + M - 1 >= N) continue;
             bool match = true;
             for (int k = 0; k < M; ++k) {
-                if (i + k >= N) {
-                    match = false;
-                    break;
-                }
                 for (int l = 0; l < M; ++l) {
-                    if (j + l >= N) {
-                        match = false;
-                        break;
-                    }
                     if (A[i+k][j+l] != B[k][l]) {
                         match = false;
                         break;
