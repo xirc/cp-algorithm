@@ -7,33 +7,29 @@ int N, MA, MB;
 vector<int> as, bs, cs;
 
 int solve() {
-    map<array<int,2>,int> dp;
+    const int inf = 1e8;
+    const int K = 500;
+    vector<vector<int>> dp(K, vector<int>(K, inf));
+    dp[0][0] = 0;
     for (int i = 0; i < N; ++i) {
         auto ndp = dp;
         int a = as[i], b = bs[i], c = cs[i];
-        if (ndp.count({ a, b })) {
-            ndp[{ a, b }] = min(ndp[{ a, b }], c);
-        } else {
-            ndp[{ a, b }] = c;
-        }
-        for (auto e : dp) {
-            int na = a + e.first[0];
-            int nb = b + e.first[1];
-            int nc = c + e.second;
-            if (ndp.count({ na, nb })) {
-                ndp[{ na, nb }] = min(ndp[{ na, nb }], nc);
-            } else {
-                ndp[{ na, nb }] = nc;
+        for (int ta = 0; ta < K; ++ta) {
+            for (int tb = 0; tb < K; ++tb) {
+                int tc = dp[ta][tb];
+                int na = a + ta, nb = b + tb, nc = tc + c;
+                if (na >= K || nb >= K) continue;
+                ndp[na][nb] = min(ndp[na][nb], nc);
             }
         }
         dp = ndp;
     }
-    const int inf = 1e9;
     int ans = inf;
-    for (auto e : dp) {
-        int a = e.first[0], b = e.first[1], c = e.second;
-        if (a * MB == b * MA) {
-            ans = min(ans, c);
+    for (int a = 0; a < K; ++a) {
+        for (int b = 0; b < K; ++b) {
+            if (a == 0 && b == 0) continue;
+            if (a * MB != b * MA) continue;
+            ans = min(ans, dp[a][b]);
         }
     }
     return ans == inf ? -1 : ans;
