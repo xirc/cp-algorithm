@@ -13,21 +13,24 @@
 // Time: O(N)
 // Space: O(N)
 //
+// NOTE:
+// - M should be a prime number
+//
 // See:
 // - https://algo-logic.info/combination/#toc_id_1_1
 //
 // Verified
 // - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
-class Combination {
+class CombinationBasic {
     size_t N;
     uint64_t MOD;
     std::vector<uint64_t> factorial, inverse, factorial_inverse;
 
 public:
-    // O(N)
+    // Time: O(N)
     // MOD should be a prime number
-    Combination(
+    CombinationBasic(
         size_t const N = 10000000,
         uint64_t const MOD = 1000000007
     )
@@ -53,6 +56,7 @@ public:
         }
     }
     // nCk
+    // n = [0,N), k = [0,n]
     // Time: O(1)
     uint64_t operator()(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");

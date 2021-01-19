@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/algebra/combination_basic.hpp"
+#include "cpalgo/algebra/combination_pascal.hpp"
 
 
-TEST(CombinationBasicTest, ShouldComputeBinomialCoefficients) {
-    CombinationBasic comb;
+TEST(CombinationPascalTest, ShouldComputeBinomialCoefficients) {
+    CombinationPascal comb;
 
     EXPECT_EQ(1ULL, comb(0, 0));
 
