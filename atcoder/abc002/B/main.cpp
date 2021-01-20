@@ -10,11 +10,11 @@ int main() {
     string vowels = "aiueo";
     string W;
     cin >> W;
-    auto it = remove_if(W.begin(), W.end(), [&](const auto c) {
-        return vowels.find(c) != string::npos;
-    });
-    W.erase(it, W.end());
-    cout << W << endl;
+    for (auto c: W) {
+        if (vowels.find(c) != string::npos) continue;
+        cout << c;
+    }
+    cout << endl;
 
     return 0;
 }
