@@ -9,16 +9,10 @@ int main() {
 
     int A, B, C;
     cin >> A >> B >> C;
-    if (A > B) {
+    if (A + C > B) {
         cout << "Takahashi" << endl;
-    } else if (A < B) {
-        cout << "Aoki" << endl;
     } else {
-        if (C == 0) {
-            cout << "Aoki" << endl;
-        } else {
-            cout << "Takahashi" << endl;
-        }
+        cout << "Aoki" << endl;
     }
 
     return 0;
