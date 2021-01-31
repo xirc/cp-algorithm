@@ -11,7 +11,8 @@
 	},
 	"extensions": [
 		"ms-vscode.cpptools",
-		"bazelbuild.vscode-bazel"
+		"bazelbuild.vscode-bazel",
+		"hediet.vscode-drawio"
 	],
 	"postCreateCommand": "g++ -v",
 }
