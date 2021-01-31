@@ -3,7 +3,7 @@
 #include <cmath>
 #include <memory>
 #include "template/template-main.hpp"
-#include "cpalgo/tree/heavy-light-decomposition.hpp"
+#include "cpalgo/tree/heavy_light_decomposition.hpp"
 
 using namespace std;
 
