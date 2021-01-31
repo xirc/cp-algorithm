@@ -16,8 +16,10 @@
 //  - undirected
 //
 // Verified:
-// - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2667
-// - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=2450
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_E
+//  - https://onlinejudge.u-aizu.ac.jp/problems/0367
+//  - https://onlinejudge.u-aizu.ac.jp/problems/2667
+//  - https://onlinejudge.u-aizu.ac.jp/problems/2450
 //
 class HeavyLightDecomposition {
     size_t N;
