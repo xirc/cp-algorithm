@@ -5,29 +5,24 @@ using ll = int64_t;
 
 int const inf = 1e8;
 int N, M;
-vector<vector<vector<int>>> G;
+vector<vector<int>> G;
 
-int solve(int s) {
-    vector<bool> done(N, false);
-    vector<int> D(N, inf);
-    priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> Q;
-    Q.push({ 0, s });
-    D[s] = 0;
-    while (Q.size()) {
-        auto e = Q.top(); Q.pop();
-        int v = e[1], w = e[0];
-        if (done[v]) continue;
-        done[v] = true;
-        for (auto const& uw : G[v]) {
-            int u = uw[0], dw = uw[1];
-            if (w + dw >= D[u]) continue;
-            D[u] = w + dw;
-            Q.push({ D[u], u });
+int solve() {
+    for (int k = 0; k < N; ++k) {
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
+            }
         }
     }
-    int ans = 0;
-    for (int u = 0; u < N; ++u) {
-        ans = max(ans, D[u]);
+
+    int ans = inf;
+    for (int i = 0; i < N; ++i) {
+        int w = 0;
+        for (int j = 0; j < N; ++j) {
+            w = max(w, G[i][j]);
+        }
+        ans = min(ans, w);
     }
     return ans;
 }
@@ -37,21 +32,15 @@ int main() {
     cin.tie(0); cout.tie(0);
 
     cin >> N >> M;
-    G.assign(N, vector<vector<int>>());
+    G.assign(N, vector<int>(N, inf));
+    for (int i = 0; i < N; ++i) G[i][i] = 0;
     for (int i = 0; i < M; ++i) {
         int a, b, t;
         cin >> a >> b >> t;
         --a, --b;
-        G[a].push_back({ b, t });
-        G[b].push_back({ a, t });
+        G[a][b] = G[b][a] = t;
     }
-
-    int ans = inf;
-    for (int v = 0; v < N; ++v) {
-        int w = solve(v);
-        ans = min(ans, w);
-    }
-    cout << ans << endl;
+    cout << solve() << endl;
 
     return 0;
 }
