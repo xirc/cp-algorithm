@@ -9,11 +9,17 @@ int main() {
 
     int N;
     cin >> N;
-    int D = 2025 - N;
+
+    int M = 0;
+    for (int i = 1; i <= 9; ++i) {
+        for (int j = 1; j <= 9; ++j) {
+            M += i * j;
+        }
+    }
 
     for (int i = 1; i <= 9; ++i) {
         for (int j = 1; j <= 9; ++j) {
-            if (i * j == D) {
+            if (i * j == M - N) {
                 cout << i << " x " << j << endl;
             }
         }
