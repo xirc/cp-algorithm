@@ -8,37 +8,32 @@ int main() {
     cin.tie(0); cout.tie(0);
 
     int N, M;
-    vector<vector<bool>> G;
+    vector<vector<int>> G;
 
     cin >> N >> M;
-    G.assign(N, vector<bool>(N, false));
+    G.assign(N, vector<int>(N, 1e8));
+    for (int i = 0; i < N; ++i) G[i][i] = 0;
     for (int i = 0; i < M; ++i) {
         int a, b;
         cin >> a >> b;
         --a, --b;
-        G[a][b] = G[b][a] = true;
+        G[a][b] = G[b][a] = 1;
     }
 
-    vector<int> T(N, 0);
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < N; ++j) {
-            if (i == j) continue;
-            bool pass = false;
-            for (int k = 0; k < N; ++k) {
-                if (i == k || j == k) continue;
-                if (G[i][j]) continue;
-                if (G[i][k] && G[k][j]) {
-                    pass = true;
-                    break;
-                }
-            }
-            if (pass) {
-                T[i]++;
+    for (int k = 0; k < N; ++k) {
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                G[i][j] = min(G[i][j], G[i][k] + G[k][j]);
             }
         }
     }
+
     for (int i = 0; i < N; ++i) {
-        cout << T[i] << endl;
+        int ans = 0;
+        for (int j = 0; j < N; ++j) {
+            if (j != i && G[i][j] == 2) ++ans;
+        }
+        cout << ans << endl;
     }
 
     return 0;
