@@ -73,13 +73,13 @@ This project contains my competitive programming library, examples, and solution
 * Union Find Tree (Disjoint Set Union)
 * kD Tree (n-dimensional)
 
-### [Tree](/lib/cpalgo/tree)
+### [Tree](/lib/cpalgo/tree/README.md)
 
-* Diameter
-* Euler Tour
-* Heavy Light Decomposition
-* Height
-* Lowest Common Ancestor
+* [Diameter](/lib/cpalgo/tree/README.md#Diameter)
+* [Euler Tour](/lib/cpalgo/tree/README.md#Euler-Tour)
+* [Heavy Light Decomposition](/lib/cpalgo/tree/README.md#Heavy-Light-Decomposition)
+* [Height](/lib/cpalgo/tree/README.md#Height)
+* [Lowest Common Ancestor](/lib/cpalgo/tree/README.md#Lowest-Common-Ancestor)
 
 ### [Graph](/lib/cpalgo/graph)
 
