@@ -9,8 +9,7 @@ int main() {
 
     int N;
     cin >> N;
-    --N;
-    N = (N + 1) % 12;
+    N %= 12;
     ++N;
     cout << N << endl;
 
