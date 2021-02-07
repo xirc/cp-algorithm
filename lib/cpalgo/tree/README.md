@@ -12,14 +12,20 @@
 ### References in Japanese
 - [木の直径](http://www.prefield.com/algorithm/graph/tree_diameter.html)
 
+### Problems
+- [Diameter of a Tree - AOJ GRL5A](https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_A)
+- [高橋くんと木の直径 - AtCoder ABC019D](https://atcoder.jp/contests/abc019/tasks/abc019_4)
+
 ## Height
 🚧 WIP
 
 [Height of Tree | C++ code](height.hpp)
 
 ### References in Japanese
-
 - [木の高さ](http://www.prefield.com/algorithm/graph/tree_height.html)
+
+### Problems
+- [Height of a Tree - AOJ GRL5B](https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_A)
 
 ## Euler Tour
 🚧 WIP
@@ -30,6 +36,9 @@
 - [Euler tour technique](https://en.wikipedia.org/wiki/Euler_tour_technique)
 - [Euler Tour of Tree](https://www.geeksforgeeks.org/euler-tour-tree/)
 - [On Euler tour trees](https://codeforces.com/blog/entry/18369)
+
+### Problems
+- [Range Query on a Tree - AOJ GRL5D](https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_D)
 
 ## Heavy Light Decomposition
 🚧 WIP
@@ -51,6 +60,10 @@
 - [Heavy-Light Decomposition - math314のブログ](https://math314.hateblo.jp/entry/2014/06/24/220107)
 - [HL分解(Heavy-Light-Decomposition)](https://ei1333.github.io/luzhiled/snippets/tree/heavy-light-decomposition.html)
 
+### Problems
+- [Tree / 木 - AOJ 2667](https://onlinejudge.u-aizu.ac.jp/problems/2667)
+- [Do use segment tree - AOJ 2450](https://onlinejudge.u-aizu.ac.jp/problems/2450)
+
 ## Lowest Common Ancestor
 🚧 WIP
 
@@ -64,3 +77,6 @@
 - [LCA | Segment Tree](https://cp-algorithms.com/graph/lca.html)
 - [LCA | Farach-Colton and Bender Algorithm](https://cp-algorithms.com/graph/lca_farachcoltonbender.html)
 - [LCA | Tarjan's off-line Algorithm](https://cp-algorithms.com/graph/lca_tarjan.html)
+
+### Problems
+- [LCA: Lowest Common Ancestor - AOJ GRL5C](https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_C)
