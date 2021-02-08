@@ -9,8 +9,8 @@ int main() {
 
     int a, b;
     cin >> a >> b;
-    if (a < b) swap(a,b);
-    cout << min(a - b, 10 + b - a) << endl;
+    int d = abs(a - b);
+    cout << min(d, 10 - d) << endl;
 
     return 0;
 }
