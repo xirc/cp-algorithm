@@ -7,39 +7,19 @@ int N, M;
 vector<array<int,3>> is;
 
 int solve() {
-    vector<int> A(M + 1, 0), B(M + 1, 0);
-
-    {
-        sort(is.begin(), is.end(), [&](auto const& lhs, auto const& rhs) {
-            return lhs[1] < rhs[1];
-        });
-        auto it = is.begin();
-        for (int i = 1; i < M + 1; ++i) {
-            A[i] = A[i-1];
-            while (it != is.end() && (*it)[1] < i) {
-                A[i] += (*it)[2];
-                ++it;
-            }
-        }
+    int U = 0;
+    vector<int> T(M+1, 0);
+    for (int i = 0; i < N; ++i) {
+        U += is[i][2];
+        T[is[i][0]] += is[i][2];
+        T[is[i][1]+1] -= is[i][2];
     }
-    
-    {
-        sort(is.begin(), is.end(), [&](auto const& lhs, auto const& rhs) {
-            return lhs[0] > rhs[0];
-        });
-        auto it = is.begin();
-        for (int i = M - 1; i >= 0; --i) {
-            B[i] = B[i+1];
-            while (it != is.end() && (*it)[0] >= i) {
-                B[i] += (*it)[2];
-                ++it;
-            }
-        }
+    for (int i = 1; i < M + 1; ++i) {
+        T[i] += T[i-1];
     }
-
     int ans = 0;
-    for (int x = 0; x < M; ++x) {
-        ans = max(ans, A[x] + B[x+1]);
+    for (int i = 0; i < M; ++i) {
+        ans = max(ans, U - T[i]);
     }
     return ans;
 }
