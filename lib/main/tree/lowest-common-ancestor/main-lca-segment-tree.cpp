@@ -4,7 +4,7 @@
 
 using namespace std;
 
-using Interp = SolverInterp<LCA>;
+using Interp = SolverInterp<LCASegmentTree>;
 Interp* interp = new Interp();
 
 void setup(string& header, map<string,Command>& commands) {

@@ -6,12 +6,12 @@ using namespace std;
 
 
 TEST(LCASegmentTreeTest, IsEmptyInitially) {
-    LCA solver;
+    LCASegmentTree solver;
     EXPECT_EQ(0ULL, solver.size());
 }
 
 TEST(LCASegmentTreeTest, CanBuildLater) {
-    LCA solver;
+    LCASegmentTree solver;
     EXPECT_EQ(0ULL, solver.size());
 
     // lca_test_case_1
@@ -35,7 +35,7 @@ TEST(LCASegmentTreeTest, ShouldComputeLCA) {
     G[3] = { 8 };
     G[5] = { 6, 7 };
 
-    LCA solver(G);
+    LCASegmentTree solver(G);
     EXPECT_EQ(9ULL, solver.size());
 
     EXPECT_EQ(1ULL, solver.query(4, 6));

@@ -19,14 +19,14 @@
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_C
 //
-class LCA {
+class LCASegmentTree {
     size_t N, M;
     std::vector<size_t> height, first, euler, segtree;
 
 public:
     // root = [0,N)
     // Time: O(N)
-    LCA(
+    LCASegmentTree(
         std::vector<std::vector<size_t>> const& adj = {},
         size_t const root = 0
     )

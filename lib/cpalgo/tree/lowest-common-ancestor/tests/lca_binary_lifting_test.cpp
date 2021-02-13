@@ -6,12 +6,12 @@ using namespace std;
 
 
 TEST(LCABinaryLiftingTest, IsEmptyInitially) {
-    LCA solver;
+    LCABinaryLifting solver;
     EXPECT_EQ(0ULL, solver.size());
 }
 
 TEST(LCABinaryLiftingTest, CanBuildLater) {
-    LCA solver;
+    LCABinaryLifting solver;
     EXPECT_EQ(0ULL, solver.size());
 
     // lca_test_case1
@@ -35,7 +35,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeLCA) {
     G[3] = { 8 };
     G[5] = { 6, 7 };
 
-    LCA solver(G);
+    LCABinaryLifting solver(G);
     EXPECT_EQ(9ULL, solver.size());
 
     EXPECT_EQ(1ULL, solver.query(4, 6));
@@ -55,7 +55,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeAncestor) {
     G[3] = { 8 };
     G[5] = { 6, 7 };
 
-    LCA solver(G);
+    LCABinaryLifting solver(G);
 
     EXPECT_TRUE(solver.is_ancestor(5, 6));
     EXPECT_FALSE(solver.is_ancestor(6, 5));
@@ -74,7 +74,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeUpperBound) {
     G[3] = { 8 };
     G[5] = { 6, 7 };
 
-    LCA solver(G);
+    LCABinaryLifting solver(G);
 
     EXPECT_EQ(5ULL, solver.upper_bound(7, 1));
     EXPECT_EQ(5ULL, solver.upper_bound(5, 1));
@@ -98,7 +98,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeEulerTour) {
     G[1] = { 4 };
     G[2] = { 5, 6, 7 };
 
-    LCA solver(G);
+    LCABinaryLifting solver(G);
 
     EXPECT_EQ( 0ULL, solver.euler_in(0));
     EXPECT_EQ( 1ULL, solver.euler_in(1));
