@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "template/template-main.hpp"
-#include "cpalgo/tree/lowest-common-ancestor/lca-tarjan.hpp"
+#include "cpalgo/tree/lca/lca_tarjan.hpp"
 
 using namespace std;
 

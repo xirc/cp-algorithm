@@ -21,7 +21,7 @@
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_C
 //
-class LCA {
+class LCAFCB {
     size_t N;
     std::vector<size_t> first;
     std::vector<size_t> height;
@@ -34,7 +34,7 @@ class LCA {
 public:
     // root = [0,N)
     // Time: O(N)
-    LCA(
+    LCAFCB(
         std::vector<std::vector<size_t>> const& adj = {},
         size_t const root = 0
     )

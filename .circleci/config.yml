@@ -9,24 +9,6 @@ executors:
           password: $DOCKERHUB_PASSWORD
 
 commands:
-  restore_source_cache:
-    steps:
-      - restore_cache:
-          name: Restoring Source Cache
-          keys:
-            - source-{{ .Branch }}-{{ .Revision }}
-            - source-{{ .Branch }}
-            - source
-  save_source_cache:
-    steps:
-      - run:
-          name: Running git gc
-          command: git gc
-      - save_cache:
-          name: Saving Source Cache
-          key: source-{{ .Branch }}-{{ .Revision }}
-          paths:
-            - .git
   restore_bazel_cache:
     steps:
       - restore_cache:
@@ -61,7 +43,6 @@ jobs:
   bazel-lint:
     executor: cpalgo
     steps:
-      - restore_source_cache
       - checkout
       - run:
           name: Lint All
@@ -70,9 +51,7 @@ jobs:
   build:
     executor: cpalgo
     steps:
-      - restore_source_cache
       - checkout
-      - save_source_cache
       - restore_bazelisk_cache
       - restore_bazel_cache
       - run:

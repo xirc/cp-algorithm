@@ -20,7 +20,7 @@
 // Verified:
 //  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_C
 //
-class LCA {
+class LCABinaryLifting {
 private:
     size_t N, L;
     std::vector<size_t> tin, tout;
@@ -29,7 +29,7 @@ private:
 public:
     // root = [0,N)
     // Time: O(N logN)
-    LCA(
+    LCABinaryLifting(
         std::vector<std::vector<size_t>> const& adj = {},
         size_t const root = 0
     )

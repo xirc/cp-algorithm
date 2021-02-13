@@ -1,10 +1,10 @@
 #include <iostream>
 #include "template-solver-interp.hpp"
-#include "cpalgo/tree/lowest-common-ancestor/lca-segment-tree.hpp"
+#include "cpalgo/tree/lca/lca_segment_tree.hpp"
 
 using namespace std;
 
-using Interp = SolverInterp<LCA>;
+using Interp = SolverInterp<LCASegmentTree>;
 Interp* interp = new Interp();
 
 void setup(string& header, map<string,Command>& commands) {
