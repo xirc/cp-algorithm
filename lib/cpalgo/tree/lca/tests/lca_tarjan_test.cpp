@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/tree/lowest-common-ancestor/lca-tarjan.hpp"
+#include "cpalgo/tree/lca/lca_tarjan.hpp"
 
 using namespace std;
 

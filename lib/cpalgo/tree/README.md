@@ -84,10 +84,10 @@ We can compute *Euler Tour Representation* in `O(V)` where `V` is the number of 
 In particular, if node `u` is an ancestor of node `v`, then node `u` is the lowest common ancestor of `u` and `v`.
 We can compute *LCA* in several ways below.
 
-- [LCA | Binary Lifting | C++ code](lowest-common-ancestor/lca-binary-lifting.hpp)
-- [LCA | Segment Tree | C++ code](lowest-common-ancestor/lca-segment-tree.hpp)
-- [LCA | Farach-Colton and Bender Algorithm | C++ code](lowest-common-ancestor/lca-farach-colton-bender.hpp)
-- [LCA | Tarjan's off-line Algorithm | C++ code](lowest-common-ancestor/lca-tarjan.hpp)
+- [LCA | Binary Lifting | C++ code](lca/lca_binary_lifting.hpp)
+- [LCA | Segment Tree | C++ code](lca/lca_segment_tree.hpp)
+- [LCA | Farach-Colton and Bender Algorithm | C++ code](lca/lca_farach_colton_bender.hpp)
+- [LCA | Tarjan's off-line Algorithm | C++ code](lca/lca_tarjan.hpp)
 
 ![Lowest Common Ancestor](resources/lca.drawio.svg)
 

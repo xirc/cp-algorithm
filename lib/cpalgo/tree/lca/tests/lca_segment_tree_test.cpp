@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/tree/lowest-common-ancestor/lca-farach-colton-bender.hpp"
+#include "cpalgo/tree/lca/lca_segment_tree.hpp"
 
 using namespace std;
 
 
-TEST(LCAFCBTest, IsEmptyInitially) {
-    LCAFCB solver;
+TEST(LCASegmentTreeTest, IsEmptyInitially) {
+    LCASegmentTree solver;
     EXPECT_EQ(0ULL, solver.size());
 }
 
-TEST(LCAFCBTest, CanBuildLater) {
-    LCAFCB solver;
+TEST(LCASegmentTreeTest, CanBuildLater) {
+    LCASegmentTree solver;
     EXPECT_EQ(0ULL, solver.size());
 
     // lca_test_case_1
@@ -27,7 +27,7 @@ TEST(LCAFCBTest, CanBuildLater) {
     EXPECT_EQ(1ULL, solver.query(3, 1));
 }
 
-TEST(LCAFCBTest, ShouldComputeLCA) {
+TEST(LCASegmentTreeTest, ShouldComputeLCA) {
     // lca_test_case2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
@@ -35,7 +35,7 @@ TEST(LCAFCBTest, ShouldComputeLCA) {
     G[3] = { 8 };
     G[5] = { 6, 7 };
 
-    LCAFCB solver(G);
+    LCASegmentTree solver(G);
     EXPECT_EQ(9ULL, solver.size());
 
     EXPECT_EQ(1ULL, solver.query(4, 6));

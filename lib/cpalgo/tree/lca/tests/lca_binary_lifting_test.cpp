@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/tree/lowest-common-ancestor/lca-binary-lifting.hpp"
+#include "cpalgo/tree/lca/lca_binary_lifting.hpp"
 
 using namespace std;
 
