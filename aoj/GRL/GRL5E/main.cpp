@@ -1,113 +1,68 @@
 // http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_E
 
-#include <vector>
-#include <stack>
-#include <algorithm>
-#include <functional>
-#include <tuple>
+#include <bits/stdc++.h>
 
 class HeavyLightDecomposition {
-    int N;
-    std::vector<int> index, inverse, out, head, heavy, parent, depth, subsize;
+    size_t N;
+    std::vector<size_t> index, inverse, out, head, heavy, parent, depth, subsize;
 
 public:
-    // O(N)
-    HeavyLightDecomposition(): HeavyLightDecomposition({}, {}) {}
-    // O(N)
+    // Time: O(N)
     HeavyLightDecomposition(
-        const std::vector<std::vector<int>>& adj,
-        const std::vector<int>& R = std::vector<int>({0})
+        std::vector<std::vector<size_t>> const& adj = {},
+        std::vector<size_t> const& R = {}
     )
-        : N(adj.size())
-        , index(N,-1)
-        , inverse(N,-1)
-        , out(N,-1)
-        , head(N,-1)
-        , heavy(N,-1)
-        , parent(N,-1)
-        , depth(N,0)
-        , subsize(N,0)
     {
         build(adj, R);
     }
-    // O(N)
+    // Time: O(N)
     void build(
-        const std::vector<std::vector<int>>& adj,
-        const std::vector<int>& R  = std::vector<int>({0})
+        std::vector<std::vector<size_t>> const& adj,
+        std::vector<size_t> const& R  = { }
     ) {
-        int pos = 0;
+        N = adj.size();
+        index.assign(N, N);
+        inverse.assign(N, N);
+        out.assign(N, N);
+        head.assign(N, N);
+        heavy.assign(N, N);
+        parent.assign(N, N);
+        depth.assign(N, 0);
+        subsize.assign(N, 0);
+
+        size_t pos = 0;
         for (auto v : R) {
             dfs_prepare(adj, v);
             dfs_decompose(adj, v, pos);
         }
     }
-    // O(1)
-    int size() {
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    int get_index(int v) {
-        throw_if_invalid_index(v);
+    // v = [0,N)
+    // Time: O(1)
+    size_t get_index(size_t v) const {
+        if (v >= N) throw std::out_of_range("v");
         return index[v];
     }
-    // O(1)
-    int get_vertex(int index) {
-        throw_if_invalid_index(index);
+    // index = [0,N)
+    // Time: O(1)
+    size_t get_vertex(size_t index) const {
+        if (index >= N) throw std::out_of_range("index");
         return inverse[index];
     }
-    // O(1)
-    int get_parent(int v) {
-        throw_if_invalid_index(v);
+    // v = [0,N)
+    // Time: O(1)
+    size_t get_parent(size_t v) const {
+        if (v >= N) throw std::out_of_range("v");
         return parent[v];
     }
-    // O(1)
-    // f [l,r)
-    void for_each_subtree_vertex(int u, const std::function<void(int,int)>& f) {
-        throw_if_invalid_index(u);
-        f(index[u], out[u]);
-    }
-    // O(1)
-    // f [l,r)
-    void for_each_subtree_edge(int u, const std::function<void(int,int)>& f) {
-        throw_if_invalid_index(u);
-        f(index[u]+1, out[u]);
-    }
-    // O(logN)
-    // f [l,r)
-    void for_each_vertex(int u, int v, const std::function<void(int,int)>& f) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
-        for (; head[u] != head[v]; v = parent[head[v]]) {
-            if (index[u] > index[v]) {
-                std::swap(u, v);
-            }
-            f(index[head[v]], index[v]+1);
-        }
-        if (index[u] > index[v]) {
-            std::swap(u, v);
-        }
-        f(index[u], index[v]+1);
-    }
-    // O(logN)
-    // f [l,r)
-    void for_each_edge(int u, int v, const std::function<void(int,int)>& f) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
-        for (; head[u] != head[v]; v = parent[head[v]]) {
-            if (index[u] > index[v]) {
-                std::swap(u, v);
-            }
-            f(index[head[v]], index[v]+1);
-        }
-        if (index[u] > index[v]) {
-            std::swap(u, v);
-        }
-        f(index[u]+1, index[v]+1);
-    }
-    // O(logN)
-    int lca(int u, int v) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
+    // u = [0,N), v = [0,N)
+    // Time: O(logN)
+    size_t lca(size_t u, size_t v) const {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
         while (true) {
             if (index[u] > index[v]) {
                 std::swap(u, v);
@@ -118,73 +73,244 @@ public:
             v = parent[head[v]];
         }
     }
-    // O(logN)
-    int distance(int u, int v) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
+    // u = [0,N), v = [0,N)
+    // Time: O(logN)
+    size_t distance(size_t u, size_t v) const {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
         return depth[u] + depth[v] - 2 * depth[lca(u,v)];
     }
-    // O(1)
-    // a: [l,r]+T
-    // b: [l,r]+T
+    // u = [0,N)
+    // Time: O(1)
+    void for_subtree_vertex(
+        size_t u,
+        std::function<void(size_t l, size_t r)> const& f
+    ) const {
+        if (u >= N) throw std::out_of_range("u");
+        f(index[u], out[u]);
+    }
+    // u = [0,N)
+    // Time: O(1)
+    void for_subtree_edge(
+        size_t u,
+        std::function<void(size_t l, size_t r)> const& f
+    ) const {
+        if (u >= N) throw std::out_of_range("u");
+        f(index[u]+1, out[u]);
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(logN)
+    void for_each_vertex(
+        size_t u,
+        size_t v,
+        std::function<void(size_t l, size_t r, bool reverse)> const& f
+    ) const {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
+        bool reverse = false;
+        for (; head[u] != head[v]; v = parent[head[v]]) {
+            if (index[u] > index[v]) {
+                std::swap(u, v);
+                reverse ^= true;
+            }
+            f(index[head[v]], index[v]+1, reverse);
+        }
+        if (index[u] > index[v]) {
+            std::swap(u, v);
+            reverse ^= true;
+        }
+        f(index[u], index[v]+1, reverse);
+    }
+    // u = [0,N), v = [0,N)
+    // f [l,r)
+    // Time: O(logN)
+    void for_each_edge(
+        size_t u,
+        size_t v,
+        std::function<void(size_t l, size_t r, bool reverse)> const& f
+    ) const {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
+        bool reverse = false;
+        for (; head[u] != head[v]; v = parent[head[v]]) {
+            if (index[u] > index[v]) {
+                std::swap(u, v);
+                reverse ^= true;
+            }
+            f(index[head[v]], index[v]+1, reverse);
+        }
+        if (index[u] > index[v]) {
+            std::swap(u, v);
+            reverse ^= true;
+        }
+        f(index[u]+1, index[v]+1, reverse);
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(logN logN)
     template <class T>
-    bool try_merge(
-        const std::tuple<int,int,T>& a,
-        const std::tuple<int,int,T>& b,
-        std::tuple<int,int,T>& ans,
-        const std::function<void(T&)> swap,
-        const std::function<T(T&,T&)> merge
-    ) {
-        auto is_connect=[&](int u, int v) {
-            return get_parent(u) == v || get_parent(v) == u;
+    T reduce_each_vertex(
+        size_t u,
+        size_t v,
+        std::function<T(size_t l, size_t r, bool reverse)> const& value,
+        std::function<T(T const& v)> const& inverse,
+        std::function<T(T const& av, T const& bv)> const& merge
+    ) const {
+        return reduce_each_vertex<T>(u, v, value, inverse, [&](T const& av, T const& bv, size_t a, size_t b) {
+            return merge(av, bv);
+        });
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(logN logN)
+    template <class T>
+    T reduce_each_vertex(
+        size_t u,
+        size_t v,
+        std::function<T(size_t l, size_t r, bool reverse)> const& value,
+        std::function<T(T const& v)> const& inverse,
+        std::function<T(T const& av, T const& bv, size_t a, size_t b)> const& merge
+    ) const {
+        std::vector<std::tuple<size_t,size_t,T>> ts;
+        for_each_vertex(u, v, [&](auto l, auto r, bool reverse) {
+            auto lv = get_vertex(l), rv = get_vertex(r-1);
+            ts.push_back(std::make_tuple(lv, rv, value(l, r, reverse)));
+        });
+        auto try_merge = [&](
+            std::tuple<size_t,size_t,T> const& a,
+            std::tuple<size_t,size_t,T> const& b,
+            std::tuple<size_t,size_t,T>& ans
+        ) {
+            auto is_connected = [&](size_t u, size_t v) {
+                return get_parent(u) == v || get_parent(v) == u;
+            };
+            auto alv = std::get<0>(a), arv = std::get<1>(a); auto av = std::get<2>(a);
+            auto blv = std::get<0>(b), brv = std::get<1>(b); auto bv = std::get<2>(b);
+            if (is_connected(alv,blv) || is_connected(alv, brv)) {
+                std::swap(alv, arv);
+                av = inverse(av);
+            }
+            if (is_connected(arv,brv)) {
+                std::swap(blv, brv);
+                bv = inverse(bv);
+            }
+            // arv and blv may be connected
+            if (is_connected(arv,blv)) {
+                auto v = merge(av, bv, arv, blv);
+                ans = std::make_tuple(alv, brv, v);
+                return true;
+            }
+            return false;
         };
-        auto al = std::get<0>(a), ar = std::get<1>(a); auto av = std::get<2>(a);
-        auto bl = std::get<0>(b), br = std::get<1>(b); auto bv = std::get<2>(b);
-        auto alv = get_vertex(al), arv = get_vertex(ar);
-        auto blv = get_vertex(bl), brv = get_vertex(br);
-        if (is_connect(alv,blv) || is_connect(alv,brv)) {
-            std::swap(al,ar);
-            std::swap(alv,arv);
-            swap(av);
+        while (ts.size() > 1) {
+            auto x = ts.back(); ts.pop_back();
+            bool found = false;
+            for (size_t i = 0; i < ts.size(); ++i) {
+                std::tuple<size_t,size_t,T> y;
+                if (try_merge(x, ts[i], y)) {
+                    ts[i] = y;
+                    found = true;
+                    break;
+                }
+            }
+            assert(found);
         }
-        if (is_connect(arv,brv)) {
-            std::swap(bl,br);
-            std::swap(blv,brv);
-            swap(bv);
+        return std::get<2>(ts[0]);
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(logN logN)
+    template <class T>
+    T reduce_each_edge(
+        size_t u,
+        size_t v,
+        std::function<T(size_t l, size_t r, bool reverse)> const& value,
+        std::function<T(T const& v)> const& inverse,
+        std::function<T(T const& av, T const& bv)> const& merge
+    ) const {
+        return reduce_each_edge<T>(u, v, value, inverse, [&](T const& av, T const& bv, size_t a, size_t b) {
+            return merge(av, bv);
+        });
+    }
+    // u = [0,N), v = [0,N)
+    // Time: O(logN logN)
+    template <class T>
+    T reduce_each_edge(
+        size_t u,
+        size_t v,
+        std::function<T(size_t l, size_t r, bool reverse)> const& value,
+        std::function<T(T const& v)> const& inverse,
+        std::function<T(T const& av, T const& bv, size_t a, size_t b)> const& merge
+    ) const {
+        std::vector<std::tuple<size_t,size_t,T>> ts;
+        for_each_edge(u, v, [&](auto l, auto r, bool reverse) {
+            auto lv = get_vertex(l), rv = get_vertex(r-1);
+            ts.push_back(std::make_tuple(lv, rv, value(l, r, reverse)));
+        });
+        auto try_merge = [&](
+            std::tuple<size_t,size_t,T> const& a,
+            std::tuple<size_t,size_t,T> const& b,
+            std::tuple<size_t,size_t,T>& ans
+        ) {
+            auto is_connected = [&](size_t u, size_t v) {
+                // The function is different from than vertex version.
+                // In edge version, nodes can be connected if they have the same parent.
+                return get_parent(u) == v || get_parent(v) == u || get_parent(u) == get_parent(v);
+            };
+            auto alv = std::get<0>(a), arv = std::get<1>(a); auto av = std::get<2>(a);
+            auto blv = std::get<0>(b), brv = std::get<1>(b); auto bv = std::get<2>(b);
+            if (is_connected(alv,blv) || is_connected(alv, brv)) {
+                std::swap(alv, arv);
+                av = inverse(av);
+            }
+            if (is_connected(arv,brv)) {
+                std::swap(blv, brv);
+                bv = inverse(bv);
+            }
+            // arv and blv may be connected
+            if (is_connected(arv, blv)) {
+                auto v = merge(av, bv, arv, blv);
+                ans = std::make_tuple(alv, brv, v);
+                return true;
+            }
+            return false;
+        };
+        while (ts.size() > 1) {
+            auto x = ts.back(); ts.pop_back();
+            bool found = false;
+            for (size_t i = 0; i < ts.size(); ++i) {
+                std::tuple<size_t,size_t,T> y;
+                if (try_merge(x, ts[i], y)) {
+                    ts[i] = y;
+                    found = true;
+                    break;
+                }
+            }
+            assert(found);
         }
-        if (is_connect(arv,blv)) {
-            ans = std::make_tuple(al, br, merge(av,bv));
-            return true;
-        }
-        return false;
+        return std::get<2>(ts[0]);
     }
 
 private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
-    }
-    // O(N)
+    // Time: O(N)
     // NOTE: Don't use a recursive call for strict constraints.
-    void dfs_prepare(const std::vector<std::vector<int>>& adj, int s) {
-        std::stack<std::pair<int,int>> S;
-        parent[s] = -1;
+    void dfs_prepare(std::vector<std::vector<size_t>> const& adj, size_t s) {
+        std::stack<std::pair<size_t,int>> S;
+        parent[s] = N;
         depth[s] = 0;
-        S.push({s,0});
+        S.push({ s, -1 });
         while (S.size()) {
-            int v = S.top().first;
-            int &i = S.top().second;
+            auto v = S.top().first;
+            auto &i = S.top().second;
             if (i == -1) {
                 i++;
                 subsize[v] = 1;
-            } else if (i < adj[v].size()) {
-                int u = adj[v][i++];
+            } else if ((uint64_t)i < adj[v].size()) {
+                auto u = adj[v][i++];
                 if (u == parent[v]) continue;
                 parent[u] = v;
                 depth[u] = depth[v] + 1;
-                S.push({u, -1});
+                S.push({ u, -1 });
             } else {
                 S.pop();
-                int max_size = 0;
+                size_t max_size = 0;
                 for (auto u : adj[v]) {
                     if (parent[v] == u) continue;
                     subsize[v] += subsize[u];
@@ -196,14 +322,14 @@ private:
             }
         }
     }
-    // O(N)
+    // Time: O(N)
     // NOTE: Don't use a recursive call for strict constraints.
-    void dfs_decompose(const std::vector<std::vector<int>>& adj, int s, int& pos) {
-        std::stack<std::tuple<int,int,int>> S;
-        S.push(std::make_tuple(s,s,-1));
+    void dfs_decompose(std::vector<std::vector<size_t>> const& adj, size_t s, size_t& pos) {
+        std::stack<std::tuple<size_t,size_t,int>> S;
+        S.push(std::make_tuple(s, s, -1));
         while (S.size()) {
-            int v = std::get<0>(S.top());
-            int h = std::get<1>(S.top());
+            size_t v = std::get<0>(S.top());
+            size_t h = std::get<1>(S.top());
             int &i = std::get<2>(S.top());
             if (i == -1) {
                 i++;
@@ -211,14 +337,14 @@ private:
                 index[v] = pos;
                 inverse[pos] = v;
                 pos++;
-                if (heavy[v] != -1) {
-                    S.push(std::make_tuple(heavy[v],h,-1));
+                if (heavy[v] != N) {
+                    S.push(std::make_tuple(heavy[v], h, -1));
                 }
-            } else if (i < adj[v].size()) {
-                int u = adj[v][i++];
+            } else if ((uint64_t)i < adj[v].size()) {
+                auto u = adj[v][i++];
                 if (parent[v] == u) continue;
                 if (heavy[v] == u) continue;
-                S.push(std::make_tuple(u,u,-1));
+                S.push(std::make_tuple(u, u, -1));
             } else {
                 out[v] = pos;
                 S.pop();
@@ -227,15 +353,6 @@ private:
     }
 };
 
-#include <vector>
-#include <algorithm>
-#include <functional>
-
-// SegmentTree (RangeUpdate,RangeQuery)
-// Memory O(N)
-// Build O(N)
-// Query O(log N)
-// Update O(log N)
 template<class T, class E>
 class SegmentTree {
 public:
@@ -412,10 +529,10 @@ int main() {
 
 
     int N, Q;
-    vector<vector<int>> adj;
+    vector<vector<size_t>> adj;
 
     cin >> N;
-    adj.assign(N, vector<int>());
+    adj.assign(N, vector<size_t>());
     for (int i = 0; i < N; ++i) {
         int k, c;
         cin >> k;
@@ -437,14 +554,14 @@ int main() {
         if (t == 0) {
             int v, w;
             cin >> v >> w;
-            hld.for_each_edge(0, v, [&](int l, int r) {
+            hld.for_each_edge(0, v, [&](int l, int r, bool reverse) {
                 tree.update(l, r, w);
             });
         } else if (t == 1) {
             long long ans = 0;
             int u;
             cin >> u;
-            hld.for_each_edge(0, u, [&](int l, int r) {
+            hld.for_each_edge(0, u, [&](int l, int r, bool reverse) {
                 ans += tree.query(l, r).value;
             });
             cout << ans << endl;
