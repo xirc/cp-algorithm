@@ -14,6 +14,7 @@ TEST(EulerTourTest, ShouldComputeEulerTour) {
     EulerTour solver(7);
     EXPECT_EQ(7ULL, solver.size());
 
+    // euler_tour_test_case1
     solver.add_edge(0, 1);
     solver.add_edge(1, 2);
     solver.add_edge(1, 3);
@@ -36,6 +37,7 @@ TEST(EulerTourTest, ShouldHandleAForest) {
     EulerTour solver(7);
     EXPECT_EQ(7ULL, solver.size());
 
+    // euler_tour_test_case2
     solver.add_edge(0, 1);
     solver.add_edge(1, 2);
     solver.add_edge(1, 3);

@@ -12,7 +12,9 @@ TEST(TreeHeightTest, IsEmptyInitially) {
 
 TEST(TreeHeightTest, ShouldComputeHeightOfTree) {
     TreeHeight solver(4);
+    EXPECT_EQ(4ULL, solver.size());
 
+    // height_test_case1
     solver.add_edge(0, 1, 2);
     solver.add_edge(1, 2, 1);
     solver.add_edge(1, 3, 3);
@@ -26,11 +28,14 @@ TEST(TreeHeightTest, ShouldComputeHeightOfTree) {
 
 TEST(TreeHeightTest, ShouldComputeHeightOfTrees) {
     TreeHeight solver(8);
+    EXPECT_EQ(8ULL, solver.size());
 
+    // height_test_case2
+    // Tree A
     solver.add_edge(0, 1, 2);
     solver.add_edge(1, 2, 1);
     solver.add_edge(1, 3, 3);
-
+    // Tree B
     solver.add_edge(4, 5, 1);
     solver.add_edge(5, 6, 2);
     solver.add_edge(6, 7, 1);

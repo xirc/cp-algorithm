@@ -12,11 +12,15 @@ TEST(DiameterTest, IsEmptyInitially) {
 
 TEST(DiameterTest, ShouldComputeDiameterOfATree) {
     TreeDiameter solver(6);
+    EXPECT_EQ(6ULL, solver.size());
+
+    // diameter_test_case1
     solver.add_edge(0, 1, 1);
     solver.add_edge(0, 2, 1);
     solver.add_edge(2, 3, 4);
     solver.add_edge(2, 5, 2);
     solver.add_edge(5, 4, 1);
+
     size_t u, v;
     uint64_t w;
     tie(u, v, w) = solver.solve();
@@ -27,11 +31,13 @@ TEST(DiameterTest, ShouldComputeDiameterOfATree) {
 
 TEST(DiameterTest, ShouldComputeDiameterOfTrees) {
     TreeDiameter solver(10);
+    EXPECT_EQ(10ULL, solver.size());
+
+    // diameter_test_case2
     // tree A
     solver.add_edge(0, 1, 1);
     solver.add_edge(0, 2, 1);
     solver.add_edge(2, 3, 1);
-
     // tree B
     solver.add_edge(4, 5, 1);
     solver.add_edge(4, 6, 1);
