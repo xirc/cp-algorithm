@@ -17,7 +17,9 @@ TEST(LCASegmentTreeTest, CanBuildLater) {
     // lca_test_case_1
     vector<vector<size_t>> G(4);
     G[0] = { 1, 2 };
-    G[1] = { 3 };
+    G[1] = { 0, 3 };
+    G[2] = { 0 };
+    G[3] = { 1 };
 
     solver.build(G);
 
@@ -31,9 +33,14 @@ TEST(LCASegmentTreeTest, ShouldComputeLCA) {
     // lca_test_case2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
-    G[1] = { 4, 5 };
-    G[3] = { 8 };
-    G[5] = { 6, 7 };
+    G[1] = { 0, 4, 5 };
+    G[2] = { 0 };
+    G[3] = { 0, 8 };
+    G[4] = { 1 };
+    G[5] = { 1, 6, 7 };
+    G[6] = { 5 };
+    G[7] = { 5 };
+    G[8] = { 3 };
 
     LCASegmentTree solver(G);
     EXPECT_EQ(9ULL, solver.size());
