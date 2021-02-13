@@ -14,7 +14,7 @@ TEST(LCABinaryLiftingTest, CanBuildLater) {
     LCABinaryLifting solver;
     EXPECT_EQ(0ULL, solver.size());
 
-    // lca_test_case1
+    // lca_testcase1
     vector<vector<size_t>> G(4);
     G[0] = { 1, 2 };
     G[1] = { 0, 3 };
@@ -30,7 +30,7 @@ TEST(LCABinaryLiftingTest, CanBuildLater) {
 }
 
 TEST(LCABinaryLiftingTest, ShouldComputeLCA) {
-    // lca_test_case2
+    // lca_testcase2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4, 5 };
@@ -55,7 +55,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeLCA) {
 }
 
 TEST(LCABinaryLiftingTest, ShouldComputeAncestor) {
-    // lca_test_case2
+    // lca_testcase2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4, 5 };
@@ -79,7 +79,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeAncestor) {
 }
 
 TEST(LCABinaryLiftingTest, ShouldComputeUpperBound) {
-    // lca_test_case_2
+    // lca_testcase_2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4, 5 };
@@ -109,7 +109,7 @@ TEST(LCABinaryLiftingTest, ShouldComputeUpperBound) {
 
 
 TEST(LCABinaryLiftingTest, ShouldComputeEulerTour) {
-    // lca_test_case3
+    // lca_testcase3
     vector<vector<size_t>> G(8);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4 };

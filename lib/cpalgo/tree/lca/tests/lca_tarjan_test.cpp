@@ -6,7 +6,7 @@ using namespace std;
 
 
 TEST(LCATarjanTest, ShouldComputeLCA) {
-    // lca_test_case2
+    // lca_testcase2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4, 5 };

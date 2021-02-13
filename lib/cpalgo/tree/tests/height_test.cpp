@@ -14,7 +14,7 @@ TEST(TreeHeightTest, ShouldComputeHeightOfTree) {
     TreeHeight solver(4);
     EXPECT_EQ(4ULL, solver.size());
 
-    // height_test_case1
+    // height_testcase1
     solver.add_edge(0, 1, 2);
     solver.add_edge(1, 2, 1);
     solver.add_edge(1, 3, 3);
@@ -30,7 +30,7 @@ TEST(TreeHeightTest, ShouldComputeHeightOfTrees) {
     TreeHeight solver(8);
     EXPECT_EQ(8ULL, solver.size());
 
-    // height_test_case2
+    // height_testcase2
     // Tree A
     solver.add_edge(0, 1, 2);
     solver.add_edge(1, 2, 1);

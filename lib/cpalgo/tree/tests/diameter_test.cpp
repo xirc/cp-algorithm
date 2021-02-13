@@ -14,7 +14,7 @@ TEST(DiameterTest, ShouldComputeDiameterOfATree) {
     TreeDiameter solver(6);
     EXPECT_EQ(6ULL, solver.size());
 
-    // diameter_test_case1
+    // diameter_testcase1
     solver.add_edge(0, 1, 1);
     solver.add_edge(0, 2, 1);
     solver.add_edge(2, 3, 4);
@@ -33,7 +33,7 @@ TEST(DiameterTest, ShouldComputeDiameterOfTrees) {
     TreeDiameter solver(10);
     EXPECT_EQ(10ULL, solver.size());
 
-    // diameter_test_case2
+    // diameter_testcase2
     // tree A
     solver.add_edge(0, 1, 1);
     solver.add_edge(0, 2, 1);

@@ -14,7 +14,7 @@ TEST(LCASegmentTreeTest, CanBuildLater) {
     LCASegmentTree solver;
     EXPECT_EQ(0ULL, solver.size());
 
-    // lca_test_case_1
+    // lca_testcase_1
     vector<vector<size_t>> G(4);
     G[0] = { 1, 2 };
     G[1] = { 0, 3 };
@@ -30,7 +30,7 @@ TEST(LCASegmentTreeTest, CanBuildLater) {
 }
 
 TEST(LCASegmentTreeTest, ShouldComputeLCA) {
-    // lca_test_case2
+    // lca_testcase2
     vector<vector<size_t>> G(9);
     G[0] = { 1, 2, 3 };
     G[1] = { 0, 4, 5 };
