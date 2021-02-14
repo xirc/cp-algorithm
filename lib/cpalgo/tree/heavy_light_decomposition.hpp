@@ -1,7 +1,27 @@
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_5_E
+#pragma once
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <cassert>
+#include <functional>
+#include <stack>
+#include <stdexcept>
+#include <tuple>
+#include <vector>
 
+
+// Heavy Light Decomposition
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - undirected
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_E
+//  - https://onlinejudge.u-aizu.ac.jp/problems/0367
+//  - https://onlinejudge.u-aizu.ac.jp/problems/2667
+//  - https://onlinejudge.u-aizu.ac.jp/problems/2450
+//
 class HeavyLightDecomposition {
     size_t N;
     std::vector<size_t> index, inverse, out, head, heavy, parent, depth, subsize;
@@ -352,221 +372,3 @@ private:
         }
     }
 };
-
-template<class T, class E>
-class SegmentTree {
-public:
-    using value_type_T = T;
-    using value_type_E = E;
-    using F = std::function<T(const T&, const T&)>;
-    using G = std::function<T(const T&, const E&)>;
-    using H = std::function<E(const E&, const E&)>;
-
-protected:
-    F query_op;
-    T query_id;
-    G update_op;
-    H lazy_op;
-    E lazy_id;
-    int N, M;
-    std::vector<T> tree;
-    std::vector<E> lazy;
-
-public:
-    // O(N)
-    SegmentTree(
-        int n,
-        const F& query_op,
-        const T& query_id,
-        const G& update_op,
-        const H& lazy_op,
-        const E& lazy_id
-    )
-        : query_op(query_op)
-        , query_id(query_id)
-        , update_op(update_op)
-        , lazy_op(lazy_op)
-        , lazy_id(lazy_id)
-    {
-        build(std::vector<T>(n, query_id));
-    }
-    // O(N)
-    template <class Query, class Update, class Lazy>
-    SegmentTree(int n, Query query, Update update, Lazy lazy)
-        : SegmentTree(
-            n,
-            std::bind(&Query::operator(), query, std::placeholders::_1, std::placeholders::_2),
-            query.id,
-            std::bind(&Update::operator(), update, std::placeholders::_1, std::placeholders::_2),
-            std::bind(&Lazy::operator(), lazy, std::placeholders::_1, std::placeholders::_2),
-            lazy.id
-        )
-    {
-        // Do nothing
-    }
-    // O(1)
-    int size() {
-        return N;
-    }
-    // O(N log N)
-    void dump(std::vector<T>& buffer) {
-        buffer.clear();
-        for (int i = 0; i < N; ++i) {
-            buffer.push_back(query(i,i+1));
-        }
-    }
-    // O(N)
-    void build(const std::vector<T>& array) {
-        N = array.size();
-        M = N * 4;
-        tree.assign(M, query_id);
-        lazy.assign(M, lazy_id);
-        build(array, 0, 0, N);
-    }
-    // O(log N)
-    // [l,r)
-    T query(int l, int r) {
-        return query(0, 0, N, std::max(l,0), std::min(r,N));
-    }
-    // O(log N)
-    // [l,r)
-    void update(int l, int r, const E& value) {
-        update(0, 0, N, l, r, value);
-    }
-
-protected:
-    static constexpr int left(int v) { return v * 2 + 1; }
-    static constexpr int right(int v) { return v * 2 + 2; }
-    void build(const std::vector<T>& array, int v, int tl, int tr) {
-        if (tr - tl <= 0) return;
-        if (tr - tl == 1) {
-            tree[v] = array[tl];
-        } else {
-            const int tm = (tl + tr) / 2;
-            build(array, left(v), tl, tm);
-            build(array, right(v), tm, tr);
-            tree[v] = query_op(tree[left(v)], tree[right(v)]);
-        }
-    }
-    T query(int v, int tl, int tr, int l, int r) {
-        if (l >= r) {
-            return query_id;
-        }
-        update_lazy(v);
-        if (l == tl && r == tr) {
-            return tree[v];
-        }
-        const int tm = (tl + tr) / 2;
-        const auto lhs = query(left(v), tl, tm, l, std::min(r,tm));
-        const auto rhs = query(right(v), tm, tr, std::max(l,tm), r);
-        return query_op(lhs, rhs);
-    }
-    void update(int v, int tl, int tr, int l, int r, const E& value) {
-        if (l >= r) return;
-        update_lazy(v);
-        if (l == tl && r == tr) {
-            lazy[v] = lazy_op(lazy[v], value);
-            tree[v] = update_op(tree[v], value);
-        } else {
-            const int tm = (tl + tr) / 2;
-            update(left(v), tl, tm, l, std::min(r, tm), value);
-            update(right(v), tm, tr, std::max(l,tm), r, value);
-            tree[v] = query_op(tree[left(v)], tree[right(v)]);
-        }
-    }
-    void update_lazy(int v) {
-        if (left(v) < M) {
-            lazy[left(v)] = lazy_op(lazy[left(v)], lazy[v]);
-            tree[left(v)] = update_op(tree[left(v)], lazy[v]);
-        }
-        if (right(v) < M) {
-            lazy[right(v)] = lazy_op(lazy[right(v)], lazy[v]);
-            tree[right(v)] = update_op(tree[right(v)], lazy[v]);
-        }
-        lazy[v] = lazy_id;
-    }
-};
-
-
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-struct Data {
-    long long value, count;
-    Data(): value(0), count(0) {}
-    Data(long long value): value(value), count(1) {}
-};
-
-struct Query {
-    const Data id = Data();
-    Data operator()(const Data& lhs, const Data& rhs) const {
-        Data ans;
-        ans.value = lhs.value + rhs.value;
-        ans.count = lhs.count + rhs.count;
-        return ans;
-    }
-};
-struct Update {
-    Data operator()(const Data& lhs, long long rhs) const {
-        Data ans;
-        ans.value = lhs.value + lhs.count * rhs;
-        ans.count = lhs.count;
-        return ans;
-    }
-};
-struct Lazy {
-    const long long id = 0;
-    long long operator()(long long lhs, long long rhs) const {
-        return lhs + rhs;
-    }
-};
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-
-    int N, Q;
-    vector<vector<size_t>> adj;
-
-    cin >> N;
-    adj.assign(N, vector<size_t>());
-    for (int i = 0; i < N; ++i) {
-        int k, c;
-        cin >> k;
-        for (int j = 0; j < k; ++j) {
-            cin >> c;
-            adj[i].push_back(c);
-            adj[c].push_back(i);
-        }
-    }
-
-    HeavyLightDecomposition hld(adj, { 0 });
-    SegmentTree<Data, long long> tree(0, Query(), Update(), Lazy());
-    tree.build(vector<Data>(N, Data(0)));
-
-    cin >> Q;
-    for (int i = 0; i < Q; ++i) {
-        int t;
-        cin >> t;
-        if (t == 0) {
-            int v, w;
-            cin >> v >> w;
-            hld.for_each_edge(0, v, [&](int l, int r, bool reverse) {
-                tree.update(l, r, w);
-            });
-        } else if (t == 1) {
-            long long ans = 0;
-            int u;
-            cin >> u;
-            hld.for_each_edge(0, u, [&](int l, int r, bool reverse) {
-                ans += tree.query(l, r).value;
-            });
-            cout << ans << endl;
-        } else throw;
-    }
-
-    return 0;
-}
