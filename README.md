@@ -7,13 +7,14 @@ This project contains my competitive programming library, examples, and solution
 
 ## Library
 
-### [Algebra](/lib/cpalgo/algebra)
+### [Algebra](/lib/cpalgo/algebra/README.md)
 
-* Binary Exponentiation
-* Binomial Coefficient (nCk)
-* Extended Euclidean Algorithm
-* GCD, LCM, Binary GCD
-* Prime Factorization
+* [Greatest Common Divisor](/lib/cpalgo/algebra/README.md#Greatest-CommonDivisor)
+* [Least Common Multiple](/lib/cpalgo/algebra/README.md#Least-Common-Multiple)
+* [Binary Exponentiation](lib/cpalgo/algebra/README.md#Binary-Exponentiation)
+* [Prime Factorization](lib/cpalgo/algebra/README.md#Prime-Factorization)
+* [Binomial Coefficients](lib/cpalgo/algebra/README.md#Binomial-Coefficients)
+* [Extended Euclidean Algorithm](lib/cpalgo/algebra/README.md#Extended-Euclidean-Algorithm)
 
 ### [Geometry (2D)](/lib/cpalgo/geometry)
 
