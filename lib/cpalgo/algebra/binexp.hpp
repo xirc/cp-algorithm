@@ -4,7 +4,7 @@
 #include <functional>
 
 
-// Binary Exponentation
+// Binary Exponentiation
 //
 // Time: O(log(N))
 // Space: O(1)
