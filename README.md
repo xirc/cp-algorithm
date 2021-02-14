@@ -9,7 +9,7 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Algebra](/lib/cpalgo/algebra)
 
-* Binary Exponentation
+* Binary Exponentiation
 * Binomial Coefficient (nCk)
 * Extended Euclidean Algorithm
 * GCD, LCM, Binary GCD
@@ -121,34 +121,25 @@ This project contains my competitive programming library, examples, and solution
 
 ## How to provision development environment
 
-Use _Visual Studio Remote Containers_  
-https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
-
+Use [Visual Studio Remote Containers*](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
 ## How to build library and examples
 
 See [lib/README.md](lib/README.md)
 
 
-## References & Learning sites
+## References
 
-### English
-* Topcoder Competitive Programming Tutorials  
-<https://www.topcoder.com/community/competitive-programming/tutorials/>
-* E-Maxx Algorithms in English  
-<https://cp-algorithms.com/>
-* SecondThread  
-<https://www.youtube.com/channel/UCXbCohpE9IoVQUD2Ifg1d1g?>
+* [cplusplus.com](http://www.cplusplus.com/reference/)
 
-### Japanese
-* アルゴリズムロジック  
-<https://algo-logic.info/>
-* 各種アルゴリズムの C++ による実装  
-<http://www.prefield.com/algorithm/>
+## Learning sites
 
-### References
-
-* <http://www.cplusplus.com/reference/>
+* [Topcoder Competitive Programming Tutorials](https://www.topcoder.com/community/competitive-programming/tutorials/)
+* [E-Maxx Algorithms in English](https://cp-algorithms.com/)
+* [Top 10 Algorithms and Data Structures for Competitive Programming | GeekforGeeks](https://www.geeksforgeeks.org/top-algorithms-and-data-structures-for-competitive-programming/)
+* [SecondThread](https://www.youtube.com/channel/UCXbCohpE9IoVQUD2Ifg1d1g?)
+* [アルゴリズムロジック](https://algo-logic.info/)
+* [各種アルゴリズムの C++ による実装](http://www.prefield.com/algorithm/)
 
 
 ## Tips
