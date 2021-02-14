@@ -137,6 +137,8 @@ See [lib/README.md](lib/README.md)
 <https://www.topcoder.com/community/competitive-programming/tutorials/>
 * E-Maxx Algorithms in English  
 <https://cp-algorithms.com/>
+* Top 10 Algorithms and Data Structures for Competitive Programming | GeekforGeeks  
+<https://www.geeksforgeeks.org/top-algorithms-and-data-structures-for-competitive-programming/>
 * SecondThread  
 <https://www.youtube.com/channel/UCXbCohpE9IoVQUD2Ifg1d1g?>
 
