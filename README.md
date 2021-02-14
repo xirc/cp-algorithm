@@ -9,7 +9,7 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Algebra](/lib/cpalgo/algebra)
 
-* Binary Exponentation
+* Binary Exponentiation
 * Binomial Coefficient (nCk)
 * Extended Euclidean Algorithm
 * GCD, LCM, Binary GCD
