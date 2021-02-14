@@ -3,32 +3,27 @@
 #include <cmath>
 #include <memory>
 #include "template/template-main.hpp"
-#include "cpalgo/tree/heavy-light-decomposition.hpp"
+#include "cpalgo/tree/heavy_light_decomposition.hpp"
 
 using namespace std;
 
 using HLD = shared_ptr<HeavyLightDecomposition>;
-vector<vector<int>> adj;
+vector<vector<size_t>> adj;
 HLD solver = nullptr;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
-    adj.assign(size, vector<int>());
+    adj.assign(size, vector<size_t>());
     solver = nullptr;
     cout << "true" << endl;
 }
 
 void action_edge() {
-    const int N = adj.size();
-    int u, v;
+    const size_t N = adj.size();
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= N ||
-        v < 0 || v >= N)
+    if (u >= N || v >= N)
     {
         cout << "false" << endl;
         return;
@@ -40,11 +35,10 @@ void action_edge() {
 }
 
 void action_query() {
-    const int N = adj.size();
-    int u, v;
+    const size_t N = adj.size();
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= N ||
-        v < 0 || v >= N)
+    if (u >= N || v >= N)
     {
         cout << "false" << endl;
         return;
@@ -58,35 +52,35 @@ void action_query() {
     cout << "Distance: " << solver->distance(u, v) << endl;
 
     cout << "index:  ";
-    for (int i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         if (i > 0) cout << " ";
         cout << setw(floor(log10(N))+1) << i;
     }
     cout << endl;
 
     cout << "vertex: ";
-    for (int i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         if (i > 0) cout << " ";
         cout << setw(floor(log10(N))+1) << solver->get_vertex(i);
     }
     cout << endl;
 
-    cout << "ForEach-SubtreeVertex:";
-    solver->for_each_subtree_vertex(u, [&](int l, int r) { cout << " u:(" << l << "," << r << ")"; });
-    solver->for_each_subtree_vertex(v, [&](int l, int r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << "ForSubtreeVertex:";
+    solver->for_subtree_vertex(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_subtree_vertex(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
     cout << endl;
 
-    cout << "ForEach-SubtreeEdge:";
-    solver->for_each_subtree_edge(u, [&](int l, int r) { cout << " u:(" << l << "," << r << ")"; });
-    solver->for_each_subtree_edge(v, [&](int l, int r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << "ForSubtreeEdge:";
+    solver->for_subtree_edge(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_subtree_edge(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
     cout << endl;
 
-    cout << "ForEach-Vertex:";
-    solver->for_each_vertex(u, v, [&](int l, int r) { cout << " (" << l << "," << r << ")"; });
+    cout << "ForEachVertex:";
+    solver->for_each_vertex(u, v, [&](size_t l, size_t r, bool reverse) { cout << " (" << l << "," << r << "," << (reverse ? "r" : "f") << ")"; });
     cout << endl;
 
-    cout << "ForEach-Edge:";
-    solver->for_each_edge(u, v, [&](int l, int r) { cout << " (" << l << "," << r << ")"; });
+    cout << "ForEachEdge:";
+    solver->for_each_edge(u, v, [&](size_t l, size_t r, bool reverse) { cout << " (" << l << "," << r << "," << (reverse ? "r" : "f") << ")"; });
     cout << endl;
 }
 

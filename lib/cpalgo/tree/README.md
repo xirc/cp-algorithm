@@ -55,9 +55,12 @@ We can compute *Euler Tour Representation* in `O(V)` where `V` is the number of 
 
 
 ## Heavy Light Decomposition
-🚧 WIP
+*Heavy Light Decomposition (HLD)* is a way to perform queries on a tree in logarithmic time.
+*HLD* converts from a tree to linearised tree.
 
-[Heavy Light Decomposition | C++ code](heavy-light-decomposition.hpp)
+[Heavy Light Decomposition | C++ code](heavy_light_decomposition.hpp)
+
+![Heavy Light Decomposition](resources/heavy_light_decomposition.drawio.svg)
 
 ### References in English
 
