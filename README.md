@@ -9,7 +9,7 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Algebra](/lib/cpalgo/algebra/README.md)
 
-* [Greatest Common Divisor](/lib/cpalgo/algebra/README.md#Greatest-CommonDivisor)
+* [Greatest Common Divisor](/lib/cpalgo/algebra/README.md#Greatest-Common-Divisor)
 * [Least Common Multiple](/lib/cpalgo/algebra/README.md#Least-Common-Multiple)
 * [Binary Exponentiation](lib/cpalgo/algebra/README.md#Binary-Exponentiation)
 * [Prime Factorization](lib/cpalgo/algebra/README.md#Prime-Factorization)
