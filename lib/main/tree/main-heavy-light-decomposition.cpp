@@ -65,22 +65,22 @@ void action_query() {
     }
     cout << endl;
 
-    cout << "ForEach-SubtreeVertex:";
-    solver->for_each_subtree_vertex(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
-    solver->for_each_subtree_vertex(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << "ForSubtreeVertex:";
+    solver->for_subtree_vertex(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_subtree_vertex(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
     cout << endl;
 
-    cout << "ForEach-SubtreeEdge:";
-    solver->for_each_subtree_edge(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
-    solver->for_each_subtree_edge(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
+    cout << "ForSubtreeEdge:";
+    solver->for_subtree_edge(u, [&](size_t l, size_t r) { cout << " u:(" << l << "," << r << ")"; });
+    solver->for_subtree_edge(v, [&](size_t l, size_t r) { cout << " v:(" << l << "," << r << ")"; });
     cout << endl;
 
-    cout << "ForEach-Vertex:";
-    solver->for_each_vertex(u, v, [&](size_t l, size_t r) { cout << " (" << l << "," << r << ")"; });
+    cout << "ForEachVertex:";
+    solver->for_each_vertex(u, v, [&](size_t l, size_t r, bool reverse) { cout << " (" << l << "," << r << "," << (reverse ? "r" : "f") << ")"; });
     cout << endl;
 
-    cout << "ForEach-Edge:";
-    solver->for_each_edge(u, v, [&](size_t l, size_t r) { cout << " (" << l << "," << r << ")"; });
+    cout << "ForEachEdge:";
+    solver->for_each_edge(u, v, [&](size_t l, size_t r, bool reverse) { cout << " (" << l << "," << r << "," << (reverse ? "r" : "f") << ")"; });
     cout << endl;
 }
 
