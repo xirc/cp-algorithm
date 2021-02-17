@@ -15,6 +15,9 @@
 // Every loop reduces solution space by half.
 // It would be better to pick a suitable loop count depending on a problem.
 //
+// Verified:
+// - https://atcoder.jp/contests/abc034/tasks/abc034_d
+//
 inline long double binary_search_f(
     std::function<bool(long double)> const& predicate,
     long double ng,
