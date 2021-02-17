@@ -1,5 +1,20 @@
 #include <bits/stdc++.h>
 
+inline long double binary_search_f(
+    std::function<bool(long double)> const& predicate,
+    long double ng,
+    long double ok,
+    const size_t N = 200
+) {
+    assert(!predicate(ng) && predicate(ok));
+    for (size_t i = 0; i < N; ++i) {
+        auto m = (ok + ng) / 2;
+        if (predicate(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+
 using namespace std;
 using ll = int64_t;
 using lf = long double;
@@ -23,6 +38,7 @@ bool pass(lf pth) {
     return u - 1e-8 > 0;
 }
 
+
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
@@ -34,15 +50,8 @@ int main() {
     }
 
     lf ok = 0.0, ng = 200.0;
-    for (int i = 0; i < 400; ++i) {
-        lf m = (ok + ng) / 2.0;
-        if (pass(m)) {
-            ok = m;
-        } else {
-            ng = m;
-        }
-    }
-    cout << fixed << setprecision(6) << ok << endl;
+    auto ans = binary_search_f(pass, ng, ok, 400);
+    cout << fixed << setprecision(6) << ans << endl;
 
     return 0;
 }
