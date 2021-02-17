@@ -74,6 +74,8 @@ The order of elements picked up is not taken into account.
 - [競プロでよく使う二項係数(nCk)を素数(p)で割った余りの計算と逆元のまとめ | アルゴリズムロジック](https://algo-logic.info/combination/)
 
 ### Challenges
+- [経路 - AtCoder ABC034C](https://atcoder.jp/contests/abc034/tasks/abc034_c)
+- [Maximum Average Sets - AtCoder ABC057D](https://atcoder.jp/contests/abc057/tasks/abc057_d)
 - [Factorization - AtCoder ABC110D](https://atcoder.jp/contests/abc110/tasks/abc110_d)
 
 

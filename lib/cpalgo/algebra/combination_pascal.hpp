@@ -23,7 +23,7 @@
 // - https://algo-logic.info/combination/#toc_id_1_3
 //
 // Verified
-// - https://atcoder.jp/contests/abc110/tasks/057D
+// - https://atcoder.jp/contests/abc057/tasks/abc057_d
 //
 class CombinationPascal {
     size_t N;
