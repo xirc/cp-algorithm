@@ -20,6 +20,7 @@
 // - https://algo-logic.info/combination/#toc_id_1_1
 //
 // Verified
+// - https://atcoder.jp/contests/abc034/tasks/abc034_c
 // - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
 class CombinationBasic {
