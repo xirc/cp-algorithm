@@ -10,12 +10,7 @@ int main() {
     int A, B, C;
     cin >> A >> B >> C;
 
-    int ans = 0;
-    int mx = C / A;
-    for (int x = 0; x <= mx; ++x) {
-        int y = (C - A * x ) / B;
-        ans = max(ans, x + y);
-    }
+    int ans = C / min(A,B);
     cout << ans << endl;
 
     return 0;
