@@ -16,7 +16,7 @@
 //  - no-self-loop
 //
 // Verified
-//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_3_A
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_3_A
 //
 class ArticulationPoints {
     struct edge { size_t id, to; };
