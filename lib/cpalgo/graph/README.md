@@ -1,7 +1,20 @@
 # Graph Algorithms
 
 ## Articulation Points
-🚧
+An articulation Point (or a cut vertex) is a vertex.
+If we remove the vertex from a graph, it makes the graph disconnected.
+A graph may have zero or more articulation points.
+We can find all articulation points of a given graph in `O(V + E)`.
+
+![Articulation Points](resources/articulation_points.drawio.svg)
+
+[Articulation Points | C++ code](articulation_points.hpp)
+
+## References in English
+- [Finding articulation points in a graph in O(N+M) | E-Maxx Algorithms in English](https://cp-algorithms.com/graph/cutpoints.html)
+
+### Challenges
+- [Articulation Points | AOJ GRL3A](https://onlinejudge.u-aizu.ac.jp/problems/GRL_3_A)
 
 
 ## Bridges

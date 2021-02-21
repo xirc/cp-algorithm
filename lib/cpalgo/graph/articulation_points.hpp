@@ -1,7 +1,23 @@
-// https://onlinejudge.u-aizu.ac.jp/problems/GRL_3_A
+#pragma once
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <stdexcept>
+#include <vector>
 
+// Articulation Points of a Graph
+//
+// Complexity
+// Time: O(V + E)
+// Space: O(V + E)
+//
+// NOTE:
+//  - undirected
+//  - multi-edge
+//  - no-self-loop
+//
+// Verified
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_3_A
+//
 class ArticulationPoints {
     struct edge { size_t id, to; };
 
@@ -49,17 +65,20 @@ private:
         size_t childlen = 0;
         tin[u] = low[u] = K++;
         for (auto const& e : adj[u]) {
-            if (tin[e.to] == N) {
+            if (tin[e.to] == N) { // not visited
                 dfs(e.to, e);
+                // tree edge
                 low[u] = std::min(low[u], low[e.to]);
                 ++childlen;
+                // u is not root and has no back edge
                 if (ein.id != M && tin[u] <= low[e.to]) {
                     is_cutpoint = true;
                 }
-            } else if (e.id != ein.id) {
+            } else if (e.id != ein.id) { // back edge
                 low[u] = std::min(low[u], tin[e.to]);
             }
         }
+        // Is root a articulation point?
         if (ein.id == M && childlen > size_t(1)) {
             is_cutpoint = true;
         }
@@ -68,28 +87,3 @@ private:
         }
     }
 };
-
-using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-    int V, E;
-    cin >> V >> E;
-
-    ArticulationPoints solver(V);
-    for (int i = 0; i < E; ++i) {
-        int s, t;
-        cin >> s >> t;
-        solver.add_edge(s, t);
-    }
-
-    auto ans = solver.solve();
-    sort(ans.begin(), ans.end());
-    for (auto v : ans) {
-        cout << v << endl;
-    }
-
-    return 0;
-}
