@@ -65,17 +65,20 @@ private:
         size_t childlen = 0;
         tin[u] = low[u] = K++;
         for (auto const& e : adj[u]) {
-            if (tin[e.to] == N) {
+            if (tin[e.to] == N) { // not visited
                 dfs(e.to, e);
+                // tree edge
                 low[u] = std::min(low[u], low[e.to]);
                 ++childlen;
+                // u is not root and has no back edge
                 if (ein.id != M && tin[u] <= low[e.to]) {
                     is_cutpoint = true;
                 }
-            } else if (e.id != ein.id) {
+            } else if (e.id != ein.id) { // back edge
                 low[u] = std::min(low[u], tin[e.to]);
             }
         }
+        // Is root a articulation point?
         if (ein.id == M && childlen > size_t(1)) {
             is_cutpoint = true;
         }
