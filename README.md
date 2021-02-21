@@ -82,34 +82,39 @@ This project contains my competitive programming library, examples, and solution
 * [Height](/lib/cpalgo/tree/README.md#Height)
 * [Lowest Common Ancestor](/lib/cpalgo/tree/README.md#Lowest-Common-Ancestor)
 
-### [Graph](/lib/cpalgo/graph)
+### [Graph](/lib/cpalgo/graph/README.md)
 
-* Articulation Points
-* Bellman Ford  
-  Single Source Shortest Path (with Negative Weight)
+* [Articulation Points](/lib/cpalgo/graph/README.md#Articulation-Points)
+* [Bridges](/lib/cpalgo/graph/README.md#Bridges)
+* [Topological Sort](/lib/cpalgo/graph/README.md#Topological-Sort)
+* [Strongly Connected Components](/lib/cpalgo/graph/README.md#Strongly-Connected-Components)
+* Single-Source Shortest Path
+  * [Dijkstra](/lib/cpalgo/graph/README.md#Dijkstra)  
+    Support Only Positive Weights
+  * [Bellman-Ford](/lib/cpalgo/graph/README.md#Bellman-Ford)  
+    Support Negative Weights
+  * [SPFA](/lib/cpalgo/graph/README.md#SPFA)  
+    Support Negative Weights
+* All-Pairs Shortest Path
+  * [Floyd-Warshall](/lib/cpalgo/graph/README.md#Floyd-Warshall)
 * Bipartite
-  * Check
-  * Matching
-* Bridges
-* Dijkstra  
-  Single Source Shortest Path (with Only Positive Weight)
-* Finding Cycle
-* Floyd Warshall  
-  All Pairs Shortest Path
-* Minimum Spanning Tree
-* Minimum Cost Arborescence
-* Maximum Flow  
+  * [Bipartite Check](/lib/cpalgo/graph/README.md#Bipartite-Check)
+  * [Bipartite Maximum Matching](/lib/cpalgo/graph/README.md#Bipartite-Maximum-Matching)
+* Cycle
+  * [Finding Cycle](/lib/cpalgo/graph/README.md#Finding-Cycle)
+  * [Finding Negative Cycle](/lib/cpalgo/graph/README.md#Finding-Negative-Cycle)
+    * Floyed-Warshall
+    * Bellman-Ford
+* [Minimum Spanning Tree](/lib/cpalgo/graph/README.md#Minimum-Spanning-Tree)
+* [Minimum Cost Arborescence](/lib/cpalgo/graph/README.md#Minimum-Cost-Arborescence)
+* [Maximum Flow](/lib/cpalgo/graph/README.md#Maximum-Flow)
   * Dinic
   * Edmonds-Karp
   * MPM
-  * Preflow Push Relabel (generic)
-  * Preflow Push Relabel (highest)
-* Minimum Cost Flow
-* Finding Negative Cycle
-  * Bellman Ford
-  * Floyd Warshall
-* Strongly Connected Components
-* Topological Sort
+  * Push Relabel (Generic)
+  * Push Relabel (Highest)
+* [Minimum Cut](/lib/cpalgo/graph/README.md#Minimum-Cut)
+* [Minimum Cost Flow](/lib/cpalgo/graph/README.md#Minimum-Cost-Flow)
 
 ### [Utilities](/lib/cpalgo/util)
 
