@@ -49,8 +49,9 @@ We can find all articulation points of a given graph in `O(V + E)`.
 ### Floyd-Warshall
 🚧
 
-### challenges
+### Challenges
 - [正直者の高橋くん - AtCoder ABC021C](https://atcoder.jp/contests/abc021/tasks/abc021_c)
+- [Blue Bird - AtCoder ABC022C](https://atcoder.jp/contests/abc022/tasks/abc022_c)
 
 
 ## Bipartite
