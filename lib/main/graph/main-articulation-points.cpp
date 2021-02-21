@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/graph/articulation-points.hpp"
+#include "cpalgo/graph/articulation_points.hpp"
 
 using namespace std;
 
