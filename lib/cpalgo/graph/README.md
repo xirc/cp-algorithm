@@ -5,6 +5,7 @@ An articulation Point (or a cut vertex) is a vertex.
 If we remove the vertex from a graph, it makes the graph disconnected.
 A graph may have zero or more articulation points.
 We can find all articulation points of a given graph in `O(V + E)`.
+`V` is the number of nodes. `E` is the number of edges.
 
 ![Articulation Points](resources/articulation_points.drawio.svg)
 

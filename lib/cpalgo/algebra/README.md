@@ -61,7 +61,7 @@ Binomial coefficients `(n,k)` are the number of ways to pick a set of `k` elemen
 The order of elements picked up is not taken into account.
 
 - [Binomial Coefficients using Pascal's Triangle | C++ code](combination_pascal.hpp)  
-  - Precomputation in `O(N*2)`
+  - Precomputation in `O(N**2)`
   - Calculation in `O(1)`
 - [Binomial Coefficients in Modulo | C++ code](combination_basic.hpp)  
   - Precomputation in `O(N)`
@@ -94,6 +94,7 @@ H(n,k) = C(n+k-1,k)
 
 ## Extended Euclidean Algorithm
 *Extended Euclidean Algorithm* is a way to compute a integer solution `(x,y)` of `ax + by = gcd(a,b)`.
+We can compute the solution in `O(log(min(a,b)))`.
 
 - [Extended Euclidean Algorithm (iterative solution) | C++ code](extgcd_iterative.hpp)
 - [Extended Euclidean Algorithm (recursive solution) | C++ code](extgcd_recursive.hpp)
