@@ -73,6 +73,18 @@ The order of elements picked up is not taken into account.
 ### References in Japanese
 - [競プロでよく使う二項係数(nCk)を素数(p)で割った余りの計算と逆元のまとめ | アルゴリズムロジック](https://algo-logic.info/combination/)
 
+### Combination with repetition
+[Number of combinations with repetition | Combination - Wikipedia](https://en.wikipedia.org/wiki/Combination#Number_of_combinations_with_repetition)
+
+```math
+((n, k)) = (n + k - 1, k)
+```
+```math
+H(n,k) = C(n+k-1,k)
+```
+
+![Combination with repetition](resources/combination_with_repetition.drawio.svg)
+
 ### Challenges
 - [多重ループ - AtCoder ABC021D](https://atcoder.jp/contests/abc021/tasks/abc021_d)
 - [経路 - AtCoder ABC034C](https://atcoder.jp/contests/abc034/tasks/abc034_c)
