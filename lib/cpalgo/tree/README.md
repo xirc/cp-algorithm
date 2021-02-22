@@ -23,7 +23,8 @@ We can calculate *Diameter* in `O(V)`. `V` is the number of nodes.
 ## Height
 *Height of a tree* is a max distance between a root node and another node in a tree.
 *Height* is dependent on a root node we picked up.
-Using *Diameter*, we can calculate all heights of a tree against any root node efficiently. The time complexity is `O(V)`. `V` is the number of nodes.
+Using *Diameter*, we can calculate all heights of a tree against any root node efficiently.
+The time complexity is `O(V)`. `V` is the number of nodes.
 
 [Height of Tree | C++ code](height.hpp)
 
@@ -56,7 +57,7 @@ We can compute *Euler Tour Representation* in `O(V)` where `V` is the number of 
 
 ## Heavy Light Decomposition
 *Heavy Light Decomposition (HLD)* is a way to perform queries on a tree in logarithmic time.
-*HLD* converts from a tree to linearised tree.
+*HLD* converts from a tree to a linearised tree.
 
 [Heavy Light Decomposition | C++ code](heavy_light_decomposition.hpp)
 
