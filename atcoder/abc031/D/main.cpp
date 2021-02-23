@@ -7,6 +7,7 @@ using ff = long double;
 int K, N;
 vector<int> vs;
 vector<string> ss;
+vector<vector<int>> ds;
 
 vector<int> digits(int v) {
     vector<int> ans;
@@ -18,48 +19,43 @@ vector<int> digits(int v) {
     return ans;
 }
 
-bool try_solve(vector<int> const& d, int i, string const& s, int j, vector<string>& mp, set<vector<string>>& ans) {
-    if (i == (int)d.size() && j == (int)s.size()) {
-        ans.insert(mp);
-        return true;
-    }
-    if (i == (int)d.size()) return false;
-    if (j == (int)s.size()) return false;
-
-    if (mp[d[i]] != "") {
-        auto w = mp[d[i]];
-        if (j + (int)w.size() - 1 >= (int)s.size()) return false;
-        for (auto c : w) {
-            if (s[j] != c) return false;
-            ++j;
+vector<string> try_solve(vector<int>& ls, int i) {
+    if (i < ls.size()) {
+        for (int c = 1; c <= 3; ++c) {
+            ls[i] = c;
+            auto ans = try_solve(ls, i+1);
+            if (ans.size() > 0) return ans;
         }
-        return try_solve(d, i + 1, s, j, mp, ans);
+        return {};
     }
 
-    bool found = false;
-    for (int k = 0; k < 3; ++k) {
-        if (j + k >= (int)s.size()) continue;
-        auto w = s.substr(j, k+1);
-        mp[d[i]] = w;
-        found |= try_solve(d, i + 1, s, j + k + 1, mp, ans);
-        mp[d[i]] = "";
+    vector<string> mp(K, "");
+    for (int k = 0; k < N; ++k) {
+        auto s = ss[k];
+        auto d = ds[k];
+        int j = 0;
+        for (auto v : d) {
+            int len = ls[v-1];
+            if (j + len > (int)s.size()) {
+                return {};
+            }
+            auto w = s.substr(j, len);
+            j += len;
+            if (mp[v-1] == "") {
+                mp[v-1] = w;
+            } else if (mp[v-1] != w) {
+                return {};
+            }
+        }
+        if (j < s.size()) return {};
     }
-    return found;
+    return mp;
 }
 
 vector<string> solve() {
-    set<vector<string>> cs, ns;
-    cs.insert(vector<string>(10, ""));
-    for (int i = 0; i < N; ++i) {
-        auto d = digits(vs[i]);
-        auto s = ss[i];
-        ns.clear();
-        for (auto mp : cs) {
-            try_solve(d, 0, s, 0, mp, ns);
-        }
-        swap(ns, cs);
-    }
-    return *cs.begin();
+    for (auto v : vs) ds.push_back(digits(v));
+    vector<int> ls(K, 0);
+    return try_solve(ls, 0);
 }
 
 int main() {
@@ -73,8 +69,9 @@ int main() {
         cin >> vs[i] >> ss[i];
     }
     auto ans = solve();
+    assert(ans.size() == K);
     for (int i = 0; i < K; ++i) {
-        cout << ans[i+1] << endl;
+        cout << ans[i] << endl;
     }
 
     return 0;
