@@ -4,15 +4,14 @@ using namespace std;
 using ll = int64_t;
 using ff = long double;
 
-int sqrti(int X) {
-    for (int r = 1; ll(r) * r <= X; ++r) {
-        if (r * r == X) return r;
+int solve(int X) {
+    int const N = 200;
+    for (int i = 1; i < N; ++i) {
+        if (ll(i) * i * i * i == X) {
+            return i;
+        }
     }
     throw;
-}
-
-int solve(int X) {
-    return sqrti(sqrti(X));
 }
 
 int main() {
