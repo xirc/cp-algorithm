@@ -60,19 +60,18 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Data Structures](/lib/cpalgo/ds)
 
-* Binary Indexed Tree (Fenwick Tree)
-* Cartesian Tree
-* Disjoint Sparse Table
-* Heap
-* Implicit Treap
-* Queue
-* Segment Tree
-* Sparse Table
-* Sqrt Decomposition
-* Stack
-* Treap
-* Union Find Tree (Disjoint Set Union)
-* kD Tree (n-dimensional)
+* [Disjoint Set Union](/lib/cpalgo/ds/README.md#Disjoint-Set-Union)
+* [Binary Indexed Tree](/lib/cpalgo/ds/README.md#Binary-Indexed-Tree)
+* [Minimum Queue](/lib/cpalgo/ds/README.md#Minimum-Queue)
+* [Minimum Stack](/lib/cpalgo/ds/README.md#Minimum-Stack)
+* [Randomized Heap](/lib/cpalgo/ds/README.md#Randomized-Heap)
+* [Segment Tree](/lib/cpalgo/ds/README.md#Segment-Tree)
+* [Sqrt Decomposition](/lib/cpalgo/ds/README.md#Sqrt-Decomposition)
+* [Sparse Table](/lib/cpalgo/ds/README.md#Sparse-Table)
+* [Disjoint Sparse Table](/lib/cpalgo/ds/README.md#Disjoint-Sparse-Table)
+* [Treap](/lib/cpalgo/ds/README.md#Treap)
+* [Implicit Treap](/lib/cpalgo/ds/README.md#Implicit-Treap)
+* [kD Tree (n-dimensional)](/lib/cpalgo/ds/README.md#kD-Tree)
 
 ### [Tree](/lib/cpalgo/tree/README.md)
 
