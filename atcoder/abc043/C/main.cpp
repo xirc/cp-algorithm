@@ -16,15 +16,11 @@ int main() {
     for (auto &ai : A) cin >> ai;
 
     int ans = 200 * 200 * 100;
-    int sum = accumulate(A.begin(), A.end(), 0, plus<int>());
-    int avg1 = sum / N;
-    int avg2 = (sum + N - 1) / N;
-    ans = min(ans, accumulate(A.begin(), A.end(), 0, [&](auto acc, auto v) {
-        return acc + (v - avg1) * (v - avg1);
-    }));
-    ans = min(ans, accumulate(A.begin(), A.end(), 0, [&](auto acc, auto v) {
-        return acc + (v - avg2) * (v - avg2);
-    }));
+    for (int X = -100; X <= 100; X++) {
+        int sum = 0;
+        for (int ai : A) sum += (ai - X) * (ai - X);
+        ans = min(ans, sum);
+    }
     cout << ans << endl;
 
     return 0;
