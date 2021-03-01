@@ -10,12 +10,7 @@ int main() {
 
     int N;
     cin >> N;
-
-    int candies = 0;
-    for (int i = 1; i <= N; ++i) {
-        candies += i;
-    }
-    cout << candies << endl;
+    cout << N * (N+1) / 2 << endl;
 
     return 0;
 }
