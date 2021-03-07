@@ -9,17 +9,9 @@ vector<int> A;
 
 int solve() {
     vector<int> DPmax(N, 0);
-    vector<int> DPcount(N, 0);
     DPmax[N-1] = A[N-1];
-    DPcount[N-1] = 1;
     for (int i = N - 2; i >= 0; --i) {
         DPmax[i] = max(A[i], DPmax[i+1]);
-        DPcount[i] = DPcount[i+1];
-        if (A[i] == DPmax[i+1]) {
-            DPcount[i] += 1;
-        } else if (A[i] > DPmax[i+1]) {
-            DPcount[i] = 1;
-        }
     }
 
     vector<int> is;
@@ -35,12 +27,7 @@ int solve() {
         }
     }
     assert((int)is.size() > 0);
-
-    int ans = 0;
-    for (auto i : is) {
-        ans += DPcount[i+1];
-    }
-    return ans;
+    return is.size();
 }
 
 int main() {
