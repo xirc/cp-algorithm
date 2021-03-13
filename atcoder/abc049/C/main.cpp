@@ -1,28 +1,29 @@
 #include <bits/stdc++.h>
 
 using namespace std;
+using ll = int64_t;
+using ff = long double;
 
 bool solve(string const& S) {
-    const int N = S.size();
-    vector<string> D = { "dream", "dreamer", "erase", "eraser" };
-    vector<bool> DP(N, false);
-    for (int i = 0; i < N; ++i) {
-        if (i != 0 && !DP[i-1]) continue;
-        for (auto w : D) {
-            if (i + w.size() - 1 >= N) continue;
+    vector<bool> pass(S.size(), false);
+    vector<string> const dict = { "dream", "dreamer", "erase", "eraser" };
+    for (int i = 0; i < (int)S.size(); ++i) {
+        if (i > 0 && !pass[i-1]) continue;
+        for (auto word : dict) {
+            if (i + word.size() > S.size()) continue;
             bool match = true;
-            for (int j = 0; j < w.size(); ++j) {
-                if (S[i+j] != w[j]) {
+            for (int j = 0; j < (int)word.size(); ++j) {
+                if (S[i+j] != word[j]) {
                     match = false;
                     break;
                 }
             }
             if (match) {
-                DP[i+w.size()-1] = true;
+                pass[i+word.size()-1] = true;
             }
         }
     }
-    return DP[N-1];
+    return pass[S.size()-1];
 }
 
 int main() {
