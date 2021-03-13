@@ -117,12 +117,10 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Utilities](/lib/cpalgo/util)
 
-* bigint  
-  Big Integer (not well-tested)
-* dice
-* two pointers  
+* [Two Pointers](/lib/cpalgo/util/README.md#Two-Pointers)  
   "しゃくとり法" in Japanese
-
+* [BigInt](/lib/cpalgo/util/README.md#BigInt)
+* [Dice](/lib/cpalgo/util/README.md#Dice)
 
 ## How to provision development environment
 
