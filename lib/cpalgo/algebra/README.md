@@ -88,6 +88,7 @@ H(n,k) = C(n+k-1,k)
 ### Challenges
 - [多重ループ - AtCoder ABC021D](https://atcoder.jp/contests/abc021/tasks/abc021_d)
 - [経路 - AtCoder ABC034C](https://atcoder.jp/contests/abc034/tasks/abc034_c)
+- [いろはちゃんとマス目 - AtCoder ABC042D](https://atcoder.jp/contests/abc042/tasks/arc058_b)
 - [Maximum Average Sets - AtCoder ABC057D](https://atcoder.jp/contests/abc057/tasks/abc057_d)
 - [Factorization - AtCoder ABC110D](https://atcoder.jp/contests/abc110/tasks/abc110_d)
 
