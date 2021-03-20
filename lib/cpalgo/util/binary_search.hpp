@@ -13,6 +13,9 @@
 // See:
 //  - https://qiita.com/drken/items/97e37dd6143e33a64c8c
 //
+// Verified:
+// - https://atcoder.jp/contests/abc063/tasks/arc075_b
+//
 inline int64_t binary_search(
     std::function<bool(int64_t)> const& predicate,
     int64_t ng,
