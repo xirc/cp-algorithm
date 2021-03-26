@@ -14,6 +14,19 @@
 - [単調増加 - AtCoder ABC038C](https://atcoder.jp/contests/abc038/tasks/abc038_c)
 
 
+## Binary Search
+*Binary Search* is an algorithm technique that reduces solution space by half at one iteration.
+Although Binary Search often is used in which we search a specific value in a given sorted array, it is not limited.
+We can use this technique in many problems. It's a pretty powerful technique.
+
+[Binary Search (Integer) | C++ code](binary-search.hpp)
+[Binary Search (Double) | C++ code](binary-search_f.hpp)
+
+### Challenges
+- [食塩水](https://atcoder.jp/contests/abc034/tasks/abc034_d)
+- [Widespread](https://atcoder.jp/contests/abc063/tasks/arc075_b)
+
+
 ## Dice
 🚧WIP
 

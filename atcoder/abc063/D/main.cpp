@@ -1,12 +1,26 @@
 #include <bits/stdc++.h>
 
+inline int64_t binary_search(
+    std::function<bool(int64_t)> const& predicate,
+    int64_t ng,
+    int64_t ok
+) {
+    assert(!predicate(ng) && predicate(ok));
+    while (abs(ok - ng) > 1) {
+        auto m = (ok + ng) / 2;
+        if (predicate(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+
 using namespace std;
-using ll = long long;
+using ll = int64_t;
 
 int N, A, B;
 vector<int> H;
 
-bool is_ok(const ll M) {
+bool satisfy(const ll M) {
     int mxh = *max_element(H.begin(), H.end());
     if (mxh / B < M) return true; // prevent an overflow
     assert(B * M <= mxh);
@@ -25,17 +39,8 @@ bool is_ok(const ll M) {
 }
 
 ll solve() {
-    ll low = 0, high = 1e15;
-    assert(!is_ok(low) && is_ok(high));
-    while (high - low > 1) {
-        auto m = low + (high - low) / 2;
-        if (is_ok(m)) {
-            high = m;
-        } else {
-            low = m;
-        }
-    }
-    return high;
+    ll ng = 0, ok = 1e15;
+    return binary_search(satisfy, ng, ok);
 }
 
 int main() {
