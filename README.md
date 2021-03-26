@@ -117,6 +117,7 @@ This project contains my competitive programming library, examples, and solution
 
 ### [Utilities](/lib/cpalgo/util)
 
+* [Binary Search](/lib/cpalgo/util/README.md#Binary-Search)
 * [Two Pointers](/lib/cpalgo/util/README.md#Two-Pointers)  
   "しゃくとり法" in Japanese
 * [BigInt](/lib/cpalgo/util/README.md#BigInt)
