@@ -1,5 +1,19 @@
 #include <bits/stdc++.h>
 
+inline int64_t binary_search(
+    std::function<bool(int64_t)> const& predicate,
+    int64_t ng,
+    int64_t ok
+) {
+    assert(!predicate(ng) && predicate(ok));
+    while (abs(ok - ng) > 1) {
+        auto m = (ok + ng) / 2;
+        if (predicate(m)) ok = m;
+        else ng = m;
+    }
+    return ok;
+}
+
 using namespace std;
 using ll = int64_t;
 using ff = long double;
@@ -7,29 +21,23 @@ using ff = long double;
 int N;
 vector<ll> H, S;
 
-ll solve() {
-    const ll inf = numeric_limits<ll>::max();
-    ll ans = 0;
-    // O(N**2)
-    vector<bool> done(N, false);
-    for (int t = N - 1; t >= 0; --t) {
-        int min_index;
-        ll min_height = inf;
-        for (int i = 0; i < N; ++i) {
-            if (done[i]) continue;
-            ll height = H[i] + t * S[i];
-            bool should_update = 
-                height < min_height ||
-                (height == min_height &&  S[min_index] > S[i]);
-            if (should_update) {
-                min_height = height;
-                min_index = i;
-            }
-        }
-        ans = max(ans, min_height);
-        done[min_index] = true;
+vector<ll> ts;
+bool pass(ll const X) {
+    for (int i = 0; i < N; ++i) {
+        if (X - H[i] < 0) return false;
+        ts[i] = (X - H[i]) / S[i];
     }
-    return ans;
+    sort(ts.begin(), ts.end());
+    for (int i = 0; i < N; ++i) {
+        if (i > ts[i]) return false;
+    }
+    return true;
+}
+
+ll solve() {
+    ts.assign(N, 0);
+    ll ng = 0, ok = numeric_limits<ll>::max() / 10;
+    return binary_search(pass, ng, ok);
 }
 
 int main() {
