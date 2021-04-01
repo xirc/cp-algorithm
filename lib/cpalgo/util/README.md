@@ -26,6 +26,7 @@ We can use this technique in many problems. It's a pretty powerful technique.
 - [食塩水](https://atcoder.jp/contests/abc034/tasks/abc034_d)
 - [Widespread](https://atcoder.jp/contests/abc063/tasks/arc075_b)
 - [射撃王](https://atcoder.jp/contests/abc023/tasks/abc023_d)
+- [壁抜け](https://atcoder.jp/contests/abc020/tasks/abc020_c)
 
 
 ## Dice
