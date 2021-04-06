@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 
-inline uint64_t extgcd(
-    uint64_t const a,
-    uint64_t const b,
+inline int64_t extgcd(
+    int64_t const a,
+    int64_t const b,
     int64_t &x, int64_t &y
 )
 {
@@ -11,7 +11,7 @@ inline uint64_t extgcd(
         return a;
     }
     int64_t x1, y1;
-    uint64_t g = extgcd(b, a % b, x1, y1);
+    int64_t g = extgcd(b, a % b, x1, y1);
     x = y1;
     y = x1 - y1 * (a / b);
     return g;
