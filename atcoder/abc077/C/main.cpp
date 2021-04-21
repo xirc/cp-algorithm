@@ -19,22 +19,13 @@ int main() {
     sort(B.begin(), B.end());
     sort(C.begin(), C.end());
 
-    vector<ll> DP(N, 0);
-    for (int i = 0; i < N; ++i) {
-        auto it = lower_bound(A.begin(), A.end(), B[i]);
-        int s = distance(A.begin(), it);
-        DP[i] = s;
-    }
-    for (int i = 1; i < N; ++i) {
-        DP[i] += DP[i-1];
-    }
     ll ans = 0;
-    for (auto c : C) {
-        auto it = lower_bound(B.begin(), B.end(), c);
-        int s = distance(B.begin(), it);
-        if (s > 0) {
-            ans += DP[s-1];
-        }
+    for (int i = 0; i < N; ++i) {
+        auto ita = lower_bound(A.begin(), A.end(), B[i]);
+        int sa = distance(A.begin(), ita);
+        auto itb = upper_bound(C.begin(), C.end(), B[i]);
+        int sb = distance(itb, C.end());
+        ans += ll(sa) * sb;
     }
     cout << ans << endl;
 
