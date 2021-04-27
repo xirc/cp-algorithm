@@ -6,45 +6,42 @@
 
 using namespace std;
 
-using BIT = BinaryIndexedTree<long long>;
+using BIT = BinaryIndexedTree<int>;
 BIT make_bit(int N) {
-    auto id = numeric_limits<long long>::max();
-    auto plus = [&](const long long& lhs, const long long& rhs) {
+    auto empty = numeric_limits<int>::max();
+    auto combine = [&](int const& lhs, int const& rhs) {
         return min(lhs, rhs);
     };
-    auto minus = [&](const long long& lhs, const long long& rhs) -> long long {
+    auto remove = [&](int const& lhs, int const& rhs) -> int {
         throw;
     };
-    return BIT(N, numeric_limits<long long>::max(), plus, minus);
+    return BIT(N, empty, combine, remove);
 };
 BIT bit;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size <= 0) {
-        cout << "false" << endl;
-        return;
-    }
     bit = make_bit(size);
     cout << "true" << endl;
 }
 
 void action_min() {
-    int index;
+    size_t index;
     cin >> index;
-    auto ans = bit.sum(index);
+    auto ans = bit.fold(index);
     cout << ans << endl;
 }
 
 void action_update() {
-    int index, value;
+    size_t index;
+    int value;
     cin >> index >> value;
-    if (index < 0 || index >= bit.size()) {
+    if (index >= bit.size()) {
         cout << "false" << endl;
         return;
     }
-    bit.add(index, value);
+    bit.combine(index, value);
     cout << "true" << endl;
 }
 

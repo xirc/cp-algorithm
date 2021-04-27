@@ -1,80 +1,78 @@
 #pragma once
 
-// Finding Sum in One-Dimensional Array
-// Verified
-// http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B
-
-#include <vector>
 #include <functional>
+#include <stdexcept>
+#include <vector>
 
 // Binary Indexed Tree
-// Memory: O(N)
-// Query: O(logN)
-// Update: O(logN)
-template <class T = long long>
+//
+// Space: O(N)
+// Time:
+//   Query: O(logN)
+//   Update: O(logN)
+//
+// Verified:
+//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B
+//
+template <class T = int64_t>
 class BinaryIndexedTree {
 public:
-    using F = std::function<T(const T&, const T&)>;
+    using F = std::function<T(T const&, T const&)>;
 
 protected:
-    int N;
+    size_t N;
     std::vector<T> bit;
-    T id;
-    F plus;
-    F minus;
+    T empty;
+    F combine_func;
+    F remove_func;
 
 public:
-    // O(N)
+    // Time: O(N)
     BinaryIndexedTree(
-        int n = 0,
-        T id = T(),
-        F plus = std::plus<T>(),
-        F minus = std::minus<T>()
+        size_t n = 0,
+        T empty = T(),
+        F combine = std::plus<T>(),
+        F remove = std::minus<T>()
     )
         : N(n+1)
-        , bit(n+1, id)
-        , id(id)
-        , plus(plus)
-        , minus(minus)
+        , bit(n+1, empty)
+        , empty(empty)
+        , combine_func(combine)
+        , remove_func(remove)
     {
         // Do nothing
     }
-    // O(1)
-    int size() {
+    // Time: O(1)
+    size_t size() const {
         return N - 1;
     }
-    // Sum of array[0..index)
-    // O(logN)
+    // Fold elements of array[0..index)
     // index = [0,N]
-    T sum(int index) {
-        if (index < 0 || index > N) throw;
-        T ans = id;
+    // Time: O(logN)
+    T fold(size_t index) const {
+        if (index > N) throw std::out_of_range("index");
+        T ans = empty;
         for (; index > 0; index -= index & -index) {
-            ans = plus(ans, bit[index]);
+            ans = combine_func(ans, bit[index]);
         }
         return ans;
     }
-    // Sum of array[l, r)
-    // O(logN)
-    T sum(int l, int r) {
-        if (l > r) throw;
-        return minus(sum(r), sum(l));
+    // Fold elements of array[l, r)
+    // l = [0,N)
+    // r = [l,N]
+    // Time: O(logN)
+    T fold(size_t l, size_t r) const {
+        if (l >= N) throw std::out_of_range("l");
+        if (r < l || r > N) throw std::out_of_range("r");
+        return remove_func(fold(r), fold(l));
     }
-    // Add value to array[index]
-    // O(logN)
+    // Combine given value to array[index]
     // index = [0,N)
-    void add(int index, const T& value) {
-        if (index < 0 || index >= N) throw;
+    // Time: O(logN)
+    void combine(size_t index, T const& value) {
+        if (index >= N) throw std::out_of_range("index");
         for (++index; index < N; index += index & -index) {
-            bit[index] = plus(bit[index], value);
+            bit[index] = combine_func(bit[index], value);
         }
-    }
-    // Set value to array[index]
-    // O(logN)
-    // index = [0,N)
-    void set(int index, const T& value) {
-        if (index < 0 || index >= N) throw;
-        T new_value = minus(value, sum(index, index+1));
-        add(index, new_value);
     }
 };

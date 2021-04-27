@@ -7,59 +7,45 @@
 
 using namespace std;
 
-using BIT = BinaryIndexedTree<long long>;
+using BIT = BinaryIndexedTree<int>;
 BIT bit;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size <= 0) {
-        cout << "false" << endl;
-        return;
-    }
     bit = BIT(size);
     cout << "true" << endl;
 }
 
 void action_sum() {
-    int l, r;
+    size_t l, r;
     cin >> l >> r;
-    if (l < 0 || l > bit.size() ||
-        r < 0 || r > bit.size())
+    if (l >= bit.size() ||
+        r > bit.size())
     {
         cout << "false" << endl;
         return;
     }
-    auto ans = bit.sum(l, r);
+    auto ans = bit.fold(l, r);
     cout << ans << endl;
 }
 
 void action_add() {
-    int index, value;
+    size_t index;
+    int value;
     cin >> index >> value;
-    if (index < 0 || index >= bit.size()) {
+    if (index >= bit.size()) {
         cout << "false" << endl;
         return;
     }
-    bit.add(index, value);
-    cout << "true" << endl;
-}
-
-void action_set() {
-    int index, value;
-    cin >> index >> value;
-    if (index < 0 || index >= bit.size()) {
-        cout << "false" << endl;
-        return;
-    }
-    bit.set(index, value);
+    bit.combine(index, value);
     cout << "true" << endl;
 }
 
 void action_dump() {
-    for (int i = 0; i < bit.size(); ++i) {
+    for (size_t i = 0; i < bit.size(); ++i) {
         if (i > 0) cout << " ";
-        cout << bit.sum(i, i+1);
+        cout << bit.fold(i, i+1);
     }
     cout << endl;
 }
@@ -69,6 +55,5 @@ void setup(string& header, map<string,Command>& commands) {
     commands["init"] = { "init {size}", action_init };
     commands["sum"] = { "sum {l} {r}", action_sum };
     commands["add"] = { "add {index} {value}", action_add };
-    commands["set"] = { "set {index} {value}", action_set };
     commands["dump"] = { "dump", action_dump };
 }

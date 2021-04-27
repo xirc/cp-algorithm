@@ -1,108 +1,94 @@
 #pragma once
 
-// Finding Sum in Two-Dimensional Array
-
-#include <map>
 #include <functional>
+#include <map>
+#include <stdexcept>
 
 // BinaryIndexedTree
-// Memory: O(NM)
-// Query: O(logN logM logNM)
-// Update: O(logN logM logNM)
-template<class T = long long>
-class BinaryIndexedTree {
+//
+// Space: O(NM)
+// Time:
+//   Query: O(logN logM logNM)
+//   Update: O(logN logM logNM)
+//
+template<class T = int64_t>
+class BinaryIndexedTree2D {
 public:
-    using F = std::function<T(const T&, const T&)>;
+    using F = std::function<T(T const&, T const&)>;
 
 protected:
-    int N, M;
-    std::map<std::pair<int,int>,T> bit;
-    T id;
-    F plus;
-    F minus;
+    size_t N, M;
+    std::map<std::pair<size_t,size_t>,T> bit;
+    T empty;
+    F combine_func;
+    F remove_func;
 
 public:
-    // O(NM)
-    BinaryIndexedTree(
-        int n = 0,
-        int m = 0,
-        T id = T(),
-        F plus = std::plus<T>(),
-        F minus = std::minus<T>()
+    // Time: O(1)
+    BinaryIndexedTree2D(
+        size_t n = 0,
+        size_t m = 0,
+        T empty = T(),
+        F combine = std::plus<T>(),
+        F remove = std::minus<T>()
     )
         : N(n + 1)
         , M(m + 1)
         , bit()
-        , id(id)
-        , plus(plus)
-        , minus(minus)
+        , empty(empty)
+        , combine_func(combine)
+        , remove_func(remove)
     {
         // Do nothing
     }
-    // O(1)
-    std::pair<int,int> size() {
+    // Time: O(1)
+    std::pair<size_t,size_t> size() const {
         return { N - 1, M - 1 };
     }
-    // Sum of array[[0,x),[0,y)]
-    // O(logN logM logNM)
+    // Fold elements of array[[0,x),[0,y)]
     // x = [0,N], y = [0,M]
-    T sum(int x, int y) {
-        if (x < 0 || x > N) throw;
-        if (y < 0 || y > M) throw;
-        T ans = id;
-        for (int i = x; i > 0; i -= i & -i) {
-            for (int j = y; j > 0; j -= j & -j) {
-                if (!bit.count({i,j})) {
-                    bit[{i,j}] = id;
+    // Time: O(logN logM logNM)
+    T fold(size_t x, size_t y) const {
+        if (x > N) throw std::out_of_range("x");
+        if (y > M) throw std::out_of_range("y");
+        T ans = empty;
+        for (size_t i = x; i > 0; i -= i & -i) {
+            for (size_t j = y; j > 0; j -= j & -j) {
+                if (bit.count({i,j})) {
+                    ans = combine_func(ans, bit.at({i,j}));
                 }
-                ans = plus(ans, bit[{i,j}]);
             }
         }
         return ans;
     }
-    // Sum of array[[xl,xr),[yl,yr)]
-    // O(logN logM logNM)
-    // xl = [0,N], xr = [0,N]
-    // yl = [0,M], yr = [0,M]
-    T sum(int xl, int xr, int yl, int yr) {
-        if (xl > xr || yl > yr) throw;
-        if (xl < 0 || xl > N || xr < 0 || xr > N) throw;
-        if (yl < 0 || yl > M || yr < 0 || yr > M) throw;
-        T ans = id;
-        ans = plus(ans, sum(xr, yr));
-        ans = minus(ans, sum(xl, yr));
-        ans = minus(ans, sum(xr, yl));
-        ans = plus(ans, sum(xl, yl));
+    // Fold elements of array[[xl,xr),[yl,yr)]
+    // xl = [0,N), xr = [xl,N]
+    // yl = [0,M), yr = [yl,M]
+    // Time: O(logN logM logNM)
+    T fold(size_t xl, size_t xr, size_t yl, size_t yr) const {
+        if (xl >= N) throw std::out_of_range("xl");
+        if (xr < xl || xr > N) throw std::out_of_range("xr");
+        if (yl >= M) throw std::out_of_range("yl");
+        if (yr < yl || yr > M) std::out_of_range("yr");
+        T ans = empty;
+        ans = combine_func(ans, fold(xr, yr));
+        ans = remove_func(ans, fold(xl, yr));
+        ans = remove_func(ans, fold(xr, yl));
+        ans = combine_func(ans, fold(xl, yl));
         return ans;
     }
-    // Add value at array[x,y]
-    // O(logN logN logNM)
+    // Combine given value at array[x,y]
     // x = [0,N), y = [0,M)
-    void add(int x, int y, const T& value) {
-        if (x < 0 || x >= N) throw;
-        if (y < 0 || y >= M) throw;
-        for (int i = x + 1; i < N; i += i & -i) {
-            for (int j = y + 1; j < M; j += j & -j) {
+    // Time: O(logN logN logNM)
+    void combine(size_t x, size_t y, T const& value) {
+        if (x >= N) throw std::out_of_range("x");
+        if ( y >= M) throw std::out_of_range("y");
+        for (size_t i = x + 1; i < N; i += i & -i) {
+            for (size_t j = y + 1; j < M; j += j & -j) {
                 if (!bit.count({i,j})) {
-                    bit[{i,j}] = id;
+                    bit[{i,j}] = empty;
                 }
-                bit[{i,j}] = plus(bit[{i,j}], value);
-            }
-        }
-    }
-    // Set value at array[x,y]
-    // O(logN logN logNM)
-    // x = [0,N), y = [0,M)
-    void set(int x, int y, const T& value) {
-        if (x < 0 || x >= N) throw;
-        if (y < 0 || y >= M) throw;
-        int new_value = value - sum(x,x+1,y,y+1);
-        for (int i = x + 1; i < N; i += i & -i) {
-            for (int j = y + 1; j < M; j += j & -j) {
-                if (!bit.count({i,j})) {
-                    bit[{i,j}] = id;
-                }
-                bit[{i,j}] = plus(bit[{i,j}], new_value);
+                bit[{i,j}] = combine_func(bit[{i,j}], value);
             }
         }
     }
