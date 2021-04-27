@@ -12,7 +12,7 @@
 //   Update: O(logN)
 //
 // Verified:
-//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=DSL_2_B
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B
 //
 template <class T = int64_t>
 class BinaryIndexedTree {
@@ -58,11 +58,11 @@ public:
         return ans;
     }
     // Fold elements of array[l, r)
-    // l = [0,N)
+    // l = [0,N]
     // r = [l,N]
     // Time: O(logN)
     T fold(size_t l, size_t r) const {
-        if (l >= N) throw std::out_of_range("l");
+        if (l > N) throw std::out_of_range("l");
         if (r < l || r > N) throw std::out_of_range("r");
         return remove_func(fold(r), fold(l));
     }

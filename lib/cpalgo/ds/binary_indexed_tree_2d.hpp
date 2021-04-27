@@ -62,13 +62,13 @@ public:
         return ans;
     }
     // Fold elements of array[[xl,xr),[yl,yr)]
-    // xl = [0,N), xr = [xl,N]
-    // yl = [0,M), yr = [yl,M]
+    // xl = [0,N], xr = [xl,N]
+    // yl = [0,M], yr = [yl,M]
     // Time: O(logN logM logNM)
     T fold(size_t xl, size_t xr, size_t yl, size_t yr) const {
-        if (xl >= N) throw std::out_of_range("xl");
+        if (xl > N) throw std::out_of_range("xl");
         if (xr < xl || xr > N) throw std::out_of_range("xr");
-        if (yl >= M) throw std::out_of_range("yl");
+        if (yl > M) throw std::out_of_range("yl");
         if (yr < yl || yr > M) std::out_of_range("yr");
         T ans = empty;
         ans = combine_func(ans, fold(xr, yr));
@@ -82,7 +82,7 @@ public:
     // Time: O(logN logN logNM)
     void combine(size_t x, size_t y, T const& value) {
         if (x >= N) throw std::out_of_range("x");
-        if ( y >= M) throw std::out_of_range("y");
+        if (y >= M) throw std::out_of_range("y");
         for (size_t i = x + 1; i < N; i += i & -i) {
             for (size_t j = y + 1; j < M; j += j & -j) {
                 if (!bit.count({i,j})) {
