@@ -2,7 +2,7 @@
 #include <map>
 #include <string>
 #include <functional>
-#include "cpalgo/ds/binary-indexed-tree-2d-sparse.hpp"
+#include "cpalgo/ds/binary_indexed_tree_2d.hpp"
 #include "template/template-main.hpp"
 
 using namespace std;

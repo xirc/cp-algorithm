@@ -3,8 +3,8 @@ load("//:variables.bzl", "COPTS")
 load("//main:variables.bzl", "DEPS")
 
 cc_binary(
-    name = "binary-indexed-tree-2d-sparse",
-    srcs = ["main-binary-indexed-tree-2d-sparse.cpp"],
+    name = "binary-indexed-tree-2d",
+    srcs = ["main-binary-indexed-tree-2d.cpp"],
     copts = COPTS,
     deps = DEPS,
 )
