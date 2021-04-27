@@ -1,7 +1,19 @@
-// https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B
+#pragma once
 
-#include <bits/stdc++.h>
+#include <functional>
+#include <stdexcept>
+#include <vector>
 
+// Binary Indexed Tree
+//
+// Space: O(N)
+// Time:
+//   Query: O(logN)
+//   Update: O(logN)
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_2_B
+//
 template <class T = int64_t>
 class BinaryIndexedTree {
 public:
@@ -64,29 +76,3 @@ public:
         }
     }
 };
-
-
-using namespace std;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-    int N, Q;
-    cin >> N >> Q;
-
-    BinaryIndexedTree<long long> bit(N);
-    for (int i = 0; i < Q; ++i) {
-        int c, x, y;
-        cin >> c >> x >> y;
-        if (c == 0) {
-            --x;
-            bit.combine(x, y);
-        } else if (c == 1) {
-            --x, --y;
-            cout << bit.fold(x, y+1) << endl;
-        } else throw;
-    }
-
-    return 0;
-}
