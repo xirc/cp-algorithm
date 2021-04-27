@@ -10,29 +10,8 @@ cc_binary(
 )
 
 cc_binary(
-    name = "binary-indexed-tree-2d",
-    srcs = ["main-binary-indexed-tree-2d.cpp"],
-    copts = COPTS,
-    deps = DEPS,
-)
-
-cc_binary(
     name = "binary-indexed-tree-min",
     srcs = ["main-binary-indexed-tree-min.cpp"],
-    copts = COPTS,
-    deps = DEPS,
-)
-
-cc_binary(
-    name = "binary-indexed-tree-rupq",
-    srcs = ["main-binary-indexed-tree-rupq.cpp"],
-    copts = COPTS,
-    deps = DEPS,
-)
-
-cc_binary(
-    name = "binary-indexed-tree-rurq",
-    srcs = ["main-binary-indexed-tree-rurq.cpp"],
     copts = COPTS,
     deps = DEPS,
 )
