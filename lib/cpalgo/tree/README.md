@@ -19,6 +19,7 @@ We can calculate *Diameter* in `O(V)`. `V` is the number of nodes.
 ### Challenges
 - [Diameter of a Tree - AOJ GRL5A](https://onlinejudge.u-aizu.ac.jp/problems/GRL_5_A)
 - [高橋くんと木の直径 - AtCoder ABC019D](https://atcoder.jp/contests/abc019/tasks/abc019_4)
+- [003 - Longest Circular Road](https://atcoder.jp/contests/typical90/tasks/typical90_c)
 
 ## Height
 *Height of a tree* is a max distance between a root node and another node in a tree.
