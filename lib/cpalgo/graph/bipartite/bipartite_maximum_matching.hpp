@@ -12,7 +12,7 @@
 //  - bipartite
 //
 // Verified:
-//  - http://judge.u-aizu.ac.jp/onlinejudge/description.jsp?id=GRL_7_A
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_7_A
 //
 class BipartiteMaximumMatching {
     size_t N;
