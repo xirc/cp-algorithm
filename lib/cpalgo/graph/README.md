@@ -58,10 +58,25 @@ We can find all articulation points of a given graph in `O(V + E)`.
 ## Bipartite
 
 ### Bipartite Check
-🚧
+Check whether a given graph is bipartite or not.
+It can be computed in `O(V)`.
+`V` is the number of vertices.
+
+[Bipartite Check | C++ code](bipartite/bipartite_check.hpp)
 
 ### Bipartite Maximum Matching
-🚧
+Find the maximum matching in a given bipartite graph `G`.
+Kuhn's algorithm can compute the maximum matching in `O(VE)`.
+`V` is the number of vertices. `E` is the number of edges.
+
+[Bipartite Maximum Matching | C++ code](bipartite/bipartite_maximum_matching.hpp)
+
+#### References in English
+- [Kuhn's Algorithm for Maximum Bipartite Matching - Competitive Programming Algorithms](https://cp-algorithms.com/graph/kuhn_maximum_bipartite_matching.html)
+
+#### Challenges
+- [GRL_7_A < Problems | Aizu Online Judge](https://onlinejudge.u-aizu.ac.jp/problems/GRL_7_A)
+- [C - 2D Plane 2N Points](https://atcoder.jp/contests/abc091/tasks/arc092_a)
 
 
 ## Cycle
