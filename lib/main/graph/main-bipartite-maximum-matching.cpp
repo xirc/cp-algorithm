@@ -7,21 +7,17 @@ using namespace std;
 BipartiteMaximumMatching solver;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     solver = BipartiteMaximumMatching(size);
     cout << "true" << endl;
 }
 
 void action_edge() {
-    int u, v;
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= solver.size() ||
-        v < 0 || v >= solver.size())
+    if (u >= solver.size() ||
+        v >= solver.size())
     {
         cout << "false" << endl;
         return;
@@ -31,10 +27,10 @@ void action_edge() {
 }
 
 void action_solve() {
-    vector<int> match;
-    int ans = solver.solve(match);
+    vector<size_t> match;
+    size_t ans = solver.solve(match);
     cout << ans << endl;
-    for (int i = 0; i < match.size(); ++i) {
+    for (size_t i = 0; i < match.size(); ++i) {
         cout << i << ": " << match[i] << endl;
     }
 }
