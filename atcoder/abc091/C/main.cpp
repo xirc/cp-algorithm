@@ -1,62 +1,5 @@
 #include <bits/stdc++.h>
 
-class BipartiteMaximumMatching {
-    size_t N;
-    std::vector<std::vector<size_t>> adj;
-
-public:
-    // Time: O(N)
-    BipartiteMaximumMatching(size_t n = 0)
-        : N(n)
-        , adj(n)
-    {
-        // Do nothing
-    }
-    // Time: O(1)
-    size_t size() const {
-        return N;
-    }
-    // u = [0,N), v = [0,N)
-    // Time: O(1)
-    void add_edge(size_t u, size_t v) {
-        if (u >= N) throw std::out_of_range("u");
-        if (v >= N) throw std::out_of_range("v");
-        adj[u].push_back(v);
-        adj[v].push_back(u);
-    }
-    // Time: O( V(V+E) )
-    size_t solve(std::vector<size_t>& match) {
-        size_t ans = 0;
-        std::vector<bool> used(N, false);
-        match = std::vector<size_t>(N, N);
-        for (size_t v = 0; v < N; ++v) {
-            if (match[v] != N) continue;
-            used.assign(N, false);
-            if (dfs(match, used, v)) ans++;
-        }
-        return ans;
-    }
-
-private:
-    bool dfs(
-        std::vector<size_t>& match,
-        std::vector<bool>& used,
-        size_t v
-    ) {
-        used[v] = true;
-        for (size_t u : adj[v]) {
-            size_t w = match[u];
-            if (w == N || (!used[w] && dfs(match, used, w))) {
-                match[v] = u;
-                match[u] = v;
-                return true;
-            }
-        }
-        return false;
-    }
-};
-
-
 using namespace std;
 using ll = int64_t;
 using ff = long double;
@@ -65,16 +8,27 @@ int N;
 vector<pair<int,int>> rs, bs;
 
 int solve() {
-    BipartiteMaximumMatching solver(2*N);
+    // x asc, y asc
+    sort(bs.begin(), bs.end());
+    // y desc x desc
+    sort(rs.begin(), rs.end(), [](auto const& lhs, auto const& rhs) {
+        if (lhs.second != rhs.second) return lhs.second > rhs.second;
+        return lhs.first > rhs.first;
+    });
+
+    int count = 0;
+    vector<bool> used(N, false);
     for (int i = 0; i < N; ++i) {
         for (int j = 0; j < N; ++j) {
-            if (rs[i].first < bs[j].first && rs[i].second < bs[j].second) {
-                solver.add_edge(i, N + j);
-            }
+            if (used[j]) continue;
+            if (bs[i].first <= rs[j].first) continue;
+            if (bs[i].second <= rs[j].second) continue;
+            used[j] = true;
+            ++count;
+            break;
         }
     }
-    vector<size_t> match;
-    return solver.solve(match);
+    return count;
 }
 
 int main() {
