@@ -1,42 +1,57 @@
 #pragma once
 
-#include <vector>
 #include <queue>
+#include <stdexcept>
+#include <vector>
+
 
 // Bipartite Check
+//
 // Memory: O(V + E)
-// NOTE: undirected, no-multi-edge, self-loop
+//
+// NOTE:
+//  - undirected
+//  - no-multi-edge
+//  - self-loop
+//
 class BipartiteCheck {
-    int N;
-    std::vector<std::vector<int>> adj;
+    size_t N;
+    std::vector<std::vector<size_t>> adj;
 
 public:
-    // O(V)
-    BipartiteCheck(int n = 0): N(n), adj(n) {}
-    // O(1)
-    int size() {
+    // Time: O(V)
+    BipartiteCheck(size_t n = 0)
+        : N(n)
+        , adj(n)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int u, int v) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
+    // u = [0,N), v = [0,N)
+    // Time: O(1)
+    void add_edge(size_t u, size_t v) {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    // O(V)
-    bool solve() {
+    // Time: O(V)
+    bool solve() const {
         bool is_bipartite = true;
-        std::vector<int> side(N, -1);
-        std::queue<int> Q;
-        for (int i = 0; i < N; ++i) {
-            if (side[i] != -1) continue;
+        int const UNKNOWN = 2;
+        std::vector<int> side(N, UNKNOWN);
+        std::queue<size_t> Q;
+        for (size_t i = 0; i < N; ++i) {
+            if (side[i] != UNKNOWN) continue;
             Q.push(i);
             side[i] = 0;
             while (Q.size()) {
-                int v = Q.front(); Q.pop();
-                for (int u : adj[v]) {
-                    if (side[u] == -1) {
+                auto v = Q.front(); Q.pop();
+                for (auto u : adj[v]) {
+                    if (side[u] == UNKNOWN) {
                         side[u] = side[v] ^ 1;
                         Q.push(u);
                     } else {
@@ -46,10 +61,5 @@ public:
             }
         }
         return is_bipartite;
-    }
-
-private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
     }
 };
