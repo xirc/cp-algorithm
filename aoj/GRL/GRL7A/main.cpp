@@ -1,51 +1,55 @@
-#include <vector>
+// https://onlinejudge.u-aizu.ac.jp/problems/GRL_7_A
 
-// Bipartite Maximum Matching
-// Memory: O(V + E)
-// NOTE: undirected, bipartite
+#include <bits/stdc++.h>
+
+
 class BipartiteMaximumMatching {
-    int N;
-    std::vector<std::vector<int>> adj;
-    // Temporal
-    std::vector<int> match;
-    std::vector<bool> used;
+    size_t N;
+    std::vector<std::vector<size_t>> adj;
 
 public:
-    // O(N)
-    BipartiteMaximumMatching(int n = 0): N(n), adj(n) {}
-    // O(1)
-    int size() {
+    // Time: O(N)
+    BipartiteMaximumMatching(size_t n = 0)
+        : N(n)
+        , adj(n)
+    {
+        // Do nothing
+    }
+    // Time: O(1)
+    size_t size() const {
         return N;
     }
-    // O(1)
-    void add_edge(int u, int v) {
-        throw_if_invalid_index(u);
-        throw_if_invalid_index(v);
+    // u = [0,N), v = [0,N)
+    // Time: O(1)
+    void add_edge(size_t u, size_t v) {
+        if (u >= N) throw std::out_of_range("u");
+        if (v >= N) throw std::out_of_range("v");
         adj[u].push_back(v);
         adj[v].push_back(u);
     }
-    // O(V(V+E))
-    int solve(std::vector<int>& out_match) {
-        int ans = 0;
-        match.assign(N, -1);
-        for (int v = 0; v < N; ++v) {
-            if (match[v] != -1) continue;
+    // Time: O( V(V+E) )
+    size_t solve(std::vector<size_t>& match) const {
+        size_t ans = 0;
+        std::vector<bool> used(N, false);
+        match = std::vector<size_t>(N, N);
+        for (size_t v = 0; v < N; ++v) {
+            if (match[v] != N) continue;
             used.assign(N, false);
-            if (dfs(v)) ans++;
+            if (dfs(match, used, v)) ans++;
         }
-        out_match = std::vector<int>(match);
         return ans;
     }
 
 private:
-    void throw_if_invalid_index(int index) {
-        if (index < 0 || index >= N) throw "index out of range";
-    }
-    bool dfs(int v) {
+    bool dfs(
+        std::vector<size_t>& match,
+        std::vector<bool>& used,
+        size_t v
+    ) const {
         used[v] = true;
-        for (int u : adj[v]) {
-            int w = match[u];
-            if (w == -1 || (!used[w] && dfs(w))) {
+        for (size_t u : adj[v]) {
+            size_t w = match[u];
+            if (w == N || (!used[w] && dfs(match, used, w))) {
                 match[v] = u;
                 match[u] = v;
                 return true;
@@ -56,9 +60,9 @@ private:
 };
 
 
-#include <iostream>
-
 using namespace std;
+using ll = int64_t;
+using ff = long double;
 
 int main() {
     ios_base::sync_with_stdio(false);
@@ -74,7 +78,7 @@ int main() {
         matching.add_edge(x, y + X);
     }
 
-    vector<int> match;
+    vector<size_t> match;
     int ans = matching.solve(match);
     cout << ans << endl;
 
