@@ -10,20 +10,6 @@ cc_binary(
 )
 
 cc_binary(
-    name = "bipartite-check",
-    srcs = ["main-bipartite-check.cpp"],
-    copts = COPTS,
-    deps = DEPS,
-)
-
-cc_binary(
-    name = "bipartite-maximum-matching",
-    srcs = ["main-bipartite-maximum-matching.cpp"],
-    copts = COPTS,
-    deps = DEPS,
-)
-
-cc_binary(
     name = "bridges",
     srcs = ["main-bridges.cpp"],
     copts = COPTS,
