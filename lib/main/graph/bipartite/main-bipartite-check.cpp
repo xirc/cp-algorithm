@@ -1,27 +1,23 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/graph/bipartite-check.hpp"
+#include "cpalgo/graph/bipartite/bipartite_check.hpp"
 
 using namespace std;
 
 BipartiteCheck solver;
 
 void action_init() {
-    int size;
+    size_t size;
     cin >> size;
-    if (size < 0) {
-        cout << "false" << endl;
-        return;
-    }
     solver = BipartiteCheck(size);
     cout << "true" << endl;
 }
 
 void action_add_edge() {
-    int u, v;
+    size_t u, v;
     cin >> u >> v;
-    if (u < 0 || u >= solver.size() ||
-        v < 0 || v >= solver.size()
+    if (u >= solver.size() ||
+        v >= solver.size()
     ) {
         cout << "false" << endl;
         return;

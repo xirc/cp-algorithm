@@ -1,8 +1,19 @@
-// https://onlinejudge.u-aizu.ac.jp/problems/GRL_7_A
+#pragma once
 
-#include <bits/stdc++.h>
+#include <stdexcept>
+#include <vector>
 
-
+// Bipartite Maximum Matching
+//
+// Space: O(V + E)
+//
+// NOTE:
+//  - undirected
+//  - bipartite
+//
+// Verified:
+//  - https://onlinejudge.u-aizu.ac.jp/problems/GRL_7_A
+//
 class BipartiteMaximumMatching {
     size_t N;
     std::vector<std::vector<size_t>> adj;
@@ -58,29 +69,3 @@ private:
         return false;
     }
 };
-
-
-using namespace std;
-using ll = int64_t;
-using ff = long double;
-
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(0); cout.tie(0);
-
-    int X, Y, E;
-    cin >> X >> Y >> E;
-
-    BipartiteMaximumMatching matching(X + Y);
-    for (int i = 0; i < E; ++i) {
-        int x, y;
-        cin >> x >> y;
-        matching.add_edge(x, y + X);
-    }
-
-    vector<size_t> match;
-    int ans = matching.solve(match);
-    cout << ans << endl;
-
-    return 0;
-}
