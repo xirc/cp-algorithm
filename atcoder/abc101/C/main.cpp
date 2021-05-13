@@ -8,12 +8,7 @@ int N, K;
 vector<int> A;
 
 int solve() {
-    int c = 0;
-    for (int i = 0; i < N; i+= K) {
-        ++c;
-        if (i > 0) i -= 1;
-    }
-    return c;
+    return (N - 1 + K - 2) / (K - 1);
 }
 
 int main() {
