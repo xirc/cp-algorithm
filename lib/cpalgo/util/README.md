@@ -37,3 +37,15 @@ We can use this technique in many problems. It's a pretty powerful technique.
 
 ## BigInt
 🚧WIP
+
+## modint
+
+Arithmetic in Modulo
+
+*modint* provides arithmetic operations in modulo.
+
+[modint | C++ code](modint.hpp)
+
+### References in Japanese
+- [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜 - Qiita](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a#8-modint)
+- [modint 構造体を使ってみませんか？ (C++) - noshi91のメモ](https://noshi91.hatenablog.com/entry/2019/03/31/174006)

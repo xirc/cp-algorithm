@@ -122,6 +122,7 @@ This project contains my competitive programming library, examples, and solution
   "しゃくとり法" in Japanese
 * [BigInt](/lib/cpalgo/util/README.md#BigInt)
 * [Dice](/lib/cpalgo/util/README.md#Dice)
+* [modint](/lib/cpalgo/util/README.md#modint)
 
 ## How to provision development environment
 
