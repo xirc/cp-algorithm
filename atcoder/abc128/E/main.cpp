@@ -4,95 +4,67 @@ using namespace std;
 using ll = int64_t;
 using ff = long double;
 
-int N;
-vector<ll> S, T, X;
+int N, Q;
+vector<int> S, T, X;
+vector<int> D;
 
-vector<ll> xs;
-vector<int> indice;
+vector<int> solve() {
 
-void build() {
-    // projection
-    for (int i = 0; i < N; ++i) {
-        S[i] = S[i] - X[i];
-        T[i] = T[i] - X[i];
-    }
+    multiset<int> xs;
+    priority_queue<array<int,3>> events;
 
-    // sort asc based on X
-    auto ss = vector<array<ll,3>>(N);
+    // make events
     for (int i = 0; i < N; ++i) {
-        ss[i] = { X[i], S[i], T[i] };
-    }
-    sort(ss.begin(), ss.end());
-    for (int i = 0; i < N; ++i) {
-        X[i] = ss[i][0];
-        S[i] = ss[i][1];
-        T[i] = ss[i][2];
+        events.push({ -(S[i] - X[i]),  1, X[i] });
+        events.push({ -(T[i] - X[i]), -1, X[i] });
     }
 
-    // compress axis
-    set<ll> ps;
-    for (int i = 0; i < N; ++i) {
-        ps.insert(S[i]);
-        ps.insert(T[i]);
+    // sort queries
+    vector<array<int,2>> qs;
+    for (int i = 0; i < Q; ++i) {
+        qs.push_back({ D[i], i });
     }
-    for (auto x : ps) {
-        xs.push_back(x);
-    }
+    sort(qs.begin(), qs.end());
 
-    // make indice
-    int const M = 2 * N;
-    indice.assign(M, N + 1);
-    priority_queue<tuple<int,int,int>> events;
-    set<int> is;
-    for (int i = 0; i < N; ++i) {
-        int si = distance(xs.begin(), lower_bound(xs.begin(), xs.end(), S[i]));
-        int ti = distance(xs.begin(), lower_bound(xs.begin(), xs.end(), T[i]));
-        events.push({ -si, 1, i });
-        events.push({ -ti, -1, i });
-    }
-    for (int i = 0; i < M; ++i) {
-        while (events.size() && -get<0>(events.top()) <= i) {
+    // process queries
+    vector<int> ans(Q, -1);
+    for (auto q : qs) {
+        while (events.size() && -events.top()[0] <= q[0]) {
             auto e = events.top();
             events.pop();
-            if (get<1>(e) > 0) {
-                is.insert(get<2>(e));
+            if (e[1] > 0) {
+                xs.insert(e[2]);
             } else {
-                is.erase(get<2>(e));
+                xs.erase(xs.find(e[2]));
             }
         }
-        if (is.size()) {
-            indice[i] = *is.begin();
+        if (xs.size()) {
+            ans[q[1]] = *xs.begin();
         }
     }
-
-}
-
-ll query(ll D) {
-    auto it = upper_bound(xs.begin(), xs.end(), D);
-    if (it == xs.begin()) return -1;
-    --it;
-    int i = distance(xs.begin(), it);
-    if (indice[i] == N + 1) return -1;
-    return X[indice[i]];
+    return ans;
 }
 
 int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-    int Q;
     cin >> N >> Q;
     S.assign(N, 0);
     T.assign(N, 0);
     X.assign(N, 0);
+    D.assign(Q, 0);
+
     for (int i = 0; i < N; ++i) {
         cin >> S[i] >> T[i] >> X[i];
     }
-    build();
     for (int i = 0; i < Q; ++i) {
-        int D;
-        cin >> D;
-        cout << query(D) << endl;
+        cin >> D[i];
+    }
+
+    auto ans = solve();
+    for (auto x : ans) {
+        cout << x << endl;
     }
 
     return 0;
