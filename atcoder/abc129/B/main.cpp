@@ -17,11 +17,11 @@ int main() {
     }
 
     int ans = 100000;
-    int total = accumulate(W.begin(), W.end(), 0, plus<int>());
-    int acc = 0;
+    int sum = accumulate(W.begin(), W.end(), 0, plus<int>());
+    int prefix_sum = 0;
     for (int i = 0; i < N - 1; ++i) {
-        acc += W[i];
-        ans = min(ans, abs(total - 2 * acc));
+        sum += W[i];
+        ans = min(ans, abs(sum - 2 * prefix_sum));
     }
     cout << ans << endl;
 
