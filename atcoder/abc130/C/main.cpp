@@ -11,8 +11,7 @@ int main() {
     ll W, H, x, y;
     cin >> W >> H >> x >> y;
     ff S = ff(W) * H / 2.0;
-    bool has_multiple =
-        W % 2 == 0 && H % 2 == 0 && x == W / 2 && y == H / 2;
+    bool has_multiple = x * 2 == W && y * 2 == H;
     cout << fixed << setprecision(10) << S << " " << (has_multiple ? 1 : 0) << endl;
 
     return 0;
