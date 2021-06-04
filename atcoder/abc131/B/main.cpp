@@ -10,17 +10,15 @@ int main() {
 
     int N, L;
     cin >> N >> L;
-    int min = 0;
-    int absmin = 400;
-    int sum = 0;
-    for (int i = 0; i < N; ++i) {
-        sum += L + i;
-        if (absmin > abs(L + i)) {
-            absmin = abs(L + i);
-            min = L + i;
-        }
-    }
-    cout << sum - min << endl;
+
+    int R = L + N - 1;
+    int absmin;
+    if (L > 0) absmin = L;
+    else if (R < 0) absmin = R;
+    else absmin = 0;
+    
+    int sum = (L + R) * N / 2 - absmin;
+    cout << sum << endl;
 
     return 0;
 }
