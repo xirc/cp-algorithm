@@ -16,13 +16,19 @@ int magnitude(vector<int> const& a, vector<int> const& b) {
     return mag;
 }
 
+bool is_squared(int n) {
+    for (int i = 0; i * i <= n; ++i) {
+        if (i * i == n) return true;
+    }
+    return false;
+}
+
 int solve() {
     int ans = 0;
     for (int i = 0; i < N; ++i) {
         for (int j = i + 1; j < N; ++j) {
             int mag = magnitude(X[i], X[j]);
-            int sqrtMag = round(sqrtl(mag));
-            if (mag == sqrtMag * sqrtMag) {
+            if (is_squared(mag)) {
                 ++ans;
             }
         }
