@@ -15,13 +15,11 @@ int main() {
     ps.assign(N, 0);
     for (auto &p : ps) cin >> p;
 
-    auto qs = ps;
-    sort(qs.begin(), qs.end());
     int diff = 0;
     for (int i = 0; i < N; ++i) {
-        if (ps[i] != qs[i]) ++diff;
+        if (ps[i] != i + 1) ++diff;
     }
-    auto ans = (diff == 0 || diff == 2) ? "YES" : "NO";
+    auto ans = (diff <= 2) ? "YES" : "NO";
     cout << ans << endl;
 
     return 0;
