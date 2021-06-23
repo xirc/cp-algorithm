@@ -26,7 +26,7 @@ Binary Indexed Tree (Fenwick Tree) is a data structure.
 ## Minimum Queue
 🚧WIP
 
-## Minimum Stack
+## MinMax Stack
 🚧WIP
 
 ## Randomized Heap
