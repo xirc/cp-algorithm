@@ -12,7 +12,8 @@
 	"extensions": [
 		"ms-vscode.cpptools",
 		"bazelbuild.vscode-bazel",
-		"hediet.vscode-drawio"
+		"hediet.vscode-drawio",
+		"yzhang.markdown-all-in-one"
 	],
 	"postCreateCommand": "g++ -v",
 }
