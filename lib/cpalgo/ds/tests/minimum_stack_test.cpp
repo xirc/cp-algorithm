@@ -3,14 +3,14 @@
 #include "cpalgo/ds/minimum_stack.hpp"
 
 
-TEST(MinimumStackTest, IsEmptyInitially) {
-    MinimumStack<int> s;
+TEST(MinMaxStackTest, IsEmptyInitially) {
+    MinMaxStack<int> s;
     EXPECT_TRUE(s.empty());
     EXPECT_EQ(0ULL, s.size());
 }
 
-TEST(MinimumStackTest, ShouldPushItems) {
-    MinimumStack<int> s;
+TEST(MinMaxStackTest, ShouldPushItems) {
+    MinMaxStack<int> s;
 
     s.push(2);
     EXPECT_FALSE(s.empty());
@@ -37,8 +37,8 @@ TEST(MinimumStackTest, ShouldPushItems) {
     EXPECT_EQ(3, s.top());
 }
 
-TEST(MinimumStackTest, ShouldPopItems) {
-    MinimumStack<int> s;
+TEST(MinMaxStackTest, ShouldPopItems) {
+    MinMaxStack<int> s;
 
     s.push(2);
     s.push(1);
@@ -72,8 +72,8 @@ TEST(MinimumStackTest, ShouldPopItems) {
     EXPECT_EQ(0ULL, s.size());
 }
 
-TEST(MinimumStackTest, ShouldUseCustomComparator) {
-    MinimumStack<int, std::greater<int>> s;
+TEST(MinMaxStackTest, ShouldUseCustomComparator) {
+    MinMaxStack<int, std::greater<int>> s;
 
     s.push(2);
     EXPECT_EQ(2, s.minimum());

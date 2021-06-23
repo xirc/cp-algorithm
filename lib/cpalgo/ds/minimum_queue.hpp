@@ -16,7 +16,7 @@
 template <class T, class Less = std::less<T>>
 class MinimumQueue {
 private:
-    MinimumStack<T, Less> Sp, Sr;
+    MinMaxStack<T, Less> Sp, Sr;
     Less less;
 
 public:

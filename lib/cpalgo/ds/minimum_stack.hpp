@@ -5,7 +5,7 @@
 #include <functional>
 
 
-// MinimumStack
+// MinMaxStack
 //
 // Space: O(N)
 //
@@ -13,7 +13,7 @@
 //  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D
 //
 template <class T, class Less = std::less<T>>
-class MinimumStack {
+class MinMaxStack {
 private:
     struct entry {
         T value;
