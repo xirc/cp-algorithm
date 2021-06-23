@@ -18,6 +18,7 @@ private:
     struct entry {
         T value;
         T minimum;
+        T maximum;
     };
     std::deque<entry> S;
     Less less;
@@ -33,9 +34,14 @@ public:
     }
     // Time: O(1)
     void push(T const& value) {
-        T new_min =
-            (S.empty() || less(value, S.back().minimum)) ? value : S.back().minimum;
-        S.push_back({ value, new_min });
+        if (S.empty()) {
+            S.push_back({ value, value, value });
+        } else {
+            auto e = S.back();
+            auto new_min = less(value, e.minimum) ? value : e.minimum;
+            auto new_max = less(e.maximum, value) ? value : e.maximum;
+            S.push_back({ value, new_min, new_max });
+        }
     }
     // Time: O(1)
     void pop() {
@@ -52,5 +58,9 @@ public:
     // Time: O(1)
     T minimum() const {
         return S.back().minimum;
+    }
+    // Time: O(1)
+    T maximum() const {
+        return S.back().maximum;
     }
 };

@@ -16,6 +16,7 @@ TEST(MinimumStackTest, ShouldPushItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(1ULL, s.size());
     EXPECT_EQ(2, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(2, s.top());
 
@@ -23,6 +24,7 @@ TEST(MinimumStackTest, ShouldPushItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(2ULL, s.size());
     EXPECT_EQ(1, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(1, s.top());
 
@@ -30,6 +32,7 @@ TEST(MinimumStackTest, ShouldPushItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(3ULL, s.size());
     EXPECT_EQ(1, s.minimum());
+    EXPECT_EQ(3, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(3, s.top());
 }
@@ -44,6 +47,7 @@ TEST(MinimumStackTest, ShouldPopItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(3ULL, s.size());
     EXPECT_EQ(1, s.minimum());
+    EXPECT_EQ(3, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(3, s.top());
 
@@ -51,6 +55,7 @@ TEST(MinimumStackTest, ShouldPopItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(2ULL, s.size());
     EXPECT_EQ(1, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(1, s.top());
 
@@ -58,6 +63,7 @@ TEST(MinimumStackTest, ShouldPopItems) {
     EXPECT_FALSE(s.empty());
     EXPECT_EQ(1ULL, s.size());
     EXPECT_EQ(2, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(2, s.top());
 
@@ -71,16 +77,19 @@ TEST(MinimumStackTest, ShouldUseCustomComparator) {
 
     s.push(2);
     EXPECT_EQ(2, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(2, s.top());
 
     s.push(3);
     EXPECT_EQ(3, s.minimum());
+    EXPECT_EQ(2, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(3, s.top());
 
     s.push(1);
     EXPECT_EQ(3, s.minimum());
+    EXPECT_EQ(1, s.maximum());
     EXPECT_EQ(2, s.bottom());
     EXPECT_EQ(1, s.top());
 }
