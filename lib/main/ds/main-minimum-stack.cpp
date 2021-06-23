@@ -1,6 +1,6 @@
 #include <iostream>
 #include "template/template-main.hpp"
-#include "cpalgo/ds/minimum_stack.hpp"
+#include "cpalgo/ds/minmax_stack.hpp"
 
 using namespace std;
 

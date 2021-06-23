@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 #include <stack>
-#include "minimum_stack.hpp"
+#include "minmax_stack.hpp"
 
 
 // MinimumQueue
