@@ -38,8 +38,8 @@ cc_binary(
 )
 
 cc_binary(
-    name = "minimum-stack",
-    srcs = ["main-minimum-stack.cpp"],
+    name = "minmax-stack",
+    srcs = ["main-minmax-stack.cpp"],
     copts = COPTS,
     deps = DEPS,
 )
