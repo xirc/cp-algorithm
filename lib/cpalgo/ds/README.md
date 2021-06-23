@@ -27,7 +27,8 @@ Binary Indexed Tree (Fenwick Tree) is a data structure.
 🚧WIP
 
 ## MinMax Stack
-🚧WIP
+A data structure that allows to store and retrieve elements in a last-in-first-out (LIFO) fashion.
+This data structure also allows to retrieval of the minimum and maximum value efficiently.
 
 ## Randomized Heap
 🚧WIP
