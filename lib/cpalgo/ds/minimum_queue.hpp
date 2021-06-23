@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <functional>
 #include <stack>
-#include "minimum_stack.hpp"
+#include "minmax_stack.hpp"
 
 
 // MinimumQueue
@@ -16,7 +16,7 @@
 template <class T, class Less = std::less<T>>
 class MinimumQueue {
 private:
-    MinimumStack<T, Less> Sp, Sr;
+    MinMaxStack<T, Less> Sp, Sr;
     Less less;
 
 public:
