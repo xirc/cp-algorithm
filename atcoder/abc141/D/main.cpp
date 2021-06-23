@@ -10,24 +10,23 @@ int main() {
 
     int N, M;
 
-    priority_queue<array<int,3>> Q;
+    priority_queue<int> Q;
     cin >> N >> M;
     for (int i = 0; i < N; ++i) {
         int A;
         cin >> A;
-        Q.push({ A, A, 0 });
+        Q.push(A);
     }
 
     for (int i = 0; i < M; ++i) {
         auto a = Q.top(); Q.pop();
-        int x = a[1], y = a[2];
-        Q.push({ x >> min(31, (y+1)), x, y + 1 });
+        Q.push(a >> 1);
     }
     
     ll ans = 0;
     while (Q.size()) {
-        auto e = Q.top(); Q.pop();
-        ans += e[0];
+        auto a = Q.top(); Q.pop();
+        ans += a;
     }
     cout << ans << endl;
 
