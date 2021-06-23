@@ -31,6 +31,10 @@ void action_minimum() {
     cout << minstack.minimum() << endl;
 }
 
+void action_maximum() {
+    if (minstack.empty()) return;
+    cout << minstack.maximum() << endl;
+}
 
 void setup(string& header, map<string,Command>& commands) {
     header = "Minimum Stack";
@@ -39,4 +43,5 @@ void setup(string& header, map<string,Command>& commands) {
     commands["pop"] = { "pop", action_pop };
     commands["top"] = { "top", action_top };
     commands["min"] = { "min", action_minimum };
+    commands["max"] = { "max", action_maximum };
 }
