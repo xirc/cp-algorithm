@@ -115,6 +115,9 @@ This project contains my competitive programming library, examples, and solution
 * [Minimum Cut](/lib/cpalgo/graph/README.md#Minimum-Cut)
 * [Minimum Cost Flow](/lib/cpalgo/graph/README.md#Minimum-Cost-Flow)
 
+### [String](/lib/cpalgo/string/README.md)
+* [Z Algorithm](/lib/cpalgo/string/README.md#Z-Algorithm)
+
 ### [Utilities](/lib/cpalgo/util)
 
 * [Binary Search](/lib/cpalgo/util/README.md#Binary-Search)
