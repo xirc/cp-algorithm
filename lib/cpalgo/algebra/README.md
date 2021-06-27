@@ -14,7 +14,7 @@ The two implementations are available.
 ### Challenges
 - [GCD and LCM | CodeChef](https://www.codechef.com/problems/FLOW016)
 - [Greatest Common Divisor - AOJ ALDS1B](https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_B)
-
+- [Disjoint Set of Common Divisors - AtCoder ABC142D](https://atcoder.jp/contests/abc142/tasks/abc142_d)
 
 ## Least Common Multiple
 *Least Common Multiple (LCM)* is the smallest number which is a multiple of all given numbers. We can also compute `LCM(a,b)` in `O(log(min(a,b)))`.
@@ -54,6 +54,7 @@ The algorithm requires only `O(log(n))` multiplications.
 ### Challenges
 - [Prime Factorization - AOJ NTL1A](https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_A)
 - [Factorization - AtCoder ABC110D](https://atcoder.jp/contests/abc110/tasks/abc110_d)
+- [Disjoint Set of Common Divisors - AtCoder ABC142D](https://atcoder.jp/contests/abc142/tasks/abc142_d)
 
 
 ## Binomial Coefficients
