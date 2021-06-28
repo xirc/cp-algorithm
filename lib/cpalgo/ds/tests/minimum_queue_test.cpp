@@ -3,14 +3,14 @@
 #include "cpalgo/ds/minimum_queue.hpp"
 
 
-TEST(MinimumQueueTest, IsEmptyInitially) {
-    MinimumQueue<int> q;
+TEST(MinMaxQueueTest, IsEmptyInitially) {
+    MinMaxQueue<int> q;
     EXPECT_TRUE(q.empty());
     EXPECT_EQ(0ULL, q.size());
 }
 
-TEST(MinimumQueueTest, ShouldPushItems) {
-    MinimumQueue<int> q;
+TEST(MinMaxQueueTest, ShouldPushItems) {
+    MinMaxQueue<int> q;
 
     q.push(2);
     EXPECT_FALSE(q.empty());
@@ -37,8 +37,8 @@ TEST(MinimumQueueTest, ShouldPushItems) {
     EXPECT_EQ(3, q.back());
 }
 
-TEST(MinimumQueueTest, ShouldPopItems) {
-    MinimumQueue<int> q;
+TEST(MinMaxQueueTest, ShouldPopItems) {
+    MinMaxQueue<int> q;
 
     q.push(3);
     q.push(1);
@@ -71,8 +71,8 @@ TEST(MinimumQueueTest, ShouldPopItems) {
     EXPECT_EQ(0ULL, q.size());
 }
 
-TEST(MinimumQueueTest, ShouldPushAndPopItems) {
-    MinimumQueue<int> q;
+TEST(MinMaxQueueTest, ShouldPushAndPopItems) {
+    MinMaxQueue<int> q;
 
     q.push(2);
     q.pop();
@@ -98,8 +98,8 @@ TEST(MinimumQueueTest, ShouldPushAndPopItems) {
     EXPECT_EQ(4, q.back());
 }
 
-TEST(MinimumQueueTest, ShouldUseCustomComparator) {
-    MinimumQueue<int, std::greater<int>> q;
+TEST(MinMaxQueueTest, ShouldUseCustomComparator) {
+    MinMaxQueue<int, std::greater<int>> q;
 
     q.push(2);
     EXPECT_EQ(2, q.minimum());

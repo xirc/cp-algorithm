@@ -6,7 +6,7 @@
 #include "minmax_stack.hpp"
 
 
-// MinimumQueue
+// MinMaxQueue
 //
 // Space: O(N)
 //
@@ -14,7 +14,7 @@
 //  - https://onlinejudge.u-aizu.ac.jp/problems/DSL_3_D
 //
 template <class T, class Less = std::less<T>>
-class MinimumQueue {
+class MinMaxQueue {
 private:
     MinMaxStack<T, Less> in_stack, out_stack;
     Less less;

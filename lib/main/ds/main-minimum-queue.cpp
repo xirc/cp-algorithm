@@ -4,41 +4,41 @@
 
 using namespace std;
 
-MinimumQueue<int> minqueue;
+MinMaxQueue<int> minmax_queue;
 
 void action_init() {
-    minqueue = MinimumQueue<int>();
+    minmax_queue = MinMaxQueue<int>();
 }
 
 void action_push() {
     int value;
     cin >> value;
-    minqueue.push(value);
+    minmax_queue.push(value);
 }
 
 void action_pop() {
-    if (minqueue.empty()) return;
-    minqueue.pop();
+    if (minmax_queue.empty()) return;
+    minmax_queue.pop();
 }
 
 void action_front() {
-    if (minqueue.empty()) return;
-    cout << minqueue.front() << endl;
+    if (minmax_queue.empty()) return;
+    cout << minmax_queue.front() << endl;
 }
 
 void action_back() {
-    if (minqueue.empty()) return;
-    cout << minqueue.back() << endl;
+    if (minmax_queue.empty()) return;
+    cout << minmax_queue.back() << endl;
 }
 
 void action_minimum() {
-    if (minqueue.empty()) return;
-    cout << minqueue.minimum() << endl;
+    if (minmax_queue.empty()) return;
+    cout << minmax_queue.minimum() << endl;
 }
 
 void action_maximum() {
-    if (minqueue.empty()) return;
-    cout << minqueue.maximum() << endl;
+    if (minmax_queue.empty()) return;
+    cout << minmax_queue.maximum() << endl;
 }
 
 void setup(string& header, map<string,Command>& commands) {
