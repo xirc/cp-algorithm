@@ -56,56 +56,69 @@ public:
 };
 
 template <class T, class Less = std::less<T>>
-class MinimumQueue {
+class MinMaxQueue {
 private:
-    MinMaxStack<T, Less> Sp, Sr;
+    MinMaxStack<T, Less> in_stack, out_stack;
     Less less;
 
 public:
     // Time: O(1)
     bool empty() const {
-        return Sp.empty() && Sr.empty();
+        return in_stack.empty() && out_stack.empty();
     }
     // Time: O(1)
     size_t size() const {
-        return Sp.size() + Sr.size();
+        return in_stack.size() + out_stack.size();
     }
     // Time: O(1)
     void push(T const& value) {
-        Sp.push(value);
+        in_stack.push(value);
     }
     // Time: O(N), amortized O(1)
     void pop() {
-        if (Sr.empty()) {
-            while (!Sp.empty()) {
-                auto value = Sp.top();
-                Sp.pop();
-                Sr.push(value);
+        if (out_stack.empty()) {
+            while (!in_stack.empty()) {
+                auto value = in_stack.top();
+                in_stack.pop();
+                out_stack.push(value);
             }
         }
-        Sr.pop();
+        out_stack.pop();
     }
     // Time: O(1)
     T front() const {
-        if (Sr.empty()) {
-            return Sp.bottom();
+        if (out_stack.empty()) {
+            return in_stack.bottom();
         }
-        return Sr.top();
+        return out_stack.top();
     }
     // Time: O(1)
     T back() const {
-        if (!Sp.empty()) {
-            return Sp.top();
+        if (!in_stack.empty()) {
+            return in_stack.top();
         }
-        return Sr.bottom();
+        return out_stack.bottom();
     }
     // Time: O(1)
     T minimum() const {
-        if (Sp.empty() || Sr.empty()) {
-            return Sp.empty() ? Sr.minimum() : Sp.minimum();
+        if (in_stack.empty()) {
+            return out_stack.minimum();
+        } else if (out_stack.empty()) {
+            return in_stack.minimum();
         } else {
-            auto m1 = Sp.minimum(), m2 = Sr.minimum();
+            auto m1 = in_stack.minimum(), m2 = out_stack.minimum();
             return less(m1, m2) ? m1 : m2;
+        }
+    }
+    // Time: O(1)
+    T maximum() const {
+        if (in_stack.empty()) {
+            return out_stack.maximum();
+        } else if (out_stack.empty()) {
+            return in_stack.maximum();
+        } else {
+            auto m1 = in_stack.maximum(), m2 = out_stack.maximum();
+            return less(m1, m2) ? m2 : m1;
         }
     }
 };
@@ -123,7 +136,7 @@ int main() {
         cin >> array[i];
     }
 
-    MinimumQueue<int> Q;
+    MinMaxQueue<int> Q;
     for (int i = 0; i < L; ++i) {
         Q.push(array[i]);
     }
