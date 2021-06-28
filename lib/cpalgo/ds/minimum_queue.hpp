@@ -16,17 +16,17 @@
 template <class T, class Less = std::less<T>>
 class MinimumQueue {
 private:
-    MinMaxStack<T, Less> in_stack, Sr;
+    MinMaxStack<T, Less> in_stack, out_stack;
     Less less;
 
 public:
     // Time: O(1)
     bool empty() const {
-        return in_stack.empty() && Sr.empty();
+        return in_stack.empty() && out_stack.empty();
     }
     // Time: O(1)
     size_t size() const {
-        return in_stack.size() + Sr.size();
+        return in_stack.size() + out_stack.size();
     }
     // Time: O(1)
     void push(T const& value) {
@@ -34,35 +34,35 @@ public:
     }
     // Time: O(N), amortized O(1)
     void pop() {
-        if (Sr.empty()) {
+        if (out_stack.empty()) {
             while (!in_stack.empty()) {
                 auto value = in_stack.top();
                 in_stack.pop();
-                Sr.push(value);
+                out_stack.push(value);
             }
         }
-        Sr.pop();
+        out_stack.pop();
     }
     // Time: O(1)
     T front() const {
-        if (Sr.empty()) {
+        if (out_stack.empty()) {
             return in_stack.bottom();
         }
-        return Sr.top();
+        return out_stack.top();
     }
     // Time: O(1)
     T back() const {
         if (!in_stack.empty()) {
             return in_stack.top();
         }
-        return Sr.bottom();
+        return out_stack.bottom();
     }
     // Time: O(1)
     T minimum() const {
-        if (in_stack.empty() || Sr.empty()) {
-            return in_stack.empty() ? Sr.minimum() : in_stack.minimum();
+        if (in_stack.empty() || out_stack.empty()) {
+            return in_stack.empty() ? out_stack.minimum() : in_stack.minimum();
         } else {
-            auto m1 = in_stack.minimum(), m2 = Sr.minimum();
+            auto m1 = in_stack.minimum(), m2 = out_stack.minimum();
             return less(m1, m2) ? m1 : m2;
         }
     }
