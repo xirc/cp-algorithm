@@ -16,6 +16,7 @@ TEST(MinimumQueueTest, ShouldPushItems) {
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(1ULL, q.size());
     EXPECT_EQ(2, q.minimum());
+    EXPECT_EQ(2, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(2, q.back());
 
@@ -23,6 +24,7 @@ TEST(MinimumQueueTest, ShouldPushItems) {
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(2ULL, q.size());
     EXPECT_EQ(1, q.minimum());
+    EXPECT_EQ(2, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(1, q.back());
 
@@ -30,6 +32,7 @@ TEST(MinimumQueueTest, ShouldPushItems) {
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(3ULL, q.size());
     EXPECT_EQ(1, q.minimum());
+    EXPECT_EQ(3, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(3, q.back());
 }
@@ -37,28 +40,31 @@ TEST(MinimumQueueTest, ShouldPushItems) {
 TEST(MinimumQueueTest, ShouldPopItems) {
     MinimumQueue<int> q;
 
-    q.push(2);
-    q.push(1);
     q.push(3);
+    q.push(1);
+    q.push(2);
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(3ULL, q.size());
     EXPECT_EQ(1, q.minimum());
-    EXPECT_EQ(2, q.front());
-    EXPECT_EQ(3, q.back());
+    EXPECT_EQ(3, q.maximum());
+    EXPECT_EQ(3, q.front());
+    EXPECT_EQ(2, q.back());
 
     q.pop();
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(2ULL, q.size());
     EXPECT_EQ(1, q.minimum());
+    EXPECT_EQ(2, q.maximum());
     EXPECT_EQ(1, q.front());
-    EXPECT_EQ(3, q.back());
+    EXPECT_EQ(2, q.back());
 
     q.pop();
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(1ULL, q.size());
-    EXPECT_EQ(3, q.minimum());
-    EXPECT_EQ(3, q.front());
-    EXPECT_EQ(3, q.back());
+    EXPECT_EQ(2, q.minimum());
+    EXPECT_EQ(2, q.maximum());
+    EXPECT_EQ(2, q.front());
+    EXPECT_EQ(2, q.back());
 
     q.pop();
     EXPECT_TRUE(q.empty());
@@ -76,6 +82,7 @@ TEST(MinimumQueueTest, ShouldPushAndPopItems) {
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(2ULL, q.size());
     EXPECT_EQ(1, q.minimum());
+    EXPECT_EQ(3, q.maximum());
     EXPECT_EQ(1, q.front());
     EXPECT_EQ(3, q.back());
 
@@ -86,6 +93,7 @@ TEST(MinimumQueueTest, ShouldPushAndPopItems) {
     EXPECT_FALSE(q.empty());
     EXPECT_EQ(3ULL, q.size());
     EXPECT_EQ(0, q.minimum());
+    EXPECT_EQ(4, q.maximum());
     EXPECT_EQ(3, q.front());
     EXPECT_EQ(4, q.back());
 }
@@ -95,16 +103,19 @@ TEST(MinimumQueueTest, ShouldUseCustomComparator) {
 
     q.push(2);
     EXPECT_EQ(2, q.minimum());
+    EXPECT_EQ(2, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(2, q.back());
 
     q.push(3);
     EXPECT_EQ(3, q.minimum());
+    EXPECT_EQ(2, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(3, q.back());
 
     q.push(1);
     EXPECT_EQ(3, q.minimum());
+    EXPECT_EQ(1, q.maximum());
     EXPECT_EQ(2, q.front());
     EXPECT_EQ(1, q.back());
 }

@@ -68,4 +68,15 @@ public:
             return less(m1, m2) ? m1 : m2;
         }
     }
+    // Time: O(1)
+    T maximum() const {
+        if (in_stack.empty()) {
+            return out_stack.maximum();
+        } else if (out_stack.empty()) {
+            return in_stack.maximum();
+        } else {
+            auto m1 = in_stack.maximum(), m2 = out_stack.maximum();
+            return less(m1, m2) ? m2 : m1;
+        }
+    }
 };
