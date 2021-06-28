@@ -62,7 +62,7 @@ This project contains my competitive programming library, examples, and solution
 
 * [Disjoint Set Union](/lib/cpalgo/ds/README.md#Disjoint-Set-Union)
 * [Binary Indexed Tree](/lib/cpalgo/ds/README.md#Binary-Indexed-Tree)
-* [Minimum Queue](/lib/cpalgo/ds/README.md#Minimum-Queue)
+* [MinMax Queue](/lib/cpalgo/ds/README.md#MinMax-Queue)
 * [MinMax Stack](/lib/cpalgo/ds/README.md#MinMax-Stack)
 * [Randomized Heap](/lib/cpalgo/ds/README.md#Randomized-Heap)
 * [Segment Tree](/lib/cpalgo/ds/README.md#Segment-Tree)
