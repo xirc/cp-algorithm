@@ -36,6 +36,11 @@ void action_minimum() {
     cout << minqueue.minimum() << endl;
 }
 
+void action_maximum() {
+    if (minqueue.empty()) return;
+    cout << minqueue.maximum() << endl;
+}
+
 void setup(string& header, map<string,Command>& commands) {
     header = "Minimum Stack";
     commands["init"] = { "init", action_init };
@@ -44,4 +49,5 @@ void setup(string& header, map<string,Command>& commands) {
     commands["front"] = { "front", action_front };
     commands["back"] = { "back", action_back };
     commands["min"] = { "min", action_minimum };
+    commands["max"] = { "max", action_maximum };
 }
