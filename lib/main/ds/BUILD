@@ -31,8 +31,8 @@ cc_binary(
 )
 
 cc_binary(
-    name = "minimum-queue",
-    srcs = ["main-minimum-queue.cpp"],
+    name = "minmax-queue",
+    srcs = ["main-minmax-queue.cpp"],
     copts = COPTS,
     deps = DEPS,
 )
