@@ -59,8 +59,10 @@ public:
     }
     // Time: O(1)
     T minimum() const {
-        if (in_stack.empty() || out_stack.empty()) {
-            return in_stack.empty() ? out_stack.minimum() : in_stack.minimum();
+        if (in_stack.empty()) {
+            return out_stack.minimum();
+        } else if (out_stack.empty()) {
+            return in_stack.minimum();
         } else {
             auto m1 = in_stack.minimum(), m2 = out_stack.minimum();
             return less(m1, m2) ? m1 : m2;
