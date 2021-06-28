@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "gtest/gtest.h"
-#include "cpalgo/ds/minimum_queue.hpp"
+#include "cpalgo/ds/minmax_queue.hpp"
 
 
 TEST(MinMaxQueueTest, IsEmptyInitially) {
