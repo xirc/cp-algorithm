@@ -24,7 +24,8 @@ inline long double binary_search_f(
     long double ok,
     const size_t N = 200
 ) {
-    assert(!predicate(ng) && predicate(ok));
+    assert(!predicate(ng));
+    assert(predicate(ok));
     for (size_t i = 0; i < N; ++i) {
         auto m = (ok + ng) / 2;
         if (predicate(m)) ok = m;
