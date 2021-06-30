@@ -5,7 +5,8 @@ inline int64_t binary_search(
     int64_t ng,
     int64_t ok
 ) {
-    assert(!predicate(ng) && predicate(ok));
+    assert(!predicate(ng));
+    assert(predicate(ok));
     while (abs(ok - ng) > 1) {
         auto m = (ok + ng) / 2;
         if (predicate(m)) ok = m;
