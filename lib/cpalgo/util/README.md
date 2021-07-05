@@ -30,6 +30,7 @@ We can use this technique in many problems. It's a pretty powerful technique.
 - [001 - Yokan Party](https://atcoder.jp/contests/typical90/tasks/typical90_a)
 - [D - No Need](https://atcoder.jp/contests/abc056/tasks/arc070_b)
 - [Gluttony - AtCoder ABC144E](https://atcoder.jp/contests/abc144/tasks/abc144_e)
+- [Buy an Integer - AtCoder ABC146C](https://atcoder.jp/contests/abc146/tasks/abc146_c)
 
 
 ## Dice
