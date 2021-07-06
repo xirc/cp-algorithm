@@ -10,29 +10,18 @@ vector<ll> A;
 int solve() {
     int const M = 64;
     ll const MOD = 1e9+7;
-    vector<ll> T(M, 0);
+    ll ans = 0;
     for (int j = 0; j < M; ++j) {
+        ll m = ll(1) << j;
+        int zeros = 0, ones = 0;
         for (int i = 0; i < N; ++i) {
-            T[j] += A[i] & (ll(1) << j);
-            T[j] %= MOD;
+            if (A[i] & m) ++ones;
+            else ++zeros;
         }
+        ans += ((m % MOD) * zeros % MOD) * ones % MOD;
+        ans %= MOD;
     }
-    vector<ll> S(N, 0);
-    for (int i = 0; i < N; ++i) {
-        for (int j = 0; j < M; ++j) {
-            int b = (A[i] >> j) & 1;
-            if (b == 0) {
-                S[i] += T[j];
-                S[i] %= MOD;
-            }
-        }
-    }
-    ll ss = 0;
-    for (int i = 0; i < N; ++i) {
-        ss += S[i];
-        ss %= MOD;
-    }
-    return ss;
+    return ans;
 }
 
 int main() {
