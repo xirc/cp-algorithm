@@ -10,7 +10,8 @@ vector<string> G;
 
 vector<int> const dx = { 1, -1, 0, 0 };
 vector<int> const dy = { 0, 0, 1, -1 };
-vector<vector<int>> solve(int sy, int sx) {
+int solve(int sy, int sx) {
+    int ans = 0;
     vector<vector<int>> D(H, vector<int>(W, inf));
     queue<array<int,2>> Q;
     Q.push({ sy, sx });
@@ -26,17 +27,7 @@ vector<vector<int>> solve(int sy, int sx) {
             if (D[ny][nx] <= D[y][x] + 1) continue;
             D[ny][nx] = D[y][x] + 1;
             Q.push({ ny, nx });
-        }
-    }
-    return D;
-}
-
-int maximum(vector<vector<int>> const& D) {
-    int ans = 0;
-    for (int y = 0; y < H; ++y) {
-        for (int x = 0; x < W; ++x) {
-            if (D[y][x] == inf) continue;
-            ans = max(ans, D[y][x]);
+            ans = max(ans, D[ny][nx]);
         }
     }
     return ans;
@@ -47,8 +38,8 @@ int solve() {
     for (int y = 0; y < H; ++y) {
         for (int x = 0; x < W; ++x) {
             if (G[y][x] == '#') continue;
-            auto d = solve(y, x);
-            ans = max(ans, maximum(d));
+            auto la = solve(y, x);
+            ans = max(ans, la);
         }
     }
     return ans;
