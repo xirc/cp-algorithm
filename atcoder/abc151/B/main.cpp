@@ -16,11 +16,8 @@ int main() {
     for (auto &a : A) cin >> a;
 
     int sum = accumulate(A.begin(), A.end(), 0, plus<int>());
-    int s;
-    for (s = 0; s <= K; ++s) {
-        if ((sum + s) >= M * N) break;
-    }
-    if (s == K + 1) s = -1;
+    int s = max(M * N - sum, 0);
+    if (s > K) s = -1;
     cout << s << endl;
 
     return 0;
