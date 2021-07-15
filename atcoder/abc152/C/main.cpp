@@ -9,14 +9,15 @@ int main() {
     cin.tie(0); cout.tie(0);
 
     int N;
-    set<int> ps;
-    int ans = 0;
-
     cin >> N;
-    for (int i = 0; i < N; ++i) {
-        int p; cin >> p;
-        if (ps.upper_bound(p-1) == ps.begin()) ++ans;
-        ps.insert(p);
+    vector<int> P(N, 0);
+    for (auto &p : P) cin >> p;
+
+    int M = P[0];
+    int ans = 1;
+    for (int i = 1; i < N; ++i) {
+        M = min(M, P[i]);
+        if (M >= P[i]) ++ans;
     }
     cout << ans << endl;
 
