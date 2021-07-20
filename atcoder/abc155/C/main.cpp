@@ -8,7 +8,7 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(0); cout.tie(0);
 
-    unordered_map<string,int> mp;
+    map<string,int> mp;
 
     int N;
     cin >> N;
@@ -22,15 +22,10 @@ int main() {
     for (auto e : mp) {
         maxc = max(maxc, e.second);
     }
-    vector<string> ws;
     for (auto e : mp) {
         if (maxc == e.second) {
-            ws.push_back(e.first);
+            cout << e.first << endl;
         }
-    }
-    sort(ws.begin(), ws.end());
-    for (auto w : ws) {
-        cout << w << endl;
     }
 
     return 0;
