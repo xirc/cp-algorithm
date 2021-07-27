@@ -93,6 +93,8 @@ H(n,k) = C(n+k-1,k)
 - [Maximum Average Sets - AtCoder ABC057D](https://atcoder.jp/contests/abc057/tasks/abc057_d)
 - [Factorization - AtCoder ABC110D](https://atcoder.jp/contests/abc110/tasks/abc110_d)
 - [E - Cell Distance](https://atcoder.jp/contests/abc127/tasks/abc127_e)
+- [D - Bouquet](https://atcoder.jp/contests/abc156/tasks/abc156_d)
+- [E - Roaming](https://atcoder.jp/contests/abc156/tasks/abc156_e)
 
 
 ## Extended Euclidean Algorithm
