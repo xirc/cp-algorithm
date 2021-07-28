@@ -23,11 +23,11 @@ int main() {
     auto const is_bingo = [&]() {
         bool bingo = false;
         for (int i = 0; i < 3; ++i) {
-            bingo |= C[i][0] == true && C[i][0] == C[i][1] && C[i][0] == C[i][2];
-            bingo |= C[0][i] == true && C[0][i] == C[1][i] && C[0][i] == C[2][i];
+            bingo |= C[i][0] && C[i][1] && C[i][2];
+            bingo |= C[0][i] && C[1][i] && C[2][i];
         }
-        bingo |= C[0][0] == true && C[0][0] == C[1][1] && C[0][0] == C[2][2];
-        bingo |= C[0][2] == true && C[0][2] == C[1][1] && C[0][2] == C[2][0];
+        bingo |= C[0][0] && C[1][1] && C[2][2];
+        bingo |= C[0][2] && C[1][1] && C[2][0];
         return bingo;
     };
 
