@@ -8,21 +8,19 @@ int N, M;
 vector<int> S, C;
 
 int solve() {
-    map<int,int> ds;
-    for (int i = 0; i < M; ++i) {
-        if (ds.count(S[i]) > 0 && ds[S[i]] != C[i]) return -1;
-        ds[S[i]] = C[i];
+    for (int v = 0; v <= 1000; ++v) {
+        string vs = to_string(v);
+        if (vs.size() != N) continue;
+        bool pass = true;
+        for (int i = 0; i < M; ++i) {
+            if (vs[S[i]] != '0' + C[i]) {
+                pass = false;
+                break;
+            }
+        }
+        if (pass) return v;
     }
-    if (N == 1) {
-        return (ds.count(0) > 0 ? ds[0] : 0);
-    }
-    if (ds.count(0) > 0 && ds[0] == 0) return -1;
-    int ans = (ds.count(0) > 0 ? ds[0] : 1);
-    for (int i = 1; i < N; ++i) {
-        ans *= 10;
-        ans += ds[i];
-    }
-    return ans;
+    return -1;
 }
 
 int main() {
