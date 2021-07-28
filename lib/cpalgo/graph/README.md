@@ -29,7 +29,14 @@ We can find all articulation points of a given graph in `O(V + E)`.
 - [AtCoder | E - League](https://atcoder.jp/contests/abc139/tasks/abc139_e)
 
 
-## Strongly Connected Components
+## Connected Components (Undirected Graph)
+🚧
+
+### Challenges
+- [D - Friend Suggestions](https://atcoder.jp/contests/abc157/tasks/abc157_d)
+
+
+## Strongly Connected Components (Directed Graph)
 🚧
 
 

@@ -6,6 +6,7 @@ a.k.a Union Find Tree
 
 ### Challenges
 - [道路の老朽化対策について - AtCoder ABC040D](https://atcoder.jp/contests/abc040/tasks/abc040_d)
+- [D - Friend Suggestions](https://atcoder.jp/contests/abc157/tasks/abc157_d)
 
 ## Binary Indexed Tree
 
