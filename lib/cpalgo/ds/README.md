@@ -35,8 +35,13 @@ This data structure also allows to retrieval of the minimum and maximum value ef
 ## Randomized Heap
 🚧WIP
 
+
 ## Segment Tree
 🚧WIP
+
+### Challenges
+- [E - Simple String Queries](https://atcoder.jp/contests/abc157/tasks/abc157_e)
+
 
 ## Sqrt Decomposition
 🚧WIP
