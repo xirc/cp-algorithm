@@ -11,13 +11,9 @@ int main() {
     int A, B, C, D;
     cin >> A >> B >> C >> D;
 
-    while (A > 0 && C > 0) {
-        C -= B;
-        if (C <= 0) break;
-        A -= D;
-        if (A <= 0) break;
-    }
-    cout << (A > 0 ? "Yes" : "No") << endl;
+    int X = (A + D - 1) / D;
+    int Y = (C + B - 1) / B;
+    cout << (X >= Y ? "Yes" : "No") << endl;
 
     return 0;
 }
