@@ -15,19 +15,25 @@ int main() {
     A.assign(N, 0);
     for (auto &a : A) cin >> a;
 
-    bool zero = false;
-    ff pf = 1;
+    int zeros = 0;
+    for (auto v : A) {
+        if (v == 0) ++zeros;
+    }
+    if (zeros > 0) {
+        cout << 0 << endl;
+        return 0;
+    }
+
+    ll const U = 1e18;
     ll p = 1;
     for (int i = 0; i < N; ++i) {
-        pf *= A[i];
-        if (A[i] == 0) zero = true;
-        if (pf <= 1e18) {
-            p *= A[i];
-        } else {
+        if (A[i] > U / p) {
             p = -1;
+            break;
         }
+        p *= A[i];
     }
-    cout << (zero ? 0 : p) << endl;
+    cout << p << endl;
 
     return 0;
 }
