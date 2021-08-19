@@ -95,6 +95,7 @@ H(n,k) = C(n+k-1,k)
 - [E - Cell Distance](https://atcoder.jp/contests/abc127/tasks/abc127_e)
 - [D - Bouquet](https://atcoder.jp/contests/abc156/tasks/abc156_d)
 - [E - Roaming](https://atcoder.jp/contests/abc156/tasks/abc156_e)
+- [E - Colorful Blocks](https://atcoder.jp/contests/abc167/tasks/abc167_e)
 
 
 ## Extended Euclidean Algorithm
