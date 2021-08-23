@@ -16,19 +16,24 @@ int main() {
     for (auto &a : A) cin >> a;
     for (auto &b : B) cin >> b;
 
-    vector<ll> S(M, 0);
-    S[0] = B[0];
-    for (int i = 1; i < M; ++i) {
-        S[i] = S[i-1] + B[i];
+    vector<ll> SA(N+1, 0);
+    vector<ll> SB(M+1, 0);
+    for (int i = 0; i < N; ++i) {
+        SA[i+1] = SA[i] + A[i];
+    }
+    for (int i = 0; i < M; ++i) {
+        SB[i+1] = SB[i] + B[i];
     }
 
     int ans = 0;
-    ll Sa = 0;
+    int j = M;
     for (int i = 0; i <= N; ++i) {
-        if (Sa > K) break;
-        int b = distance(S.begin(), upper_bound(S.begin(), S.end(), K - Sa));
-        ans = max(ans, i + b);
-        if (i < N) Sa += A[i];
+        if (SA[i] > K) break;
+        while (SB[j] > K - SA[i])
+        {
+            --j;
+        }
+        ans = max(ans, i + j);
     }
     cout << ans << endl;
 
