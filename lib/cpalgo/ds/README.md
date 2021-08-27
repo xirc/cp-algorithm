@@ -24,6 +24,10 @@ Binary Indexed Tree (Fenwick Tree) is a data structure.
 ### References in Japanese
 - [Binary Indexed Tree のはなし](http://hos.ac/slides/20140319_bit.pdf)
 
+### Challenges
+- [F - Range Set Query](https://atcoder.jp/contests/abc174/tasks/abc174_f)
+
+
 ## MinMax Queue
 A data structure that allows to store and retrieve elements in a first-in-first-out (FIFO) fashion.
 This data structure also allows to retrieval of the minimum and maximum value efficiently.
