@@ -5,7 +5,7 @@
 #include <vector>
 
 
-// Binomial Coefficient (Combination) modulo M
+// Binomial Coefficient (Combination) in modulo M
 //
 // Constraints:
 //   N <= 10^7
@@ -23,25 +23,22 @@
 // - https://atcoder.jp/contests/abc034/tasks/abc034_c
 // - https://atcoder.jp/contests/abc110/tasks/abc110_d
 //
+template <uint64_t MOD = 1000000007>
 class CombinationBasic {
     size_t N;
-    uint64_t MOD;
     std::vector<uint64_t> factorial, inverse, factorial_inverse;
 
 public:
     // Time: O(N)
-    // MOD should be a prime number
     CombinationBasic(
-        size_t const N = 10000000,
-        uint64_t const MOD = 1000000007
+        size_t const N = 10000000
     )
     {
-        build(N, MOD);
+        build(N);
     }
     // Time: O(N)
-    void build(size_t const N, uint64_t const MOD) {
+    void build(size_t const N) {
         this->N = N;
-        this->MOD = MOD;
 
         factorial.assign(N, 0);
         factorial_inverse.assign(N, 0);
