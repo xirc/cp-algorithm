@@ -83,3 +83,49 @@ TEST(CombinationPascalTest, ShouldComputeBinomialCoefficients) {
     }, std::out_of_range);
 
 }
+
+
+TEST(CombinationPascalTest, CombinationWithRepetition) {
+    CombinationPascal<> comb(10);
+
+    EXPECT_EQ(1ULL, comb.H(0, 0));
+
+    EXPECT_EQ(1ULL, comb.H(1, 0));
+    EXPECT_EQ(1ULL, comb.H(1, 1));
+    EXPECT_EQ(1ULL, comb.H(1, 2));
+    EXPECT_EQ(1ULL, comb.H(1, 3));
+
+    EXPECT_EQ(1ULL, comb.H(2, 0));
+    EXPECT_EQ(2ULL, comb.H(2, 1));
+    EXPECT_EQ(3ULL, comb.H(2, 2));
+    EXPECT_EQ(4ULL, comb.H(2, 3));
+    EXPECT_EQ(5ULL, comb.H(2, 4));
+
+    EXPECT_EQ( 1ULL, comb.H(3, 0));
+    EXPECT_EQ( 3ULL, comb.H(3, 1));
+    EXPECT_EQ( 6ULL, comb.H(3, 2));
+    EXPECT_EQ(10ULL, comb.H(3, 3));
+    EXPECT_EQ(15ULL, comb.H(3, 4));
+    EXPECT_EQ(21ULL, comb.H(3, 5));
+
+    EXPECT_NO_THROW({
+        // n + k - 1 == N
+        comb.H(11, 0);
+    });
+
+    EXPECT_THROW({
+        // n + k - 1 > N
+        comb.H(12, 0);
+    }, std::out_of_range);
+
+    EXPECT_NO_THROW({
+        // n + k - 1 == N
+        comb.H(3, 8);
+    });
+
+    EXPECT_THROW({
+        // n + k - 1 > N
+        comb.H(3, 9);
+    }, std::out_of_range);
+
+}
