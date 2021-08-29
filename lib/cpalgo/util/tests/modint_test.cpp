@@ -8,10 +8,33 @@ using namespace std;
 TEST(modint, init) {
 
     int const MOD = 7;
+
+    // init with positive values
     for (int i = 0; i < 100; ++i) {
         auto v = modint<MOD>(i);
-        EXPECT_EQ(uint64_t(i % MOD), v.value());
+        auto expected = i % MOD;
+        EXPECT_EQ(expected, v.value());
     }
+
+    // init with negative values
+    for (int i = -99; i >= 0; ++i) {
+        auto v = modint<MOD>(i);
+        auto expected = ((i % MOD) + MOD) % MOD;
+        EXPECT_EQ(expected, v.value());
+    }
+
+}
+
+TEST(modint, modulo) {
+
+    auto in_default_modulo = modint<>(0);
+    EXPECT_EQ(1000000007, in_default_modulo.modulo());
+
+    auto in7 = modint<7>(0);
+    EXPECT_EQ(7, in7.modulo());
+
+    auto in97 = modint<97>(123);
+    EXPECT_EQ(97, in97.modulo());
 
 }
 
@@ -49,7 +72,7 @@ TEST(modint, plus) {
         for (int j = 0; j < 100; ++j) {
             auto v = modint<MOD>(i);
             auto u = v + j;
-            uint64_t expected = (i + j) % MOD;
+            int64_t expected = (i + j) % MOD;
             EXPECT_EQ(expected, u.value());
         }
     }
@@ -63,7 +86,7 @@ TEST(modint, minus) {
         for (int j = 0; j < 100; ++j) {
             auto v = modint<MOD>(i);
             auto u = v - j;
-            uint64_t expected = ((i - j) % MOD + MOD) % MOD;
+            int64_t expected = ((i - j) % MOD + MOD) % MOD;
             EXPECT_EQ(expected, u.value());
         }
     }
@@ -77,7 +100,7 @@ TEST(modint, mult) {
         for (int j = 0; j < 100; ++j) {
             auto v = modint<MOD>(i);
             auto u = v * j;
-            uint64_t expected = (i * j) % MOD;
+            int64_t expected = (i * j) % MOD;
             EXPECT_EQ(expected, u.value());
         }
     }
@@ -89,7 +112,7 @@ TEST(modint, div) {
     int const MOD = 7;
 
     for (int i = 0; i < 7; ++i) {
-        uint64_t expected = 0;
+        int64_t expected = 0;
         auto u = modint<MOD>(0) / i;
         EXPECT_EQ(expected, u.value());
     }
