@@ -34,7 +34,6 @@ cc_binary(
     name = "combination-basic",
     srcs = [
         "main-combination-basic.cpp",
-        "template-combination-interp.hpp",
     ],
     copts = COPTS,
     deps = DEPS,
