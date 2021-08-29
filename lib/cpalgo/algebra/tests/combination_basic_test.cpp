@@ -85,6 +85,47 @@ TEST(CombinationBasicTest, ShouldComputeBinomialCoefficients) {
 }
 
 
+TEST(CombinationBasicTest, Permutation) {
+    CombinationBasic<> comb(10);
+
+    EXPECT_EQ(1ULL, comb.P(0, 0));
+
+    EXPECT_EQ(1ULL, comb.P(1, 0));
+    EXPECT_EQ(1ULL, comb.P(1, 1));
+
+    EXPECT_EQ(1ULL, comb.P(2, 0));
+    EXPECT_EQ(2ULL, comb.P(2, 1));
+    EXPECT_EQ(2ULL, comb.P(2, 2));
+
+    EXPECT_EQ(1ULL, comb.P(3, 0));
+    EXPECT_EQ(3ULL, comb.P(3, 1));
+    EXPECT_EQ(6ULL, comb.P(3, 2));
+    EXPECT_EQ(6ULL, comb.P(3, 3));
+
+    EXPECT_EQ( 1ULL, comb.P(4, 0));
+    EXPECT_EQ( 4ULL, comb.P(4, 1));
+    EXPECT_EQ(12ULL, comb.P(4, 2));
+    EXPECT_EQ(24ULL, comb.P(4, 3));
+    EXPECT_EQ(24ULL, comb.P(4, 4));
+
+    EXPECT_THROW({
+        // n > N
+        comb.P(21, 0);
+    }, std::out_of_range);
+
+    EXPECT_THROW({
+        // k > n
+        comb.P(0, 1);
+    }, std::out_of_range);
+
+    EXPECT_THROW({
+        // k > n
+        comb.P(6, 7);
+    }, std::out_of_range);
+
+}
+
+
 TEST(CombinationBasicTest, CombinationWithRepetition) {
     CombinationBasic<> comb(10);
 

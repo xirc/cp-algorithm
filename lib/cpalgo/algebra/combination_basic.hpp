@@ -61,6 +61,15 @@ public:
         if (n > N) throw std::out_of_range("n");
         return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
     }
+    // nPk
+    // P(n,k) = n! / (n-k)!
+    // n = [0,N], k = [0,n]
+    // Time: O(1)
+    uint64_t P(size_t const n, size_t const k) const {
+        if (k > n) throw std::out_of_range("k");
+        if (n > N) throw std::out_of_range("n");
+        return factorial[n] * factorial_inverse[n-k] % MOD;
+    }
     // nHk
     // H(n,k) = C(n+k-1,k)
     // n = [0,N-k+1], k = [0,N]
