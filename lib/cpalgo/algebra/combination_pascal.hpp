@@ -6,7 +6,7 @@
 #include <vector>
 
 
-// Binomial Coefficient (Combination) modulo M
+// Binomial Coefficient (Combination) in modulo M
 //
 // Constraints:
 //   N <= 10^3 ~ 10^4
@@ -25,24 +25,22 @@
 // Verified
 // - https://atcoder.jp/contests/abc057/tasks/abc057_d
 //
+template<uint64_t MOD = std::numeric_limits<uint64_t>::max()>
 class CombinationPascal {
     size_t N;
-    uint64_t MOD;
     std::vector<std::vector<uint64_t>> C;
 
 public:
     // Time: O(N^2)
     CombinationPascal(
-        size_t const N = 1000,
-        uint64_t const MOD = std::numeric_limits<uint64_t>::max()
+        size_t const N = 1000
     )
     {
-        build(N, MOD);
+        build(N);
     }
     // Time: O(N^2)
-    void build(size_t const N, uint64_t const MOD) {
+    void build(size_t const N) {
         this->N = N;
-        this->MOD = MOD;
         if (N == 0) return;
         C.assign(N, std::vector<uint64_t>(N, 0));
         C[0][0] = 1;

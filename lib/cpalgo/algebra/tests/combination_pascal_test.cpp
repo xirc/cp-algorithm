@@ -4,7 +4,7 @@
 
 
 TEST(CombinationPascalTest, ShouldComputeBinomialCoefficients) {
-    CombinationPascal comb;
+    CombinationPascal<> comb;
 
     EXPECT_EQ(1ULL, comb(0, 0));
 
