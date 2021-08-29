@@ -41,22 +41,21 @@ public:
     // Time: O(N^2)
     void build(size_t const N) {
         this->N = N;
-        if (N == 0) return;
-        C.assign(N, std::vector<uint64_t>(N, 0));
+        C.assign(N + 1, std::vector<uint64_t>(N + 1, 0));
         C[0][0] = 1;
-        for (size_t n = 1; n < N; ++n) {
+        for (size_t n = 1; n <= N; ++n) {
             C[n][0] = 1;
-            for (size_t k = 1; k < N; ++k) {
+            for (size_t k = 1; k <= N; ++k) {
                 C[n][k] = (C[n-1][k-1] + C[n-1][k]) % MOD;
             }
         }
     }
     // nCk
-    // n = [0,N), k = [0,n]
+    // n = [0,N], k = [0,n]
     // Time: O(1)
     uint64_t operator()(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");
-        if (n >= N) throw std::out_of_range("n");
+        if (n > N) throw std::out_of_range("n");
         return C[n][k];
     }
     // Time: O(1)

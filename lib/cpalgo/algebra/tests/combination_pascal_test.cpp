@@ -4,7 +4,7 @@
 
 
 TEST(CombinationPascalTest, ShouldComputeBinomialCoefficients) {
-    CombinationPascal<> comb;
+    CombinationPascal<> comb(20);
 
     EXPECT_EQ(1ULL, comb(0, 0));
 
@@ -71,4 +71,15 @@ TEST(CombinationPascalTest, ShouldComputeBinomialCoefficients) {
     EXPECT_EQ(   190ULL, comb(20, 18));
     EXPECT_EQ(    20ULL, comb(20, 19));
     EXPECT_EQ(     1ULL, comb(20, 20));
+
+    EXPECT_THROW({
+        // n > N
+        comb(21, 0);
+    }, std::out_of_range);
+
+    EXPECT_THROW({
+        // k > n
+        comb(6, 7);
+    }, std::out_of_range);
+
 }
