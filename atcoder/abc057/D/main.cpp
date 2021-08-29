@@ -1,45 +1,52 @@
 #include <bits/stdc++.h>
 
+template<uint64_t MOD = std::numeric_limits<uint64_t>::max()>
 class CombinationPascal {
     size_t N;
-    uint64_t MOD;
-    std::vector<std::vector<uint64_t>> C;
+    std::vector<std::vector<uint64_t>> comb;
 
 public:
     // Time: O(N^2)
     CombinationPascal(
-        size_t const N = 1000,
-        uint64_t const MOD = std::numeric_limits<uint64_t>::max()
+        size_t const N = 1000
     )
     {
-        build(N, MOD);
+        build(N);
     }
     // Time: O(N^2)
-    void build(size_t const N, uint64_t const MOD) {
+    void build(size_t const N) {
         this->N = N;
-        this->MOD = MOD;
-        C.assign(N, std::vector<uint64_t>(N, 0));
-        C[0][0] = 1;
-        for (size_t n = 1; n < N; ++n) {
-            C[n][0] = 1;
-            for (size_t k = 1; k < N; ++k) {
-                C[n][k] = (C[n-1][k-1] + C[n-1][k]) % MOD;
+        comb.assign(N + 1, std::vector<uint64_t>(N + 1, 0));
+        comb[0][0] = 1;
+        for (size_t n = 1; n <= N; ++n) {
+            comb[n][0] = 1;
+            for (size_t k = 1; k <= N; ++k) {
+                comb[n][k] = (comb[n-1][k-1] + comb[n-1][k]) % MOD;
             }
         }
     }
     // nCk
-    // n = [0,N), k = [0,n]
+    // n = [0,N], k = [0,n]
     // Time: O(1)
-    uint64_t operator()(size_t const n, size_t const k) const {
+    uint64_t C(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");
-        if (n >= N) throw std::out_of_range("n");
-        return C[n][k];
+        if (n > N) throw std::out_of_range("n");
+        return comb[n][k];
+    }
+    // nHk
+    // H(n,k) = C(n+k-1,k)
+    // n = [0,N-k+1], k = [0,N]
+    // Time: O(1)
+    uint64_t H(size_t const n, size_t const k) const {
+        if (n == 0 && k == 0) return 1;
+        return C(n+k-1,k);
     }
     // Time: O(1)
     size_t size() const {
         return N;
     }
 };
+
 
 using namespace std;
 using ll = int64_t;
@@ -48,7 +55,7 @@ int N, A, B;
 vector<ll> vs;
 
 pair<double,ll> solve() {
-    CombinationPascal comb(N+1);
+    CombinationPascal<> solver(N+1);
 
     map<ll,int,greater<ll>> mp;
     for (int i = 0; i < N; ++i) {
@@ -68,13 +75,13 @@ pair<double,ll> solve() {
             assert(sum == 0);
             ll ans = 0;
             for (int k = A; k <= min(c,B); ++k) {
-                ans += comb(c, k);
+                ans += solver.C(c, k);
             }
             return make_pair(v, ans);
         } else {
             int r = A - acc;
             sum += ll(v) * r;
-            return make_pair(double(sum) / A, comb(c,r));
+            return make_pair(double(sum) / A, solver.C(c,r));
         }
     }
     throw;
