@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    container:
+      image: xirc/cp-algorithm
+    steps:
+    - uses: actions/checkout@v2
+    - name: Lint
+      run: |
+        buildifier --mode=diff --lint=warn --warnings=all -r lib
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: xirc/cp-algorithm
+    steps:
+    - uses: actions/checkout@v2
+    - name: Cache Bazelisk
+      uses: actions/cache@v2
+      with:
+        path: ~/.cache/bazelisk
+        key: bazelisk-${{ hashFiles('.bazelversion') }}
+    - name: Build
+      run: |
+        cd lib
+        bazelisk build //cpalgo/...:* //main/...:*
+    - name: Test
+      run: |
+        cd lib
+        bazelisk test //cpalgo/...:*
