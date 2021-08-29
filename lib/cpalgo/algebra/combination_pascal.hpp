@@ -6,7 +6,7 @@
 #include <vector>
 
 
-// Binomial Coefficient (Combination) modulo M
+// Binomial Coefficient (Combination) in modulo M
 //
 // Constraints:
 //   N <= 10^3 ~ 10^4
@@ -25,41 +25,46 @@
 // Verified
 // - https://atcoder.jp/contests/abc057/tasks/abc057_d
 //
+template<uint64_t MOD = std::numeric_limits<uint64_t>::max()>
 class CombinationPascal {
     size_t N;
-    uint64_t MOD;
-    std::vector<std::vector<uint64_t>> C;
+    std::vector<std::vector<uint64_t>> comb;
 
 public:
     // Time: O(N^2)
     CombinationPascal(
-        size_t const N = 1000,
-        uint64_t const MOD = std::numeric_limits<uint64_t>::max()
+        size_t const N = 1000
     )
     {
-        build(N, MOD);
+        build(N);
     }
     // Time: O(N^2)
-    void build(size_t const N, uint64_t const MOD) {
+    void build(size_t const N) {
         this->N = N;
-        this->MOD = MOD;
-        if (N == 0) return;
-        C.assign(N, std::vector<uint64_t>(N, 0));
-        C[0][0] = 1;
-        for (size_t n = 1; n < N; ++n) {
-            C[n][0] = 1;
-            for (size_t k = 1; k < N; ++k) {
-                C[n][k] = (C[n-1][k-1] + C[n-1][k]) % MOD;
+        comb.assign(N + 1, std::vector<uint64_t>(N + 1, 0));
+        comb[0][0] = 1;
+        for (size_t n = 1; n <= N; ++n) {
+            comb[n][0] = 1;
+            for (size_t k = 1; k <= N; ++k) {
+                comb[n][k] = (comb[n-1][k-1] + comb[n-1][k]) % MOD;
             }
         }
     }
     // nCk
-    // n = [0,N), k = [0,n]
+    // n = [0,N], k = [0,n]
     // Time: O(1)
-    uint64_t operator()(size_t const n, size_t const k) const {
+    uint64_t C(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");
-        if (n >= N) throw std::out_of_range("n");
-        return C[n][k];
+        if (n > N) throw std::out_of_range("n");
+        return comb[n][k];
+    }
+    // nHk
+    // H(n,k) = C(n+k-1,k)
+    // n = [0,N-k+1], k = [0,N]
+    // Time: O(1)
+    uint64_t H(size_t const n, size_t const k) const {
+        if (n == 0 && k == 0) return 1;
+        return C(n+k-1,k);
     }
     // Time: O(1)
     size_t size() const {
