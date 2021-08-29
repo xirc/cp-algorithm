@@ -20,15 +20,15 @@
  * - [E - Cell Distance](https://atcoder.jp/contests/abc127/tasks/abc127_e)
  * 
  */
-template<std::uint64_t MOD>
+template<std::int64_t MOD>
 class modint {
-    using u64 = std::uint64_t;
-    u64 x;
+    using i64 = std::int64_t;
+    i64 x;
 
 public:
-    constexpr modint(u64 const& x = 0) noexcept : x(x % MOD) {}
-    constexpr u64& value() noexcept { return x; }
-    constexpr const u64& value() const noexcept { return x; }
+    constexpr modint(i64 const& x = 0) noexcept : x(((x % MOD) + MOD) % MOD) {}
+    constexpr i64& value() noexcept { return x; }
+    constexpr const i64& value() const noexcept { return x; }
     constexpr modint operator+(modint const& rhs) const noexcept { return modint(*this) += rhs; }
     constexpr modint operator-(modint const& rhs) const noexcept { return modint(*this) -= rhs; }
     constexpr modint operator*(modint const& rhs) const noexcept { return modint(*this) *= rhs; }
@@ -49,7 +49,7 @@ public:
     }
     constexpr modint& operator/=(modint rhs) noexcept {
         // Use Fermat's little theorem & binary exponentiation
-        u64 exp = MOD - 2;
+        auto exp = MOD - 2;
         while (exp) {
             if (exp & 1) *this *= rhs;
             rhs *= rhs;
