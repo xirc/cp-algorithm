@@ -27,6 +27,9 @@ TEST(modint, init) {
 
 TEST(modint, modulo) {
 
+    auto in_default_modulo = modint<>(0);
+    EXPECT_EQ(1000000007, in_default_modulo.modulo());
+
     auto in7 = modint<7>(0);
     EXPECT_EQ(7, in7.modulo());
 

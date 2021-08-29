@@ -20,7 +20,7 @@
  * - [E - Cell Distance](https://atcoder.jp/contests/abc127/tasks/abc127_e)
  * 
  */
-template<std::int64_t MOD>
+template<std::int64_t MOD = 1000000007>
 class modint {
     using i64 = std::int64_t;
     i64 x;
