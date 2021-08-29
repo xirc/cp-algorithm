@@ -25,6 +25,16 @@ TEST(modint, init) {
 
 }
 
+TEST(modint, modulo) {
+
+    auto in7 = modint<7>(0);
+    EXPECT_EQ(7, in7.modulo());
+
+    auto in97 = modint<97>(123);
+    EXPECT_EQ(97, in97.modulo());
+
+}
+
 TEST(modint, eq) {
 
     int const MOD = 7;

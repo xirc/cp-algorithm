@@ -29,6 +29,7 @@ public:
     constexpr modint(i64 const& x = 0) noexcept : x(((x % MOD) + MOD) % MOD) {}
     constexpr i64& value() noexcept { return x; }
     constexpr const i64& value() const noexcept { return x; }
+    constexpr i64 modulo() const noexcept { return MOD; }
     constexpr modint operator+(modint const& rhs) const noexcept { return modint(*this) += rhs; }
     constexpr modint operator-(modint const& rhs) const noexcept { return modint(*this) -= rhs; }
     constexpr modint operator*(modint const& rhs) const noexcept { return modint(*this) *= rhs; }
