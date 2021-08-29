@@ -53,7 +53,7 @@ jobs:
     steps:
       - checkout
       - restore_bazelisk_cache
-      - restore_bazel_cache
+      # - restore_bazel_cache
       - run:
           name: Build All
           command: |
@@ -67,7 +67,7 @@ jobs:
       - store_test_results:
           path: lib/bazel-testlogs/cpalgo
       - save_bazelisk_cache
-      - save_bazel_cache
+      # - save_bazel_cache
 
 workflows:
   version: 2
