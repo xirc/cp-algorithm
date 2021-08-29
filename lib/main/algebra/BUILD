@@ -43,7 +43,6 @@ cc_binary(
     name = "combination-pascal",
     srcs = [
         "main-combination-pascal.cpp",
-        "template-combination-interp.hpp",
     ],
     copts = COPTS,
     deps = DEPS,
