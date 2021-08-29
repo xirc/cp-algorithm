@@ -39,7 +39,6 @@ public:
     // Time: O(N)
     void build(size_t const N) {
         this->N = N;
-
         factorial.assign(N + 1, 0);
         factorial_inverse.assign(N + 1, 0);
         inverse.assign(N + 1, 0);
@@ -56,7 +55,7 @@ public:
     // nCk
     // n = [0,N], k = [0,n]
     // Time: O(1)
-    uint64_t operator()(size_t const n, size_t const k) const {
+    uint64_t C(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");
         if (n > N) throw std::out_of_range("n");
         return factorial[n] * (factorial_inverse[k] * factorial_inverse[n - k] % MOD) % MOD;
@@ -76,7 +75,7 @@ public:
     // Time: O(1)
     uint64_t H(size_t const n, size_t const k) const {
         if (n == 0 && k == 0) return 1;
-        return (*this)(n+k-1,k);
+        return C(n+k-1, k);
     }
     // Time: O(1)
     size_t size() const {
