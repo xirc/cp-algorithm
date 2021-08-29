@@ -28,7 +28,7 @@
 template<uint64_t MOD = std::numeric_limits<uint64_t>::max()>
 class CombinationPascal {
     size_t N;
-    std::vector<std::vector<uint64_t>> C;
+    std::vector<std::vector<uint64_t>> comb;
 
 public:
     // Time: O(N^2)
@@ -41,22 +41,22 @@ public:
     // Time: O(N^2)
     void build(size_t const N) {
         this->N = N;
-        C.assign(N + 1, std::vector<uint64_t>(N + 1, 0));
-        C[0][0] = 1;
+        comb.assign(N + 1, std::vector<uint64_t>(N + 1, 0));
+        comb[0][0] = 1;
         for (size_t n = 1; n <= N; ++n) {
-            C[n][0] = 1;
+            comb[n][0] = 1;
             for (size_t k = 1; k <= N; ++k) {
-                C[n][k] = (C[n-1][k-1] + C[n-1][k]) % MOD;
+                comb[n][k] = (comb[n-1][k-1] + comb[n-1][k]) % MOD;
             }
         }
     }
     // nCk
     // n = [0,N], k = [0,n]
     // Time: O(1)
-    uint64_t operator()(size_t const n, size_t const k) const {
+    uint64_t C(size_t const n, size_t const k) const {
         if (k > n) throw std::out_of_range("k");
         if (n > N) throw std::out_of_range("n");
-        return C[n][k];
+        return comb[n][k];
     }
     // Time: O(1)
     size_t size() const {
