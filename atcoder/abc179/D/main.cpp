@@ -1,69 +1,5 @@
 #include <bits/stdc++.h>
 
-template <class T = int64_t>
-class BinaryIndexedTree {
-public:
-    using F = std::function<T(T const&, T const&)>;
-
-protected:
-    size_t N;
-    std::vector<T> bit;
-    T empty;
-    F combine_func;
-    F remove_func;
-
-public:
-    // Time: O(N)
-    BinaryIndexedTree(
-        size_t n = 0,
-        T empty = T(),
-        F combine = std::plus<T>(),
-        F remove = std::minus<T>()
-    )
-        : N(n+1)
-        , bit(n+1, empty)
-        , empty(empty)
-        , combine_func(combine)
-        , remove_func(remove)
-    {
-        // Do nothing
-    }
-    // Time: O(1)
-    size_t size() const {
-        return N - 1;
-    }
-    // Fold elements of array[0..index)
-    // index = [0,N]
-    // Time: O(logN)
-    T fold(size_t index) const {
-        if (index > N) throw std::out_of_range("index");
-        T ans = empty;
-        for (; index > 0; index -= index & -index) {
-            ans = combine_func(ans, bit[index]);
-        }
-        return ans;
-    }
-    // Fold elements of array[l, r)
-    // l = [0,N]
-    // r = [l,N]
-    // Time: O(logN)
-    T fold(size_t l, size_t r) const {
-        if (l > N) throw std::out_of_range("l");
-        if (r < l || r > N) throw std::out_of_range("r");
-        return remove_func(fold(r), fold(l));
-    }
-    // Combine given value to array[index]
-    // index = [0,N)
-    // Time: O(logN)
-    void combine(size_t index, T const& value) {
-        if (index >= N) throw std::out_of_range("index");
-        for (++index; index < N; index += index & -index) {
-            bit[index] = combine_func(bit[index], value);
-        }
-    }
-};
-
-
 using namespace std;
 using ll = int64_t;
 using ff = long double;
@@ -85,20 +21,22 @@ ll minusf(ll lhs, ll rhs) {
     return value;
 }
 ll solve() {
-    BinaryIndexedTree<> bit(N, 0, plusf, minusf);
-    bit.combine(0, 1);
-    bit.combine(1, -1);
+    vector<ll> f(N+1, 0);
+    vector<ll> g(N+1, 0);
+    f[0] = 1;
     for (int i = 0; i < N; ++i) {
+        if (i > 0) g[i] = plusf(g[i], g[i-1]);
+        f[i] = plusf(f[i], g[i]);
         for (int j = 0; j < K; ++j) {
             int l = i + L[j], r = i + R[j] + 1;
             if (l >= N) continue;
             r = min(r, N);
-            ll p = bit.fold(i+1);
-            bit.combine(l, p);
-            bit.combine(r, -p);
+            ll p = f[i];
+            g[l] = plusf(g[l], p);
+            g[r] = minusf(g[r], p);
         }
     }
-    return bit.fold(N);
+    return f[N-1];
 }
 
 int main() {
