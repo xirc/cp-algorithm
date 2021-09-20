@@ -110,3 +110,24 @@ We can compute the solution in `O(log(min(a,b)))`.
 
 ### Challenges
 - [Extended Euclidean Algorithm - AOJ NTL1E](https://onlinejudge.u-aizu.ac.jp/courses/library/6/NTL/1/NTL_1_E)
+
+
+## Modular Multiplcative Inverse
+A *Modular Multiplicative Inverse* of an integer `a` is an integer `x` such that the product `ax` is congruent to 1 in modulus `m`.
+```math
+ax = 1 (mod m)
+x = a^{-1} (mod m)
+```
+
+- [Modular Multiplicative Inverse (using Fermat's little theorem and Binary Exponentation) | C++ code](modinv_binexp.hpp)
+- [Modular Multiplicative Inverse (using Extended Euclidean Algorithm) | C++ code](modinv_extgcd.hpp)
+- [All Modular Multiplicative Inverse | C++ code](modinvall.hpp)
+
+### References in English
+- [Modular multiplicative inverse - Wikipedia](https://en.wikipedia.org/wiki/Modular_multiplicative_inverse)
+- [Modular Inverse - Competitive Programming Algorithms](https://cp-algorithms.com/algebra/module-inverse.html)
+
+### Challenges
+- [D - 動的計画法](https://atcoder.jp/contests/abc024/tasks/abc024_d)
+- [E - Flatten](https://atcoder.jp/contests/abc152/tasks/abc152_e)
+- [E - Throne](https://atcoder.jp/contests/abc186/tasks/abc186_e)
