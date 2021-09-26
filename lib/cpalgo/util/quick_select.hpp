@@ -42,7 +42,6 @@ private:
             }
             auto pivot_index = pivot_of(array, begin, end);
             pivot_index = partition(array, begin, end, k, array[pivot_index]);
-            std::cout << pivot_index << " " << k << std::endl;
             if (pivot_index == k) {
                 return k;
             } else if (pivot_index < k) {
