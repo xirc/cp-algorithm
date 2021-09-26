@@ -51,3 +51,13 @@ Arithmetic in Modulo
 ### References in Japanese
 - [「1000000007 で割ったあまり」の求め方を総特集！ 〜 逆元から離散対数まで 〜 - Qiita](https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a#8-modint)
 - [modint 構造体を使ってみませんか？ (C++) - noshi91のメモ](https://noshi91.hatenablog.com/entry/2019/03/31/174006)
+
+
+## Quick Select
+
+Selects the k-th smallest element of an unsorted array in linear time.
+
+[quick_select | C++ code](quick_select.hpp)
+
+### References in English
+- [Median of medians - Wikipedia](https://en.wikipedia.org/wiki/Median_of_medians)
