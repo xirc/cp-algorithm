@@ -10,7 +10,7 @@ int main() {
 
     int N;
     cin >> N;
-    int price_with_tax = int(N * ff(1.08));
+    int price_with_tax = N * 108 / 100;
     int const fixed_price = 206;
     if (price_with_tax < fixed_price) {
         cout << "Yay!" << endl;
