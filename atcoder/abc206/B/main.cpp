@@ -12,11 +12,15 @@ int main() {
     cin >> N;
 
     ll cash = 0;
-    int i;
-    for (i = 1; cash < N; ++i) {
+    int i = 1;
+    while (true) {
         cash += i;
+        if (cash >= N) {
+            break;
+        }
+        ++i;
     }
-    cout << (i-1) << endl;
+    cout << i << endl;
 
     return 0;
 }
