@@ -11,12 +11,8 @@ int main() {
     int A, B;
 
     cin >> A >> B;
-    for (int C = 0; C < 256; ++C) {
-        if ((A ^ C) == B) {
-            cout << C << endl;
-            break;
-        }
-    }
+    int C = A ^ B;
+    cout << C << endl;
 
     return 0;
 }
