@@ -12,28 +12,21 @@ int main() {
 
     cin >> L >> Q;
 
-    set<int> bs;
-    map<int,int> ls;
-    bs.insert(0);
-    ls[0] = L;
+    set<int> xs;
+    xs.insert(0);
+    xs.insert(L);
 
     for (int i = 0; i < Q; ++i) {
         int c, x;
         cin >> c >> x;
         if (c == 1) {
-            auto it = bs.upper_bound(x);
-            assert(it != bs.begin());
-            --it;
-            auto b = *it, l = ls[b];
-            ls[b] = x - b;
-            bs.insert(x);
-            ls[x] = l - ls[b];
+            xs.insert(x);
         } else if (c == 2) {
-            auto it = bs.upper_bound(x);
-            assert(it != bs.begin());
-            --it;
-            auto b = *it;
-            cout << ls[b] << endl;
+            auto it = xs.upper_bound(x);
+            assert(it != xs.begin());
+            auto r = *it; --it;
+            auto l = *it;
+            cout << (r - l) << endl;
         } else throw;
     }
 
